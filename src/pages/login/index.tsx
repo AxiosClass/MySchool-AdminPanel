@@ -3,7 +3,7 @@ import { Logo, PageTitle } from '@/components/shared';
 export default function LoginPage() {
   return (
     <PageTitle title='Login'>
-      <div className='bg-baseLight-400 relative flex h-screen items-center justify-center overflow-hidden'>
+      <div className='relative flex h-screen items-center justify-center overflow-hidden bg-baseLight-400'>
         <img
           className='absolute -top-5 left-1/2 translate-x-[-50%] md:-top-16'
           width={600}
