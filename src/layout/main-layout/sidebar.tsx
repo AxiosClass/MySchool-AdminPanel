@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { BiLogOutCircle } from 'react-icons/bi';
-import { Logo } from '@/components/shared/logo';
 import { IoMdSettings } from 'react-icons/io';
+import { Logo } from '@/components/shared';
 import { FaUser } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
 import { links } from './links';
