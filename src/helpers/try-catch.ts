@@ -12,10 +12,10 @@ export const tryCatch = async ({ id, tryFn, catchFn, finallyFn }: IArgs) => {
   return Promise.resolve(tryFn())
     .catch((error: any) => {
       if (catchFn) return catchFn(error);
-      if (error instanceof Error) return toast.error(error.message, { id });
-      return toast.error(error?.data?.message || 'Something went wrong', {
-        id,
-      });
+      const message =
+        error.data?.message || error.message || 'Something went wrong';
+
+      toast.error(message, { id });
     })
     .finally(() => {
       if (finallyFn) finallyFn();

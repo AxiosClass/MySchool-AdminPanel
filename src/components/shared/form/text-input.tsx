@@ -22,7 +22,7 @@ export const TextInput = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <customForm.FormItem>
+        <customForm.FormItem className='w-full'>
           <customForm.FormLabel className='font-semibold'>
             {label}
           </customForm.FormLabel>

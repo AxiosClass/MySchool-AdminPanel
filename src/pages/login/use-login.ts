@@ -42,16 +42,17 @@ export const useLogin = () => {
           body: formData,
         });
 
+        console.log(response);
+
         if (!response?.ok) throw Error(response?.message);
-        toast.success(response?.message);
+        toast.success(response?.message, { id });
 
         const accessToken = response?.data?.accessToken;
         const refreshToken = response?.data?.refreshToken;
-
         setAccessTokenToLocal(accessToken);
         setRefreshTokenToLocal(refreshToken);
 
-        navigation('/login');
+        navigation('/');
       },
 
       finallyFn: () => {

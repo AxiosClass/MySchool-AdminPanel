@@ -26,7 +26,7 @@ export const PasswordInput = ({ form, name, label, description }: IProps) => {
       control={form.control}
       name={name}
       render={({ field }) => (
-        <customForm.FormItem>
+        <customForm.FormItem className='w-full'>
           <customForm.FormLabel className='font-semibold'>
             {label}
           </customForm.FormLabel>

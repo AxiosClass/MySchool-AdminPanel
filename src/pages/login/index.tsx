@@ -1,20 +1,53 @@
-import { Logo, PageTitle } from '@/components/shared';
+import * as customForm from '@/components/ui/form';
+
+import { Logo, PageTitle, TextInput } from '@/components/shared';
+import { useLogin } from './use-login';
+import { PasswordInput } from '@/components/shared/form/password-input';
+import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
+  const { form, handleLogin, isLoading } = useLogin();
+
   return (
     <PageTitle title='Login'>
-      <div className='relative flex h-screen items-center justify-center overflow-hidden bg-baseLight-400'>
+      <div className='relative flex h-screen flex-col items-center justify-center overflow-hidden bg-baseLight-400'>
         <img
-          className='absolute -top-5 left-1/2 translate-x-[-50%] md:-top-16'
+          className='absolute -top-12 left-1/2 translate-x-[-50%] md:-top-28'
           width={600}
           src='/public/asset/education/bro.png'
           alt=''
         />
-        <div>
-          <Logo></Logo>
-        </div>
+
+        <customForm.Form {...form}>
+          <form
+            className='flex w-full max-w-[350px] flex-col items-center gap-3 rounded-md border p-6 px-6'
+            onSubmit={handleLogin}
+          >
+            <Logo />
+            <h3 className='text-center text-muted-foreground'>
+              Input Your Credentials to Login
+            </h3>
+            <TextInput
+              form={form}
+              label='UserId'
+              name='userId'
+              placeholder='@ john-doe'
+            />
+
+            <PasswordInput
+              form={form}
+              label='Password'
+              name='password'
+              placeholder='****'
+            />
+            <Button className='mt-4 w-full' disabled={isLoading}>
+              Login
+            </Button>
+          </form>
+        </customForm.Form>
+
         <img
-          className='absolute -bottom-5 left-1/2 translate-x-[-50%] md:-bottom-16'
+          className='absolute -bottom-20 left-1/2 translate-x-[-50%] md:-bottom-36'
           width={600}
           src='/public/asset/high-school/bro.png'
           alt=''
