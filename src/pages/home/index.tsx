@@ -1,4 +1,4 @@
-export const HomePage = () => {
+export default function () {
   return (
     <main>
       <h1>Home Page</h1>
