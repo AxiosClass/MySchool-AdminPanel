@@ -1,1 +1,2 @@
-export * from './text-input';
+export * from './PasswordInput';
+export * from './TextInput';

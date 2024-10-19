@@ -1,8 +1,7 @@
-import { PasswordInput } from '@/components/shared/form/password-input';
-import { Logo, PageTitle, TextInput } from '@/components/shared';
+import { Logo, PageTitle, TextInput, PasswordInput } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { useLogin } from './lib/useLogin';
+import { useLogin } from './useLogin';
 
 export default function LoginPage() {
   const { form, handleLogin, isLoading } = useLogin();
