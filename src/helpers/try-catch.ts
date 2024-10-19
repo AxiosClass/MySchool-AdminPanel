@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from 'sonner';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface IArgs {
   id: string | number;
   tryFn: () => void;
