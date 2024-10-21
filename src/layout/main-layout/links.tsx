@@ -3,8 +3,8 @@ import { ReactNode } from 'react';
 import { FaBellConcierge } from 'react-icons/fa6';
 import { IoCalendarSharp } from 'react-icons/io5';
 import { RiAccountBoxFill } from 'react-icons/ri';
-import { HiUsers } from 'react-icons/hi2';
 import { FaHome, FaBook } from 'react-icons/fa';
+import { HiUsers } from 'react-icons/hi2';
 
 interface ILink {
   title: string;
@@ -18,5 +18,5 @@ export const links: ILink[] = [
   { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
   { title: 'Calender', url: '/calender', icon: <IoCalendarSharp /> },
   { title: 'Account', url: '/account', icon: <RiAccountBoxFill /> },
-  { title: 'Employees', url: '/employees', icon: <HiUsers /> },
+  { title: 'Staffs', url: '/staffs', icon: <HiUsers /> },
 ];

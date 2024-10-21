@@ -10,7 +10,7 @@ export const Sidebar = () => {
   const { pathname } = useLocation();
 
   return (
-    <aside className='hidden min-h-screen min-w-[240px] flex-col p-6 md:flex'>
+    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-input p-6 shadow md:flex'>
       <Logo />
       <div className='mt-8 flex flex-col gap-2'>
         {links.map(({ url, icon, title }) => (

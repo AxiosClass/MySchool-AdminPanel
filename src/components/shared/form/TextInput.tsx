@@ -8,6 +8,7 @@ interface IProps {
   label: string;
   placeholder: string;
   description?: string;
+  type?: 'text' | 'number';
 }
 
 export const TextInput = ({

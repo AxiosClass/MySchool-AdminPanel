@@ -1,7 +1,7 @@
 import { EUserRole } from '@/lib/types/user';
 import { gql } from '@apollo/client';
 
-export interface IAddTeacherPayload {
+export interface IAddStaffPayload {
   name: string;
   nid: string;
   phone: string;
@@ -16,11 +16,11 @@ export interface IAddTeacherPayload {
   password: string;
 }
 
-export interface IAddTeacherResponse {
+export interface IAddStaffResponse {
   insert_staffs_one: { id: string };
 }
 
-export const ADD_TEACHER = gql`
+export const ADD_STAFF = gql`
   mutation Staff(
     $name: String!
     $nid: String!
