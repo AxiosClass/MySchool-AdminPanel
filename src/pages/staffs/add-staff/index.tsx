@@ -9,8 +9,9 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-import { DatePicker, TextInput } from '@/components/shared';
+import { DatePicker, TextInput, ControlledSelect } from '@/components/shared';
 import { Button } from '@/components/ui/button';
+import { BLOOD_GROUP } from '@/data/constants';
 import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
@@ -70,7 +71,14 @@ export function AddStaff() {
                   label='Date of birth'
                   name='dob'
                 />
-                {/* to do => Date , blood Group */}
+                <ControlledSelect
+                  control={form.control}
+                  name='bloodGroup'
+                  label='Blood Group'
+                  placeholder='Select blood group'
+                  options={BLOOD_GROUP}
+                />
+                {/* to do =>  blood Group */}
                 <TextInput
                   control={form.control}
                   label='Salary'
