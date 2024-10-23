@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-import { TextInput } from '@/components/shared';
+import { DatePicker, TextInput } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
@@ -64,6 +64,11 @@ export function AddStaff() {
                   label='Phone'
                   name='phone'
                   placeholder='@: 015******'
+                />
+                <DatePicker
+                  control={form.control}
+                  label='Date of birth'
+                  name='dob'
                 />
                 {/* to do => Date , blood Group */}
                 <TextInput
