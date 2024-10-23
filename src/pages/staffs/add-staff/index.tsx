@@ -15,6 +15,7 @@ import { BLOOD_GROUP } from '@/data/constants';
 import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
+import { EUserRole } from '@/lib/types/user';
 
 export function AddStaff() {
   const { form, handleAddStaff } = useAddStaff();
@@ -78,7 +79,6 @@ export function AddStaff() {
                   placeholder='Select blood group'
                   options={BLOOD_GROUP}
                 />
-                {/* to do =>  blood Group */}
                 <TextInput
                   control={form.control}
                   label='Salary'
@@ -111,7 +111,13 @@ export function AddStaff() {
                   type='number'
                   placeholder='@: Science'
                 />
-                {/* to do => Roles */}
+                <ControlledSelect
+                  control={form.control}
+                  label='Role'
+                  name='role'
+                  placeholder='Select any role'
+                  options={Object.values(EUserRole)}
+                />
               </div>
             </div>
 
