@@ -1,7 +1,9 @@
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -24,8 +26,8 @@ export function AddStaff() {
           Add Staff
         </Button>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
+      <SheetContent className='p-0'>
+        <SheetHeader className='px-6 py-4'>
           <SheetTitle>Add Staff</SheetTitle>
           <SheetDescription>
             Please provide staff&apos; information
@@ -34,70 +36,78 @@ export function AddStaff() {
         <Form {...form}>
           <form
             style={{ height: `calc(100dvh - 120px)` }}
-            className='mt-4 flex flex-col gap-4 overflow-y-auto pr-4'
+            className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto px-6'
             onSubmit={handleAddStaff}
           >
-            <div className='grid grid-cols-2 gap-4'>
-              <TextInput
-                form={form}
-                label='Name'
-                name='name'
-                placeholder='@: John Doe'
-              />
-              <TextInput
-                form={form}
-                label='StaffId'
-                name='userId'
-                placeholder='@: John'
-              />
-              <TextInput
-                form={form}
-                label='NID'
-                name='nid'
-                placeholder='@: 6612****'
-              />
-              <TextInput
-                form={form}
-                label='Phone'
-                name='phone'
-                placeholder='@: 015******'
-              />
-              {/* to do => Date , blood Group */}
-              <TextInput
-                form={form}
-                label='Salary'
-                name='salary'
-                placeholder='@: 30000'
-              />
-              <TextInput
-                form={form}
-                label='Designation'
-                name='designation'
-                placeholder='@: Teacher'
-              />
-              {/* to do => Address */}
-              <TextInput
-                form={form}
-                label='Degree Name'
-                name='education.degreeName'
-                placeholder='@: HSC'
-              />
-              <TextInput
-                form={form}
-                label='Group'
-                name='education.group'
-                placeholder='@: Science'
-              />
-              <TextInput
-                form={form}
-                label='Result'
-                name='education.result'
-                type='number'
-                placeholder='@: Science'
-              />
-              {/* to do => Roles */}
+            <div className='h-full'>
+              <div className='grid grid-cols-2 gap-4'>
+                <TextInput
+                  control={form.control}
+                  label='Name'
+                  name='name'
+                  placeholder='@: John Doe'
+                />
+                <TextInput
+                  control={form.control}
+                  label='StaffId'
+                  name='userId'
+                  placeholder='@: John'
+                />
+                <TextInput
+                  control={form.control}
+                  label='NID'
+                  name='nid'
+                  placeholder='@: 6612****'
+                />
+                <TextInput
+                  control={form.control}
+                  label='Phone'
+                  name='phone'
+                  placeholder='@: 015******'
+                />
+                {/* to do => Date , blood Group */}
+                <TextInput
+                  control={form.control}
+                  label='Salary'
+                  name='salary'
+                  placeholder='@: 30000'
+                />
+                <TextInput
+                  control={form.control}
+                  label='Designation'
+                  name='designation'
+                  placeholder='@: Teacher'
+                />
+                {/* to do => Address */}
+                <TextInput
+                  control={form.control}
+                  label='Degree Name'
+                  name='education.degreeName'
+                  placeholder='@: HSC'
+                />
+                <TextInput
+                  control={form.control}
+                  label='Group'
+                  name='education.group'
+                  placeholder='@: Science'
+                />
+                <TextInput
+                  control={form.control}
+                  label='Result'
+                  name='education.result'
+                  type='number'
+                  placeholder='@: Science'
+                />
+                {/* to do => Roles */}
+              </div>
             </div>
-            <Button className='mt-4'>Add Staff</Button>
+
+            <SheetFooter className='flex items-center justify-end'>
+              <SheetClose asChild>
+                <Button variant={'outline'}>Cancel</Button>
+              </SheetClose>
+              <Button>Add Staff</Button>
+            </SheetFooter>
           </form>
         </Form>
       </SheetContent>

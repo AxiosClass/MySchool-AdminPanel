@@ -1,45 +1,47 @@
-import * as customForm from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
-interface IProps {
+import { Input } from '@/components/ui/input';
+import { InputHTMLAttributes } from 'react';
+import { Control } from 'react-hook-form';
+
+interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any;
+  control: Control<any>;
+  description?: string;
   name: string;
   label: string;
-  placeholder: string;
-  description?: string;
-  type?: 'text' | 'number';
 }
 
 export const TextInput = ({
-  form,
+  control,
   name,
   label,
-  placeholder,
   description,
+  ...props
 }: IProps) => {
   return (
-    <customForm.FormField
-      control={form.control}
+    <FormField
+      control={control}
       name={name}
       render={({ field }) => (
-        <customForm.FormItem className='w-full'>
-          <customForm.FormLabel className='font-semibold'>
-            {label}
-          </customForm.FormLabel>
-          <customForm.FormControl>
-            <Input placeholder={placeholder} {...field} />
-          </customForm.FormControl>
+        <FormItem className='w-full'>
+          <FormLabel className='font-semibold'>{label}</FormLabel>
+          <FormControl>
+            <Input {...field} {...props} />
+          </FormControl>
           {/* show error message */}
-          <customForm.FormMessage />
+          <FormMessage />
 
           {/* if any description is provided */}
-          {description && (
-            <customForm.FormDescription>
-              {description}
-            </customForm.FormDescription>
-          )}
-        </customForm.FormItem>
+          {description && <FormDescription>{description}</FormDescription>}
+        </FormItem>
       )}
     />
   );
