@@ -1,7 +1,7 @@
 import { EUserRole } from '@/lib/types/user';
 import { gql } from '@apollo/client';
 
-export interface IAddStaffPayload {
+export interface IAddStaffWithUserAccountPayload {
   name: string;
   nid: string;
   phone: string;
@@ -20,7 +20,7 @@ export interface IAddStaffResponse {
   insert_staffs_one: { id: string };
 }
 
-export const ADD_STAFF = gql`
+export const ADD_STAFF_WITH_USER_ACCOUNT = gql`
   mutation Staff(
     $name: String!
     $nid: String!
@@ -55,6 +55,42 @@ export const ADD_STAFF = gql`
             password: $password
           }
         }
+      }
+    ) {
+      id
+    }
+  }
+`;
+
+export type TAddStaffWithOutUserAccountPayload = Omit<
+  IAddStaffWithUserAccountPayload,
+  'userId' | 'password'
+>;
+
+export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
+  mutation Staff(
+    $name: String!
+    $nid: String!
+    $phone: String!
+    $dob: date!
+    $bloodGroup: String!
+    $salary: Int!
+    $designation: String!
+    $address: String!
+    $education: json!
+  ) {
+    insert_staffs_one(
+      object: {
+        name: $name
+        nid: $nid
+        phone: $phone
+        dob: $dob
+        bloodGroup: $bloodGroup
+        salary: $salary
+        designation: $designation
+        address: $address
+        education: $education
+        role: $role
       }
     ) {
       id
