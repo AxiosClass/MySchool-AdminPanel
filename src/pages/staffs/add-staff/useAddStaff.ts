@@ -17,7 +17,7 @@ const addTeacherFormSchema = z.object({
     result: z.string().min(1, { message: 'Result is required' }),
   }),
   role: z.string().min(1, { message: 'Role is required' }),
-  userId: z.string().min(1, { message: 'userId is required' }),
+  userId: z.string(),
 });
 
 const defaultValues = {
@@ -41,6 +41,8 @@ export const useAddStaff = () => {
   });
 
   const handleAddStaff = form.handleSubmit(async (formData) => {
+    if (formData.role !== 'other' && !formData.userId)
+      return form.setError('userId', { message: 'Staff id is required' });
     console.log(formData);
   });
 

@@ -7,11 +7,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import { Input } from '@/components/ui/input';
-import { InputHTMLAttributes } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { TextareaHTMLAttributes } from 'react';
 import { Control } from 'react-hook-form';
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
   description?: string;
@@ -19,7 +19,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export function TextInput({
+export function ControlledTextAea({
   control,
   name,
   label,
@@ -34,7 +34,7 @@ export function TextInput({
         <FormItem className='w-full'>
           <FormLabel className='font-semibold'>{label}</FormLabel>
           <FormControl>
-            <Input {...field} {...props} />
+            <Textarea {...field} {...props} />
           </FormControl>
           {/* show error message */}
           <FormMessage />

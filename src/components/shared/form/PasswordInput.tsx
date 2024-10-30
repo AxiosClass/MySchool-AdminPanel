@@ -14,7 +14,7 @@ interface IProps {
   description?: string;
 }
 
-export const PasswordInput = ({ form, name, label, description }: IProps) => {
+export function PasswordInput({ form, name, label, description }: IProps) {
   const [isShown, setIsShown] = useState(false);
 
   const onToggle = () => {
@@ -58,4 +58,4 @@ export const PasswordInput = ({ form, name, label, description }: IProps) => {
       )}
     />
   );
-};
+}

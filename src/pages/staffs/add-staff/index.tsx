@@ -3,7 +3,6 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -12,10 +11,11 @@ import {
 import { DatePicker, TextInput, ControlledSelect } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { BLOOD_GROUP } from '@/data/constants';
+import { EUserRole } from '@/lib/types/user';
 import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
-import { EUserRole } from '@/lib/types/user';
+import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
 
 export function AddStaff() {
   const { form, handleAddStaff } = useAddStaff();
@@ -38,10 +38,10 @@ export function AddStaff() {
         <Form {...form}>
           <form
             style={{ height: `calc(100dvh - 120px)` }}
-            className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto px-6'
+            className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto'
             onSubmit={handleAddStaff}
           >
-            <div className='h-full'>
+            <div className='h-full overflow-y-auto px-6'>
               <div className='grid grid-cols-2 gap-4'>
                 <TextInput
                   control={form.control}
@@ -79,6 +79,14 @@ export function AddStaff() {
                   placeholder='Select blood group'
                   options={BLOOD_GROUP}
                 />
+                <div className='col-span-2'>
+                  <ControlledTextAea
+                    control={form.control}
+                    label='Address'
+                    name='address'
+                    placeholder='@ : Dhaka'
+                  />
+                </div>
                 <TextInput
                   control={form.control}
                   label='Salary'
@@ -109,7 +117,7 @@ export function AddStaff() {
                   label='Result'
                   name='education.result'
                   type='number'
-                  placeholder='@: Science'
+                  placeholder='@: 5.00'
                 />
                 <ControlledSelect
                   control={form.control}
@@ -121,12 +129,12 @@ export function AddStaff() {
               </div>
             </div>
 
-            <SheetFooter className='flex items-center justify-end'>
+            <div className='flex items-center justify-end px-6'>
               <SheetClose asChild>
                 <Button variant={'outline'}>Cancel</Button>
               </SheetClose>
               <Button>Add Staff</Button>
-            </SheetFooter>
+            </div>
           </form>
         </Form>
       </SheetContent>
