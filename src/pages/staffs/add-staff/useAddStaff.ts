@@ -24,7 +24,7 @@ const defaultValues = {
   name: '',
   nid: '',
   phone: '',
-  dob: undefined,
+  dob: new Date(),
   bloodGroup: '',
   salary: '',
   designation: '',

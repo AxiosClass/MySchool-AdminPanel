@@ -38,7 +38,6 @@ export function TextInput({
           </FormControl>
           {/* show error message */}
           <FormMessage />
-
           {/* if any description is provided */}
           {description && <FormDescription>{description}</FormDescription>}
         </FormItem>

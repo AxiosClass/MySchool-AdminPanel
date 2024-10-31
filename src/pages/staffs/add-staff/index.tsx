@@ -16,6 +16,7 @@ import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
 import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export function AddStaff() {
   const { form, handleAddStaff } = useAddStaff();
@@ -37,12 +38,12 @@ export function AddStaff() {
         </SheetHeader>
         <Form {...form}>
           <form
-            style={{ height: `calc(100dvh - 120px)` }}
+            style={{ height: `calc(100dvh - 100px)` }}
             className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto'
             onSubmit={handleAddStaff}
           >
-            <div className='h-full overflow-y-auto px-6'>
-              <div className='grid grid-cols-2 gap-4'>
+            <ScrollArea className='h-full px-6'>
+              <div className='grid grid-cols-2 gap-4 p-1'>
                 <TextInput
                   control={form.control}
                   label='Name'
@@ -51,7 +52,7 @@ export function AddStaff() {
                 />
                 <TextInput
                   control={form.control}
-                  label='StaffId'
+                  label='Staff Id'
                   name='userId'
                   placeholder='@: John'
                 />
@@ -69,7 +70,7 @@ export function AddStaff() {
                 />
                 <DatePicker
                   control={form.control}
-                  label='Date of birth'
+                  label='Date of Birth'
                   name='dob'
                 />
                 <ControlledSelect
@@ -127,9 +128,8 @@ export function AddStaff() {
                   options={Object.values(EUserRole)}
                 />
               </div>
-            </div>
-
-            <div className='flex items-center justify-end px-6'>
+            </ScrollArea>
+            <div className='flex items-center justify-end gap-4 px-6'>
               <SheetClose asChild>
                 <Button variant={'outline'}>Cancel</Button>
               </SheetClose>
