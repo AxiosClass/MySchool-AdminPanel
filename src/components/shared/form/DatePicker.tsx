@@ -68,7 +68,7 @@ export function DatePicker({ label, name, control }: IProps) {
                 <PopoverContent className='bg-background p-0' align='start'>
                   <ScrollArea className='h-52 p-4'>
                     <ScrollBar />
-                    <div className='grid grid-cols-3 gap-2'>
+                    <div className='grid grid-cols-4 gap-2'>
                       {[...Array(80)].map((_, index) => (
                         <div
                           onClick={() => {
