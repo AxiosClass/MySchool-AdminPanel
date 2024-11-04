@@ -8,13 +8,13 @@ import {
 } from '@/lib/queries';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { clientFetch, tryCatch } from '@/helpers';
 import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { EUserRole } from '@/lib/types';
-import { clientFetch, tryCatch } from '@/helpers';
+import { apiUrl } from '@/data';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { apiUrl } from '@/data/api-url';
 
 const addTeacherFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),

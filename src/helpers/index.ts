@@ -1,3 +1,3 @@
-export * from './token-helper';
+export * from './tokenHelper';
 export * from './fetchHelper';
-export * from './try-catch';
+export * from './tryCatch';

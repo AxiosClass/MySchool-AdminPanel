@@ -12,11 +12,11 @@ import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
 import { DatePicker, TextInput, ControlledSelect } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { BLOOD_GROUP } from '@/data/constants';
 import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
 import { EUserRole } from '@/lib/types';
+import { BLOOD_GROUP } from '@/data';
 
 export function AddStaff() {
   const { form, handleAddStaff, isLoading } = useAddStaff();
