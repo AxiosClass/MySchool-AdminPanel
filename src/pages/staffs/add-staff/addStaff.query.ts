@@ -5,7 +5,7 @@ export interface IAddStaffWithUserAccountPayload {
   name: string;
   nid: string;
   phone: string;
-  dob: string;
+  dob: Date;
   bloodGroup: string;
   salary: number;
   designation: string;
@@ -64,7 +64,7 @@ export const ADD_STAFF_WITH_USER_ACCOUNT = gql`
 
 export type TAddStaffWithOutUserAccountPayload = Omit<
   IAddStaffWithUserAccountPayload,
-  'userId' | 'password'
+  'userId' | 'password' | 'role'
 >;
 
 export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
@@ -90,7 +90,7 @@ export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
         designation: $designation
         address: $address
         education: $education
-        role: $role
+        role: other
       }
     ) {
       id

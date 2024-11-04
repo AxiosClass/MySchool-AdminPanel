@@ -11,6 +11,7 @@ interface IArgs {
 export const tryCatch = async ({ id, tryFn, catchFn, finallyFn }: IArgs) => {
   return Promise.resolve(tryFn())
     .catch((error: any) => {
+      console.log(error);
       if (catchFn) return catchFn(error);
       const message =
         error.data?.message || error.message || 'Something went wrong';

@@ -19,7 +19,7 @@ import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export function AddStaff() {
-  const { form, handleAddStaff } = useAddStaff();
+  const { form, handleAddStaff, isLoading } = useAddStaff();
 
   return (
     <Sheet>
@@ -133,7 +133,9 @@ export function AddStaff() {
               <SheetClose asChild>
                 <Button variant={'outline'}>Cancel</Button>
               </SheetClose>
-              <Button>Add Staff</Button>
+              <Button disabled={isLoading}>
+                {isLoading ? 'Adding Staff' : 'Add Staff'}
+              </Button>
             </div>
           </form>
         </Form>

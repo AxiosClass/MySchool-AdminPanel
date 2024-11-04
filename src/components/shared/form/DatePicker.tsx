@@ -67,7 +67,6 @@ export function DatePicker({ label, name, control }: IProps) {
                 </PopoverTrigger>
                 <PopoverContent className='bg-background p-0' align='start'>
                   <ScrollArea className='h-52 p-4'>
-                    <ScrollBar />
                     <div className='grid grid-cols-4 gap-2'>
                       {[...Array(80)].map((_, index) => (
                         <div
@@ -154,7 +153,7 @@ export function DatePicker({ label, name, control }: IProps) {
                             const date = new Date(field.value);
                             date.setDate(index + 1);
                             field.onChange(date);
-                            setIsMonthShown(false);
+                            setIsDayShown(false);
                           }}
                           className={cn(
                             'flex cursor-pointer justify-center rounded-md border p-1',
