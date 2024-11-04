@@ -26,18 +26,19 @@ export default function LoginPage() {
               Input Your Credentials to Login
             </h3>
             <TextInput
-              form={form}
+              control={form.control}
               label='UserId'
               name='userId'
               placeholder='@ john-doe'
             />
 
             <PasswordInput
-              form={form}
+              control={form.control}
               label='Password'
               name='password'
               placeholder='****'
             />
+
             <Button className='mt-4 w-full' disabled={isLoading}>
               Login
             </Button>

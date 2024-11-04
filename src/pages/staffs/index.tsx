@@ -7,7 +7,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { GET_STAFFS, IGetStaffsResponse } from './staff.query';
+import { GET_STAFFS, IGetStaffsResponse } from '@/lib/queries';
 import { UserIcon } from '@/components/shared/UserIcon';
 import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared';
