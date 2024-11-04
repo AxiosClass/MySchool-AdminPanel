@@ -1,9 +1,7 @@
-import * as customForm from '@/components/ui/form';
-
-import { Logo, PageTitle, TextInput } from '@/components/shared';
-import { useLogin } from './use-login';
-import { PasswordInput } from '@/components/shared/form/password-input';
+import { Logo, PageTitle, TextInput, PasswordInput } from '@/components/shared';
 import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import { useLogin } from './useLogin';
 
 export default function LoginPage() {
   const { form, handleLogin, isLoading } = useLogin();
@@ -18,7 +16,7 @@ export default function LoginPage() {
           alt=''
         />
 
-        <customForm.Form {...form}>
+        <Form {...form}>
           <form
             className='flex w-full max-w-[350px] flex-col items-center gap-3 rounded-md border p-6 px-6'
             onSubmit={handleLogin}
@@ -44,7 +42,7 @@ export default function LoginPage() {
               Login
             </Button>
           </form>
-        </customForm.Form>
+        </Form>
 
         <img
           className='absolute -bottom-20 left-1/2 translate-x-[-50%] md:-bottom-36'

@@ -1,4 +1,4 @@
-import { ETokenKeys } from '@/lib/types';
+import { ETokenKeys } from '@/lib/keys';
 
 export const setAccessTokenToLocal = (accessToken: string) => {
   localStorage.setItem(ETokenKeys.ACCESS_TOKEN, accessToken);

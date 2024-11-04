@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from './sidebar';
-import { TopBar } from './top-bar';
+import { Sidebar } from './Sidebar';
+import { TopBar } from './TopBar';
 
 export const MainLayout = () => {
   return (
@@ -8,7 +8,7 @@ export const MainLayout = () => {
       <Sidebar />
       <section className='grid h-screen grid-rows-[auto_1fr]'>
         <TopBar />
-        <main className='customized_scrollbar h-full overflow-y-auto rounded-t-xl bg-green-50 px-5 pb-6'>
+        <main className='customized_scrollbar h-full overflow-y-auto rounded-t-xl px-5 py-6 pb-6'>
           <Outlet />
         </main>
       </section>

@@ -1,14 +1,9 @@
-import {
-  setRefreshTokenToLocal,
-  setAccessTokenToLocal,
-  fetchHelper,
-  tryCatch,
-} from '@/helpers';
+import { ILoginPayload, ILoginResponse, LOGIN } from './login.query';
+import { setAccessTokenToLocal, tryCatch } from '@/helpers';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { ERequestMethod } from '@/lib/types';
+import { apolloClient } from '@/apollo-client';
 import { useForm } from 'react-hook-form';
-import { apiUrl } from '@/data/api-url';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -36,25 +31,20 @@ export const useLogin = () => {
       id,
       tryFn: async () => {
         setIsLoading(true);
-        const response = await fetchHelper({
-          url: apiUrl.login,
-          method: ERequestMethod.POST,
-          body: formData,
+        const { userId, password } = formData;
+        const response = await apolloClient.mutate<
+          ILoginResponse,
+          ILoginPayload
+        >({
+          mutation: LOGIN,
+          variables: { userId, password },
         });
 
-        console.log(response);
-
-        if (!response?.ok) throw Error(response?.message);
-        toast.success(response?.message, { id });
-
-        const accessToken = response?.data?.accessToken;
-        const refreshToken = response?.data?.refreshToken;
-        setAccessTokenToLocal(accessToken);
-        setRefreshTokenToLocal(refreshToken);
-
+        const accessToken = response?.data?.login_action.accessToken;
+        setAccessTokenToLocal(accessToken!);
+        toast.success('Login was successful', { id });
         navigation('/');
       },
-
       finallyFn: () => {
         setIsLoading(false);
       },
