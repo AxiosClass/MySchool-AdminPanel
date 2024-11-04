@@ -1,5 +1,6 @@
-export const serverAddress = 'http://localhost:5000/api/v1';
+export const backendServerAddress =
+  'https://my-school-server-cyan.vercel.app/api/v1';
 
 export const apiUrl = {
-  login: `${serverAddress}/auth/login`,
+  hashPassword: `${backendServerAddress}/utility/hash-password`,
 };

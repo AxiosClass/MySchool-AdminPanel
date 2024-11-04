@@ -11,9 +11,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { EUserRole } from '@/lib/types';
-import { tryCatch } from '@/helpers';
+import { clientFetch, tryCatch } from '@/helpers';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { apiUrl } from '@/data/api-url';
 
 const addTeacherFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
@@ -113,8 +114,14 @@ export const useAddStaff = () => {
         }
 
         // when role is not other
-        const password = nid;
-        // to do hash the password => hashing with bcrypt does not support in browser , make an api to hash it
+        // sending api request to the server
+        const hashResponse = await clientFetch({
+          url: apiUrl.hashPassword,
+          method: 'POST',
+          body: { password: nid },
+        });
+        const password = hashResponse.password;
+
         const response = await addStaffWithAccount({
           variables: {
             name,
