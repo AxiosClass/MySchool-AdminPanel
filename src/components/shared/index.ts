@@ -1,3 +1,3 @@
 export * from './PageTitle';
-export * from './Logo';
+export * from './AppLogo';
 export * from './form';
