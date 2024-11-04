@@ -39,13 +39,13 @@ export function CreateClass() {
         <Form {...form}>
           <form className='flex flex-col gap-4' onSubmit={handleCreateClass}>
             <TextInput
-              form={form}
+              control={form.control}
               label='Name'
               name='name'
               placeholder='Class Name'
             />
             <TextInput
-              form={form}
+              control={form.control}
               label='Level'
               name='level'
               placeholder='Level'

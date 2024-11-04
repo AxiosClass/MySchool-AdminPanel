@@ -1,4 +1,9 @@
-import { Logo, PageTitle, TextInput, PasswordInput } from '@/components/shared';
+import {
+  AppLogo,
+  PageTitle,
+  TextInput,
+  PasswordInput,
+} from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useLogin } from './useLogin';
@@ -21,7 +26,7 @@ export default function LoginPage() {
             className='flex w-full max-w-[350px] flex-col items-center gap-3 rounded-md border p-6 px-6'
             onSubmit={handleLogin}
           >
-            <Logo />
+            <AppLogo />
             <h3 className='text-center text-muted-foreground'>
               Input Your Credentials to Login
             </h3>
