@@ -1,3 +1,3 @@
-export * from './page-title';
-export * from './logo';
+export * from './PageTitle';
+export * from './Logo';
 export * from './form';

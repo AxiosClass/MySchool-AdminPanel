@@ -8,15 +8,15 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
+import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
 import { DatePicker, TextInput, ControlledSelect } from '@/components/shared';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { BLOOD_GROUP } from '@/data/constants';
-import { EUserRole } from '@/lib/types/user';
 import { Form } from '@/components/ui/form';
 import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
-import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { EUserRole } from '@/lib/types';
 
 export function AddStaff() {
   const { form, handleAddStaff, isLoading } = useAddStaff();

@@ -1,24 +1,26 @@
-import { EUserRole } from '@/lib/types/user';
+import { IStaff } from '@/lib/types';
 import { gql } from '@apollo/client';
 
-export interface IAddStaffWithUserAccountPayload {
-  name: string;
-  nid: string;
-  phone: string;
-  dob: Date;
-  bloodGroup: string;
-  salary: number;
-  designation: string;
-  address: string;
-  education: string;
-  role: EUserRole;
-  userId: string;
-  password: string;
-}
+// type
 
 export interface IAddStaffResponse {
   insert_staffs_one: { id: string };
 }
+
+export type TAddStaffWithUserAccount = Pick<
+  IStaff,
+  | 'name'
+  | 'nid'
+  | 'phone'
+  | 'dob'
+  | 'bloodGroup'
+  | 'salary'
+  | 'designation'
+  | 'address'
+  | 'education'
+  | 'role'
+  | 'userId'
+> & { password: string };
 
 export const ADD_STAFF_WITH_USER_ACCOUNT = gql`
   mutation Staff(
@@ -62,8 +64,8 @@ export const ADD_STAFF_WITH_USER_ACCOUNT = gql`
   }
 `;
 
-export type TAddStaffWithOutUserAccountPayload = Omit<
-  IAddStaffWithUserAccountPayload,
+export type TAddStaffWithOutUserAccount = Omit<
+  TAddStaffWithUserAccount,
   'userId' | 'password' | 'role'
 >;
 
@@ -94,6 +96,37 @@ export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
       }
     ) {
       id
+    }
+  }
+`;
+
+export interface IGetStaffsResponse {
+  staffs: Pick<
+    IStaff,
+    | 'id'
+    | 'name'
+    | 'designation'
+    | 'bloodGroup'
+    | 'phone'
+    | 'salary'
+    | 'address'
+    | 'role'
+    | 'joinedAt'
+  >[];
+}
+
+export const GET_STAFFS = gql`
+  query GetStaff {
+    staffs(order_by: { joinedAt: desc }) {
+      id
+      name
+      designation
+      bloodGroup
+      phone
+      salary
+      address
+      role
+      joinedAt
     }
   }
 `;
