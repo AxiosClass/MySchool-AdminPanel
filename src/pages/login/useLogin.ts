@@ -1,4 +1,4 @@
-import { ILoginPayload, ILoginResponse, LOGIN } from './login.query';
+import { ILoginPayload, ILoginResponse, LOGIN } from '@/lib/queries';
 import { setAccessTokenToLocal, tryCatch } from '@/helpers';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
