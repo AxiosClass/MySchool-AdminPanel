@@ -2,7 +2,7 @@ import {
   CREATE_CLASS,
   ICreateClassArgs,
   ICreateClassResponse,
-} from './createClass.query';
+} from '@/lib/queries';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@apollo/client';

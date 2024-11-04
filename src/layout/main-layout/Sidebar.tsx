@@ -4,7 +4,7 @@ import { IoMdSettings } from 'react-icons/io';
 import { Logo } from '@/components/shared';
 import { FaUser } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
-import { links } from './links';
+import { links } from './Links';
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
