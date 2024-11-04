@@ -1,15 +1,16 @@
 import {
-  TAddStaffWithOutUserAccountPayload,
-  IAddStaffWithUserAccountPayload,
-  ADD_STAFF_WITHOUT_USER_ACCOUNT,
   ADD_STAFF_WITH_USER_ACCOUNT,
+  ADD_STAFF_WITHOUT_USER_ACCOUNT,
+  GET_STAFFS,
   IAddStaffResponse,
-} from './addStaff.query';
+  TAddStaffWithOutUserAccount,
+  TAddStaffWithUserAccount,
+} from '@/lib/queries';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EUserRole } from '@/lib/types/user';
 import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
+import { EUserRole } from '@/lib/types';
 import { tryCatch } from '@/helpers';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -53,13 +54,15 @@ export const useAddStaff = () => {
   });
 
   const [addStaffWithoutAccount, { loading: isAddStaffWithoutAccountLoading }] =
-    useMutation<IAddStaffResponse, TAddStaffWithOutUserAccountPayload>(
+    useMutation<IAddStaffResponse, TAddStaffWithOutUserAccount>(
       ADD_STAFF_WITHOUT_USER_ACCOUNT,
+      { refetchQueries: [GET_STAFFS] },
     );
 
   const [addStaffWithAccount, { loading: isAddStaffWithAccountLoading }] =
-    useMutation<IAddStaffResponse, IAddStaffWithUserAccountPayload>(
+    useMutation<IAddStaffResponse, TAddStaffWithUserAccount>(
       ADD_STAFF_WITH_USER_ACCOUNT,
+      { refetchQueries: [GET_STAFFS] },
     );
 
   const handleAddStaff = form.handleSubmit(async (formData) => {
