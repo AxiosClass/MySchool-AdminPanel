@@ -1,7 +1,8 @@
 import {
   CREATE_CLASS,
-  ICreateClassArgs,
+  GET_CLASSES,
   ICreateClassResponse,
+  TCreateClassPayload,
 } from '@/lib/queries';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,8 +28,8 @@ export const useCreateClass = () => {
 
   const [createClass, { loading }] = useMutation<
     ICreateClassResponse,
-    ICreateClassArgs
-  >(CREATE_CLASS);
+    TCreateClassPayload
+  >(CREATE_CLASS, { refetchQueries: [GET_CLASSES] });
 
   const handleCreateClass = form.handleSubmit(async (formData) => {
     const id = toast.loading('Class creating ...!');
