@@ -1,9 +1,5 @@
-import {
-  AppLogo,
-  PageTitle,
-  TextInput,
-  PasswordInput,
-} from '@/components/shared';
+import { PasswordInput, TextInput } from '@/components/shared/form';
+import { AppLogo, PageTitle } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useLogin } from './useLogin';

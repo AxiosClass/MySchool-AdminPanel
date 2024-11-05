@@ -7,9 +7,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
+import { TextInput } from '@/components/shared/form';
 import { useCreateClass } from './useCreateClass';
 import { Button } from '@/components/ui/button';
-import { TextInput } from '@/components/shared';
 import { Form } from '@/components/ui/form';
 import { FaPlus } from 'react-icons/fa6';
 

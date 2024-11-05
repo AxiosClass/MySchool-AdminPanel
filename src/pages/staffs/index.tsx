@@ -7,10 +7,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+import { UserIcon, Message, PageTitle } from '@/components/shared';
 import { GET_STAFFS, IGetStaffsResponse } from '@/lib/queries';
-import { UserIcon } from '@/components/shared/UserIcon';
-import { Message } from '@/components/shared/Message';
-import { PageTitle } from '@/components/shared';
 import { useQuery } from '@apollo/client';
 import { AddStaff } from './add-staff';
 import { format } from 'date-fns';
