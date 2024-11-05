@@ -1,19 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { IoMdSettings } from 'react-icons/io';
+import { sidebarLinks } from './sidebarLinks';
 import { AppLogo } from '@/components/shared';
 import { FaUser } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
-import { links } from './Links';
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
 
   return (
-    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-input p-6 shadow md:flex'>
+    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-50 p-6 shadow md:flex'>
       <AppLogo />
       <div className='mt-8 flex flex-col gap-2'>
-        {links.map(({ url, icon, title }) => (
+        {sidebarLinks.map(({ url, icon, title }) => (
           <Link
             key={url}
             to={url}

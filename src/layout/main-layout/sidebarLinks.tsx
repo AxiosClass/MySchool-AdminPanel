@@ -12,7 +12,7 @@ interface ILink {
   icon: ReactNode;
 }
 
-export const links: ILink[] = [
+export const sidebarLinks: ILink[] = [
   { title: 'Dashboard', url: '/', icon: <FaHome /> },
   { title: 'Classes', url: '/classes', icon: <FaBook /> },
   { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },

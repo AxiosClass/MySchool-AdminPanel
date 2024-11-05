@@ -28,12 +28,11 @@ export default function StaffsPage() {
         <AddStaff />
       </section>
       {staffData && staffData.staffs.length > 0 ? (
-        <section className='mt-6 w-full overflow-hidden rounded-md border'>
+        <section className='mt-6 w-full overflow-hidden rounded-md border-4 border-primary-50'>
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className='border-none'>
                 <TableHead>Staff Info</TableHead>
-                {/* to do => in staff info we will display => name,  designation, blood group and phone */}
                 <TableHead>Salary</TableHead>
                 <TableHead>Address</TableHead>
                 <TableHead>Role</TableHead>
@@ -42,7 +41,10 @@ export default function StaffsPage() {
             </TableHeader>
             <TableBody>
               {staffData.staffs.map((staff) => (
-                <TableRow className='border-b' key={staff.id}>
+                <TableRow
+                  className='border-b-4 border-primary-50'
+                  key={staff.id}
+                >
                   <TableCell>
                     <div className='flex gap-2'>
                       <UserIcon username={staff.name} />
