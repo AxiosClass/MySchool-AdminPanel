@@ -125,7 +125,10 @@ export function AddStaff() {
                   label='Role'
                   name='role'
                   placeholder='Select any role'
-                  options={Object.values(EUserRole)}
+                  // filtering out student role
+                  options={Object.values(EUserRole).filter(
+                    (role) => role !== EUserRole.STUDENT,
+                  )}
                 />
               </div>
             </ScrollArea>
