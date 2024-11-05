@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { IClass } from '../types/class';
+import { IClass } from '../types';
 
 export type TCreateClassPayload = Pick<IClass, 'name' | 'level'>;
 

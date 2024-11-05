@@ -130,3 +130,16 @@ export const GET_STAFFS = gql`
     }
   }
 `;
+
+export interface IGetTEacherFormCreateClassroomResponse {
+  staffs: Pick<IStaff, 'id' | 'name'>[];
+}
+
+export const GET_TEACHERS_FOR_CREATE_CLASSROOM = gql`
+  query GetTeachersForCreateClassroom {
+    staffs(where: { role: { _eq: teacher } }) {
+      id
+      name
+    }
+  }
+`;

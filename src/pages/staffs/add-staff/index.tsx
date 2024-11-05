@@ -22,9 +22,31 @@ import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
 import { EUserRole } from '@/lib/types';
 import { BLOOD_GROUP } from '@/data';
+import { useMemo } from 'react';
 
 export function AddStaff() {
   const { form, handleAddStaff, isLoading } = useAddStaff();
+
+  const bloodGroups = useMemo(() => {
+    return BLOOD_GROUP.map((each) => ({ label: each, value: each }));
+  }, []);
+
+  const staffRoles = useMemo(() => {
+    return Object.values(EUserRole).reduce(
+      (roles: { label: string; value: string }[], eachRole) => {
+        // filtering out student role
+        if (eachRole !== EUserRole.STUDENT)
+          roles.push({
+            //  in label making role capitalize
+            label: eachRole.charAt(0).toUpperCase() + eachRole.slice(1),
+            value: eachRole,
+          });
+
+        return roles;
+      },
+      [],
+    );
+  }, []);
 
   return (
     <Sheet>
@@ -83,7 +105,7 @@ export function AddStaff() {
                   name='bloodGroup'
                   label='Blood Group'
                   placeholder='Select blood group'
-                  options={BLOOD_GROUP}
+                  options={bloodGroups}
                 />
                 <div className='col-span-2'>
                   <ControlledTextAea
@@ -130,10 +152,7 @@ export function AddStaff() {
                   label='Role'
                   name='role'
                   placeholder='Select any role'
-                  // filtering out student role
-                  options={Object.values(EUserRole).filter(
-                    (role) => role !== EUserRole.STUDENT,
-                  )}
+                  options={staffRoles}
                 />
               </div>
             </ScrollArea>

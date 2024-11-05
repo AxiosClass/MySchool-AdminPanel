@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-'use client';
-
 import {
   FormControl,
   FormField,
@@ -19,13 +17,15 @@ import {
 } from '@/components/ui/select';
 
 import { Control } from 'react-hook-form';
+import { Message } from '../Message';
 
 interface IProps {
   control: Control<any>;
   name: string;
   label: string;
-  options: string[];
+  options: { label: string; value: string }[];
   placeholder: string;
+  disabled?: boolean;
 }
 
 export function ControlledSelect({
@@ -34,6 +34,7 @@ export function ControlledSelect({
   label,
   options,
   placeholder,
+  disabled,
 }: IProps) {
   return (
     <FormField
@@ -42,18 +43,28 @@ export function ControlledSelect({
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <Select value={field.value} onValueChange={field.onChange}>
+          <Select
+            disabled={disabled}
+            value={field.value}
+            onValueChange={field.onChange}
+          >
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options.map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
+              {options && options.length > 0 ? (
+                <>
+                  {options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </>
+              ) : (
+                <Message className='my-2' message='No data found' />
+              )}
             </SelectContent>
           </Select>
           <FormMessage />

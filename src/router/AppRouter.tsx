@@ -6,6 +6,7 @@ const ClassesPage = lazy(() => import('@/pages/classes'));
 const StaffsPage = lazy(() => import('@/pages/staffs'));
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
+const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/classes', element: <ClassesPage /> },
       { path: '/staffs', element: <StaffsPage /> },
+      { path: '/class/:classId', element: <ClassDetailsPage /> },
     ],
   },
   {
