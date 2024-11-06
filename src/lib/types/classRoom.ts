@@ -3,4 +3,5 @@ export interface IClassRoom {
   name: string;
   teacherId: string;
   classId: string;
+  createdAt: Date;
 }
