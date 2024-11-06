@@ -1,2 +1,4 @@
-export * from './logo';
-export * from './page-title';
+export * from './AppLogo';
+export * from './Message';
+export * from './PageTitle';
+export * from './UserIcon';
