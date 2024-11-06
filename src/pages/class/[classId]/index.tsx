@@ -39,17 +39,15 @@ export default function ClassDetailsPage() {
           </div>
         </div>
 
-        <section className='mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-          {classRoomsData?.classrooms && classRoomsData.classrooms.length ? (
-            <>
-              {classRoomsData.classrooms.map((classroom) => (
-                <ClassroomCard key={classroom.id} {...classroom} />
-              ))}
-            </>
-          ) : (
-            <Message message='No classroom found' />
-          )}
-        </section>
+        {classRoomsData?.classrooms && classRoomsData.classrooms.length ? (
+          <section className='mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+            {classRoomsData.classrooms.map((classroom) => (
+              <ClassroomCard key={classroom.id} {...classroom} />
+            ))}
+          </section>
+        ) : (
+          <Message message='No classroom found' />
+        )}
       </main>
     </PageTitle>
   );
