@@ -7,13 +7,13 @@ export interface ILoginResponse {
 }
 
 export interface ILoginPayload {
-  userId: string;
+  id: string;
   password: string;
 }
 
 export const LOGIN = gql`
-  mutation Login($userId: String!, $password: String!) {
-    login_action(userId: $userId, password: $password) {
+  mutation Login($id: String!, $password: String!) {
+    login_action(id: $id, password: $password) {
       accessToken
     }
   }
