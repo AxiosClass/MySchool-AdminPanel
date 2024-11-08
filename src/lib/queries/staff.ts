@@ -2,13 +2,9 @@ import { IStaff } from '@/lib/types';
 import { gql } from '@apollo/client';
 
 // type
-
-export interface IAddStaffResponse {
-  insert_staffs_one: { id: string };
-}
-
 export type TAddStaffWithUserAccount = Pick<
   IStaff,
+  | 'id'
   | 'name'
   | 'nid'
   | 'phone'
@@ -19,26 +15,31 @@ export type TAddStaffWithUserAccount = Pick<
   | 'address'
   | 'education'
   | 'role'
-  | 'userId'
 > & { password: string };
 
+export interface IAddStaffResponse {
+  insert_staffs_one: { id: string };
+  insert_users_one?: { id: string };
+}
+
 export const ADD_STAFF_WITH_USER_ACCOUNT = gql`
-  mutation Staff(
+  mutation CreateStaffWithUserAccount(
+    $id: String!
     $name: String!
     $nid: String!
     $phone: String!
     $dob: date!
     $bloodGroup: String!
     $salary: Int!
-    $designation: String!
-    $address: String!
+    $designation: String
+    $address: String
     $education: json!
-    $role: user_roles_enum!
-    $userId: String!
     $password: String!
+    $role: user_roles_enum!
   ) {
     insert_staffs_one(
       object: {
+        id: $id
         name: $name
         nid: $nid
         phone: $phone
@@ -49,28 +50,35 @@ export const ADD_STAFF_WITH_USER_ACCOUNT = gql`
         address: $address
         education: $education
         role: $role
-        userInfo: {
-          data: {
-            name: $name
-            role: $role
-            userId: $userId
-            password: $password
-          }
-        }
       }
+    ) {
+      id
+    }
+    insert_users_one(
+      object: { id: $id, name: $name, password: $password, role: $role }
     ) {
       id
     }
   }
 `;
 
-export type TAddStaffWithOutUserAccount = Omit<
-  TAddStaffWithUserAccount,
-  'userId' | 'password' | 'role'
+export type TAddStaffWithOutUserAccount = Pick<
+  IStaff,
+  | 'id'
+  | 'name'
+  | 'nid'
+  | 'phone'
+  | 'dob'
+  | 'bloodGroup'
+  | 'salary'
+  | 'designation'
+  | 'address'
+  | 'education'
 >;
 
 export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
   mutation Staff(
+    $id: String!
     $name: String!
     $nid: String!
     $phone: String!
@@ -83,6 +91,7 @@ export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
   ) {
     insert_staffs_one(
       object: {
+        id: $id
         name: $name
         nid: $nid
         phone: $phone

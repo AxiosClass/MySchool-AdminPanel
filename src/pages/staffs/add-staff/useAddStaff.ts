@@ -16,7 +16,7 @@ import { apiUrl } from '@/data';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-const addTeacherFormSchema = z.object({
+const addStaffFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   nid: z.string().min(1, { message: 'Nid is required' }),
   phone: z.string().min(1, { message: 'Phone Number is required' }),
@@ -31,8 +31,10 @@ const addTeacherFormSchema = z.object({
     result: z.string().min(1, { message: 'Result is required' }),
   }),
   role: z.string().min(1, { message: 'Role is required' }),
-  userId: z.string(),
+  staffId: z.string().min(1, { message: 'StaffId is required' }),
 });
+
+type TAddStaffFormSchema = z.infer<typeof addStaffFormSchema>;
 
 const defaultValues = {
   name: '',
@@ -45,12 +47,12 @@ const defaultValues = {
   address: '',
   education: { degreeName: '', group: '', result: '' },
   role: '',
-  userId: '',
+  staffId: '',
 };
 
 export const useAddStaff = () => {
-  const form = useForm<z.infer<typeof addTeacherFormSchema>>({
-    resolver: zodResolver(addTeacherFormSchema),
+  const form = useForm<TAddStaffFormSchema>({
+    resolver: zodResolver(addStaffFormSchema),
     defaultValues,
   });
 
@@ -66,84 +68,98 @@ export const useAddStaff = () => {
       { refetchQueries: [GET_STAFFS] },
     );
 
+  // add staff and crate a user account
+  const addStaffWithUserAccount = async (
+    formData: TAddStaffFormSchema,
+    id: string | number,
+  ) => {
+    const {
+      staffId,
+      name,
+      nid,
+      phone,
+      dob,
+      bloodGroup,
+      salary,
+      designation,
+      address,
+      education,
+      role,
+    } = formData;
+
+    // encrypt password
+    const hashResponse = await clientFetch({
+      url: apiUrl.hashPassword,
+      method: 'POST',
+      body: { password: nid },
+    });
+    const password = hashResponse.password;
+
+    await addStaffWithAccount({
+      variables: {
+        id: staffId,
+        password,
+        name,
+        nid,
+        phone,
+        dob,
+        bloodGroup,
+        salary: Number(salary),
+        designation,
+        address,
+        education: JSON.stringify(education),
+        role: role as EUserRole,
+      },
+    });
+
+    toast.success('Staff Added', { id });
+    form.reset();
+  };
+
+  const addStaffWithoutUserAccount = async (
+    formData: TAddStaffFormSchema,
+    id: string | number,
+  ) => {
+    const {
+      staffId,
+      name,
+      nid,
+      phone,
+      dob,
+      bloodGroup,
+      salary,
+      designation,
+      address,
+      education,
+    } = formData;
+    await addStaffWithoutAccount({
+      variables: {
+        id: staffId,
+        name,
+        nid,
+        phone,
+        dob,
+        bloodGroup,
+        salary: Number(salary),
+        designation,
+        address,
+        education: JSON.stringify(education),
+      },
+    });
+
+    toast.success('Staff created successfully', { id });
+    form.reset();
+  };
+
   const handleAddStaff = form.handleSubmit(async (formData) => {
     const id = toast.loading('Adding staff');
-
-    // simple validation
-    if (formData.role !== 'other' && !formData.userId)
-      return form.setError('userId', { message: 'Staff id is required' });
 
     tryCatch({
       id,
       async tryFn() {
-        const {
-          name,
-          userId,
-          nid,
-          phone,
-          dob,
-          bloodGroup,
-          address,
-          salary,
-          designation,
-          education,
-          role,
-        } = formData;
-        //  checking the role
-        // create new staff with no account
-        if (formData.role === 'other') {
-          const response = await addStaffWithoutAccount({
-            variables: {
-              name,
-              nid,
-              phone,
-              dob,
-              bloodGroup,
-              address,
-              salary: Number(salary),
-              designation,
-              education: JSON.stringify(education),
-            },
-          });
-          if (!response.data?.insert_staffs_one?.id)
-            throw new Error('Failed to add staff');
-
-          toast.success('Staff Added Successfully!', { id });
-          form.reset();
-          return;
-        }
-
-        // when role is not other
-        // sending api request to the server
-        const hashResponse = await clientFetch({
-          url: apiUrl.hashPassword,
-          method: 'POST',
-          body: { password: nid },
-        });
-        const password = hashResponse.password;
-
-        const response = await addStaffWithAccount({
-          variables: {
-            name,
-            nid,
-            phone,
-            dob,
-            bloodGroup,
-            address,
-            salary: Number(salary),
-            designation,
-            education: JSON.stringify(education),
-            role: role as EUserRole,
-            userId,
-            password,
-          },
-        });
-
-        if (!response.data?.insert_staffs_one.id)
-          throw new Error('Failed to add staff');
-
-        toast.success('Staff added successfully', { id });
-        form.reset();
+        if (formData.role !== EUserRole.OTHER)
+          await addStaffWithUserAccount(formData, id);
+        else await addStaffWithoutUserAccount(formData, id);
       },
     });
   });

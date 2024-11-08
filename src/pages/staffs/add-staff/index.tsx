@@ -80,7 +80,7 @@ export function AddStaff() {
                 <TextInput
                   control={form.control}
                   label='Staff Id'
-                  name='userId'
+                  name='staffId'
                   placeholder='@: John'
                 />
                 <TextInput

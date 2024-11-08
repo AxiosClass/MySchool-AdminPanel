@@ -2,7 +2,6 @@ import { EUserRole } from './user';
 
 export interface IStaff {
   id: string;
-  userId: string;
   name: string;
   nid: string;
   phone: string;
