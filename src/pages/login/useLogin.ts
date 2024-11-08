@@ -37,7 +37,7 @@ export const useLogin = () => {
           ILoginPayload
         >({
           mutation: LOGIN,
-          variables: { userId, password },
+          variables: { id: userId, password },
         });
 
         const accessToken = response?.data?.login_action.accessToken;
