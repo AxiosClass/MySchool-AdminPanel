@@ -46,3 +46,19 @@ export const ADD_TEACHER = gql`
     }
   }
 `;
+
+export interface IGetTeachersResponse {
+  teachers: Pick<ITeacher, 'id' | 'name' | 'salary' | 'address' | 'joinedAt'>[];
+}
+
+export const GET_TEACHERS = gql`
+  query GetTeacherS {
+    teachers(order_by: { joinedAt: desc }) {
+      id
+      name
+      salary
+      address
+      joinedAt
+    }
+  }
+`;
