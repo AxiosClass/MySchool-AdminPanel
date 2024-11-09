@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { FaBellConcierge } from 'react-icons/fa6';
+import { FaBellConcierge, FaUserTie } from 'react-icons/fa6';
 import { IoCalendarSharp } from 'react-icons/io5';
 import { RiAccountBoxFill } from 'react-icons/ri';
 import { FaHome, FaBook } from 'react-icons/fa';
@@ -19,4 +19,5 @@ export const sidebarLinks: ILink[] = [
   { title: 'Calender', url: '/calender', icon: <IoCalendarSharp /> },
   { title: 'Account', url: '/account', icon: <RiAccountBoxFill /> },
   { title: 'Staffs', url: '/staffs', icon: <HiUsers /> },
+  { title: 'Teachers', url: '/teachers', icon: <FaUserTie /> },
 ];
