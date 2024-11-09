@@ -13,9 +13,8 @@ export type TAddStaffWithUserAccount = Pick<
   | 'salary'
   | 'designation'
   | 'address'
-  | 'education'
   | 'role'
-> & { password: string };
+> & { education: string; password: string };
 
 export interface IAddStaffResponse {
   insert_staffs_one: { id: string };
@@ -73,8 +72,7 @@ export type TAddStaffWithOutUserAccount = Pick<
   | 'salary'
   | 'designation'
   | 'address'
-  | 'education'
->;
+> & { education: string };
 
 export const ADD_STAFF_WITHOUT_USER_ACCOUNT = gql`
   mutation Staff(
