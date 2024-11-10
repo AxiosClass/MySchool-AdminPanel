@@ -5,7 +5,7 @@ import { IStaff } from '@/lib/types';
 interface IProps {
   id: string;
   name: string;
-  classTeacher: Pick<IStaff, 'name' | 'userId'>;
+  classTeacher: Pick<IStaff, 'name' | 'id'>;
 }
 
 export function ClassroomCard({ name, classTeacher }: IProps) {

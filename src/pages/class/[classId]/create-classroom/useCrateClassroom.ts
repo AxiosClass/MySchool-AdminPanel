@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { useMutation } from '@apollo/client';
 import {
   CREATE_CLASSROOM,
+  GET_CLASS_BY_ID,
   ICreateClassroomResponse,
   TCreateClassroomPayload,
 } from '@/lib/queries';
@@ -31,7 +32,7 @@ export const useCreateClassroom = () => {
   const [createClassroom, { loading }] = useMutation<
     ICreateClassroomResponse,
     TCreateClassroomPayload
-  >(CREATE_CLASSROOM);
+  >(CREATE_CLASSROOM, { refetchQueries: [GET_CLASS_BY_ID] });
 
   const handleCreateClassroom = form.handleSubmit(async (formData) => {
     const id = toast.loading('Creating Classroom...!');
