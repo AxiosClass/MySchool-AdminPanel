@@ -61,7 +61,7 @@ export function DatePicker({ label, name, control }: IProps) {
                   className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
                   asChild
                 >
-                  <Button variant={'outline'} className='w-full'>
+                  <Button variant={'outline'} className='w-full rounded-md'>
                     Year : {field.value?.getFullYear()}
                   </Button>
                 </PopoverTrigger>
@@ -96,7 +96,7 @@ export function DatePicker({ label, name, control }: IProps) {
                   className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
                   asChild
                 >
-                  <Button variant={'outline'} className='w-full'>
+                  <Button variant={'outline'} className='w-full rounded-md'>
                     Month : {months[field.value?.getMonth()]}
                   </Button>
                 </PopoverTrigger>
@@ -132,7 +132,7 @@ export function DatePicker({ label, name, control }: IProps) {
                   className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
                   asChild
                 >
-                  <Button variant={'outline'} className='w-full'>
+                  <Button variant={'outline'} className='w-full rounded-md'>
                     Day : {field.value.getDate()}
                   </Button>
                 </PopoverTrigger>

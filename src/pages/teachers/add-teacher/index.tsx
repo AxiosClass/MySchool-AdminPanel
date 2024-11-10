@@ -1,4 +1,11 @@
 import {
+  ControlledSelect,
+  ControlledTextAea,
+  DatePicker,
+  TextInput,
+} from '@/components/shared/form';
+
+import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -8,66 +15,42 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-import {
-  DatePicker,
-  TextInput,
-  ControlledSelect,
-  ControlledTextAea,
-} from '@/components/shared/form';
-
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useAddTeacher } from './useAddTeacher';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { useAddStaff } from './useAddStaff';
 import { FaPlus } from 'react-icons/fa6';
-import { EUserRole } from '@/lib/types';
 import { BLOOD_GROUP } from '@/data';
 import { useMemo } from 'react';
 
-export function AddStaff() {
-  const { form, handleAddStaff, isLoading } = useAddStaff();
+export function AddTeacher() {
+  const { form, handleAddTeacher, isLoading, isOpen, setIsOpen } =
+    useAddTeacher();
 
   const bloodGroups = useMemo(() => {
     return BLOOD_GROUP.map((each) => ({ label: each, value: each }));
   }, []);
 
-  const staffRoles = useMemo(() => {
-    return Object.values(EUserRole).reduce(
-      (roles: { label: string; value: string }[], eachRole) => {
-        // filtering out student role
-        if (eachRole !== EUserRole.STUDENT)
-          roles.push({
-            //  in label making role capitalize
-            label: eachRole.charAt(0).toUpperCase() + eachRole.slice(1),
-            value: eachRole,
-          });
-
-        return roles;
-      },
-      [],
-    );
-  }, []);
-
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button className='gap-3'>
           <FaPlus />
-          Add Staff
+          Add Teacher
         </Button>
       </SheetTrigger>
       <SheetContent className='p-0'>
         <SheetHeader className='px-6 py-4'>
-          <SheetTitle>Add Staff</SheetTitle>
+          <SheetTitle>Add Teacher</SheetTitle>
           <SheetDescription>
-            Please provide staff&apos; information
+            Please provide teacher&apos; information
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
           <form
             style={{ height: `calc(100dvh - 100px)` }}
             className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto'
-            onSubmit={handleAddStaff}
+            onSubmit={handleAddTeacher}
           >
             <ScrollArea className='h-full px-6'>
               <div className='grid grid-cols-2 gap-4 p-1'>
@@ -79,9 +62,9 @@ export function AddStaff() {
                 />
                 <TextInput
                   control={form.control}
-                  label='Staff Id'
-                  name='staffId'
-                  placeholder='@: John'
+                  label='Teacher Id'
+                  name='teacherId'
+                  placeholder='@: FAH'
                 />
                 <TextInput
                   control={form.control}
@@ -123,13 +106,6 @@ export function AddStaff() {
                 />
                 <TextInput
                   control={form.control}
-                  label='Designation'
-                  name='designation'
-                  placeholder='@: Teacher'
-                />
-                {/* to do => Address */}
-                <TextInput
-                  control={form.control}
                   label='Degree Name'
                   name='education.degreeName'
                   placeholder='@: HSC'
@@ -147,13 +123,6 @@ export function AddStaff() {
                   type='number'
                   placeholder='@: 5.00'
                 />
-                <ControlledSelect
-                  control={form.control}
-                  label='Role'
-                  name='role'
-                  placeholder='Select any role'
-                  options={staffRoles}
-                />
               </div>
             </ScrollArea>
             <div className='flex items-center justify-end gap-4 px-6'>
@@ -161,7 +130,7 @@ export function AddStaff() {
                 <Button variant={'outline'}>Cancel</Button>
               </SheetClose>
               <Button disabled={isLoading}>
-                {isLoading ? 'Adding Staff' : 'Add Staff'}
+                {isLoading ? 'Adding Teacher' : 'Add Teacher'}
               </Button>
             </div>
           </form>

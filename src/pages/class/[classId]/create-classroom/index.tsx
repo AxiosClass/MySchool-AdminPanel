@@ -1,9 +1,4 @@
 import {
-  GET_TEACHERS_FOR_CREATE_CLASSROOM,
-  IGetTEacherFormCreateClassroomResponse,
-} from '@/lib/queries';
-
-import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -15,6 +10,7 @@ import {
 } from '@/components/ui/dialog';
 
 import { ControlledSelect, TextInput } from '@/components/shared/form';
+import { GET_TEACHERS, IGetTeachersResponse } from '@/lib/queries';
 import { useCreateClassroom } from './useCrateClassroom';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -24,13 +20,11 @@ import { useMemo } from 'react';
 
 export function CreateClassroom() {
   const { data: teachersData, loading: isTeachersDataLoading } =
-    useQuery<IGetTEacherFormCreateClassroomResponse>(
-      GET_TEACHERS_FOR_CREATE_CLASSROOM,
-    );
+    useQuery<IGetTeachersResponse>(GET_TEACHERS);
 
   const teachers = useMemo(() => {
     return (
-      teachersData?.staffs.map((teacher) => ({
+      teachersData?.teachers?.map((teacher) => ({
         label: teacher.name,
         value: teacher.id,
       })) || []

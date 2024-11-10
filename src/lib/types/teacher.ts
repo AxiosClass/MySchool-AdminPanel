@@ -1,6 +1,4 @@
-import { EUserRole } from './user';
-
-export interface IStaff {
+export interface ITeacher {
   id: string;
   name: string;
   nid: string;
@@ -8,7 +6,6 @@ export interface IStaff {
   dob: Date;
   bloodGroup: string;
   salary: number;
-  designation: string;
   address: string;
   education: {
     degreeName: string;
@@ -16,5 +13,4 @@ export interface IStaff {
     result: string;
   };
   joinedAt: Date;
-  role: EUserRole;
 }
