@@ -1,4 +1,4 @@
-export interface IClassRoom {
+export interface IClassroom {
   id: string;
   name: string;
   teacherId: string;

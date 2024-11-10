@@ -1,5 +1,5 @@
+import { IClass, IClassroom, ITeacher } from '../types';
 import { gql } from '@apollo/client';
-import { IClass } from '../types';
 
 export type TCreateClassPayload = Pick<IClass, 'name' | 'level'>;
 
@@ -25,6 +25,36 @@ export const GET_CLASSES = gql`
       id
       name
       level
+    }
+  }
+`;
+
+export interface IGetClassByIdArgs {
+  id: string;
+}
+
+export interface IGetClassByIdResponse {
+  classes_by_pk: Pick<IClass, 'id' | 'level' | 'name'> & {
+    classrooms: (Pick<IClassroom, 'id' | 'name'> & {
+      classTeacher: Pick<ITeacher, 'id' | 'name'>;
+    })[];
+  };
+}
+
+export const GET_CLASS_BY_ID = gql`
+  query GetClassById($id: uuid!) {
+    classes_by_pk(id: $id) {
+      id
+      level
+      name
+      classrooms {
+        id
+        name
+        classTeacher {
+          id
+          name
+        }
+      }
     }
   }
 `;
