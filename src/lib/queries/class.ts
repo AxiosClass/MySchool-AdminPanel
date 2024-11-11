@@ -15,7 +15,7 @@ export const CREATE_CLASS = gql`
   }
 `;
 
-export interface IGetClassResponse {
+export interface IGetClassesResponse {
   classes: IClass[];
 }
 

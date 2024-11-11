@@ -21,3 +21,20 @@ export const CREATE_CLASSROOM = gql`
     }
   }
 `;
+
+export interface IGetClassroomByClassLevelArgs {
+  level: string;
+}
+
+export interface IGetClassroomByClassLevelResponse {
+  classrooms: Pick<IClassroom, 'id' | 'name'>[];
+}
+
+export const GET_CLASSROOM_BY_CLASS_LEVEL = gql`
+  query GetClassroomsByClassLevel($level: String!) {
+    classrooms(where: { class: { level: { _eq: $level } } }) {
+      id
+      name
+    }
+  }
+`;
