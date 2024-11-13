@@ -1,16 +1,21 @@
-import { BLOOD_GROUP } from '@/data';
 import {
+  ADD_STUDENT,
   GET_CLASSES,
   GET_CLASSROOM_BY_CLASS_LEVEL,
+  IAddStudentResponse,
   IGetClassesResponse,
   IGetClassroomByClassLevelArgs,
   IGetClassroomByClassLevelResponse,
+  TAddStudentPayload,
 } from '@/lib/queries';
 
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { BLOOD_GROUP } from '@/data';
+import { tryCatch } from '@/helpers';
 import { z } from 'zod';
 
 const addStudentFormSchema = z.object({
@@ -35,6 +40,7 @@ const addStudentFormSchema = z.object({
 type TAddStudentForm = z.infer<typeof addStudentFormSchema>;
 
 export const useAddStudent = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const form = useForm<TAddStudentForm>({
     resolver: zodResolver(addStudentFormSchema),
     defaultValues: {
@@ -93,18 +99,60 @@ export const useAddStudent = () => {
   // for syncing
   useEffect(() => {
     form.setValue('classroomId', '');
-    console.log('triggered');
   }, [classLevel, form]);
 
+  // for mutation
+
+  const [addStudent, { loading: isAddStudentLoading }] = useMutation<
+    IAddStudentResponse,
+    TAddStudentPayload
+  >(ADD_STUDENT);
+
   const handleAddStudent = form.handleSubmit(async (formData) => {
-    console.log(formData);
+    const id = toast.loading('Adding Student');
+    tryCatch({
+      id,
+      async tryFn() {
+        const {
+          name,
+          birthId,
+          classroomId,
+          bloodGroup,
+          dob,
+          address,
+          guardian,
+          parents,
+        } = formData;
+
+        const response = await addStudent({
+          variables: {
+            name,
+            birthId,
+            class: formData.class,
+            classroomId,
+            bloodGroup,
+            dob,
+            address,
+            guardian: JSON.stringify(guardian),
+            parents: JSON.stringify(parents),
+          },
+        });
+
+        if (!response?.data?.add_student?.ok)
+          throw new Error(response?.data?.add_student?.message);
+
+        toast.success(response?.data?.add_student?.message, { id });
+        setIsOpen(false);
+      },
+    });
   });
 
   return {
     form,
     handleAddStudent,
     data: { classes, classrooms, bloodGroups },
-    loading: { isClassesLoading, isClassroomLoading },
+    loading: { isClassesLoading, isClassroomLoading, isAddStudentLoading },
     watching: { classLevel },
+    states: { isOpen, setIsOpen },
   };
 };
