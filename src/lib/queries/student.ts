@@ -50,3 +50,31 @@ export const ADD_STUDENT = gql`
     }
   }
 `;
+
+export interface IGetStudentsResponse {
+  students: {
+    id: string;
+    name: string;
+    class: string;
+    classroom: {
+      id: string;
+      name: string;
+    };
+    admittedAt: string;
+  }[];
+}
+
+export const GET_STUDENTS = gql`
+  query GetStudents {
+    students(order_by: { admittedAt: desc }) {
+      id
+      name
+      class
+      classroom {
+        id
+        name
+      }
+      admittedAt
+    }
+  }
+`;
