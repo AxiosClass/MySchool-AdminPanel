@@ -1,4 +1,4 @@
-import { GET_CLASSES, IGetClassResponse } from '@/lib/queries';
+import { GET_CLASSES, IGetClassesResponse } from '@/lib/queries';
 import { PageTitle, Message } from '@/components/shared';
 import { CreateClass } from './create-class';
 import { useQuery } from '@apollo/client';
@@ -6,7 +6,7 @@ import { ClassCard } from './ClassCard';
 
 export default function ClassesPage() {
   const { data: classData, loading: isLoading } =
-    useQuery<IGetClassResponse>(GET_CLASSES);
+    useQuery<IGetClassesResponse>(GET_CLASSES);
 
   if (isLoading) return 'Loading';
 

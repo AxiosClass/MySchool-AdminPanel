@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/form';
 
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 import { TextareaHTMLAttributes } from 'react';
 import { Control } from 'react-hook-form';
 
@@ -17,6 +18,7 @@ interface IProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   description?: string;
   name: string;
   label: string;
+  className?: string;
 }
 
 export function ControlledTextAea({
@@ -24,6 +26,7 @@ export function ControlledTextAea({
   name,
   label,
   description,
+  className,
   ...props
 }: IProps) {
   return (
@@ -31,7 +34,7 @@ export function ControlledTextAea({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className='w-full'>
+        <FormItem className={cn('w-full', className)}>
           <FormLabel className='font-semibold'>{label}</FormLabel>
           <FormControl>
             <Textarea {...field} {...props} />

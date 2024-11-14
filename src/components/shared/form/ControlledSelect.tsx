@@ -26,6 +26,7 @@ interface IProps {
   options: { label: string; value: string }[];
   placeholder: string;
   disabled?: boolean;
+  className?: string;
 }
 
 export function ControlledSelect({
@@ -35,13 +36,14 @@ export function ControlledSelect({
   options,
   placeholder,
   disabled,
+  className,
 }: IProps) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
           <Select
             disabled={disabled}

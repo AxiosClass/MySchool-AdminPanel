@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/form';
 
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { InputHTMLAttributes } from 'react';
 import { Control } from 'react-hook-form';
 
@@ -17,6 +18,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   description?: string;
   name: string;
   label: string;
+  className?: string;
 }
 
 export function TextInput({
@@ -24,6 +26,7 @@ export function TextInput({
   name,
   label,
   description,
+  className,
   ...props
 }: IProps) {
   return (
@@ -31,7 +34,7 @@ export function TextInput({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className='w-full'>
+        <FormItem className={cn('w-full', className)}>
           <FormLabel className='font-semibold'>{label}</FormLabel>
           <FormControl>
             <Input {...field} {...props} />
