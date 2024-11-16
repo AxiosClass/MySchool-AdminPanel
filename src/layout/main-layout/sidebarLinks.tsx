@@ -6,6 +6,7 @@ import { RiAccountBoxFill } from 'react-icons/ri';
 import { FaHome, FaBook } from 'react-icons/fa';
 import { PiStudentFill } from 'react-icons/pi';
 import { HiUsers } from 'react-icons/hi2';
+import { IoWallet } from 'react-icons/io5';
 
 interface ILink {
   title: string;
@@ -22,4 +23,5 @@ export const sidebarLinks: ILink[] = [
   { title: 'Staffs', url: '/staffs', icon: <HiUsers /> },
   { title: 'Teachers', url: '/teachers', icon: <FaUserTie /> },
   { title: 'Students', url: '/students', icon: <PiStudentFill /> },
+  { title: 'Transactions', url: '/transactions/payments', icon: <IoWallet /> },
 ];

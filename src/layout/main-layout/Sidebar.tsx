@@ -15,9 +15,9 @@ export const Sidebar = () => {
   const { pathname } = useLocation();
 
   return (
-    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-100 p-6 shadow md:flex'>
+    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-100 shadow md:flex'>
       <AppLogo />
-      <div className='mt-8 flex flex-col gap-2'>
+      <div className='mt-2 flex flex-col gap-2 px-6'>
         {sidebarLinks.map(({ url, icon, title }) => (
           <Link
             key={url}
@@ -32,7 +32,7 @@ export const Sidebar = () => {
           </Link>
         ))}
       </div>
-      <div className='mt-auto flex items-center justify-between'>
+      <div className='mt-auto flex items-center justify-between border-t border-primary-100 p-6'>
         <div className='rounded-full bg-white p-2 text-red-600'>
           <BiLogOutCircle size={20} />
         </div>
