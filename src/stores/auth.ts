@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { EUserRole } from '@/lib/types';
 import { jwtDecode } from 'jwt-decode';
 import { getAccessTokenFromLocal } from '@/helpers';
+import { ETokenKeys } from '@/lib/keys';
 
 interface IUser {
   id: string;
@@ -20,6 +21,8 @@ let user: IUser | null = null;
 const accessToken = getAccessTokenFromLocal();
 if (accessToken) user = jwtDecode(accessToken);
 
+console.log(user);
+
 export const useAuth = create<IAuthServices>((set) => ({
   user: user,
   login(token) {
@@ -29,6 +32,7 @@ export const useAuth = create<IAuthServices>((set) => ({
     }
   },
   logout() {
+    localStorage.removeItem(ETokenKeys.ACCESS_TOKEN);
     set(() => ({ user: null }));
   },
 }));

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { toast } from 'sonner';
 import { useState } from 'react';
 import { ILoginPayload, ILoginResponse, LOGIN } from '@/lib/queries';
 import { setAccessTokenToLocal, tryCatch } from '@/helpers';
@@ -8,6 +7,7 @@ import { useAuth } from '@/stores/auth';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { apolloClient } from '@/apollo-client';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
   userId: z.string().min(1, { message: 'UserId is required' }),

@@ -5,6 +5,8 @@ import { sidebarLinks } from './sidebarLinks';
 import { AppLogo } from '@/components/shared';
 import { FaUser } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/stores/auth';
+import { toast } from 'sonner';
 
 const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
@@ -15,6 +17,12 @@ const isActive = (url: string, pathname: string) => {
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
+  const logout = useAuth((state) => state.logout);
+
+  const handleLogout = () => {
+    toast.info('You have been logged out');
+    logout();
+  };
 
   return (
     <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-100 shadow md:flex'>
@@ -35,7 +43,10 @@ export const Sidebar = () => {
         ))}
       </div>
       <div className='mt-auto flex items-center justify-between border-t border-primary-100 p-6'>
-        <div className='rounded-full bg-white p-2 text-red-600'>
+        <div
+          onClick={handleLogout}
+          className='cursor-pointer rounded-full bg-white p-2 text-red-600'
+        >
           <BiLogOutCircle size={20} />
         </div>
         <div className='rounded-full bg-white p-2'>
