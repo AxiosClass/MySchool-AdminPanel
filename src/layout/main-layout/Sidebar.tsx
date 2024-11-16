@@ -9,6 +9,8 @@ import { cn } from '@/lib/utils';
 const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes' && pathname.startsWith('/class')) return true;
+  if (url.startsWith('/transactions') && pathname.startsWith('/transactions'))
+    return true;
 };
 
 export const Sidebar = () => {

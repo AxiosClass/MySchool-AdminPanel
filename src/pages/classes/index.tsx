@@ -12,7 +12,7 @@ export default function ClassesPage() {
 
   return (
     <PageTitle title='Classes'>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between pt-6'>
         <h1 className='text-xl font-semibold'>Classes</h1>
         <CreateClass />
       </div>

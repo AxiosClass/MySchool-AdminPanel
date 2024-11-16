@@ -21,7 +21,7 @@ export default function StaffsPage() {
 
   return (
     <PageTitle title='Staffs'>
-      <section className='flex items-center justify-between'>
+      <section className='flex items-center justify-between pt-6'>
         <h1 className='text-xl font-semibold'>Staffs</h1>
         <AddStaff />
       </section>

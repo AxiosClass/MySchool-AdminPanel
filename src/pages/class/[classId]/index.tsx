@@ -24,7 +24,7 @@ export default function ClassDetailsPage() {
 
   return (
     <PageTitle title='Class Details'>
-      <main>
+      <main className='pt-6'>
         <div className='flex items-center gap-4'>
           <Link to={'/classes'}>
             <Button className='h-10 w-10 text-white'>

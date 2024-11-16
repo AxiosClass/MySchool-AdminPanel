@@ -21,7 +21,7 @@ export default function StudentsPage() {
 
   return (
     <PageTitle title='Students'>
-      <section className='flex items-center justify-between'>
+      <section className='flex items-center justify-between pt-6'>
         <h1 className='text-xl font-semibold'>Students</h1>
         <AddStudent />
       </section>

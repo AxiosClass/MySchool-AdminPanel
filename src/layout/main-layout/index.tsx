@@ -9,7 +9,7 @@ export const MainLayout = () => {
       <Sidebar />
       <section className='grid h-screen grid-rows-[auto_1fr]'>
         <TopBar />
-        <ScrollArea className='customized_scrollbar h-full rounded-t-xl px-6 pb-6'>
+        <ScrollArea className='customized_scrollbar h-full rounded-t-xl px-6'>
           <Outlet />
         </ScrollArea>
       </section>

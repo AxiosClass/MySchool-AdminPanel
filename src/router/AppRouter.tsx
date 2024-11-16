@@ -11,6 +11,8 @@ const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
 const TeachersPage = lazy(() => import('@/pages/teachers'));
 const StudentsPage = lazy(() => import('@/pages/students'));
 const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
+const SalariesPage = lazy(() => import('@/pages/transactions/salaries'));
+const ExpensesPage = lazy(() => import('@/pages/transactions/expenses'));
 
 const router = createBrowserRouter([
   {
@@ -27,11 +29,9 @@ const router = createBrowserRouter([
         path: '/transactions',
         element: <TransactionSubLayout />,
         children: [
-          {
-            index: true,
-            path: 'payments',
-            element: <PaymentsPage />,
-          },
+          { path: 'payments', element: <PaymentsPage /> },
+          { path: 'salaries', element: <SalariesPage /> },
+          { path: 'expenses', element: <ExpensesPage /> },
         ],
       },
     ],

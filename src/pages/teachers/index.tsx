@@ -21,7 +21,7 @@ export default function TeachersPage() {
 
   return (
     <PageTitle title='Teachers'>
-      <section className='flex items-center justify-between'>
+      <section className='flex items-center justify-between pt-6'>
         <h1 className='text-xl font-semibold'>Teachers</h1>
         <AddTeacher />
       </section>
