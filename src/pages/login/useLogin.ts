@@ -1,12 +1,13 @@
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useState } from 'react';
 import { ILoginPayload, ILoginResponse, LOGIN } from '@/lib/queries';
 import { setAccessTokenToLocal, tryCatch } from '@/helpers';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAuth } from '@/stores/auth';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { apolloClient } from '@/apollo-client';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { z } from 'zod';
 
 const formSchema = z.object({
   userId: z.string().min(1, { message: 'UserId is required' }),
@@ -21,6 +22,7 @@ export const useLogin = () => {
     defaultValues: { userId: '', password: '' },
   });
 
+  const login = useAuth((state) => state.login);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigate();
 
@@ -42,6 +44,7 @@ export const useLogin = () => {
 
         const accessToken = response?.data?.login_action.accessToken;
         setAccessTokenToLocal(accessToken!);
+        login(accessToken!);
         toast.success('Login was successful', { id });
         navigation('/');
       },

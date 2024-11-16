@@ -7,3 +7,7 @@ export const setAccessTokenToLocal = (accessToken: string) => {
 export const setRefreshTokenToLocal = (refreshToken: string) => {
   localStorage.setItem(ETokenKeys.REFRESH_TOKEN, refreshToken);
 };
+
+export const getAccessTokenFromLocal = () => {
+  return localStorage.getItem(ETokenKeys.ACCESS_TOKEN);
+};
