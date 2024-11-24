@@ -16,7 +16,7 @@ import { FaPlus } from 'react-icons/fa6';
 export function CreateClass() {
   const {
     form,
-    states: { isDialogOpen, isCreatingClass, setIsDialogOpen },
+    states: { isDialogOpen, isLoading, setIsDialogOpen },
     handlers: { handleCreateClass },
   } = useCreateClass();
 
@@ -49,8 +49,8 @@ export function CreateClass() {
               name='level'
               placeholder='Level'
             />
-            <Button disabled={isCreatingClass} className='mt-4'>
-              {isCreatingClass ? 'Class Creating...' : 'Create Class'}
+            <Button disabled={isLoading} className='mt-4'>
+              {isLoading ? 'Class Creating...' : 'Create Class'}
             </Button>
           </form>
         </Form>

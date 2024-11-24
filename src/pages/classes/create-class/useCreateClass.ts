@@ -13,7 +13,7 @@ const createClassSchema = z.object({
 
 export const useCreateClass = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { addClassMutation, isCreatingClass } = useCreateClassMutation();
+  const { addClassMutation, isLoading } = useCreateClassMutation();
 
   const form = useForm<z.infer<typeof createClassSchema>>({
     resolver: zodResolver(createClassSchema),
@@ -39,7 +39,7 @@ export const useCreateClass = () => {
 
   return {
     form,
-    states: { isDialogOpen, setIsDialogOpen, isCreatingClass },
+    states: { isDialogOpen, setIsDialogOpen, isLoading },
     handlers: { handleCreateClass },
   };
 };

@@ -17,9 +17,9 @@ export const useCreateClassMutation = () => {
   const addClassMutation = useMutation({
     mutationFn: createClass,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [TAGS.CLASS] });
+      queryClient.invalidateQueries({ queryKey: [TAGS.CLASSES] });
     },
   });
 
-  return { addClassMutation, isCreatingClass: addClassMutation.isPending };
+  return { addClassMutation, isLoading: addClassMutation.isPending };
 };

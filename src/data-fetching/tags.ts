@@ -1,3 +1,3 @@
 export enum TAGS {
-  CLASS = 'CLASS',
+  CLASSES = 'CLASSES',
 }
