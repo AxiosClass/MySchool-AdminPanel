@@ -3,21 +3,31 @@ import { Link, useLocation } from 'react-router-dom';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { IoMdSettings } from 'react-icons/io';
 import { sidebarLinks } from './sidebarLinks';
+import { useAuthStore } from '@/stores/auth';
 import { FaUser } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes' && pathname.startsWith('/class')) return true;
+  if (url.startsWith('/transactions') && pathname.startsWith('/transactions'))
+    return true;
 };
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
+  const removeUser = useAuthStore((state) => state.removeUser);
+
+  const handleLogout = () => {
+    toast.info('You have been logged out');
+    removeUser();
+  };
 
   return (
-    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-100 p-6 shadow md:flex'>
+    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-100 shadow md:flex'>
       <AppLogo />
-      <div className='mt-8 flex flex-col gap-2'>
+      <div className='mt-2 flex flex-col gap-2 px-6'>
         {sidebarLinks.map(({ url, icon, title }) => (
           <Link
             key={url}
@@ -32,8 +42,11 @@ export const Sidebar = () => {
           </Link>
         ))}
       </div>
-      <div className='mt-auto flex items-center justify-between'>
-        <div className='rounded-full bg-white p-2 text-red-600'>
+      <div className='mt-auto flex items-center justify-between border-t border-primary-100 p-6'>
+        <div
+          onClick={handleLogout}
+          className='cursor-pointer rounded-full bg-white p-2 text-red-600'
+        >
           <BiLogOutCircle size={20} />
         </div>
         <div className='rounded-full bg-white p-2'>

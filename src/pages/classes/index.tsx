@@ -1,7 +1,7 @@
-import { PageTitle } from '@/components/shared/PageTitle';
-import { CreateClass } from './create-class';
 import { useGetClassesQuery } from '@/data-fetching/queries/getClasses';
+import { PageTitle } from '@/components/shared/PageTitle';
 import { Message } from '@/components/shared/Message';
+import { CreateClass } from './create-class';
 import { ClassCard } from './ClassCard';
 
 export default function ClassesPage() {
@@ -11,7 +11,7 @@ export default function ClassesPage() {
 
   return (
     <PageTitle title='Classes'>
-      <div className='flex items-center justify-between'>
+      <div className='mt-6 flex items-center justify-between'>
         <h1 className='text-xl font-semibold'>Classes</h1>
         <CreateClass />
       </div>
