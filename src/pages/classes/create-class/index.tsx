@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { TextInput } from '@/components/shared/form';
+import { TextInput } from '@/components/shared/form/TextInput';
 import { useCreateClass } from './useCreateClass';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -16,9 +16,8 @@ import { FaPlus } from 'react-icons/fa6';
 export function CreateClass() {
   const {
     form,
-    states: { isDialogOpen, isLoading },
+    states: { isDialogOpen, isCreatingClass, setIsDialogOpen },
     handlers: { handleCreateClass },
-    setters: { setIsDialogOpen },
   } = useCreateClass();
 
   return (
@@ -50,8 +49,8 @@ export function CreateClass() {
               name='level'
               placeholder='Level'
             />
-            <Button disabled={isLoading} className='mt-4'>
-              {isLoading ? 'Create Class' : 'Class Creating...'}
+            <Button disabled={isCreatingClass} className='mt-4'>
+              {isCreatingClass ? 'Class Creating...' : 'Create Class'}
             </Button>
           </form>
         </Form>

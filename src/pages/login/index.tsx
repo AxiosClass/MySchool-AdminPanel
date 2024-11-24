@@ -1,9 +1,11 @@
-import { PasswordInput, TextInput } from '@/components/shared/form';
-import { AppLogo, PageTitle } from '@/components/shared';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
 import { useLogin } from './useLogin';
+import { PasswordInput } from '@/components/shared/form/PasswordInput';
+import { TextInput } from '@/components/shared/form/TextInput';
+import { PageTitle } from '@/components/shared/PageTitle';
+import { AppLogo } from '@/components/shared/AppLogo';
+import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/stores/auth';
+import { Form } from '@/components/ui/form';
 import { Navigate } from 'react-router-dom';
 
 export default function LoginPage() {

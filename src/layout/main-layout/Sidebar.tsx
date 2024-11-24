@@ -1,8 +1,8 @@
+import { AppLogo } from '@/components/shared/AppLogo';
 import { Link, useLocation } from 'react-router-dom';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { IoMdSettings } from 'react-icons/io';
 import { sidebarLinks } from './sidebarLinks';
-import { AppLogo } from '@/components/shared';
 import { FaUser } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
 
