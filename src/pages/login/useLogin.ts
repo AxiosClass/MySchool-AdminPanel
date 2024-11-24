@@ -1,15 +1,18 @@
-import { ILoginPayload, ILoginResponse, LOGIN } from '@/lib/queries';
-import { setAccessTokenToLocal, tryCatch } from '@/helpers';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { apolloClient } from '@/apollo-client';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { toast } from 'sonner';
 import { z } from 'zod';
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+
+import { axiosInstance } from '@/data-fetching/axiosInstance';
+import { IServerResponse } from '@/lib/types/common';
+import { setAccessTokenToLocal } from '@/helpers/tokenHelper';
+import { apiUrl } from '@/data-fetching/apiUrl';
+import { tryCatch } from '@/helpers/tryCatch';
 
 const formSchema = z.object({
-  userId: z.string().min(1, { message: 'UserId is required' }),
+  id: z.string().min(1, { message: 'UserId is required' }),
   password: z.string().min(4, { message: 'Password is required' }),
 });
 
@@ -18,7 +21,7 @@ export type TFormSchema = z.infer<typeof formSchema>;
 export const useLogin = () => {
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: { userId: '', password: '' },
+    defaultValues: { id: '', password: '' },
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -31,17 +34,16 @@ export const useLogin = () => {
       id,
       tryFn: async () => {
         setIsLoading(true);
-        const { userId, password } = formData;
-        const response = await apolloClient.mutate<
-          ILoginResponse,
-          ILoginPayload
-        >({
-          mutation: LOGIN,
-          variables: { id: userId, password },
+        const { id: userId, password } = formData;
+        const response = await axiosInstance.post(apiUrl.login, {
+          id: userId,
+          password,
         });
 
-        const accessToken = response?.data?.login_action.accessToken;
-        setAccessTokenToLocal(accessToken!);
+        const responseData: IServerResponse<{ accessToken: string }> =
+          response.data;
+
+        setAccessTokenToLocal(responseData.data.accessToken);
         toast.success('Login was successful', { id });
         navigation('/');
       },

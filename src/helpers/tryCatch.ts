@@ -14,7 +14,9 @@ export const tryCatch = async ({ id, tryFn, catchFn, finallyFn }: IArgs) => {
       console.log(error);
       if (catchFn) return catchFn(error);
       const message =
-        error.data?.message || error.message || 'Something went wrong';
+        error.response?.data?.message ||
+        error.message ||
+        'Something went wrong';
 
       toast.error(message, { id });
     })

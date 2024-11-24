@@ -28,8 +28,8 @@ export default function LoginPage() {
             </h3>
             <TextInput
               control={form.control}
-              label='UserId'
-              name='userId'
+              label='Id'
+              name='id'
               placeholder='@ john-doe'
             />
 
@@ -41,7 +41,7 @@ export default function LoginPage() {
             />
 
             <Button className='mt-4 w-full' disabled={isLoading}>
-              Login
+              {isLoading ? 'Logging in...' : 'Login'}
             </Button>
           </form>
         </Form>
