@@ -1,9 +1,12 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthStore } from '@/stores/auth';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 
 export const MainLayout = () => {
-  return (
+  const user = useAuthStore((state) => state.user);
+
+  return user ? (
     <section className='grid min-h-screen bg-background md:grid-cols-[auto_1fr]'>
       <Sidebar />
       <section className='grid h-screen grid-rows-[auto_1fr]'>
@@ -13,5 +16,7 @@ export const MainLayout = () => {
         </main>
       </section>
     </section>
+  ) : (
+    <Navigate to={'/login'} />
   );
 };

@@ -3,11 +3,16 @@ import { AppLogo, PageTitle } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useLogin } from './useLogin';
+import { useAuthStore } from '@/stores/auth';
+import { Navigate } from 'react-router-dom';
 
 export default function LoginPage() {
   const { form, handleLogin, isLoading } = useLogin();
+  const user = useAuthStore((state) => state.user);
 
-  return (
+  return user ? (
+    <Navigate to={'/'} />
+  ) : (
     <PageTitle title='Login'>
       <div className='relative flex h-screen flex-col items-center justify-center overflow-hidden bg-baseLight-400'>
         <img

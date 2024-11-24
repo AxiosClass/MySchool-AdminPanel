@@ -1,4 +1,4 @@
-import { TOKEN_KEYS } from '@/lib/keys';
+import { TOKEN_KEYS } from '@/data/keys';
 
 export const setAccessTokenToLocal = (accessToken: string) => {
   localStorage.setItem(TOKEN_KEYS.ACCESS_TOKEN, accessToken);

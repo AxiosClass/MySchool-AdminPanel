@@ -5,11 +5,12 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { axiosInstance } from '@/data-fetching/axiosInstance';
-import { IServerResponse } from '@/lib/types/common';
-import { setAccessTokenToLocal } from '@/helpers/tokenHelper';
+import { IServerResponse } from '@/types/common';
 import { apiUrl } from '@/data-fetching/apiUrl';
 import { tryCatch } from '@/helpers/tryCatch';
+import { setAccessTokenToLocal } from '@/helpers/tokenHelper';
+import { axiosInstance } from '@/data-fetching/axiosInstance';
+import { useAuthStore } from '@/stores/auth';
 
 const formSchema = z.object({
   id: z.string().min(1, { message: 'UserId is required' }),
@@ -26,6 +27,7 @@ export const useLogin = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigate();
+  const updateUser = useAuthStore((state) => state.updateUser);
 
   const handleLogin = form.handleSubmit(async (formData) => {
     const id = toast.loading('Logging in...');
@@ -44,6 +46,7 @@ export const useLogin = () => {
           response.data;
 
         setAccessTokenToLocal(responseData.data.accessToken);
+        updateUser(responseData?.data?.accessToken);
         toast.success('Login was successful', { id });
         navigation('/');
       },

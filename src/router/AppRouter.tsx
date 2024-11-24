@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { MainLayout } from '@/layout/main-layout';
+import { MainLayout } from '@/layout/main-layout/MainLayout';
 import { lazy, Suspense } from 'react';
 
-const ClassesPage = lazy(() => import('@/pages/classes'));
-const StaffsPage = lazy(() => import('@/pages/staffs'));
+// const ClassesPage = lazy(() => import('@/pages/classes'));
+// const StaffsPage = lazy(() => import('@/pages/staffs'));
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
-const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
-const TeachersPage = lazy(() => import('@/pages/teachers'));
+// const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
+// const TeachersPage = lazy(() => import('@/pages/teachers'));
 
 const router = createBrowserRouter([
   {
@@ -15,10 +15,10 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/classes', element: <ClassesPage /> },
-      { path: '/staffs', element: <StaffsPage /> },
-      { path: '/class/:classId', element: <ClassDetailsPage /> },
-      { path: '/teachers', element: <TeachersPage /> },
+      // { path: '/classes', element: <ClassesPage /> },
+      // { path: '/staffs', element: <StaffsPage /> },
+      // { path: '/class/:classId', element: <ClassDetailsPage /> },
+      // { path: '/teachers', element: <TeachersPage /> },
     ],
   },
   {
