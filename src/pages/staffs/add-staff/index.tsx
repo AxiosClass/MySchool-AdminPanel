@@ -8,12 +8,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-import {
-  DatePicker,
-  TextInput,
-  ControlledSelect,
-  ControlledTextAea,
-} from '@/components/shared/form';
+import { DatePicker, TextInput, ControlledSelect, ControlledTextAea } from '@/components/shared/form';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -32,20 +27,17 @@ export function AddStaff() {
   }, []);
 
   const staffRoles = useMemo(() => {
-    return Object.values(EUserRole).reduce(
-      (roles: { label: string; value: string }[], eachRole) => {
-        // filtering out student role
-        if (eachRole !== EUserRole.STUDENT)
-          roles.push({
-            //  in label making role capitalize
-            label: eachRole.charAt(0).toUpperCase() + eachRole.slice(1),
-            value: eachRole,
-          });
+    return Object.values(EUserRole).reduce((roles: { label: string; value: string }[], eachRole) => {
+      // filtering out student role
+      if (eachRole !== EUserRole.STUDENT)
+        roles.push({
+          //  in label making role capitalize
+          label: eachRole.charAt(0).toUpperCase() + eachRole.slice(1),
+          value: eachRole,
+        });
 
-        return roles;
-      },
-      [],
-    );
+      return roles;
+    }, []);
   }, []);
 
   return (
@@ -59,9 +51,7 @@ export function AddStaff() {
       <SheetContent className='p-0'>
         <SheetHeader className='px-6 py-4'>
           <SheetTitle>Add Staff</SheetTitle>
-          <SheetDescription>
-            Please provide staff&apos; information
-          </SheetDescription>
+          <SheetDescription>Please provide staff&apos; information</SheetDescription>
         </SheetHeader>
         <Form {...form}>
           <form
@@ -71,35 +61,11 @@ export function AddStaff() {
           >
             <ScrollArea className='h-full px-6'>
               <div className='grid grid-cols-2 gap-4 p-1'>
-                <TextInput
-                  control={form.control}
-                  label='Name'
-                  name='name'
-                  placeholder='@: John Doe'
-                />
-                <TextInput
-                  control={form.control}
-                  label='Staff Id'
-                  name='staffId'
-                  placeholder='@: John'
-                />
-                <TextInput
-                  control={form.control}
-                  label='NID'
-                  name='nid'
-                  placeholder='@: 6612****'
-                />
-                <TextInput
-                  control={form.control}
-                  label='Phone'
-                  name='phone'
-                  placeholder='@: 015******'
-                />
-                <DatePicker
-                  control={form.control}
-                  label='Date of Birth'
-                  name='dob'
-                />
+                <TextInput control={form.control} label='Name' name='name' placeholder='@: John Doe' />
+                <TextInput control={form.control} label='Staff Id' name='staffId' placeholder='@: John' />
+                <TextInput control={form.control} label='NID' name='nid' placeholder='@: 6612****' />
+                <TextInput control={form.control} label='Phone' name='phone' placeholder='@: 015******' />
+                <DatePicker control={form.control} label='Date of Birth' name='dob' />
                 <ControlledSelect
                   control={form.control}
                   name='bloodGroup'
@@ -108,25 +74,10 @@ export function AddStaff() {
                   options={bloodGroups}
                 />
                 <div className='col-span-2'>
-                  <ControlledTextAea
-                    control={form.control}
-                    label='Address'
-                    name='address'
-                    placeholder='@ : Dhaka'
-                  />
+                  <ControlledTextAea control={form.control} label='Address' name='address' placeholder='@ : Dhaka' />
                 </div>
-                <TextInput
-                  control={form.control}
-                  label='Salary'
-                  name='salary'
-                  placeholder='@: 30000'
-                />
-                <TextInput
-                  control={form.control}
-                  label='Designation'
-                  name='designation'
-                  placeholder='@: Teacher'
-                />
+                <TextInput control={form.control} label='Salary' name='salary' placeholder='@: 30000' />
+                <TextInput control={form.control} label='Designation' name='designation' placeholder='@: Teacher' />
                 {/* to do => Address */}
                 <TextInput
                   control={form.control}
@@ -134,12 +85,7 @@ export function AddStaff() {
                   name='education.degreeName'
                   placeholder='@: HSC'
                 />
-                <TextInput
-                  control={form.control}
-                  label='Group'
-                  name='education.group'
-                  placeholder='@: Science'
-                />
+                <TextInput control={form.control} label='Group' name='education.group' placeholder='@: Science' />
                 <TextInput
                   control={form.control}
                   label='Result'
@@ -160,9 +106,7 @@ export function AddStaff() {
               <SheetClose asChild>
                 <Button variant={'outline'}>Cancel</Button>
               </SheetClose>
-              <Button disabled={isLoading}>
-                {isLoading ? 'Adding Staff' : 'Add Staff'}
-              </Button>
+              <Button disabled={isLoading}>{isLoading ? 'Adding Staff' : 'Add Staff'}</Button>
             </div>
           </form>
         </Form>

@@ -30,22 +30,10 @@ export default function LoginPage() {
             onSubmit={handleLogin}
           >
             <AppLogo />
-            <h3 className='text-center text-muted-foreground'>
-              Input Your Credentials to Login
-            </h3>
-            <TextInput
-              control={form.control}
-              label='Id'
-              name='id'
-              placeholder='@ john-doe'
-            />
+            <h3 className='text-center text-muted-foreground'>Input Your Credentials to Login</h3>
+            <TextInput control={form.control} label='Id' name='id' placeholder='@ john-doe' />
 
-            <PasswordInput
-              control={form.control}
-              label='Password'
-              name='password'
-              placeholder='****'
-            />
+            <PasswordInput control={form.control} label='Password' name='password' placeholder='****' />
 
             <Button className='mt-4 w-full' disabled={isLoading}>
               {isLoading ? 'Logging in...' : 'Login'}

@@ -1,11 +1,4 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { UserIcon, Message, PageTitle } from '@/components/shared';
 import { GET_STAFFS, IGetStaffsResponse } from '@/lib/queries';
@@ -14,8 +7,7 @@ import { AddStaff } from './add-staff';
 import { format } from 'date-fns';
 
 export default function StaffsPage() {
-  const { data: staffData, loading: isLoading } =
-    useQuery<IGetStaffsResponse>(GET_STAFFS);
+  const { data: staffData, loading: isLoading } = useQuery<IGetStaffsResponse>(GET_STAFFS);
 
   if (isLoading) return 'Loading';
 
@@ -39,10 +31,7 @@ export default function StaffsPage() {
             </TableHeader>
             <TableBody>
               {staffData.staffs.map((staff) => (
-                <TableRow
-                  className='border-b-4 border-primary-50'
-                  key={staff.id}
-                >
+                <TableRow className='border-b-4 border-primary-50' key={staff.id}>
                   <TableCell>
                     <div className='flex gap-2'>
                       <UserIcon username={staff.name} />
@@ -55,9 +44,7 @@ export default function StaffsPage() {
                   <TableCell>{staff.salary} TK</TableCell>
                   <TableCell>{staff.address}</TableCell>
                   <TableCell className='capitalize'>{staff.role}</TableCell>
-                  <TableCell className='capitalize'>
-                    {format(staff.joinedAt, 'PPP')}
-                  </TableCell>
+                  <TableCell className='capitalize'>{format(staff.joinedAt, 'PPP')}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

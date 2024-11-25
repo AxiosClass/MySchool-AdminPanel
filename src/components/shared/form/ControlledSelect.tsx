@@ -1,20 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 import { Control } from 'react-hook-form';
 import { Message } from '../Message';
@@ -28,14 +16,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-export function ControlledSelect({
-  control,
-  name,
-  label,
-  options,
-  placeholder,
-  disabled,
-}: IProps) {
+export function ControlledSelect({ control, name, label, options, placeholder, disabled }: IProps) {
   return (
     <FormField
       control={control}
@@ -43,11 +24,7 @@ export function ControlledSelect({
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <Select
-            disabled={disabled}
-            value={field.value}
-            onValueChange={field.onChange}
-          >
+          <Select disabled={disabled} value={field.value} onValueChange={field.onChange}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />

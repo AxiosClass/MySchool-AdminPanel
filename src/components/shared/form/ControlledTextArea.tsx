@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 import { Textarea } from '@/components/ui/textarea';
 import { TextareaHTMLAttributes } from 'react';
@@ -19,13 +12,7 @@ interface IProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
 }
 
-export function ControlledTextAea({
-  control,
-  name,
-  label,
-  description,
-  ...props
-}: IProps) {
+export function ControlledTextAea({ control, name, label, description, ...props }: IProps) {
   return (
     <FormField
       control={control}

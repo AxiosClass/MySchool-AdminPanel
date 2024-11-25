@@ -56,36 +56,19 @@ export const useAddStaff = () => {
     defaultValues,
   });
 
-  const [addStaffWithoutAccount, { loading: isAddStaffWithoutAccountLoading }] =
-    useMutation<IAddStaffResponse, TAddStaffWithOutUserAccount>(
-      ADD_STAFF_WITHOUT_USER_ACCOUNT,
-      { refetchQueries: [GET_STAFFS] },
-    );
+  const [addStaffWithoutAccount, { loading: isAddStaffWithoutAccountLoading }] = useMutation<
+    IAddStaffResponse,
+    TAddStaffWithOutUserAccount
+  >(ADD_STAFF_WITHOUT_USER_ACCOUNT, { refetchQueries: [GET_STAFFS] });
 
-  const [addStaffWithAccount, { loading: isAddStaffWithAccountLoading }] =
-    useMutation<IAddStaffResponse, TAddStaffWithUserAccount>(
-      ADD_STAFF_WITH_USER_ACCOUNT,
-      { refetchQueries: [GET_STAFFS] },
-    );
+  const [addStaffWithAccount, { loading: isAddStaffWithAccountLoading }] = useMutation<
+    IAddStaffResponse,
+    TAddStaffWithUserAccount
+  >(ADD_STAFF_WITH_USER_ACCOUNT, { refetchQueries: [GET_STAFFS] });
 
   // add staff and crate a user account
-  const addStaffWithUserAccount = async (
-    formData: TAddStaffFormSchema,
-    id: string | number,
-  ) => {
-    const {
-      staffId,
-      name,
-      nid,
-      phone,
-      dob,
-      bloodGroup,
-      salary,
-      designation,
-      address,
-      education,
-      role,
-    } = formData;
+  const addStaffWithUserAccount = async (formData: TAddStaffFormSchema, id: string | number) => {
+    const { staffId, name, nid, phone, dob, bloodGroup, salary, designation, address, education, role } = formData;
 
     // encrypt password
     const hashResponse = await clientFetch({
@@ -116,22 +99,8 @@ export const useAddStaff = () => {
     form.reset();
   };
 
-  const addStaffWithoutUserAccount = async (
-    formData: TAddStaffFormSchema,
-    id: string | number,
-  ) => {
-    const {
-      staffId,
-      name,
-      nid,
-      phone,
-      dob,
-      bloodGroup,
-      salary,
-      designation,
-      address,
-      education,
-    } = formData;
+  const addStaffWithoutUserAccount = async (formData: TAddStaffFormSchema, id: string | number) => {
+    const { staffId, name, nid, phone, dob, bloodGroup, salary, designation, address, education } = formData;
     await addStaffWithoutAccount({
       variables: {
         id: staffId,
@@ -157,8 +126,7 @@ export const useAddStaff = () => {
     tryCatch({
       id,
       async tryFn() {
-        if (formData.role !== EUserRole.OTHER)
-          await addStaffWithUserAccount(formData, id);
+        if (formData.role !== EUserRole.OTHER) await addStaffWithUserAccount(formData, id);
         else await addStaffWithoutUserAccount(formData, id);
       },
     });

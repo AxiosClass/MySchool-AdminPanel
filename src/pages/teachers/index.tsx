@@ -1,31 +1,16 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-import { Message, PageTitle, UserIcon } from '@/components/shared';
-import { GET_TEACHERS, IGetTeachersResponse } from '@/lib/queries';
+import { PageTitle } from '@/components/shared/PageTitle';
 import { AddTeacher } from './add-teacher';
-import { useQuery } from '@apollo/client';
-import { format } from 'date-fns';
 
 export default function TeachersPage() {
-  const { data: teachersData, loading: isLoading } =
-    useQuery<IGetTeachersResponse>(GET_TEACHERS);
-
-  if (isLoading) return 'Loading';
-
   return (
     <PageTitle title='Teachers'>
       <section className='flex items-center justify-between'>
         <h1 className='text-xl font-semibold'>Teachers</h1>
         <AddTeacher />
       </section>
-      {teachersData && teachersData.teachers.length > 0 ? (
+      {/* {teachersData && teachersData.teachers.length > 0 ? (
         <section className='mt-6 w-full overflow-hidden rounded-md border-4 border-primary-50'>
           <Table>
             <TableHeader>
@@ -61,7 +46,7 @@ export default function TeachersPage() {
         </section>
       ) : (
         <Message message='No Teacher Found' />
-      )}
+      )} */}
     </PageTitle>
   );
 }

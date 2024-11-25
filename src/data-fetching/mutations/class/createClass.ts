@@ -1,14 +1,11 @@
-import { TAGS } from '../tags';
-import { apiUrl } from '../apiUrl';
-import { axiosInstance } from '../axiosInstance';
+import { TAGS } from '../../tags';
+import { apiUrl } from '../../apiUrl';
+import { axiosInstance } from '../../axiosInstance';
 import { IServerResponse } from '@/types/common';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../QueryProvider';
+import { queryClient } from '../../QueryProvider';
 
-const createClass = async (payload: {
-  name: string;
-  level: string;
-}): Promise<IServerResponse<null>> => {
+const createClass = async (payload: { name: string; level: string }): Promise<IServerResponse<null>> => {
   const response = await axiosInstance.post(apiUrl.createClass, payload);
   return response?.data;
 };

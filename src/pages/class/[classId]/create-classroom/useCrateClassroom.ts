@@ -3,12 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useMutation } from '@apollo/client';
-import {
-  CREATE_CLASSROOM,
-  GET_CLASS_BY_ID,
-  ICreateClassroomResponse,
-  TCreateClassroomPayload,
-} from '@/lib/queries';
+import { CREATE_CLASSROOM, GET_CLASS_BY_ID, ICreateClassroomResponse, TCreateClassroomPayload } from '@/lib/queries';
 import { toast } from 'sonner';
 import { tryCatch } from '@/helpers';
 import { useState } from 'react';
@@ -29,10 +24,10 @@ export const useCreateClassroom = () => {
     defaultValues: { name: '', teacherId: '' },
   });
 
-  const [createClassroom, { loading }] = useMutation<
-    ICreateClassroomResponse,
-    TCreateClassroomPayload
-  >(CREATE_CLASSROOM, { refetchQueries: [GET_CLASS_BY_ID] });
+  const [createClassroom, { loading }] = useMutation<ICreateClassroomResponse, TCreateClassroomPayload>(
+    CREATE_CLASSROOM,
+    { refetchQueries: [GET_CLASS_BY_ID] },
+  );
 
   const handleCreateClassroom = form.handleSubmit(async (formData) => {
     const id = toast.loading('Creating Classroom...!');

@@ -1,18 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@/components/ui/button';
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Control } from 'react-hook-form';
@@ -27,20 +17,7 @@ interface IProps {
 
 const currentYear = new Date().getFullYear();
 
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sept',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 export function DatePicker({ label, name, control }: IProps) {
   const [isYearShown, setYearShown] = useState(false);
@@ -57,10 +34,7 @@ export function DatePicker({ label, name, control }: IProps) {
           <FormControl>
             <div className='flex items-center gap-4'>
               <Popover open={isYearShown} onOpenChange={setYearShown}>
-                <PopoverTrigger
-                  className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
-                  asChild
-                >
+                <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
                   <Button variant={'outline'} className='w-full rounded-md'>
                     Year : {field.value?.getFullYear()}
                   </Button>
@@ -78,8 +52,7 @@ export function DatePicker({ label, name, control }: IProps) {
                           }}
                           className={cn(
                             'flex cursor-pointer justify-center rounded-md border p-1',
-                            field.value.getFullYear() === currentYear - index &&
-                              'bg-primary text-white',
+                            field.value.getFullYear() === currentYear - index && 'bg-primary text-white',
                           )}
                           key={index}
                         >
@@ -92,10 +65,7 @@ export function DatePicker({ label, name, control }: IProps) {
               </Popover>
 
               <Popover open={isMothShown} onOpenChange={setIsMonthShown}>
-                <PopoverTrigger
-                  className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
-                  asChild
-                >
+                <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
                   <Button variant={'outline'} className='w-full rounded-md'>
                     Month : {months[field.value?.getMonth()]}
                   </Button>
@@ -114,8 +84,7 @@ export function DatePicker({ label, name, control }: IProps) {
                           }}
                           className={cn(
                             'flex cursor-pointer justify-center rounded-md border p-1',
-                            field.value.getMonth() === index &&
-                              'bg-primary text-white',
+                            field.value.getMonth() === index && 'bg-primary text-white',
                           )}
                           key={index}
                         >
@@ -128,10 +97,7 @@ export function DatePicker({ label, name, control }: IProps) {
               </Popover>
 
               <Popover open={isDayShown} onOpenChange={setIsDayShown}>
-                <PopoverTrigger
-                  className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
-                  asChild
-                >
+                <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
                   <Button variant={'outline'} className='w-full rounded-md'>
                     Day : {field.value.getDate()}
                   </Button>
@@ -139,32 +105,25 @@ export function DatePicker({ label, name, control }: IProps) {
                 <PopoverContent className='bg-background p-0' align='start'>
                   <ScrollArea className='max-h-56 p-4'>
                     <div className='grid grid-cols-7 gap-2'>
-                      {[
-                        ...Array(
-                          new Date(
-                            field.value.getFullYear(),
-                            field.value.getMonth() + 1,
-                            0,
-                          ).getDate(),
+                      {[...Array(new Date(field.value.getFullYear(), field.value.getMonth() + 1, 0).getDate())].map(
+                        (_, index) => (
+                          <div
+                            onClick={() => {
+                              const date = new Date(field.value);
+                              date.setDate(index + 1);
+                              field.onChange(date);
+                              setIsDayShown(false);
+                            }}
+                            className={cn(
+                              'flex cursor-pointer justify-center rounded-md border p-1',
+                              field.value.getDate() === index + 1 && 'bg-primary text-white',
+                            )}
+                            key={index}
+                          >
+                            {index + 1}
+                          </div>
                         ),
-                      ].map((_, index) => (
-                        <div
-                          onClick={() => {
-                            const date = new Date(field.value);
-                            date.setDate(index + 1);
-                            field.onChange(date);
-                            setIsDayShown(false);
-                          }}
-                          className={cn(
-                            'flex cursor-pointer justify-center rounded-md border p-1',
-                            field.value.getDate() === index + 1 &&
-                              'bg-primary text-white',
-                          )}
-                          key={index}
-                        >
-                          {index + 1}
-                        </div>
-                      ))}
+                      )}
                     </div>
                   </ScrollArea>
                 </PopoverContent>

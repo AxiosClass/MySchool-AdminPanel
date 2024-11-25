@@ -4,9 +4,9 @@ import { lazy, Suspense } from 'react';
 
 const HomePage = lazy(() => import('@/pages/home'));
 const ClassesPage = lazy(() => import('@/pages/classes'));
+const TeachersPage = lazy(() => import('@/pages/teachers'));
 // const StaffsPage = lazy(() => import('@/pages/staffs'));
 // const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
-// const TeachersPage = lazy(() => import('@/pages/teachers'));
 const LoginPage = lazy(() => import('@/pages/login'));
 
 const router = createBrowserRouter([
@@ -16,9 +16,9 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/classes', element: <ClassesPage /> },
+      { path: '/teachers', element: <TeachersPage /> },
       // { path: '/staffs', element: <StaffsPage /> },
       // { path: '/class/:classId', element: <ClassDetailsPage /> },
-      // { path: '/teachers', element: <TeachersPage /> },
     ],
   },
   {

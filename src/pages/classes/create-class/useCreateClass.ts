@@ -4,19 +4,21 @@ import { tryCatch } from '@/helpers/tryCatch';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { useCreateClassMutation } from '@/data-fetching/mutations/createClass';
+import { useCreateClassMutation } from '@/data-fetching/mutations/class/createClass';
 
-const createClassSchema = z.object({
+const createClassFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   level: z.string().min(1, { message: 'Level is required' }),
 });
+
+type TCreateClassFormSchema = z.infer<typeof createClassFormSchema>;
 
 export const useCreateClass = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { addClassMutation, isLoading } = useCreateClassMutation();
 
-  const form = useForm<z.infer<typeof createClassSchema>>({
-    resolver: zodResolver(createClassSchema),
+  const form = useForm<TCreateClassFormSchema>({
+    resolver: zodResolver(createClassFormSchema),
     defaultValues: { name: '', level: '' },
   });
 
@@ -28,10 +30,7 @@ export const useCreateClass = () => {
       id,
       async tryFn() {
         const response = await addClassMutation.mutateAsync({ name, level });
-        console.log(response);
-        if (!response.ok) throw new Error(response.message);
-
-        toast.success('Class created', { id });
+        toast.success(response.message, { id });
         setIsDialogOpen(false);
       },
     });

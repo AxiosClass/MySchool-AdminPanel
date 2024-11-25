@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 import { Input } from '@/components/ui/input';
 import { InputHTMLAttributes } from 'react';
@@ -19,13 +12,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export function TextInput({
-  control,
-  name,
-  label,
-  description,
-  ...props
-}: IProps) {
+export function TextInput({ control, name, label, description, ...props }: IProps) {
   return (
     <FormField
       control={control}

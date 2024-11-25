@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 import { InputHTMLAttributes, useState } from 'react';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
@@ -20,13 +13,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export function PasswordInput({
-  control,
-  name,
-  label,
-  description,
-  ...props
-}: IProps) {
+export function PasswordInput({ control, name, label, description, ...props }: IProps) {
   const [isShown, setIsShown] = useState(false);
 
   const onToggle = () => {
@@ -42,16 +29,8 @@ export function PasswordInput({
           <FormLabel className='font-semibold'>{label}</FormLabel>
           <FormControl>
             <div className='relative'>
-              <Input
-                placeholder={'*******'}
-                type={isShown ? 'text' : 'password'}
-                {...field}
-                {...props}
-              />
-              <div
-                onClick={onToggle}
-                className='absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer'
-              >
+              <Input placeholder={'*******'} type={isShown ? 'text' : 'password'} {...field} {...props} />
+              <div onClick={onToggle} className='absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer'>
                 {isShown ? <IoMdEyeOff /> : <IoMdEye />}
               </div>
             </div>

@@ -42,8 +42,7 @@ export const useLogin = () => {
           password,
         });
 
-        const responseData: IServerResponse<{ accessToken: string }> =
-          response.data;
+        const responseData: IServerResponse<{ accessToken: string }> = response.data;
 
         setAccessTokenToLocal(responseData.data.accessToken);
         updateUser(responseData?.data?.accessToken);

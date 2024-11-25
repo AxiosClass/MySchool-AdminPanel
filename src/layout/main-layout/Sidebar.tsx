@@ -11,8 +11,7 @@ import { toast } from 'sonner';
 const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes' && pathname.startsWith('/class')) return true;
-  if (url.startsWith('/transactions') && pathname.startsWith('/transactions'))
-    return true;
+  if (url.startsWith('/transactions') && pathname.startsWith('/transactions')) return true;
 };
 
 export const Sidebar = () => {
@@ -43,10 +42,7 @@ export const Sidebar = () => {
         ))}
       </div>
       <div className='mt-auto flex items-center justify-between border-t border-primary-100 p-6'>
-        <div
-          onClick={handleLogout}
-          className='cursor-pointer rounded-full bg-white p-2 text-red-600'
-        >
+        <div onClick={handleLogout} className='cursor-pointer rounded-full bg-white p-2 text-red-600'>
           <BiLogOutCircle size={20} />
         </div>
         <div className='rounded-full bg-white p-2'>

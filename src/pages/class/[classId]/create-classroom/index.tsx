@@ -19,8 +19,7 @@ import { useQuery } from '@apollo/client';
 import { useMemo } from 'react';
 
 export function CreateClassroom() {
-  const { data: teachersData, loading: isTeachersDataLoading } =
-    useQuery<IGetTeachersResponse>(GET_TEACHERS);
+  const { data: teachersData, loading: isTeachersDataLoading } = useQuery<IGetTeachersResponse>(GET_TEACHERS);
 
   const teachers = useMemo(() => {
     return (
@@ -49,21 +48,11 @@ export function CreateClassroom() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Classroom</DialogTitle>
-          <DialogDescription>
-            Provide with classroom information to create a new one.
-          </DialogDescription>
+          <DialogDescription>Provide with classroom information to create a new one.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={handleCreateClassroom}
-            className='flex flex-col gap-4'
-          >
-            <TextInput
-              control={form.control}
-              name='name'
-              label='Classroom Name'
-              placeholder='@: Modhumoti'
-            />
+          <form onSubmit={handleCreateClassroom} className='flex flex-col gap-4'>
+            <TextInput control={form.control} name='name' label='Classroom Name' placeholder='@: Modhumoti' />
             <ControlledSelect
               control={form.control}
               label='Class Teacher'
@@ -76,9 +65,7 @@ export function CreateClassroom() {
               <DialogClose asChild>
                 <Button variant={'outline'}>Cancel</Button>
               </DialogClose>
-              <Button disabled={isLoading}>
-                {isLoading ? 'Processing' : 'Proceed'}
-              </Button>
+              <Button disabled={isLoading}>{isLoading ? 'Processing' : 'Proceed'}</Button>
             </DialogFooter>
           </form>
         </Form>

@@ -6,9 +6,5 @@ interface IProps {
 }
 
 export function Message({ className, message }: IProps) {
-  return (
-    <p className={cn('mt-2 w-full text-center font-bold', className)}>
-      {message}
-    </p>
-  );
+  return <p className={cn('mt-2 w-full text-center font-bold', className)}>{message}</p>;
 }
