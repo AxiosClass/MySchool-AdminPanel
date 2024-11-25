@@ -33,11 +33,11 @@ export default function TeachersPage() {
               {teachersData.data.map(({ id, name, salary, joinedAt, classroomsClassTeacher, phone }) => (
                 <TableRow className='border-b' key={id}>
                   <TableCell>
-                    <div className='flex gap-2'>
+                    <div className='flex gap-4'>
                       <UserIcon username={name} />
                       <div>
                         <p className='text-base font-semibold'>{name}</p>
-                        <p>ID : {id}</p>
+                        <p className='text-sm text-muted-foreground'>ID : {id}</p>
                       </div>
                     </div>
                   </TableCell>

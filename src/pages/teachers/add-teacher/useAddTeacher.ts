@@ -11,7 +11,7 @@ const addTeacherFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   nid: z.string().min(1, { message: 'Nid is required' }),
   phone: z.string().min(1, { message: 'Phone Number is required' }),
-  dob: z.date(),
+  dob: z.date({ message: 'Invalid date' }),
   bloodGroup: z.string().min(1, { message: 'Blood Group is required' }),
   salary: z.string().min(1, { message: 'Salary is required' }),
   address: z.string().min(1, { message: 'Address is required' }),

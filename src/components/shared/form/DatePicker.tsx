@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from '@/components/ui/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Control } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Control } from 'react-hook-form';
 
 interface IProps {
   label: string;
