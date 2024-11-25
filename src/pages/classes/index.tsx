@@ -1,11 +1,11 @@
-import { ClassCard } from './ClassCard';
+import { CreateClass } from './create-class/CreateClass';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetClassesQuery } from '@/data-fetching/queries/class/getClasses';
-import { CreateClass } from './create-class/CreateClass';
 import { Message } from '@/components/shared/Message';
+import { ClassCard } from './ClassCard';
 
 export default function ClassesPage() {
-  const { classesData, isLoading } = useGetClassesQuery();
+  const { data: classesData, isLoading } = useGetClassesQuery();
 
   if (isLoading) return 'Loading';
 

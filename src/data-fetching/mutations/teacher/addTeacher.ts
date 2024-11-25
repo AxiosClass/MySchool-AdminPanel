@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { axiosInstance } from '../../axiosInstance';
 import { queryClient } from '../../QueryProvider';
 import { IServerResponse } from '@/types/common';
+import { TAGS } from '@/data-fetching/tags';
 
 interface IAddTeacherPayload {
   id: string;
@@ -28,7 +29,7 @@ export const useAddTeacherMutation = () => {
   const addTeacherMutation = useMutation({
     mutationFn: addTeacher,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [] });
+      queryClient.invalidateQueries({ queryKey: [TAGS.TEACHERS] });
     },
   });
 

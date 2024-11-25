@@ -24,7 +24,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r border-primary-100 shadow md:flex'>
+    <aside className='hidden min-h-screen min-w-[240px] flex-col border-r shadow md:flex'>
       <AppLogo />
       <div className='mt-2 flex flex-col gap-2 px-6'>
         {sidebarLinks.map(({ url, icon, title }) => (
@@ -41,7 +41,7 @@ export const Sidebar = () => {
           </Link>
         ))}
       </div>
-      <div className='mt-auto flex items-center justify-between border-t border-primary-100 p-6'>
+      <div className='mt-auto flex items-center justify-between border-t p-6'>
         <div onClick={handleLogout} className='cursor-pointer rounded-full bg-white p-2 text-red-600'>
           <BiLogOutCircle size={20} />
         </div>

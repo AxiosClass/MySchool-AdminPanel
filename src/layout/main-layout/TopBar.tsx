@@ -6,7 +6,7 @@ export function TopBar() {
   const user = useAuthStore((state) => state.user)!;
 
   return (
-    <div className='flex h-20 items-center justify-between gap-3 border-b border-primary-100 px-6'>
+    <div className='flex h-20 items-center justify-between gap-3 border-b px-6'>
       <h2 className='rounded-full bg-primary-100 px-4 py-2 text-lg font-semibold'>Greetings {user.name} 👋</h2>
       <div className='flex items-center gap-6'>
         <div className='relative'>
