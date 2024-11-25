@@ -1,12 +1,12 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { PageTitle } from '@/components/shared/PageTitle';
-import { AddTeacher } from './add-teacher';
+import { AddTeacher } from './add-teacher/AddTeacher';
 
 export default function TeachersPage() {
   return (
     <PageTitle title='Teachers'>
-      <section className='flex items-center justify-between'>
+      <section className='mt-6 flex items-center justify-between'>
         <h1 className='text-xl font-semibold'>Teachers</h1>
         <AddTeacher />
       </section>
