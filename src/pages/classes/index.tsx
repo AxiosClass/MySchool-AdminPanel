@@ -1,8 +1,8 @@
+import { ClassCard } from './ClassCard';
+import { Message } from '@/components/shared/Message';
 import { CreateClass } from './create-class/CreateClass';
 import { PageTitle } from '@/components/shared/PageTitle';
-import { useGetClassesQuery } from '@/data-fetching/queries/class/getClasses';
-import { Message } from '@/components/shared/Message';
-import { ClassCard } from './ClassCard';
+import { useGetClassesQuery } from '@/data-fetching/hooks/class';
 
 export default function ClassesPage() {
   const { data: classesData, isLoading } = useGetClassesQuery();

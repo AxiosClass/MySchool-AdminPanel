@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { useAddTeacherMutation } from '@/data-fetching/mutations/teacher/addTeacher';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { tryCatch } from '@/helpers/tryCatch';
-import { useState } from 'react';
 import { toast } from 'sonner';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { tryCatch } from '@/helpers/tryCatch';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useAddTeacherMutation } from '@/data-fetching/hooks/teacher';
 
 const addTeacherFormSchema = z.object({
   teacherId: z.string().min(1, { message: 'Teacher id is required' }),

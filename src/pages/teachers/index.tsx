@@ -1,11 +1,10 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-import { useGetTeachersQuery } from '@/data-fetching/queries/teacher/getTeachers';
-import { PageTitle } from '@/components/shared/PageTitle';
-import { AddTeacher } from './add-teacher/AddTeacher';
-import { Message } from '@/components/shared/Message';
-import { UserIcon } from '@/components/shared/UserIcon';
 import { format } from 'date-fns';
+import { Message } from '@/components/shared/Message';
+import { AddTeacher } from './add-teacher/AddTeacher';
+import { UserIcon } from '@/components/shared/UserIcon';
+import { PageTitle } from '@/components/shared/PageTitle';
+import { useGetTeachersQuery } from '@/data-fetching/hooks/teacher';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 export default function TeachersPage() {
   const { data: teachersData, isLoading } = useGetTeachersQuery();

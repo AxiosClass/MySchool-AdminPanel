@@ -1,10 +1,10 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { tryCatch } from '@/helpers/tryCatch';
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import { useCreateClassMutation } from '@/data-fetching/mutations/class/createClass';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCreateClassMutation } from '@/data-fetching/hooks/class';
 
 const createClassFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),

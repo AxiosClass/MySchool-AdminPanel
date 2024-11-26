@@ -1,9 +1,9 @@
-import { apiUrl } from '../../apiUrl';
-import { useMutation } from '@tanstack/react-query';
-import { axiosInstance } from '../../axiosInstance';
-import { queryClient } from '../../QueryProvider';
-import { IServerResponse } from '@/types/common';
+import { apiUrl } from '../apiUrl';
 import { TAGS } from '@/data-fetching/tags';
+import { queryClient } from '../QueryProvider';
+import { IServerResponse } from '@/types/common';
+import { axiosInstance } from '../axiosInstance';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 interface IAddTeacherPayload {
   id: string;
@@ -34,4 +34,28 @@ export const useAddTeacherMutation = () => {
   });
 
   return { addTeacherMutation, isLoading: addTeacherMutation.isPending };
+};
+
+// Get Teachers
+interface ITeacherInfo {
+  id: string;
+  name: string;
+  phone: string;
+  salary: string;
+  classroomsClassTeacher: {
+    name: string;
+    class: {
+      level: string;
+    };
+  }[];
+  joinedAt: string;
+}
+
+export const getTeachers = async (): Promise<IServerResponse<ITeacherInfo[]>> => {
+  const response = await axiosInstance.get(apiUrl.getTeachers);
+  return response.data;
+};
+
+export const useGetTeachersQuery = () => {
+  return useQuery({ queryKey: [TAGS.TEACHERS], queryFn: getTeachers });
 };
