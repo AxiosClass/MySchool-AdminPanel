@@ -5,6 +5,7 @@ import { IServerResponse } from '@/types/common';
 import { axiosInstance } from '../axiosInstance';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+// ********* add new teacher ********* \\
 interface IAddTeacherPayload {
   id: string;
   name: string;
@@ -35,8 +36,7 @@ export const useAddTeacherMutation = () => {
 
   return { addTeacherMutation, isLoading: addTeacherMutation.isPending };
 };
-
-// Get Teachers
+// ********* get teachers ********* \\
 interface ITeacherInfo {
   id: string;
   name: string;

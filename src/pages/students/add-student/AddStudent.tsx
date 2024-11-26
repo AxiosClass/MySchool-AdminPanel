@@ -1,5 +1,3 @@
-import { ControlledSelect, ControlledTextAea, DatePicker, TextInput } from '@/components/shared/form';
-
 import {
   Sheet,
   SheetClose,
@@ -11,19 +9,23 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-import { Button } from '@/components/ui/button';
 import { FaPlus } from 'react-icons/fa6';
-import { useAddStudent } from './useAddStudent';
 import { Form } from '@/components/ui/form';
+import { useAddStudent } from './useAddStudent';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { DatePicker } from '@/components/shared/form/DatePicker';
+import { TextInput } from '@/components/shared/form/TextInput';
+import { ControlledSelect } from '@/components/shared/form/ControlledSelect';
+import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
 
 export function AddStudent() {
   const {
     form,
-    handleAddStudent,
+    handler: { handleAddStudent },
     data: { classes, classrooms, bloodGroups },
     loading: { isClassesLoading, isClassroomLoading, isAddStudentLoading },
-    watching: { classLevel },
+    watching: { selectedClass },
     states: { isOpen, setIsOpen },
   } = useAddStudent();
 
@@ -59,7 +61,7 @@ export function AddStudent() {
                   name='classroomId'
                   label='Classroom'
                   options={classrooms}
-                  disabled={isClassroomLoading || !classLevel}
+                  disabled={isClassroomLoading || !selectedClass}
                   placeholder='Choose any classroom'
                 />
                 <ControlledSelect

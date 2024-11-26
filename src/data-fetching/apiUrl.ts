@@ -10,4 +10,6 @@ export const apiUrl = {
   // teacher
   addTeacher: `${SERVER_ADDRESS}/teacher`,
   getTeachers: `${SERVER_ADDRESS}/teachers`,
+  // student
+  addStudent: `${SERVER_ADDRESS}/student`,
 };

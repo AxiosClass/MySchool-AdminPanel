@@ -5,7 +5,7 @@ import { IServerResponse } from '@/types/common';
 import { axiosInstance } from '../axiosInstance';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-// Create Class
+// ********* crate class ********* \\
 const createClass = async (payload: { name: string; level: string }): Promise<IServerResponse<null>> => {
   const response = await axiosInstance.post(apiUrl.createClass, payload);
   return response?.data;
@@ -22,7 +22,7 @@ export const useCreateClassMutation = () => {
   return { addClassMutation, isLoading: addClassMutation.isPending };
 };
 
-// Get Classes
+// ********* get classes ********* \\
 interface IGetClass {
   id: string;
   name: string;
@@ -37,11 +37,15 @@ const getClasses = async (): Promise<IServerResponse<IGetClass[]>> => {
 };
 
 export const useGetClassesQuery = () => {
-  return useQuery({ queryFn: getClasses, queryKey: [TAGS.CLASSES] });
+  return useQuery({
+    queryFn: getClasses,
+    queryKey: [TAGS.CLASSES],
+  });
 };
 
-// Get Class Details
-export interface IGetClassDetails {
+// ********* get class details ********* \\
+
+interface IGetClassDetails {
   id: string;
   name: string;
   level: string;
@@ -53,6 +57,6 @@ const getClassDetails = async (classId: string): Promise<IServerResponse<IGetCla
   return response?.data;
 };
 
-export const useGetClassDetails = (classId: string) => {
-  return useQuery({ queryKey: [TAGS.CLASS_DETAILS, classId], queryFn: () => getClassDetails(classId) });
+export const useGetClassDetailsQuery = (classId: string, skip?: boolean) => {
+  return useQuery({ queryKey: [TAGS.CLASS_DETAILS, classId], queryFn: () => getClassDetails(classId), enabled: !skip });
 };

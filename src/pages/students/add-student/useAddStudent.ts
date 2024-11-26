@@ -1,12 +1,12 @@
-import { useMutation, useQuery } from '@apollo/client';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { BLOOD_GROUP } from '@/data/constants';
-import { tryCatch } from '@/helpers/tryCatch';
 import { z } from 'zod';
-import { useGetClassesQuery } from '@/data-fetching/queries/class/getClasses';
+import { toast } from 'sonner';
+import { useForm } from 'react-hook-form';
+import { tryCatch } from '@/helpers/tryCatch';
+import { BLOOD_GROUP } from '@/data/constants';
+import { useEffect, useMemo, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useAddStudentMutation } from '@/data-fetching/hooks/student';
+import { useGetClassDetailsQuery, useGetClassesQuery } from '@/data-fetching/hooks/class';
 
 const addStudentFormSchema = z.object({
   name: z.string().min(1, { message: 'Student name is required' }),
@@ -46,44 +46,18 @@ export const useAddStudent = () => {
     },
   });
 
-  const { data: classesData, isLoading: isClassLoading } = useGetClassesQuery();
+  const selectedClass = form.watch('class');
+
+  const { data: classesData, isLoading: isClassesLoading } = useGetClassesQuery();
+  const { data: classDetails, isLoading: isClassroomLoading } = useGetClassDetailsQuery(selectedClass, !selectedClass);
 
   const classes = useMemo(() => {
-    return classesData?.data?.map((classInfo) => ({ label: classInfo.level, value: classInfo.id })) || [];
+    return classesData?.data?.map((classData) => ({ label: classData.level, value: classData.id })) || [];
   }, [classesData?.data]);
 
-  const classrooms = useMemo(() => {}, []);
-
-  // data fetching to get classes
-  // const { data: classData, loading: isClassesLoading } = useQuery<IGetClassesResponse>(GET_CLASSES);
-
-  // const classes = useMemo(() => {
-  //   return (
-  //     classData?.classes?.map((classInfo) => ({
-  //       label: classInfo.name,
-  //       value: classInfo.level,
-  //     })) || []
-  //   );
-  // }, [classData?.classes]);
-
-  // data fetching to get classroom
-  // const classLevel = form.watch('class');
-  // const { data: classroomsData, loading: isClassroomLoading } = useQuery<
-  //   IGetClassroomByClassLevelResponse,
-  //   IGetClassroomByClassLevelArgs
-  // >(GET_CLASSROOM_BY_CLASS_LEVEL, {
-  //   variables: { level: classLevel },
-  //   skip: !classLevel,
-  // });
-
-  // const classrooms = useMemo(() => {
-  //   return (
-  //     classroomsData?.classrooms?.map((classroom) => ({
-  //       label: classroom.name,
-  //       value: classroom.id,
-  //     })) || []
-  //   );
-  // }, [classroomsData?.classrooms]);
+  const classrooms = useMemo(() => {
+    return classDetails?.data.classrooms.map((classroom) => ({ label: classroom.name, value: classroom.id })) || [];
+  }, [selectedClass, classDetails?.data]);
 
   // for bloodGroup
   const bloodGroups = useMemo(() => {
@@ -94,24 +68,21 @@ export const useAddStudent = () => {
   }, []);
 
   // for syncing
-  // useEffect(() => {
-  //   form.setValue('classroomId', '');
-  // }, [classLevel, form]);
+  useEffect(() => {
+    form.setValue('classroomId', '');
+  }, [selectedClass, form]);
 
-  // for mutation
-
-  // const [addStudent, { loading: isAddStudentLoading }] = useMutation<IAddStudentResponse, TAddStudentPayload>(
-  //   ADD_STUDENT,
-  // );
+  const { addStudentMutation, isLoading: isAddStudentLoading } = useAddStudentMutation();
 
   const handleAddStudent = form.handleSubmit(async (formData) => {
     const id = toast.loading('Adding Student');
     tryCatch({
       id,
       async tryFn() {
-        const { name, birthId, classroomId, bloodGroup, dob, address, guardian, parents } = formData;
+        const { dob } = formData;
+        const response = await addStudentMutation.mutateAsync({ ...formData, dob: dob.toISOString() });
+        toast.success(response.message, { id });
 
-        // toast.success(response?.data?.add_student?.message, { id });
         setIsOpen(false);
       },
     });
@@ -119,12 +90,10 @@ export const useAddStudent = () => {
 
   return {
     form,
-    handleAddStudent,
-    loading: { isClassLoading },
-    data: { classes },
-    // data: { classes, classrooms, bloodGroups },
-    // loading: { isClassesLoading, isClassroomLoading, isAddStudentLoading },
-    // watching: { classLevel },
+    handler: { handleAddStudent },
+    data: { classes, classrooms, bloodGroups },
+    loading: { isClassesLoading, isClassroomLoading, isAddStudentLoading },
+    watching: { selectedClass },
     states: { isOpen, setIsOpen },
   };
 };

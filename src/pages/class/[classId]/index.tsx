@@ -4,11 +4,11 @@ import { ArrowBigLeftDashIcon } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared/PageTitle';
-import { useGetClassDetails } from '@/data-fetching/hooks/class';
+import { useGetClassDetailsQuery } from '@/data-fetching/hooks/class';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
-  const { data: classData, isLoading } = useGetClassDetails(classId!);
+  const { data: classData, isLoading } = useGetClassDetailsQuery(classId!);
 
   if (isLoading) return 'Loading';
 
