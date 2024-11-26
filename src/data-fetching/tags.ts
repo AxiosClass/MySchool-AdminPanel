@@ -1,4 +1,5 @@
 export enum TAGS {
   CLASSES = 'CLASSES',
   TEACHERS = 'TEACHERS',
+  CLASS_DETAILS = 'CLASS_DETAILS',
 }

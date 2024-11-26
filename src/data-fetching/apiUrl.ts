@@ -6,6 +6,7 @@ export const apiUrl = {
   // class
   createClass: `${SERVER_ADDRESS}/class`,
   getClasses: `${SERVER_ADDRESS}/classes`,
+  getClassDetails: (classId: string) => `${SERVER_ADDRESS}/class/${classId}`,
   // teacher
   addTeacher: `${SERVER_ADDRESS}/teacher`,
   getTeachers: `${SERVER_ADDRESS}/teachers`,

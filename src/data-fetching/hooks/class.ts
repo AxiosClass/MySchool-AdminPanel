@@ -41,3 +41,18 @@ export const useGetClassesQuery = () => {
 };
 
 // Get Class Details
+export interface IGetClassDetails {
+  id: string;
+  name: string;
+  level: string;
+  classrooms: { id: string; name: string; classTeacher: { id: string; name: string }; students: { id: string }[] }[];
+}
+
+const getClassDetails = async (classId: string): Promise<IServerResponse<IGetClassDetails>> => {
+  const response = await axiosInstance.get(apiUrl.getClassDetails(classId));
+  return response?.data;
+};
+
+export const useGetClassDetails = (classId: string) => {
+  return useQuery({ queryKey: [TAGS.CLASS_DETAILS, classId], queryFn: () => getClassDetails(classId) });
+};
