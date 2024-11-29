@@ -3,7 +3,7 @@ import { apiUrl } from '../apiUrl';
 import { queryClient } from '../QueryProvider';
 import { IServerResponse } from '@/types/common';
 import { axiosInstance } from '../axiosInstance';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 // ********* add new student ********* \\
 interface IAddStudentPayload {
@@ -31,4 +31,29 @@ export const useAddStudentMutation = () => {
   });
 
   return { addStudentMutation, isLoading: addStudentMutation.isPending };
+};
+
+// ********* get students ********* \\
+interface IGetStudent {
+  id: string;
+  name: string;
+  address: string;
+  guardian: {
+    name: string;
+    phone: string;
+  };
+  admittedAt: string;
+  class: string;
+  classroom: {
+    name: string;
+  };
+}
+
+const getStudents = async (): Promise<IServerResponse<IGetStudent[]>> => {
+  const response = await axiosInstance.get(apiUrl.getStudents);
+  return response?.data;
+};
+
+export const useGetStudents = () => {
+  return useQuery({ queryKey: [TAGS.STUDENTS], queryFn: getStudents });
 };
