@@ -1,10 +1,11 @@
 import { ClassroomCard } from './ClassroomCard';
 import { Button } from '@/components/ui/button';
-import { ArrowBigLeftDashIcon } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
+import { ArrowBigLeftDashIcon } from 'lucide-react';
 import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetClassDetailsQuery } from '@/data-fetching/hooks/class';
+import { CreateClassroom } from './create-classroom/CreateClassroom';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
@@ -23,7 +24,9 @@ export default function ClassDetailsPage() {
           </Button>
         </Link>
         {classData?.data && <p className='text-3xl font-semibold'>Class : {classData?.data?.name}</p>}
-        <div className='ml-auto'>{/* <CreateClassroom /> */}</div>
+        <div className='ml-auto'>
+          <CreateClassroom />
+        </div>
       </section>
 
       {classData?.data?.classrooms && classData?.data.classrooms.length ? (

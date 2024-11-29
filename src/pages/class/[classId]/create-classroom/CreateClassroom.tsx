@@ -9,32 +9,20 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { ControlledSelect, TextInput } from '@/components/shared/form';
-import { GET_TEACHERS, IGetTeachersResponse } from '@/lib/queries';
-import { useCreateClassroom } from './useCrateClassroom';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
 import { FaPlus } from 'react-icons/fa6';
-import { useQuery } from '@apollo/client';
-import { useMemo } from 'react';
+import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { useCreateClassroom } from './useCrateClassroom';
+import { TextInput } from '@/components/shared/form/TextInput';
+import { ControlledSelect } from '@/components/shared/form/ControlledSelect';
 
 export function CreateClassroom() {
-  const { data: teachersData, loading: isTeachersDataLoading } = useQuery<IGetTeachersResponse>(GET_TEACHERS);
-
-  const teachers = useMemo(() => {
-    return (
-      teachersData?.teachers?.map((teacher) => ({
-        label: teacher.name,
-        value: teacher.id,
-      })) || []
-    );
-  }, [teachersData]);
-
   const {
     form,
     handleCreateClassroom,
-    isLoading,
     states: { isDialogOpen, setIsDialogOpen },
+    data: { teachers },
+    loaders: { isClassroomCreating, isTeacherFetching },
   } = useCreateClassroom();
 
   return (
@@ -56,16 +44,16 @@ export function CreateClassroom() {
             <ControlledSelect
               control={form.control}
               label='Class Teacher'
-              name='teacherId'
+              name='classTeacherId'
               options={teachers}
               placeholder='Select Any Teacher'
-              disabled={isTeachersDataLoading}
+              disabled={isTeacherFetching}
             />
             <DialogFooter className='mt-2'>
               <DialogClose asChild>
                 <Button variant={'outline'}>Cancel</Button>
               </DialogClose>
-              <Button disabled={isLoading}>{isLoading ? 'Processing' : 'Proceed'}</Button>
+              <Button disabled={isClassroomCreating}>{isClassroomCreating ? 'Processing' : 'Proceed'}</Button>
             </DialogFooter>
           </form>
         </Form>

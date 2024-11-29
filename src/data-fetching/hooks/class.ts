@@ -19,14 +19,14 @@ const createClass = async (payload: IAddClassPayload): Promise<IServerResponse<n
 };
 
 export const useCreateClassMutation = () => {
-  const addClassMutation = useMutation({
+  const createClassMutation = useMutation({
     mutationFn: createClass,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [TAGS.CLASSES] });
     },
   });
 
-  return { createClass: addClassMutation, isLoading: addClassMutation.isPending };
+  return { createClassMutation, isLoading: createClassMutation.isPending };
 };
 
 // ********* get classes ********* \\

@@ -18,7 +18,7 @@ type TCreateClassFormSchema = z.infer<typeof createClassFormSchema>;
 
 export const useCreateClass = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { createClass, isLoading } = useCreateClassMutation();
+  const { createClassMutation, isLoading } = useCreateClassMutation();
 
   const form = useForm<TCreateClassFormSchema>({
     resolver: zodResolver(createClassFormSchema),
@@ -32,7 +32,7 @@ export const useCreateClass = () => {
     tryCatch({
       id,
       tryFn: async () => {
-        const response = await createClass.mutateAsync({ name, level, admissionFee, monthlyFee });
+        const response = await createClassMutation.mutateAsync({ name, level, admissionFee, monthlyFee });
         toast.success(response.message, { id });
         setIsDialogOpen(false);
       },

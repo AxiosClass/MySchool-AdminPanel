@@ -1,9 +1,10 @@
-import { PageTitle } from '@/components/shared/PageTitle';
+import { format } from 'date-fns';
+import { Message } from '@/components/shared/Message';
 import { AddStudent } from './add-student/AddStudent';
+import { UserIcon } from '@/components/shared/UserIcon';
+import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetStudents } from '@/data-fetching/hooks/student';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { UserIcon } from '@/components/shared/UserIcon';
-import { format } from 'date-fns';
 
 export default function StudentsPage() {
   const { data: studentsInfo, isLoading } = useGetStudents();
@@ -57,7 +58,7 @@ export default function StudentsPage() {
             </Table>
           </section>
         ) : (
-          <></>
+          <Message message='No student found' />
         )}
       </section>
     </PageTitle>
