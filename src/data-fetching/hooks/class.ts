@@ -6,7 +6,14 @@ import { axiosInstance } from '../axiosInstance';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 // ********* crate class ********* \\
-const createClass = async (payload: { name: string; level: string }): Promise<IServerResponse<null>> => {
+interface IAddClassPayload {
+  name: string;
+  level: string;
+  admissionFee: number;
+  monthlyFee: number;
+}
+
+const createClass = async (payload: IAddClassPayload): Promise<IServerResponse<null>> => {
   const response = await axiosInstance.post(apiUrl.createClass, payload);
   return response?.data;
 };
@@ -19,7 +26,7 @@ export const useCreateClassMutation = () => {
     },
   });
 
-  return { addClassMutation, isLoading: addClassMutation.isPending };
+  return { createClass: addClassMutation, isLoading: addClassMutation.isPending };
 };
 
 // ********* get classes ********* \\

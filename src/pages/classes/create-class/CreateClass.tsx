@@ -35,8 +35,15 @@ export function CreateClass() {
         </DialogHeader>
         <Form {...form}>
           <form className='flex flex-col gap-4' onSubmit={handleCreateClass}>
-            <TextInput control={form.control} label='Name' name='name' placeholder='Class Name' />
-            <TextInput control={form.control} label='Level' name='level' placeholder='Level' />
+            <TextInput control={form.control} label='Name' name='name' placeholder='Input Class Name' />
+            <TextInput control={form.control} label='Level' name='level' placeholder='Input Level' />
+            <TextInput control={form.control} label='Monthly Fee' name='monthlyFee' placeholder='Input monthly fee' />
+            <TextInput
+              control={form.control}
+              label='Admission Fee'
+              name='admissionFee'
+              placeholder='Input admission fee'
+            />
             <Button disabled={isLoading} className='mt-4'>
               {isLoading ? 'Class Creating...' : 'Create Class'}
             </Button>
