@@ -1,3 +1,4 @@
+import { MainLayoutLoader } from '@/components/loader/MainLayoutLoader';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback='Main Layout is loading'>
+      <Suspense fallback={<MainLayoutLoader />}>
         <MainLayout />
       </Suspense>
     ),

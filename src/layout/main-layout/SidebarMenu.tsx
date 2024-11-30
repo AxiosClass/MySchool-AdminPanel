@@ -1,9 +1,9 @@
-import { AppLogo } from '@/components/shared/AppLogo';
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
 import { MenuIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { AppLogo } from '@/components/shared/AppLogo';
 import { isActive, sidebarLinks } from './sidebarLinks';
-import { cn } from '@/lib/utils';
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 export function SidebarMenu() {
   const location = useLocation();
@@ -14,9 +14,10 @@ export function SidebarMenu() {
         <MenuIcon />
       </SheetTrigger>
       <SheetContent className='max-w-60' side='left'>
-        <div>
+        <SheetTitle>
           <AppLogo />
-        </div>
+        </SheetTitle>
+        <SheetDescription className='sr-only'>Sheet Description</SheetDescription>
         <section className='mt-4 flex flex-col gap-1'>
           {sidebarLinks.map(({ icon, title, url }) => (
             <Link
