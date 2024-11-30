@@ -27,7 +27,7 @@ export function CreateClassroom() {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className='gap-3'>
           <FaPlus />
           Create Classroom

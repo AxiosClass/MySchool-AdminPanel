@@ -27,7 +27,7 @@ export default function StudentsPage() {
                   <TableHead>Class</TableHead>
                   <TableHead>Guardian</TableHead>
                   <TableHead>Address</TableHead>
-                  <TableHead className='text-right'>Joined at</TableHead>
+                  <TableHead className='text-right'>Admitted at</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

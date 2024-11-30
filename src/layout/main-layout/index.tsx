@@ -1,10 +1,10 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthStore } from '@/stores/auth';
-import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
+import { Sidebar } from './Sidebar';
+import { useAuthStore } from '@/stores/auth';
+import { Navigate, Outlet } from 'react-router-dom';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-export const MainLayout = () => {
+export default function MainLayout() {
   const user = useAuthStore((state) => state.user);
 
   return user ? (
@@ -20,4 +20,4 @@ export const MainLayout = () => {
   ) : (
     <Navigate to={'/login'} />
   );
-};
+}

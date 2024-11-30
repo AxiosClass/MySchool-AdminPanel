@@ -1,7 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { MainLayout } from '@/layout/main-layout/MainLayout';
 import { lazy, Suspense } from 'react';
 
+// layouts
+const MainLayout = lazy(() => import('@/layout/main-layout'));
+
+// pages
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
 const ClassesPage = lazy(() => import('@/pages/classes'));
@@ -12,25 +15,72 @@ const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout />,
+    element: (
+      <Suspense fallback='Main Layout is loading'>
+        <MainLayout />
+      </Suspense>
+    ),
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/classes', element: <ClassesPage /> },
-      { path: '/class/:classId', element: <ClassDetailsPage /> },
-      { path: '/teachers', element: <TeachersPage /> },
-      { path: '/students', element: <StudentsPage /> },
+      {
+        path: '/',
+        element: (
+          <Suspense fallback='Home Page is loading'>
+            <HomePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/classes',
+        element: (
+          <Suspense fallback='Classes Page is loading'>
+            <ClassesPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/class/:classId',
+        element: (
+          <Suspense fallback='Class Details Page is loading'>
+            <ClassDetailsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/teachers',
+        element: (
+          <Suspense fallback='Teachers Page is loading'>
+            <TeachersPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/students',
+        element: (
+          <Suspense fallback='Students Page is loading'>
+            <StudentsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/transactions',
+        element: (
+          <Suspense fallback='Students Page is loading'>
+            <StudentsPage />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: (
+      <Suspense fallback='Login Page is loading'>
+        <LoginPage />
+      </Suspense>
+    ),
   },
 ]);
 
 export const AppRouter = () => {
-  return (
-    <Suspense fallback='Loading'>
-      <RouterProvider router={router} />
-    </Suspense>
-  );
+  return <RouterProvider router={router} />;
 };

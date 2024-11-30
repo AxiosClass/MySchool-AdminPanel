@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaUserTie } from 'react-icons/fa';
 import { FaGraduationCap } from 'react-icons/fa6';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface IProps {
   id: string;

@@ -23,7 +23,7 @@ export default function TeachersPage() {
               <TableRow className='border-none'>
                 <TableHead>Teacher Info</TableHead>
                 <TableHead>Phone</TableHead>
-                <TableHead>Class Teacher</TableHead>
+                <TableHead>Section</TableHead>
                 <TableHead>Salary</TableHead>
                 <TableHead className='text-right'>Joined at</TableHead>
               </TableRow>
