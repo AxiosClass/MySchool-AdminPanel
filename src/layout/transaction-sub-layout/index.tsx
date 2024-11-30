@@ -2,13 +2,17 @@ import { cn } from '@/lib/utils';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const transactionLinks = [
-  { title: 'Payments', url: 'transactions/payments' },
-  { title: 'Salaries', url: 'transactions/salaries' },
-  { title: 'Expenses', url: 'transactions/expenses' },
+  { title: 'Take Payment', url: '/transactions/take-payment' },
+  { title: 'Payments', url: '/transactions/payments' },
+  { title: 'Salaries', url: '/transactions/salaries' },
+  { title: 'Expenses', url: '/transactions/expenses' },
 ];
 
 const findPath = (url: string) => {
+  if (url.includes('/take-payment')) return 'Take Payment';
   if (url.includes('/payments')) return 'Payments';
+  if (url.includes('/salaries')) return 'Salaries';
+  if (url.includes('/expenses')) return 'Expenses';
 };
 
 const isActive = (pathname: string, url: string) => {
@@ -31,7 +35,7 @@ export default function TransactionSubLayout() {
             <Link
               className={cn(
                 'flex items-center gap-2 rounded-full px-4 py-2 hover:bg-neutral-300 hover:text-black',
-                isActive(location.pathname, url) && 'bg-primary text-white',
+                isActive(location.pathname, `${url}`) && 'bg-primary text-white',
               )}
               key={url}
               to={url}
@@ -41,7 +45,9 @@ export default function TransactionSubLayout() {
           ))}
         </div>
       </section>
-      <Outlet />
+      <section className='flex-grow pl-6'>
+        <Outlet />
+      </section>
     </main>
   );
 }

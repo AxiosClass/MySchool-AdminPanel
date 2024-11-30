@@ -12,3 +12,8 @@ export enum USER_ROLE {
   TEACHER = 'teacher',
   STUDENT = 'student',
 }
+
+export enum USER_STATUS {
+  ACTIVE = 'ACTIVE',
+  BLOCKED = 'BLOCKED',
+}

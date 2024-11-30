@@ -17,7 +17,7 @@ export const sidebarLinks: ILink[] = [
   { title: 'Classes', url: '/classes', icon: <FaBook /> },
   { title: 'Teachers', url: '/teachers', icon: <FaUserTie /> },
   { title: 'Students', url: '/students', icon: <PiStudentFill /> },
-  { title: 'Transactions', url: '/transactions/payments', icon: <IoWallet /> },
+  { title: 'Transactions', url: '/transactions/take-payment', icon: <IoWallet /> },
   { title: 'Staffs', url: '/staffs', icon: <HiUsers /> },
   { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
   { title: 'Calender', url: '/calender', icon: <IoCalendarSharp /> },

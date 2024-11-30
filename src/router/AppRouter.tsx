@@ -1,6 +1,6 @@
-import { MainLayoutLoader } from '@/components/loader/MainLayoutLoader';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { MainLayoutLoader } from '@/components/loader/MainLayoutLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -13,6 +13,7 @@ const ClassesPage = lazy(() => import('@/pages/classes'));
 const TeachersPage = lazy(() => import('@/pages/teachers'));
 const StudentsPage = lazy(() => import('@/pages/students'));
 const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
+const TakePaymentPage = lazy(() => import('@/pages/transactions/take-payment'));
 
 const router = createBrowserRouter([
   {
@@ -70,7 +71,17 @@ const router = createBrowserRouter([
             <TransactionSubLayout />
           </Suspense>
         ),
-        children: [{ path: 'payments', element: <Suspense fallback='Payments Page is loading'></Suspense> }],
+        children: [
+          {
+            path: 'take-payment',
+            element: (
+              <Suspense fallback='Take Payment Page is loading'>
+                <TakePaymentPage />
+              </Suspense>
+            ),
+          },
+          { path: 'payments', element: <Suspense fallback='Payments Page is loading'></Suspense> },
+        ],
       },
     ],
   },

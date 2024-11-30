@@ -8,12 +8,12 @@ import {
 } from '@/components/ui/dialog';
 
 import { Button } from '@/components/ui/button';
-import { useAddPayment } from './useAddPayment';
+import { useMakePayment } from './useMakePayment';
 
-export function AddPayment() {
+export function MakePayment() {
   const {
     states: { isOpen, setIsOpen },
-  } = useAddPayment();
+  } = useMakePayment();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

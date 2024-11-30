@@ -15,4 +15,6 @@ export const apiUrl = {
   // student
   addStudent: `${SERVER_ADDRESS}/student`,
   getStudents: `${SERVER_ADDRESS}/students`,
+  // payment
+  getPaymentSummary: (studentId: string) => `${SERVER_ADDRESS}/payment/summary/${studentId}`,
 };
