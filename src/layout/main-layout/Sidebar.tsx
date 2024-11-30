@@ -26,7 +26,7 @@ export const Sidebar = () => {
   return (
     <aside className='hidden min-h-screen min-w-[240px] flex-col border-r shadow md:flex'>
       <AppLogo />
-      <div className='mt-2 flex flex-col gap-2 px-6'>
+      <div className='mt-2 flex flex-col px-6'>
         {sidebarLinks.map(({ url, icon, title }) => (
           <Link
             key={url}

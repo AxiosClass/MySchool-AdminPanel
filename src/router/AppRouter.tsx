@@ -1,8 +1,9 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
+const TransactionSubLayout = lazy(() => import('@/layout/transaction-sub-layout'));
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -65,9 +66,10 @@ const router = createBrowserRouter([
         path: '/transactions',
         element: (
           <Suspense fallback='Students Page is loading'>
-            <StudentsPage />
+            <TransactionSubLayout />
           </Suspense>
         ),
+        children: [{ path: 'payments', element: <Suspense fallback='Payments Page is loading'></Suspense> }],
       },
     ],
   },
