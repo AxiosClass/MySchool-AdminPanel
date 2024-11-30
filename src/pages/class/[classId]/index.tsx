@@ -23,7 +23,7 @@ export default function ClassDetailsPage() {
             </span>
           </Button>
         </Link>
-        {classData?.data && <p className='text-3xl font-semibold'>Class : {classData?.data?.name}</p>}
+        {classData?.data && <p className='hidden text-3xl font-semibold md:block'>Class : {classData?.data?.name}</p>}
         <div className='ml-auto'>
           <CreateClassroom />
         </div>

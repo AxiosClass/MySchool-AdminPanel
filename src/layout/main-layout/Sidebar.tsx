@@ -1,18 +1,12 @@
-import { AppLogo } from '@/components/shared/AppLogo';
-import { Link, useLocation } from 'react-router-dom';
-import { BiLogOutCircle } from 'react-icons/bi';
-import { IoMdSettings } from 'react-icons/io';
-import { sidebarLinks } from './sidebarLinks';
-import { useAuthStore } from '@/stores/auth';
-import { FaUser } from 'react-icons/fa6';
-import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-
-const isActive = (url: string, pathname: string) => {
-  if (url === pathname) return true;
-  if (url === '/classes' && pathname.startsWith('/class')) return true;
-  if (url.startsWith('/transactions') && pathname.startsWith('/transactions')) return true;
-};
+import { cn } from '@/lib/utils';
+import { FaUser } from 'react-icons/fa6';
+import { useAuthStore } from '@/stores/auth';
+import { IoMdSettings } from 'react-icons/io';
+import { isActive, sidebarLinks } from './sidebarLinks';
+import { BiLogOutCircle } from 'react-icons/bi';
+import { Link, useLocation } from 'react-router-dom';
+import { AppLogo } from '@/components/shared/AppLogo';
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
