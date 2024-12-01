@@ -11,3 +11,9 @@ export interface IServerResponse<IData> {
   data: IData;
   meta?: IMeta;
 }
+
+export enum PAYMENT_TYPES {
+  ADMISSION_FEE = 'ADMISSION_FEE',
+  MONTHLY_FEE = 'MONTHLY_FEE',
+  OTHERS = 'OTHERS',
+}

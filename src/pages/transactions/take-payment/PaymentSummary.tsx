@@ -5,7 +5,7 @@ import { MakePayment } from '@/components/shared/make-payment/MakePayment';
 export function PaymentSummary(paymentSummary: IPaymentSummary) {
   if (!paymentSummary?.id) return <Message className='mt-12' message='No Student Found' />;
 
-  const { name, class: classLevel, classroom, totalPaid, totalDue } = paymentSummary;
+  const { name, class: classLevel, classroom, totalPaid, totalDue, id } = paymentSummary;
 
   return (
     <section className='mt-12'>
@@ -24,13 +24,13 @@ export function PaymentSummary(paymentSummary: IPaymentSummary) {
               Section : <span className='font-semibold'>{classroom.name}</span>
             </p>
             <p className='font-semibold'>Paid : {totalPaid}</p>
-            <p className='font-semibold'>Due : {totalDue}</p>
+            <p className='font-semibold'>Due : {(totalDue || 0) - (totalPaid || 0)}</p>
           </div>
 
           <div className='flex items-center gap-4'></div>
         </div>
         <div className='ml-auto'>
-          <MakePayment />
+          <MakePayment studentId={id} />
         </div>
       </section>
     </section>

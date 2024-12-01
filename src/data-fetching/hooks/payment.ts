@@ -3,10 +3,11 @@ import { apiUrl } from '../apiUrl';
 import { USER_STATUS } from '@/types/user';
 import { IServerResponse } from '@/types/common';
 import { axiosInstance } from '../axiosInstance';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { removeEmptyProperties } from '@/helpers/common';
+import { queryClient } from '../QueryProvider';
 
 // payment summary
-
 export interface IPaymentSummary {
   id: string;
   name: string;
@@ -26,7 +27,35 @@ const getPaymentSummary = async (studentId: string): Promise<IServerResponse<IPa
 export const useGetPaymentSummary = (studentId: string) => {
   return useQuery({
     queryFn: () => getPaymentSummary(studentId),
-    queryKey: [TAGS.PAYMENT_DETAILS, studentId],
+    queryKey: [TAGS.PAYMENT_DETAILS, { studentId }],
     enabled: !!studentId,
   });
+};
+
+// make payment
+export interface IMakePaymentPayload {
+  amount: number;
+  month?: number;
+  year: number;
+  description?: string;
+  type: string;
+  studentId: string;
+}
+
+const makePayment = async (payload: IMakePaymentPayload): Promise<IServerResponse<null>> => {
+  const refinedProperties = removeEmptyProperties(payload);
+  const response = await axiosInstance.post(apiUrl.makePayment, refinedProperties);
+  return response?.data;
+};
+
+export const useMakePaymentMutation = (studentId: string) => {
+  const makePaymentMutation = useMutation({
+    mutationFn: makePayment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [TAGS.PAYMENTS, { studentId }] });
+      queryClient.invalidateQueries({ queryKey: [TAGS.PAYMENT_DETAILS, { studentId }] });
+    },
+  });
+
+  return { makePaymentMutation, isLoading: makePaymentMutation.isPending };
 };

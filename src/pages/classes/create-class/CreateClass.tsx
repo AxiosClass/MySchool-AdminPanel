@@ -37,9 +37,16 @@ export function CreateClass() {
           <form className='flex flex-col gap-4' onSubmit={handleCreateClass}>
             <TextInput control={form.control} label='Name' name='name' placeholder='Input Class Name' />
             <TextInput control={form.control} label='Level' name='level' placeholder='Input Level' />
-            <TextInput control={form.control} label='Monthly Fee' name='monthlyFee' placeholder='Input monthly fee' />
             <TextInput
               control={form.control}
+              type='number'
+              label='Monthly Fee'
+              name='monthlyFee'
+              placeholder='Input monthly fee'
+            />
+            <TextInput
+              control={form.control}
+              type='number'
               label='Admission Fee'
               name='admissionFee'
               placeholder='Input admission fee'

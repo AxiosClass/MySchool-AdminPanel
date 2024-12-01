@@ -1,31 +1,49 @@
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { numberGenerator } from '@/helpers/zodHelper';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { tryCatch } from '@/helpers/tryCatch';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMakePaymentMutation } from '@/data-fetching/hooks/payment';
 
 const makePaymentSchema = z.object({
-  amount: numberGenerator({ min: 100, minErrorMessage: 'Minimum amount is 100' }),
-  month: numberGenerator({ min: 0, max: 11, minErrorMessage: 'Invalid month', maxErrorMessage: 'Invalid month' }),
-  year: numberGenerator({ min: 2024, minErrorMessage: 'Invalid year' }),
+  amount: z.string().min(1, { message: 'Amount is required' }),
+  month: z.string().min(0, { message: 'Invalid Month' }),
+  year: z.string().min(0, { message: 'Invalid Year' }),
   description: z.string().optional(),
   type: z.string().min(1, { message: 'Payment type is required' }),
 });
 
 type TMakePaymentFromSchema = z.infer<typeof makePaymentSchema>;
 
-const date = new Date();
-
-export const useMakePayment = () => {
+export const useMakePayment = (studentId: string) => {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<TMakePaymentFromSchema>({
     resolver: zodResolver(makePaymentSchema),
-    defaultValues: { amount: 0, description: '', month: 0, type: '', year: date.getFullYear() },
+    defaultValues: { amount: '', description: '', month: '', type: '', year: '' },
   });
+
+  const { makePaymentMutation, isLoading } = useMakePaymentMutation(studentId);
 
   const handleAddPayment = form.handleSubmit(async (formData) => {
-    console.log(formData);
+    const id = toast.loading('Making Payment');
+    tryCatch({
+      id,
+      tryFn: async () => {
+        const response = await makePaymentMutation.mutateAsync({
+          ...formData,
+          amount: Number(formData.amount),
+          month: Number(formData.month),
+          year: Number(formData.year),
+          studentId,
+        });
+
+        toast.success(response?.message, { id });
+        form.reset();
+        setIsOpen(false);
+      },
+    });
   });
 
-  return { form, handleAddPayment, states: { isOpen, setIsOpen } };
+  return { form, handleAddPayment, states: { isOpen, setIsOpen }, isLoading };
 };
