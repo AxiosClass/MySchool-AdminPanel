@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetPaymentSummary } from '@/data-fetching/hooks/payment';
+import { PaymentsTable } from './PaymentsTable';
 
 export default function TakePaymentPage() {
   const [searchParams, setSearchParam] = useSearchParams();
@@ -22,6 +23,7 @@ export default function TakePaymentPage() {
         <div className='relative w-full max-w-96'>
           <Input
             ref={inputRef}
+            className='rounded-md'
             placeholder='Input student id here...'
             onKeyDown={(event) => {
               if (event.key === 'Enter' && inputRef.current?.value)
@@ -37,7 +39,10 @@ export default function TakePaymentPage() {
         </div>
       </section>
       {studentId ? (
-        <PaymentSummary {...paymentSummary?.data!} />
+        <>
+          <PaymentSummary {...paymentSummary?.data!} />
+          <PaymentsTable studentId={studentId} />
+        </>
       ) : (
         <Message className='mt-12' message='Input student id first' />
       )}

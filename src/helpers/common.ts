@@ -4,3 +4,12 @@ export const removeEmptyProperties = (obj: Record<string, any>) => {
     return acc;
   }, {});
 };
+
+export const makeQueryUrl = (baseAddress: string, obj: Record<string, any>) => {
+  const refinedObj = removeEmptyProperties(obj);
+  return Object.keys(refinedObj).reduce((acc: string, key, index) => {
+    if (index === 0) acc += `?${key}=${obj[key]}`;
+    else acc += `&${key}=${obj[key]}`;
+    return acc;
+  }, baseAddress);
+};
