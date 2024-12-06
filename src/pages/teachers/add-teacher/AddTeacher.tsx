@@ -1,24 +1,16 @@
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
-
 import { useMemo } from 'react';
-import { DatePicker } from '@/components/shared/form/DatePicker';
-import { TextInput } from '@/components/shared/form/TextInput';
+import { FaPlus } from 'react-icons/fa6';
+import { Form } from '@/components/ui/form';
+import { useAddTeacher } from './useAddTeacher';
 import { BLOOD_GROUP } from '@/data/constants';
 import { Button } from '@/components/ui/button';
+import { SheetClose } from '@/components/ui/sheet';
+import { DatePicker } from '@/components/shared/form/DatePicker';
+import { TextInput } from '@/components/shared/form/TextInput';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ControlledSelect } from '@/components/shared/form/ControlledSelect';
 import { ControlledTextAea } from '@/components/shared/form/ControlledTextArea';
-import { useAddTeacher } from './useAddTeacher';
-import { Form } from '@/components/ui/form';
-import { FaPlus } from 'react-icons/fa6';
+import { CustomSheet } from '@/components/shared/CustomSheet';
 
 export function AddTeacher() {
   const {
@@ -32,62 +24,63 @@ export function AddTeacher() {
   }, []);
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
+    <CustomSheet
+      title='Add Teacher'
+      description="Please provide teacher' information"
+      side='right'
+      control={{ isSheetOpen: isOpen, setIsSheetOpen: setIsOpen }}
+      asChild
+      trigger={
         <Button className='gap-3'>
           <FaPlus />
           Add Teacher
         </Button>
-      </SheetTrigger>
-      <SheetContent className='p-0'>
-        <SheetHeader className='px-6 py-4'>
-          <SheetTitle>Add Teacher</SheetTitle>
-          <SheetDescription>Please provide teacher&apos; information</SheetDescription>
-        </SheetHeader>
-        <Form {...form}>
-          <form
-            style={{ height: `calc(100dvh - 100px)` }}
-            className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto'
-            onSubmit={handleAddTeacher}
-          >
-            <ScrollArea className='h-full px-6'>
-              <div className='grid grid-cols-2 gap-4 p-1'>
-                <TextInput control={form.control} label='Name' name='name' placeholder='@: John Doe' />
-                <TextInput control={form.control} label='Teacher Id' name='teacherId' placeholder='@: JDO' />
-                <TextInput control={form.control} label='NID' name='nid' placeholder='@: 6612****' />
-                <TextInput control={form.control} label='Phone' name='phone' placeholder='@: 015******' />
-                <DatePicker control={form.control} label='Date of Birth' name='dob' />
-                <ControlledSelect
-                  control={form.control}
-                  name='bloodGroup'
-                  label='Blood Group'
-                  placeholder='Select blood group'
-                  options={bloodGroups}
-                />
-                <div className='col-span-2'>
-                  <ControlledTextAea control={form.control} label='Address' name='address' placeholder='@ : Dhaka' />
-                </div>
-                <TextInput control={form.control} label='Salary' name='salary' placeholder='@: 30000' />
-                <TextInput control={form.control} label='Degree Name' name='education.degree' placeholder='@: HSC' />
-                <TextInput
-                  control={form.control}
-                  label='Passed Year'
-                  name='education.passedYear'
-                  type='number'
-                  placeholder='@: 2024'
-                />
+      }
+      className={{ content: 'p-0', header: 'px-6 pt-6' }}
+    >
+      <Form {...form}>
+        <form
+          style={{ height: `calc(100dvh - 100px)` }}
+          className='flex grid-rows-[1fr_auto] flex-col gap-4 overflow-y-auto'
+          onSubmit={handleAddTeacher}
+        >
+          <ScrollArea className='h-full px-6'>
+            <div className='mt-6 grid grid-cols-2 gap-4 p-1'>
+              <TextInput control={form.control} label='Name' name='name' placeholder='@: John Doe' />
+              <TextInput control={form.control} label='Teacher Id' name='teacherId' placeholder='@: JDO' />
+              <TextInput control={form.control} label='NID' name='nid' placeholder='@: 6612****' />
+              <TextInput control={form.control} label='Phone' name='phone' placeholder='@: 015******' />
+              <DatePicker control={form.control} label='Date of Birth' name='dob' />
+              <ControlledSelect
+                control={form.control}
+                name='bloodGroup'
+                label='Blood Group'
+                placeholder='Select blood group'
+                options={bloodGroups}
+              />
+              <div className='col-span-2'>
+                <ControlledTextAea control={form.control} label='Address' name='address' placeholder='@ : Dhaka' />
               </div>
-            </ScrollArea>
-
-            <div className='flex items-center justify-end gap-4 px-6'>
-              <SheetClose asChild>
-                <Button variant={'outline'}>Cancel</Button>
-              </SheetClose>
-              <Button disabled={isLoading}>{isLoading ? 'Adding Teacher' : 'Add Teacher'}</Button>
+              <TextInput control={form.control} label='Salary' name='salary' placeholder='@: 30000' />
+              <TextInput control={form.control} label='Degree Name' name='education.degree' placeholder='@: HSC' />
+              <TextInput
+                control={form.control}
+                label='Passed Year'
+                name='education.passedYear'
+                type='number'
+                placeholder='@: 2024'
+              />
             </div>
-          </form>
-        </Form>
-      </SheetContent>
-    </Sheet>
+          </ScrollArea>
+
+          <div className='flex items-center justify-end gap-4 px-6'>
+            <SheetClose asChild>
+              <Button variant={'outline'}>Cancel</Button>
+            </SheetClose>
+            <Button disabled={isLoading}>{isLoading ? 'Adding Teacher' : 'Add Teacher'}</Button>
+          </div>
+        </form>
+      </Form>
+    </CustomSheet>
   );
 }
