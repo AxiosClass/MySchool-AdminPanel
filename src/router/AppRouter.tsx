@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { MainLayoutLoader } from '@/components/loader/MainLayoutLoader';
+import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));

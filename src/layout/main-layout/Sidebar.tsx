@@ -20,13 +20,13 @@ export const Sidebar = () => {
   return (
     <aside className='hidden min-h-screen min-w-[240px] flex-col border-r shadow md:flex'>
       <AppLogo />
-      <div className='mt-2 flex flex-col px-6'>
+      <div className='mt-2 flex flex-col gap-1 px-6'>
         {sidebarLinks.map(({ url, icon, title }) => (
           <Link
             key={url}
             to={url}
             className={cn(
-              'flex items-center gap-2 rounded-full px-4 py-2 hover:bg-neutral-300 hover:text-black',
+              'flex items-center gap-2 rounded-md px-4 py-2 hover:bg-neutral-300 hover:text-black',
               isActive(url, pathname) && 'bg-primary text-white',
             )}
           >

@@ -11,7 +11,7 @@ export function TopBar() {
       <div className='md:hidden'>
         <SidebarMenu />
       </div>
-      <h2 className='hidden rounded-full bg-primary-100 px-4 py-2 text-lg font-semibold md:block'>
+      <h2 className='hidden rounded-md bg-primary-100 px-4 py-2 text-lg font-semibold md:block'>
         Greetings {user.name} 👋
       </h2>
       <div className='flex items-center gap-6'>
