@@ -6,6 +6,7 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetStudents } from '@/data-fetching/hooks/student';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CustomTable } from '@/components/shared/CustomTable';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 export default function StudentsPage() {
   const { data: studentsInfo, isLoading } = useGetStudents();
@@ -14,10 +15,9 @@ export default function StudentsPage() {
 
   return (
     <PageTitle title='Students'>
-      <section className='mt-6 flex items-center justify-between'>
-        <h1 className='text-xl font-semibold'>Students</h1>
+      <PageHeader label='Students'>
         <AddStudent />
-      </section>
+      </PageHeader>
       <section>
         {studentsInfo?.data && studentsInfo.data.length ? (
           <CustomTable

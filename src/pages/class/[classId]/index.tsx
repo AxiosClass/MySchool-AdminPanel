@@ -1,11 +1,10 @@
+import { useParams } from 'react-router-dom';
 import { ClassroomCard } from './ClassroomCard';
-import { Button } from '@/components/ui/button';
-import { Link, useParams } from 'react-router-dom';
-import { ArrowBigLeftDashIcon } from 'lucide-react';
 import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetClassDetailsQuery } from '@/data-fetching/hooks/class';
 import { CreateClassroom } from './create-classroom/CreateClassroom';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
@@ -15,22 +14,11 @@ export default function ClassDetailsPage() {
 
   return (
     <PageTitle title='Class Details'>
-      <section className='mt-6 flex items-center gap-4'>
-        <Link to={'/classes'}>
-          <Button className='h-10 w-10 text-white'>
-            <span className='text-xl'>
-              <ArrowBigLeftDashIcon />
-            </span>
-          </Button>
-        </Link>
-        {classData?.data && <p className='hidden text-3xl font-semibold md:block'>Class : {classData?.data?.name}</p>}
-        <div className='ml-auto'>
-          <CreateClassroom />
-        </div>
-      </section>
-
+      <PageHeader label={`${classData?.data ? 'Class : ' + classData?.data?.name : ''}`} backLink='/classes'>
+        <CreateClassroom />
+      </PageHeader>
       {classData?.data?.classrooms && classData?.data.classrooms.length ? (
-        <section className='mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+        <section className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
           {classData?.data.classrooms.map((classroom) => <ClassroomCard key={classroom.id} {...classroom} />)}
         </section>
       ) : (

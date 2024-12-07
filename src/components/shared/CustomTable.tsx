@@ -6,7 +6,7 @@ type TProps = PropsWithChildren<{ className?: { tableContainer?: string }; head:
 
 export function CustomTable({ head, children, className }: TProps) {
   return (
-    <section className={cn('mt-6 w-full overflow-hidden rounded-md border', className?.tableContainer)}>
+    <section className={cn('w-full overflow-hidden rounded-md border', className?.tableContainer)}>
       <Table>
         <TableHeader>
           <TableRow className='border-none'>{head}</TableRow>

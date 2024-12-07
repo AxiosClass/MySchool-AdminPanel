@@ -6,6 +6,7 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetTeachersQuery } from '@/data-fetching/hooks/teacher';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CustomTable } from '@/components/shared/CustomTable';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 export default function TeachersPage() {
   const { data: teachersData, isLoading } = useGetTeachersQuery();
@@ -13,10 +14,9 @@ export default function TeachersPage() {
 
   return (
     <PageTitle title='Teachers'>
-      <section className='mt-6 flex items-center justify-between'>
-        <h1 className='text-xl font-semibold'>Teachers</h1>
+      <PageHeader label='Teachers'>
         <AddTeacher />
-      </section>
+      </PageHeader>
       {teachersData?.data && teachersData?.data?.length > 0 ? (
         <>
           <CustomTable
