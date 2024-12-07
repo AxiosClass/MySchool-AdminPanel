@@ -22,6 +22,7 @@ export function AddStudent() {
 
   return (
     <CustomSheet
+      asChild
       title='Add New Student'
       description="Provide student's Information"
       control={{ isSheetOpen: isOpen, setIsSheetOpen: setIsOpen }}

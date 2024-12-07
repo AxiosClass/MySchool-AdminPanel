@@ -20,16 +20,16 @@ export function CreateClassroom() {
   return (
     <>
       <CustomDialog
+        control={{ isDialogOpen, setIsDialogOpen }}
         title='Create Classroom'
         description='Provide with classroom information to create a new one.'
-        control={{ isDialogOpen, setIsDialogOpen }}
+        asChild
         trigger={
           <Button className='gap-3'>
             <FaPlus />
             Create Classroom
           </Button>
         }
-        asChild
       >
         <Form {...form}>
           <form onSubmit={handleCreateClassroom} className='flex flex-col gap-4'>

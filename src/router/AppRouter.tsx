@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
+import { ClassesLoader } from '@/pages/classes/ClassesLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       {
         path: '/classes',
         element: (
-          <Suspense fallback='Classes Page is loading'>
+          <Suspense fallback={<ClassesLoader />}>
             <ClassesPage />
           </Suspense>
         ),

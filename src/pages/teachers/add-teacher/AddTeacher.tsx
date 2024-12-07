@@ -28,8 +28,8 @@ export function AddTeacher() {
       title='Add Teacher'
       description="Please provide teacher' information"
       side='right'
-      control={{ isSheetOpen: isOpen, setIsSheetOpen: setIsOpen }}
       asChild
+      control={{ isSheetOpen: isOpen, setIsSheetOpen: setIsOpen }}
       trigger={
         <Button className='gap-3'>
           <FaPlus />
