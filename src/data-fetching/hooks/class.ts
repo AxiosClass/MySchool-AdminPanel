@@ -47,6 +47,7 @@ export const useGetClassesQuery = () => {
   return useQuery({
     queryFn: getClasses,
     queryKey: [TAGS.CLASSES],
+    staleTime: Infinity,
   });
 };
 
@@ -65,5 +66,10 @@ const getClassDetails = async (classId: string): Promise<IServerResponse<IGetCla
 };
 
 export const useGetClassDetailsQuery = (classId: string, skip?: boolean) => {
-  return useQuery({ queryKey: [TAGS.CLASS_DETAILS, classId], queryFn: () => getClassDetails(classId), enabled: !skip });
+  return useQuery({
+    queryKey: [TAGS.CLASSES, { classId }],
+    queryFn: () => getClassDetails(classId),
+    enabled: !skip,
+    staleTime: Infinity,
+  });
 };

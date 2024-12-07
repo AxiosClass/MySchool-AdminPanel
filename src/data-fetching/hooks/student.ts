@@ -55,5 +55,5 @@ const getStudents = async (): Promise<IServerResponse<IGetStudent[]>> => {
 };
 
 export const useGetStudents = () => {
-  return useQuery({ queryKey: [TAGS.STUDENTS], queryFn: getStudents });
+  return useQuery({ queryKey: [TAGS.STUDENTS], queryFn: getStudents, staleTime: Infinity });
 };

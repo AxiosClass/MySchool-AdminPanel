@@ -7,7 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetPaymentSummary } from '@/data-fetching/hooks/payment';
-import { PaymentsTable } from './PaymentsTable';
+import { Payments } from './Payments';
 
 export default function TakePaymentPage() {
   const [searchParams, setSearchParam] = useSearchParams();
@@ -41,7 +41,7 @@ export default function TakePaymentPage() {
       {studentId ? (
         <>
           <PaymentSummary {...paymentSummary?.data!} />
-          <PaymentsTable studentId={studentId} />
+          <Payments studentId={studentId} />
         </>
       ) : (
         <Message className='mt-12' message='Input student id first' />

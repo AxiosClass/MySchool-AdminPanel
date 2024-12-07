@@ -1,8 +1,8 @@
 import { TAGS } from '../tags';
 import { apiUrl } from '../apiUrl';
 import { USER_STATUS } from '@/types/user';
-import { IServerResponse, PAYMENT_TYPES } from '@/types/common';
 import { axiosInstance } from '../axiosInstance';
+import { IServerResponse, PAYMENT_TYPES } from '@/types/common';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { makeQueryUrl, removeEmptyProperties } from '@/helpers/common';
 import { queryClient } from '../QueryProvider';
@@ -29,6 +29,7 @@ export const useGetPaymentSummary = (studentId: string) => {
     queryFn: () => getPaymentSummary(studentId),
     queryKey: [TAGS.PAYMENT_DETAILS, { studentId }],
     enabled: !!studentId,
+    staleTime: Infinity,
   });
 };
 
@@ -52,7 +53,7 @@ export const useMakePaymentMutation = (studentId: string) => {
   const makePaymentMutation = useMutation({
     mutationFn: makePayment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [TAGS.PAYMENTS, { studentId }] });
+      queryClient.invalidateQueries({ queryKey: [TAGS.PAYMENTS] });
       queryClient.invalidateQueries({ queryKey: [TAGS.PAYMENT_DETAILS, { studentId }] });
     },
   });
@@ -62,7 +63,7 @@ export const useMakePaymentMutation = (studentId: string) => {
 
 // get payments
 
-interface IGetPayment {
+export interface IGetPayment {
   id: string;
   student: { id: string; name: string; class: string; classroom: { name: string } };
   amount: number;
@@ -82,6 +83,7 @@ const getPayments = async (args: Record<string, any>): Promise<IServerResponse<I
 export const useGetPaymentsQuery = (args: Record<string, any>) => {
   return useQuery({
     queryFn: () => getPayments(args),
-    queryKey: [TAGS.PAYMENTS, args],
+    queryKey: [TAGS.PAYMENTS, { ...args }],
+    staleTime: Infinity,
   });
 };
