@@ -1,15 +1,15 @@
 import './index.css';
 
-import { AppRouter } from './router/AppRouter';
-import { QueryProvider } from './data-fetching/QueryProvider';
-import { createRoot } from 'react-dom/client';
-import { StrictMode } from 'react';
 import { Toaster } from 'sonner';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { QueryProvider } from './data-fetching/QueryProvider';
+import { Router } from './Router';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryProvider>
-      <AppRouter />
+      <Router />
       <Toaster richColors />
     </QueryProvider>
   </StrictMode>,
