@@ -57,5 +57,5 @@ export const getTeachers = async (): Promise<IServerResponse<ITeacherInfo[]>> =>
 };
 
 export const useGetTeachersQuery = () => {
-  return useQuery({ queryKey: [TAGS.TEACHERS], queryFn: getTeachers });
+  return useQuery({ queryKey: [TAGS.TEACHERS], queryFn: getTeachers, staleTime: Infinity });
 };

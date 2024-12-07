@@ -11,14 +11,14 @@ export function PageHeader({ label, children, backLink, className }: TProps) {
     <section className={cn('flex items-center gap-4 py-6', className?.container)}>
       {backLink && (
         <Link to={backLink}>
-          <Button className='size-8 text-white'>
-            <span className='text-xl'>
-              <ArrowBigLeftDashIcon />
+          <Button className='size-8'>
+            <span>
+              <ArrowBigLeftDashIcon className='size-6 text-white' />
             </span>
           </Button>
         </Link>
       )}
-      {typeof label === 'string' ? <p className='hidden text-xl font-semibold md:block'>{label}</p> : label}
+      {typeof label === 'string' ? <p className='hidden text-lg font-semibold md:block'>{label}</p> : label}
       <div className='ml-auto'>{children}</div>
     </section>
   );

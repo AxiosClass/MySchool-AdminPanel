@@ -16,6 +16,7 @@ const TeachersPage = lazy(() => import('@/pages/teachers'));
 const StudentsPage = lazy(() => import('@/pages/students'));
 const ClassDetailsPage = lazy(() => import('@/pages/class/[classId]'));
 const TakePaymentPage = lazy(() => import('@/pages/transactions/take-payment'));
+const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
 
 const router = createBrowserRouter([
   {
@@ -82,7 +83,14 @@ const router = createBrowserRouter([
               </Suspense>
             ),
           },
-          { path: 'payments', element: <Suspense fallback='Payments Page is loading'></Suspense> },
+          {
+            path: 'payments',
+            element: (
+              <Suspense fallback='Payments Page is loading'>
+                <PaymentsPage />
+              </Suspense>
+            ),
+          },
         ],
       },
     ],
