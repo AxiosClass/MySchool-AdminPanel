@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
-import { ClassesLoader } from '@/pages/classes/ClassesLoader';
+import { ClassesPageLoader } from '@/pages/classes/ClassesPageLoader';
+import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
       {
         path: '/classes',
         element: (
-          <Suspense fallback={<ClassesLoader />}>
+          <Suspense fallback={<ClassesPageLoader />}>
             <ClassesPage />
           </Suspense>
         ),
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       {
         path: '/teachers',
         element: (
-          <Suspense fallback='Teachers Page is loading'>
+          <Suspense fallback={<TeachersPageLoader />}>
             <TeachersPage />
           </Suspense>
         ),
