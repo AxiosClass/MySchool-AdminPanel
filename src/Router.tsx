@@ -6,6 +6,7 @@ import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
 import { ClassDetailsPageLoader } from './pages/class/[classId]/ClassDetailsPageLoader';
 import { StudentPageLoader } from './pages/students/add-student/StudentPageLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
+import { TakePaymentLoader } from './layout/transaction-sub-layout/TakePaymentLoder';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -81,7 +82,7 @@ const router = createBrowserRouter([
           {
             path: 'take-payment',
             element: (
-              <Suspense fallback='Take Payment Page is loading'>
+              <Suspense fallback={<TakePaymentLoader />}>
                 <TakePaymentPage />
               </Suspense>
             ),
