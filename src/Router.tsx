@@ -6,7 +6,7 @@ import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
 import { ClassDetailsPageLoader } from './pages/class/[classId]/ClassDetailsPageLoader';
 import { StudentPageLoader } from './pages/students/add-student/StudentPageLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
-import { TakePaymentLoader } from './layout/transaction-sub-layout/TakePaymentLoder';
+import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
