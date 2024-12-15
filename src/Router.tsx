@@ -3,6 +3,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
 import { ClassesPageLoader } from '@/pages/classes/ClassesPageLoader';
 import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
+import { ClassDetailsPageLoader } from './pages/class/[classId]/ClassDetailsPageLoader';
+import { StudentPageLoader } from './pages/students/add-student/StudentPageLoader';
+import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -46,7 +49,7 @@ const router = createBrowserRouter([
       {
         path: '/class/:classId',
         element: (
-          <Suspense fallback='Class Details Page is loading'>
+          <Suspense fallback={<ClassDetailsPageLoader />}>
             <ClassDetailsPage />
           </Suspense>
         ),
@@ -62,7 +65,7 @@ const router = createBrowserRouter([
       {
         path: '/students',
         element: (
-          <Suspense fallback='Students Page is loading'>
+          <Suspense fallback={<StudentPageLoader />}>
             <StudentsPage />
           </Suspense>
         ),
@@ -70,7 +73,7 @@ const router = createBrowserRouter([
       {
         path: '/transactions',
         element: (
-          <Suspense fallback='Students Page is loading'>
+          <Suspense fallback={<TransactionSubLayoutLoader />}>
             <TransactionSubLayout />
           </Suspense>
         ),

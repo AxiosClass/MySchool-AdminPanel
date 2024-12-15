@@ -5,12 +5,13 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { useGetClassDetailsQuery } from '@/data-fetching/hooks/class';
 import { CreateClassroom } from './create-classroom/CreateClassroom';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ClassDetailsPageLoader } from './ClassDetailsPageLoader';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
-  const { data: classData, isLoading } = useGetClassDetailsQuery(classId!);
+  const { data: classData, isLoading, isFetching } = useGetClassDetailsQuery(classId!);
 
-  if (isLoading) return 'Loading';
+  if (isLoading || isFetching) return <ClassDetailsPageLoader />;
 
   return (
     <PageTitle title='Class Details'>
