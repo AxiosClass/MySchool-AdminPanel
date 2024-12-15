@@ -19,7 +19,7 @@ export default function LoginPage() {
       <div className='relative flex h-screen flex-col items-center justify-center overflow-hidden bg-baseLight-400'>
         <img
           className='absolute -top-12 left-1/2 translate-x-[-50%] md:-top-28'
-          width={600}
+          width={450}
           src='/public/asset/education/bro.png'
           alt=''
         />
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
         <img
           className='absolute -bottom-20 left-1/2 translate-x-[-50%] md:-bottom-36'
-          width={600}
+          width={450}
           src='/public/asset/high-school/bro.png'
           alt=''
         />

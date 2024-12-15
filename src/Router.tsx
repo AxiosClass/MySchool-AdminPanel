@@ -7,6 +7,7 @@ import { ClassDetailsPageLoader } from './pages/class/[classId]/ClassDetailsPage
 import { StudentPageLoader } from './pages/students/add-student/StudentPageLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
+import { LogInPageLoader } from './pages/login/LogInPageLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -102,7 +103,7 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: (
-      <Suspense fallback='Login Page is loading'>
+      <Suspense fallback={<LogInPageLoader />}>
         <LoginPage />
       </Suspense>
     ),

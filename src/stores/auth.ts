@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import { create } from 'zustand';
 
-import { getAccessTokenFormLocal } from '@/helpers/tokenHelper';
+import { getAccessTokenFormLocal, removeAccessTokenFromLocal } from '@/helpers/tokenHelper';
 import { ILoggedUser } from '@/types/user';
 
 export interface IAuthStore {
@@ -22,5 +22,6 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   },
   removeUser() {
     set(() => ({ user: null }));
+    removeAccessTokenFromLocal();
   },
 }));
