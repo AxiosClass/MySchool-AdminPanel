@@ -20,7 +20,7 @@ export default function LoginPage() {
         <img
           className='absolute -top-12 left-1/2 translate-x-[-50%] md:-top-28'
           width={600}
-          src='/public/asset/education/bro.png'
+          src='/asset/education/bro.png'
           alt=''
         />
 
@@ -32,9 +32,7 @@ export default function LoginPage() {
             <AppLogo />
             <h3 className='text-center text-muted-foreground'>Input Your Credentials to Login</h3>
             <TextInput control={form.control} label='Id' name='id' placeholder='@ john-doe' />
-
             <PasswordInput control={form.control} label='Password' name='password' placeholder='****' />
-
             <Button className='mt-4 w-full' disabled={isLoading}>
               {isLoading ? 'Logging in...' : 'Login'}
             </Button>
@@ -44,7 +42,7 @@ export default function LoginPage() {
         <img
           className='absolute -bottom-20 left-1/2 translate-x-[-50%] md:-bottom-36'
           width={600}
-          src='/public/asset/high-school/bro.png'
+          src='/asset/high-school/bro.png'
           alt=''
         />
       </div>
