@@ -1,12 +1,12 @@
 import { PropsWithChildren, useEffect } from 'react';
 
-interface IProps extends PropsWithChildren {
-  title: string;
-}
-
-export const PageTitle = ({ title, children }: IProps) => {
+type TPageTitleProps = PropsWithChildren<{ title: string }>;
+export const PageTitle = ({ title, children }: TPageTitleProps) => {
   useEffect(() => {
     document.title = `MySchool | ${title}`;
+    return () => {
+      document.title = 'MySchool';
+    };
   }, [title]);
 
   return children;

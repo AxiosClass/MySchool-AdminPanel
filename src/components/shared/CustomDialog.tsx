@@ -22,7 +22,7 @@ interface IProps {
   showClose?: boolean;
 }
 
-export function CustomDialog({
+export const CustomDialog = ({
   control,
   trigger,
   asChild,
@@ -31,7 +31,7 @@ export function CustomDialog({
   description,
   showClose = true,
   children,
-}: IProps) {
+}: IProps) => {
   const dialogContent = useMemo(() => {
     return (
       <>
@@ -67,4 +67,4 @@ export function CustomDialog({
   ) : (
     <Dialog>{dialogContent}</Dialog>
   );
-}
+};

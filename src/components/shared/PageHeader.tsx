@@ -4,9 +4,13 @@ import { Button } from '../ui/button';
 import { PropsWithChildren, ReactNode } from 'react';
 import { ArrowBigLeftDashIcon } from 'lucide-react';
 
-type TProps = PropsWithChildren<{ label: string | ReactNode; backLink?: string; className?: { container?: string } }>;
+type TPageHeaderProps = PropsWithChildren<{
+  label: string | ReactNode;
+  backLink?: string;
+  className?: { container?: string };
+}>;
 
-export function PageHeader({ label, children, backLink, className }: TProps) {
+export const PageHeader = ({ label, children, backLink, className }: TPageHeaderProps) => {
   return (
     <section className={cn('flex items-center gap-4 py-6', className?.container)}>
       {backLink && (
@@ -22,4 +26,4 @@ export function PageHeader({ label, children, backLink, className }: TProps) {
       <div className='ml-auto'>{children}</div>
     </section>
   );
-}
+};

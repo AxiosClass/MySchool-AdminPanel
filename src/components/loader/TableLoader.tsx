@@ -1,6 +1,6 @@
 import { Skeleton } from '../ui/skeleton';
 
-export function TableLoader() {
+export const TableLoader = () => {
   return (
     <div className='flex flex-col gap-2'>
       <Skeleton className='h-10' />
@@ -15,4 +15,4 @@ export function TableLoader() {
       ))}
     </div>
   );
-}
+};

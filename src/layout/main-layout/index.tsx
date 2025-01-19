@@ -6,18 +6,19 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function MainLayout() {
   const user = useAuthStore((state) => state.user);
+  if (!user) return <Navigate to='/login' />;
 
-  return user ? (
+  return (
     <section className='grid min-h-screen bg-background md:grid-cols-[auto_1fr]'>
       <Sidebar />
-      <section className='grid h-screen grid-rows-[auto_1fr]'>
-        <TopBar />
-        <ScrollArea className='customized_scrollbar h-full rounded-t-xl px-6'>
+      <section className='flex h-dvh flex-col'>
+        <div>
+          <TopBar />
+        </div>
+        <ScrollArea className='grow p-6'>
           <Outlet />
         </ScrollArea>
       </section>
     </section>
-  ) : (
-    <Navigate to={'/login'} />
   );
 }

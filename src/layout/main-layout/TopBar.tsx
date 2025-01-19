@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 import { RiNotification4Fill } from 'react-icons/ri';
 import { UserIcon } from '@/components/shared/UserIcon';
 
-export function TopBar() {
+export const TopBar = () => {
   const user = useAuthStore((state) => state.user)!;
 
   return (
@@ -25,4 +25,4 @@ export function TopBar() {
       </div>
     </div>
   );
-}
+};

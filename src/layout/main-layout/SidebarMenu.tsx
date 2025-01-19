@@ -6,7 +6,7 @@ import { isActive, sidebarLinks } from './sidebarLinks';
 import { CustomSheet } from '@/components/shared/CustomSheet';
 import { SheetClose, SheetHeader } from '@/components/ui/sheet';
 
-export function SidebarMenu() {
+export const SidebarMenu = () => {
   const location = useLocation();
 
   return (
@@ -34,4 +34,4 @@ export function SidebarMenu() {
       </section>
     </CustomSheet>
   );
-}
+};
