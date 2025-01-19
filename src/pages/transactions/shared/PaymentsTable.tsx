@@ -4,7 +4,7 @@ import { UserIcon } from '@/components/shared/UserIcon';
 import { CustomTable } from '@/components/shared/CustomTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { IGetPayment } from '@/data-fetching/hooks/payment';
-import { PAYMENT_TYPES } from '@/types/common';
+import { PAYMENT_TYPES } from '@/types/commonType';
 import { months } from '@/data/constants';
 
 interface IProps {

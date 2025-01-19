@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ControlledTextAea } from '../form/ControlledTextArea';
 import { ControlledSelect } from '../form/ControlledSelect';
 import { useMakePayment } from './useMakePayment';
-import { PAYMENT_TYPES } from '@/types/common';
+import { PAYMENT_TYPES } from '@/types/commonType';
 import { CustomDialog } from '../CustomDialog';
 import { useMemo } from 'react';
 import { months } from '@/data/constants';

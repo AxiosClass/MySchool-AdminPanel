@@ -1,2 +1,3 @@
-export * from './common';
-export * from './user';
+export * from './commonType';
+export * from './userType';
+export * from './classType';

@@ -1,8 +1,8 @@
 import { TAGS } from '../tags';
 import { apiUrl } from '../apiUrl';
-import { USER_STATUS } from '@/types/user';
+import { USER_STATUS } from '@/types/userType';
 import { axiosInstance } from '../axiosInstance';
-import { IServerResponse, PAYMENT_TYPES } from '@/types/common';
+import { IServerResponse, PAYMENT_TYPES } from '@/types/commonType';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { makeQueryUrl, removeEmptyProperties } from '@/helpers/helpers';
 import { queryClient } from '../QueryProvider';

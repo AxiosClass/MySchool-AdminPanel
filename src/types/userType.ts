@@ -1,9 +1,9 @@
-export interface ILoggedUser {
+export type TLoggedUser = {
   id: string;
   name: string;
   role: USER_ROLE;
   needPasswordChange: boolean;
-}
+};
 
 export enum USER_ROLE {
   ADMIN = 'ADMIN',

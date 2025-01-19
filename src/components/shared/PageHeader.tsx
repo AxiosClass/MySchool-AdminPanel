@@ -12,7 +12,7 @@ type TPageHeaderProps = PropsWithChildren<{
 
 export const PageHeader = ({ label, children, backLink, className }: TPageHeaderProps) => {
   return (
-    <section className={cn('flex items-center gap-4 py-6', className?.container)}>
+    <section className={cn('flex items-center gap-4 pb-6', className?.container)}>
       {backLink && (
         <Link to={backLink}>
           <Button className='size-8'>

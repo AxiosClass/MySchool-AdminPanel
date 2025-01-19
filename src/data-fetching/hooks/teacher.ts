@@ -1,7 +1,7 @@
 import { apiUrl } from '../apiUrl';
 import { TAGS } from '@/data-fetching/tags';
 import { queryClient } from '../QueryProvider';
-import { IServerResponse } from '@/types/common';
+import { IServerResponse } from '@/types/commonType';
 import { axiosInstance } from '../axiosInstance';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
