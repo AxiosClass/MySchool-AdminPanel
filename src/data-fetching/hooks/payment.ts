@@ -4,7 +4,7 @@ import { USER_STATUS } from '@/types/user';
 import { axiosInstance } from '../axiosInstance';
 import { IServerResponse, PAYMENT_TYPES } from '@/types/common';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { makeQueryUrl, removeEmptyProperties } from '@/helpers/common';
+import { makeQueryUrl, removeEmptyProperties } from '@/helpers/helpers';
 import { queryClient } from '../QueryProvider';
 
 // payment summary

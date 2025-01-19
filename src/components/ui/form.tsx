@@ -133,4 +133,46 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
 );
 FormMessage.displayName = 'FormMessage';
 
-export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField };
+interface IProps<TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>
+  extends Omit<ControllerProps<TFieldValues, TName>, 'render'> {
+  label?: string;
+  description?: string;
+  showMessage?: boolean;
+  children: ControllerProps<TFieldValues, TName>['render'];
+  className?: { formItem?: string };
+}
+
+const CommonFormFiled = <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>({
+  label,
+  description,
+  children,
+  showMessage = true,
+  className,
+  ...props
+}: IProps<TFieldValues, TName>) => {
+  return (
+    <FormField
+      {...props}
+      render={(fieldProps) => (
+        <FormItem className={className?.formItem}>
+          {label && <FormLabel className='font-semibold'>{label}</FormLabel>}
+          <FormControl>{children(fieldProps)}</FormControl>
+          {description && <FormDescription>{description}</FormDescription>}
+          {showMessage && <FormMessage />}
+        </FormItem>
+      )}
+    />
+  );
+};
+
+export {
+  useFormField,
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+  CommonFormFiled,
+};

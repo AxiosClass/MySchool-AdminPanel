@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getAccessTokenFormLocal } from '@/helpers/tokenHelper';
+import { getAccessTokenFormLocal } from '@/helpers';
 import { SERVER_ADDRESS } from './apiUrl';
 
 export const axiosInstance = axios.create({

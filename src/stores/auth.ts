@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import { create } from 'zustand';
 
-import { getAccessTokenFormLocal, removeAccessTokenFromLocal } from '@/helpers/tokenHelper';
+import { getAccessTokenFormLocal, removeAccessTokenFromLocal } from '@/helpers';
 import { ILoggedUser } from '@/types/user';
 
 export interface IAuthStore {

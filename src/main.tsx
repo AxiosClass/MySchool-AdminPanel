@@ -1,10 +1,10 @@
 import './index.css';
 
 import { Toaster } from 'sonner';
+import { Router } from './Router';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { QueryProvider } from './data-fetching/QueryProvider';
-import { Router } from './Router';
+import { QueryProvider } from '@/components/providers';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
