@@ -1,5 +1,6 @@
 import { TOKEN_KEYS } from '@/data/keys';
 import { AxiosError } from 'axios';
+import { z } from 'zod';
 
 export const removeEmptyProperties = (obj: Record<string, any>) => {
   return Object.keys(obj).reduce((acc: Record<string, any>, key) => {
@@ -35,4 +36,9 @@ export const getAccessTokenFormLocal = () => {
 
 export const removeAccessTokenFromLocal = () => {
   localStorage.removeItem(TOKEN_KEYS.ACCESS_TOKEN);
+};
+
+type TZodNumberArgs = { min: number; message: string };
+export const zodNumber = ({ min, message }: TZodNumberArgs) => {
+  return z.string().refine((value) => value && Number(value) >= min, { message });
 };
