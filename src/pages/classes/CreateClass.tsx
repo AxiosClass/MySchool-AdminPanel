@@ -21,7 +21,7 @@ const createClassFormSchema = z.object({
 
 type TCreateClassForm = z.infer<typeof createClassFormSchema>;
 
-const mutationKey = QK.CLASS + '_CREATE';
+const formId = QK.CLASS + '_CREATE';
 
 export const CreateClass = () => {
   const qc = useQueryClient();
@@ -33,7 +33,7 @@ export const CreateClass = () => {
   });
 
   const { mutate } = useMutation({
-    mutationKey: [mutationKey],
+    mutationKey: [formId],
     mutationFn: createClass,
     onSuccess: (res) => {
       toast.success(res.message);
@@ -57,7 +57,7 @@ export const CreateClass = () => {
     <>
       <ActionButton actionType='ADD' label='Create Class' onClick={() => onOpenChange(true)} />
       <FormDialog
-        formId={mutationKey}
+        formId={formId}
         open={open}
         onOpenChange={onOpenChange}
         title='Create Class'
@@ -66,7 +66,7 @@ export const CreateClass = () => {
         submitLoadingTitle='Cratering Class...'
       >
         <Form {...form}>
-          <form id={mutationKey} className='space-y-3' onSubmit={handleCreateClass}>
+          <form id={formId} className='space-y-3' onSubmit={handleCreateClass}>
             <CommonFormFiled control={form.control} name='name' label='Name'>
               {({ field }) => <Input {...field} placeholder='Input class name' />}
             </CommonFormFiled>

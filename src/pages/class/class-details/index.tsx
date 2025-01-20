@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { FaGraduationCap, FaUserTie } from 'react-icons/fa';
 import { getClassDetails } from '@/api/query';
 import { ClassDetailsPageLoader } from './ClassDetailsPageLoader';
+import { CreateClassroom } from './CreateClassroom';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
@@ -21,7 +22,7 @@ export default function ClassDetailsPage() {
   return (
     <PageTitle title='Class Details'>
       <PageHeader label={`${classData?.data ? 'Class : ' + classData?.data?.name : ''}`} backLink='/classes'>
-        {/* <CreateClassroom /> */}
+        <CreateClassroom />
       </PageHeader>
       {classData?.data?.classrooms && classData?.data.classrooms.length ? (
         <section className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
