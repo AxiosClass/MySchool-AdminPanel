@@ -1,15 +1,17 @@
 import { QK } from '@/api';
 import { PageTitle, PageHeader, Message } from '@/components/shared';
-import { CreateClass } from './create-class/CreateClass';
 import { useQuery } from '@tanstack/react-query';
 import { CardsLoader } from '@/components/loader';
 import { getClasses } from '@/api/query';
 import { ClassCard } from './ClassCard';
+import { CreateClass } from './CreateClass';
 
 export default function ClassesPage() {
   return (
     <PageTitle title='Classes'>
-      <PageHeader label='Classes'>{/* <CreateClass /> */}</PageHeader>
+      <PageHeader label='Classes'>
+        <CreateClass />
+      </PageHeader>
       <ClassList />
     </PageTitle>
   );

@@ -1,8 +1,14 @@
-import { TServerResponse } from '@/types';
+import { TClass, TServerResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
-type TGetClassResponse = {
+type TCreateClassPayload = Pick<TClass, 'name' | 'level' | 'monthlyFee' | 'admissionFee'>;
+export const createClass = async (payload: TCreateClassPayload): Promise<TServerResponse<null>> => {
+  const { data } = await axiosInstance.post(apiUrl.createClass, payload);
+  return data;
+};
+
+export type TGetClassResponse = {
   id: string;
   name: string;
   level: string;

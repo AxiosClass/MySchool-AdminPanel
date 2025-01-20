@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { IClassInfo } from '@/data-fetching/queries/getClasses';
 import { Link } from 'react-router-dom';
 import { FaUserGraduate } from 'react-icons/fa6';
 import { FaBuilding } from 'react-icons/fa';
+import { TGetClassResponse } from '@/api/query';
 
-export function ClassCard({ name, level, id, classrooms }: IClassInfo) {
+export function ClassCard({ name, level, id, classrooms }: TGetClassResponse) {
   const totalStudents = classrooms.reduce((count, classroom) => {
     count += classroom.students?.length || 0;
     return count;
