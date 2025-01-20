@@ -20,3 +20,15 @@ export const getClasses = async (): Promise<TServerResponse<TGetClassResponse[]>
   const { data } = await axiosInstance.get(apiUrl.getClasses);
   return data;
 };
+
+export type TGetClassDetails = {
+  id: string;
+  name: string;
+  level: string;
+  classrooms: { id: string; name: string; classTeacher: { id: string; name: string }; students: { id: string }[] }[];
+};
+
+export const getClassDetails = async (classId: string): Promise<TServerResponse<TGetClassDetails>> => {
+  const { data } = await axiosInstance.get(apiUrl.getClassDetails(classId));
+  return data;
+};
