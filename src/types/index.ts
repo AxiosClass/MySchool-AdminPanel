@@ -1,3 +1,4 @@
-export * from './commonType';
-export * from './userType';
 export * from './classType';
+export * from './commonType';
+export * from './teacherType';
+export * from './userType';

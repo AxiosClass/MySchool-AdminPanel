@@ -38,7 +38,7 @@ export const CommonSelect = ({ options, value, onValueChange, placeholder, isLoa
   );
 };
 
-export const SelectContentLoader = () => {
+const SelectContentLoader = () => {
   return (
     <div className='flex flex-col gap-2 p-2'>
       {[...Array(2)].map((_, index) => (
