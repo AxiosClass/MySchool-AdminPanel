@@ -117,7 +117,7 @@ const FormDialog = ({
             <Button variant='destructive'>Cancel</Button>
           </DialogClose>
           <Button form={formId} type='submit' isLoading={!!isMutating}>
-            {!!isMutating ? <>{submitLoadingTitle || 'Submitting...'}</> : <>{submitButtonTitle || 'Submit'}</>}
+            {!!isMutating ? submitLoadingTitle || 'Submitting...' : submitButtonTitle || 'Submit'}
           </Button>
         </DialogFooter>
       </DialogContent>

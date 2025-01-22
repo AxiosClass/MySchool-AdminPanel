@@ -3,11 +3,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
 import { ClassesPageLoader } from '@/pages/classes/ClassesPageLoader';
 import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
-import { ClassDetailsPageLoader } from './pages/class/[classId]/ClassDetailsPageLoader';
 import { StudentPageLoader } from './pages/students/add-student/StudentPageLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 import { LogInPageLoader } from './pages/login/LogInPageLoader';
+import { ClassDetailsPageLoader } from './pages/class/class-details/ClassDetailsPageLoader';
 
 // layouts
 const MainLayout = lazy(() => import('@/layout/main-layout'));
@@ -110,6 +110,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-export function Router() {
+export const Router = () => {
   return <RouterProvider router={router} />;
-}
+};

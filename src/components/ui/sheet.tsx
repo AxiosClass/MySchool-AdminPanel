@@ -2,6 +2,9 @@ import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import { Button } from './button';
+import { useIsMutating } from '@tanstack/react-query';
+import { ScrollArea } from './scroll-area';
 
 const Sheet = SheetPrimitive.Root;
 const SheetTrigger = SheetPrimitive.Trigger;
@@ -84,6 +87,52 @@ const SheetDescription = React.forwardRef<
 ));
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
+type TFormSheetProps = {
+  formId: string;
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+  submitButtonTitle?: string;
+  submitLoadingTitle?: string;
+  open: boolean;
+  onOpenChange(open: boolean): void;
+};
+
+const FormSheet = ({
+  open,
+  onOpenChange,
+  formId,
+  title,
+  description,
+  children,
+  submitButtonTitle,
+  submitLoadingTitle,
+}: TFormSheetProps) => {
+  const isMutating = useIsMutating({ mutationKey: [formId] });
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent>
+        <section className='flex h-dvh flex-col'>
+          <SheetHeader>
+            <SheetTitle>{title}</SheetTitle>
+            <SheetDescription>{description}</SheetDescription>
+          </SheetHeader>
+          <ScrollArea className='grow'>{children}</ScrollArea>
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button variant='destructive'>Cancel</Button>
+            </SheetClose>
+            <Button form={formId} type='submit' isLoading={!!isMutating}>
+              {isMutating ? submitLoadingTitle || 'Submitting...' : submitButtonTitle || 'Submit'}
+            </Button>
+          </SheetFooter>
+        </section>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
 export {
   Sheet,
   SheetPortal,
@@ -95,4 +144,5 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
+  FormSheet,
 };
