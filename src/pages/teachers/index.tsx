@@ -1,3 +1,4 @@
+import { QK } from '@/api';
 import { format } from 'date-fns';
 import { Message } from '@/components/shared/Message';
 import { UserIcon } from '@/components/shared/UserIcon';
@@ -7,13 +8,15 @@ import { CustomTable } from '@/components/shared/CustomTable';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { TableLoader } from '@/components/loader/TableLoader';
 import { useQuery } from '@tanstack/react-query';
-import { QK } from '@/api';
 import { getTeachers } from '@/api/query';
+import { AddTeacher } from './AddTeacher';
 
 export default function TeachersPage() {
   return (
     <PageTitle title='Teachers'>
-      <PageHeader label='Teachers'>{/* <AddTeacher /> */}</PageHeader>
+      <PageHeader label='Teachers'>
+        <AddTeacher />
+      </PageHeader>
       <TeacherTable />
     </PageTitle>
   );

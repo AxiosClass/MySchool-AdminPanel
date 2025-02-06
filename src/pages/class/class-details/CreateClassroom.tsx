@@ -1,16 +1,16 @@
 import { z } from 'zod';
 import { QK } from '@/api';
+import { toast } from 'sonner';
+import { usePopupState } from '@/hooks';
+import { useForm } from 'react-hook-form';
 import { ActionButton } from '@/components/ui/button';
 import { FormDialog } from '@/components/ui/dialog';
-import { CommonFormFiled, Form } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { CommonSelect } from '@/components/shared/form';
-import { usePopupState } from '@/hooks';
+import { CommonFormField, CommonSelect } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
 import { createClassroom, getTeacherList } from '@/api/query';
-import { toast } from 'sonner';
 import { errorMessageGen } from '@/helpers';
 import { useParams } from 'react-router-dom';
 
@@ -69,20 +69,19 @@ export const CreateClassroom = () => {
       >
         <Form {...form}>
           <form className='space-y-3' id={formId} onSubmit={handleCreateClassroom}>
-            <CommonFormFiled control={form.control} name='name' label='Name'>
+            <CommonFormField control={form.control} name='name' label='Name'>
               {({ field }) => <Input {...field} placeholder='Input name' />}
-            </CommonFormFiled>
-            <CommonFormFiled control={form.control} name='classTeacherId' label='Class Teacher'>
+            </CommonFormField>
+            <CommonFormField control={form.control} name='classTeacherId' label='Class Teacher'>
               {({ field }) => (
                 <CommonSelect
+                  {...field}
                   placeholder='Select Teacher'
                   options={teacherData || []}
-                  value={field.value}
-                  onValueChange={field.onChange}
                   isLoading={isLoading}
                 />
               )}
-            </CommonFormFiled>
+            </CommonFormField>
           </form>
         </Form>
       </FormDialog>

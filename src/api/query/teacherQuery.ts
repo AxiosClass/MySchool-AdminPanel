@@ -1,7 +1,25 @@
-import { TServerResponse } from '@/types';
+import { TServerResponse, TTeacher } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
+import { removeEmptyProperties } from '@/helpers';
 
+export const getTeachers = async (): Promise<TServerResponse<TTeacherInfo[]>> => {
+  const { data } = await axiosInstance.get(apiUrl.getTeachers);
+  return data;
+};
+
+export const getTeacherList = async (): Promise<TServerResponse<TGetTeacherListResponse[]>> => {
+  const { data } = await axiosInstance.get(apiUrl.getStudents);
+  return data;
+};
+
+export const addTeacher = async (payload: TAddTeacherPayload): Promise<TServerResponse<null>> => {
+  const refinedPayload = removeEmptyProperties(payload);
+  const { data } = await axiosInstance.post(apiUrl.addTeacher, refinedPayload);
+  return data;
+};
+
+// type
 type TTeacherInfo = {
   id: string;
   name: string;
@@ -11,13 +29,9 @@ type TTeacherInfo = {
   joinedAt: string;
 };
 
-export const getTeachers = async (): Promise<TServerResponse<TTeacherInfo[]>> => {
-  const { data } = await axiosInstance.get(apiUrl.getTeachers);
-  return data;
-};
-
 type TGetTeacherListResponse = { id: string; name: string };
-export const getTeacherList = async (): Promise<TServerResponse<TGetTeacherListResponse[]>> => {
-  const { data } = await axiosInstance.get(apiUrl.getStudents);
-  return data;
-};
+
+type TAddTeacherPayload = Pick<
+  TTeacher,
+  'id' | 'name' | 'nid' | 'phone' | 'dob' | 'salary' | 'bloodGroup' | 'address' | 'education'
+>;

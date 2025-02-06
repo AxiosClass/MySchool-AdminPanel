@@ -1,35 +1,32 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useMemo } from 'react';
 import { Message } from '../Message';
+import { useMemo } from 'react';
+import { Loading } from '@/components/ui/loader';
 
-export type TOption = { label: string; value: string };
-type TCommonSelectProps = {
-  options: TOption[];
-  value: string;
-  onValueChange(value: string): void;
-  placeholder: string;
-  isLoading?: boolean;
-};
-
-export const CommonSelect = ({ options, value, onValueChange, placeholder, isLoading }: TCommonSelectProps) => {
+export const CommonSelect = ({
+  options,
+  value,
+  onChange,
+  isLoading = false,
+  placeholder = 'Select any',
+}: TCommonSelectProps) => {
   const content = useMemo(() => {
-    if (isLoading) return <SelectContentLoader />;
-    if (!options.length) return <Message message='No Data Found' className='p-2' />;
+    if (isLoading) return <Loading />;
+    if (!options.length) return <Message message='No options available' />;
 
     return (
       <>
-        {options.map(({ label, value }) => (
-          <SelectItem key={value} value={value}>
-            {label}
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
           </SelectItem>
         ))}
       </>
     );
-  }, []);
+  }, [options, isLoading]);
 
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={onChange}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -38,12 +35,13 @@ export const CommonSelect = ({ options, value, onValueChange, placeholder, isLoa
   );
 };
 
-const SelectContentLoader = () => {
-  return (
-    <div className='flex flex-col gap-2 p-2'>
-      {[...Array(2)].map((_, index) => (
-        <Skeleton key={index} className='h-input w-full rounded-md' />
-      ))}
-    </div>
-  );
+// types
+type TCommonSelectProps = {
+  options: TOption[];
+  value: string;
+  onChange: (value: string) => void;
+  isLoading?: boolean;
+  placeholder?: string;
 };
+
+type TOption = { label: string; value: string };

@@ -1,136 +1,156 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Control } from 'react-hook-form';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ReactNode, useState } from 'react';
 
-interface IProps {
-  label: string;
-  name: string;
-  control: Control<any>;
-}
-
-const currentYear = new Date().getFullYear();
-
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-
-export function DatePicker({ label, name, control }: IProps) {
+// Main component
+export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
   const [isYearShown, setYearShown] = useState(false);
-  const [isMothShown, setIsMonthShown] = useState(false);
+  const [isMonthShown, setIsMonthShown] = useState(false);
   const [isDayShown, setIsDayShown] = useState(false);
 
+  const currentYear = new Date().getFullYear();
+  const daysInMonth = new Date(value.getFullYear(), value.getMonth() + 1, 0).getDate();
+
+  const updateDate = (part: 'year' | 'month' | 'day', newValue: number) => {
+    const newDate = new Date(value);
+    switch (part) {
+      case 'year':
+        newDate.setFullYear(newValue);
+        break;
+      case 'month':
+        newDate.setMonth(newValue);
+        break;
+      case 'day':
+        newDate.setDate(newValue);
+        break;
+    }
+    onChange(newDate);
+  };
+
   return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormItem className='w-full'>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>
-            <div className='flex items-center gap-4'>
-              <Popover open={isYearShown} onOpenChange={setYearShown}>
-                <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
-                  <Button variant={'outline'} className='w-full rounded-md'>
-                    Year : {field.value?.getFullYear()}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className='bg-background p-0' align='start'>
-                  <ScrollArea className='h-52 p-4'>
-                    <div className='grid grid-cols-4 gap-2'>
-                      {[...Array(80)].map((_, index) => (
-                        <div
-                          onClick={() => {
-                            const date = new Date(field.value);
-                            date.setFullYear(currentYear - index);
-                            field.onChange(date);
-                            setYearShown(false);
-                          }}
-                          className={cn(
-                            'flex cursor-pointer justify-center rounded-md border p-1',
-                            field.value.getFullYear() === currentYear - index && 'bg-primary text-white',
-                          )}
-                          key={index}
-                        >
-                          {currentYear - index}
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                </PopoverContent>
-              </Popover>
+    <div className='flex items-center gap-4'>
+      <DatePartPicker
+        isOpen={isYearShown}
+        onOpenChange={setYearShown}
+        label='Year'
+        displayValue={value.getFullYear()}
+        value={value}
+        onChange={onChange}
+      >
+        <div className='grid grid-cols-4 gap-2'>
+          {[...Array(YEARS_TO_SHOW)].map((_, index) => {
+            const year = currentYear - index;
+            return (
+              <div
+                key={year}
+                onClick={() => {
+                  updateDate('year', year);
+                  setYearShown(false);
+                }}
+                className={cn(
+                  'flex cursor-pointer justify-center rounded-md border p-1',
+                  value.getFullYear() === year && 'bg-primary text-white',
+                )}
+              >
+                {year}
+              </div>
+            );
+          })}
+        </div>
+      </DatePartPicker>
 
-              <Popover open={isMothShown} onOpenChange={setIsMonthShown}>
-                <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
-                  <Button variant={'outline'} className='w-full rounded-md'>
-                    Month : {months[field.value?.getMonth()]}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className='bg-background p-0' align='start'>
-                  <ScrollArea className='max-h-52 p-4'>
-                    <ScrollBar />
-                    <div className='grid grid-cols-3 gap-2'>
-                      {months.map((month, index) => (
-                        <div
-                          onClick={() => {
-                            const date = new Date(field.value);
-                            date.setMonth(index);
-                            field.onChange(date);
-                            setIsMonthShown(false);
-                          }}
-                          className={cn(
-                            'flex cursor-pointer justify-center rounded-md border p-1',
-                            field.value.getMonth() === index && 'bg-primary text-white',
-                          )}
-                          key={index}
-                        >
-                          {month}
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                </PopoverContent>
-              </Popover>
-
-              <Popover open={isDayShown} onOpenChange={setIsDayShown}>
-                <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
-                  <Button variant={'outline'} className='w-full rounded-md'>
-                    Day : {field.value.getDate()}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className='bg-background p-0' align='start'>
-                  <ScrollArea className='max-h-56 p-4'>
-                    <div className='grid grid-cols-7 gap-2'>
-                      {[...Array(new Date(field.value.getFullYear(), field.value.getMonth() + 1, 0).getDate())].map(
-                        (_, index) => (
-                          <div
-                            onClick={() => {
-                              const date = new Date(field.value);
-                              date.setDate(index + 1);
-                              field.onChange(date);
-                              setIsDayShown(false);
-                            }}
-                            className={cn(
-                              'flex cursor-pointer justify-center rounded-md border p-1',
-                              field.value.getDate() === index + 1 && 'bg-primary text-white',
-                            )}
-                            key={index}
-                          >
-                            {index + 1}
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  </ScrollArea>
-                </PopoverContent>
-              </Popover>
+      <DatePartPicker
+        isOpen={isMonthShown}
+        onOpenChange={setIsMonthShown}
+        label='Month'
+        displayValue={MONTHS[value.getMonth()]}
+        value={value}
+        onChange={onChange}
+      >
+        <div className='grid grid-cols-3 gap-2'>
+          {MONTHS.map((month, index) => (
+            <div
+              key={month}
+              onClick={() => {
+                updateDate('month', index);
+                setIsMonthShown(false);
+              }}
+              className={cn(
+                'flex cursor-pointer justify-center rounded-md border p-1',
+                value.getMonth() === index && 'bg-primary text-white',
+              )}
+            >
+              {month}
             </div>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+          ))}
+        </div>
+      </DatePartPicker>
+
+      <DatePartPicker
+        isOpen={isDayShown}
+        onOpenChange={setIsDayShown}
+        label='Day'
+        displayValue={value.getDate()}
+        value={value}
+        onChange={onChange}
+      >
+        <div className='grid grid-cols-7 gap-2'>
+          {[...Array(daysInMonth)].map((_, index) => {
+            const day = index + 1;
+            return (
+              <div
+                key={day}
+                onClick={() => {
+                  updateDate('day', day);
+                  setIsDayShown(false);
+                }}
+                className={cn(
+                  'flex cursor-pointer justify-center rounded-md border p-1',
+                  value.getDate() === day && 'bg-primary text-white',
+                )}
+              >
+                {day}
+              </div>
+            );
+          })}
+        </div>
+      </DatePartPicker>
+    </div>
   );
-}
+};
+
+// Reusable date part picker component
+const DatePartPicker = ({ isOpen, onOpenChange, label, displayValue, children }: TDatePartPickerProps) => (
+  <Popover open={isOpen} onOpenChange={onOpenChange}>
+    <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
+      <Button variant='outline' className='w-full justify-start rounded-md'>
+        {label} : {displayValue}
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent className='bg-background p-0' align='start' onWheel={(e) => e.stopPropagation()}>
+      <ScrollArea className='p-4'>
+        <div className='max-h-52'>{children}</div>
+      </ScrollArea>
+    </PopoverContent>
+  </Popover>
+);
+
+// consts
+const YEARS_TO_SHOW = 80;
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+// Types
+type TDatePickerProps = {
+  value: Date;
+  onChange: (date: Date) => void;
+};
+
+type TDatePartPickerProps = TDatePickerProps & {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  label: string;
+  displayValue: string | number;
+  children?: ReactNode;
+};

@@ -2,8 +2,8 @@ import { TOKEN_KEYS } from '@/data/keys';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 
-export const removeEmptyProperties = (obj: Record<string, any>) => {
-  return Object.keys(obj).reduce((acc: Record<string, any>, key) => {
+export const removeEmptyProperties = (obj: Record<string, unknown>) => {
+  return Object.keys(obj).reduce((acc: Record<string, unknown>, key) => {
     if (obj[key]) acc[key] = obj[key];
     return acc;
   }, {});

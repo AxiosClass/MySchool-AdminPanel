@@ -1,13 +1,13 @@
-import { errorMessageGen, setAccessTokenToLocal } from '@/helpers';
-import { PageTitle, AppLogo } from '@/components/shared';
-import { CommonFormFiled, Form } from '@/components/ui/form';
-import { Navigate, useNavigate } from 'react-router-dom';
-
 import { z } from 'zod';
 import { toast } from 'sonner';
 import { login } from '@/api/query';
-import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
 import { useAuthStore } from '@/stores/auth';
+import { Button } from '@/components/ui/button';
+import { PageTitle, AppLogo } from '@/components/shared';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { errorMessageGen, setAccessTokenToLocal } from '@/helpers';
+import { CommonFormField } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
@@ -58,12 +58,12 @@ export default function LoginPage() {
           >
             <AppLogo />
             <h3 className='text-center text-muted-foreground'>Input Your Credentials to Login</h3>
-            <CommonFormFiled control={form.control} name='id' label='Id' className={{ formItem: 'w-full' }}>
+            <CommonFormField control={form.control} name='id' label='Id' className={{ formItem: 'w-full' }}>
               {({ field }) => <Input {...field} placeholder='Input your id' />}
-            </CommonFormFiled>
-            <CommonFormFiled control={form.control} name='password' label='Password' className={{ formItem: 'w-full' }}>
+            </CommonFormField>
+            <CommonFormField control={form.control} name='password' label='Password' className={{ formItem: 'w-full' }}>
               {({ field }) => <Input {...field} placeholder='Input your password' type='password' />}
-            </CommonFormFiled>
+            </CommonFormField>
             <Button className='mt-4 w-full' isLoading={isPending}>
               {isPending ? 'Logging in...' : 'Login'}
             </Button>
