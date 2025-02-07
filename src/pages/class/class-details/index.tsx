@@ -1,5 +1,5 @@
 import { QK } from '@/api';
-import { getClassDetails } from '@/api/query';
+import { getClassDetails, TGetClassDetails } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from '@/components/shared/PageHeader';
@@ -8,33 +8,42 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { FaGraduationCap, FaUserTie } from 'react-icons/fa';
 import { CreateClassroom } from './CreateClassroom';
-import { CardsLoader, PageHeaderLoader } from '@/components/loader';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ClassDetailsPageLoader } from './ClassDetailsPageLoader';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
   const { data: classData, isLoading } = useQuery({
     queryKey: [QK.CLASS, { classId }],
     queryFn: () => getClassDetails(classId as string),
+    select: (res) => res.data,
   });
 
   if (isLoading) return <ClassDetailsPageLoader />;
+  if (!classData) return <Message message='No Class Found!' />;
 
   return (
-    <>
+    <ScrollArea>
       <PageTitle title='Class Details' />
-      <PageHeader label={`${classData?.data ? 'Class : ' + classData?.data?.name : ''}`} backLink='/classes'>
+      <PageHeader label={`${classData ? 'Class : ' + classData.name : ''}`} backLink='/classes'>
         <CreateClassroom />
       </PageHeader>
-      {classData?.data?.classrooms && classData?.data.classrooms.length ? (
-        <section className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-          {classData?.data.classrooms.map((classroom) => <ClassroomCard key={classroom.id} {...classroom} />)}
-        </section>
-      ) : (
-        <Message message='No classroom found' />
-      )}
-    </>
+      <ClassroomList classrooms={classData.classrooms} />
+    </ScrollArea>
   );
 }
+
+const ClassroomList = ({ classrooms }: { classrooms: TGetClassDetails['classrooms'] }) => {
+  if (!classrooms.length) return <Message message='No Classrooms Found!' />;
+
+  return (
+    <section className='grid gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+      {classrooms.map((classroom) => (
+        <ClassroomCard key={classroom.id} {...classroom} />
+      ))}
+    </section>
+  );
+};
 
 const ClassroomCard = ({ name, classTeacher, students }: TClassroomCardProps) => {
   return (
@@ -51,16 +60,6 @@ const ClassroomCard = ({ name, classTeacher, students }: TClassroomCardProps) =>
         </div>
       </CardContent>
     </Card>
-  );
-};
-
-// loader
-const ClassDetailsPageLoader = () => {
-  return (
-    <section className='my-6'>
-      <PageHeaderLoader />
-      <CardsLoader />
-    </section>
   );
 };
 

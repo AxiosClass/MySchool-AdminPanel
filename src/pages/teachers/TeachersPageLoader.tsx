@@ -1,7 +1,7 @@
 import { PageHeaderLoader } from '@/components/loader/PageHeaderLoader';
 import { TableLoader } from '@/components/loader/TableLoader';
 
-export function TeachersPageLoader() {
+export const TeachersPageLoader = () => {
   return (
     <section className='my-6'>
       <PageHeaderLoader />
@@ -10,4 +10,4 @@ export function TeachersPageLoader() {
       </div>
     </section>
   );
-}
+};

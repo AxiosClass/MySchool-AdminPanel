@@ -7,7 +7,7 @@ export const TopBar = () => {
   const user = useAuthStore((state) => state.user)!;
 
   return (
-    <div className='h-header flex items-center justify-between gap-3 border-b px-6'>
+    <div className='flex h-header shrink-0 items-center justify-between gap-3 border-b px-6'>
       <div className='md:hidden'>
         <SidebarMenu />
       </div>

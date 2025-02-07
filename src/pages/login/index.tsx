@@ -13,13 +13,6 @@ import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 
-const formSchema = z.object({
-  id: z.string().min(1, { message: 'UserId is required' }),
-  password: z.string().min(4, { message: 'Password is required' }),
-});
-
-export type TFormSchema = z.infer<typeof formSchema>;
-
 export default function LoginPage() {
   const form = useForm<TFormSchema>({ resolver: zodResolver(formSchema), defaultValues: { id: '', password: '' } });
   const user = useAuthStore((state) => state.user);
@@ -42,7 +35,8 @@ export default function LoginPage() {
   if (user) return <Navigate to={'/'} />;
 
   return (
-    <PageTitle title='Login'>
+    <>
+      <PageTitle title='Login' />
       <div className='relative flex h-screen flex-col items-center justify-center overflow-hidden bg-baseLight-400'>
         <img
           className='absolute -top-12 left-1/2 translate-x-[-50%] md:-top-28'
@@ -77,6 +71,15 @@ export default function LoginPage() {
           alt=''
         />
       </div>
-    </PageTitle>
+    </>
   );
 }
+
+// schema
+const formSchema = z.object({
+  id: z.string().min(1, { message: 'UserId is required' }),
+  password: z.string().min(4, { message: 'Password is required' }),
+});
+
+// types
+export type TFormSchema = z.infer<typeof formSchema>;

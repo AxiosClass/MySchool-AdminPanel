@@ -25,6 +25,7 @@ export default function TeachersPage() {
 
 const TeacherTable = () => {
   const { data: teachersData, isLoading } = useQuery({ queryKey: [QK.TEACHER], queryFn: getTeachers });
+
   if (isLoading) return <TableLoader />;
   if (!teachersData || teachersData.data.length === 0) return <Message message='No Teacher Found' />;
 
