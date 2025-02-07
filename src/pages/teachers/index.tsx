@@ -13,12 +13,13 @@ import { AddTeacher } from './AddTeacher';
 
 export default function TeachersPage() {
   return (
-    <PageTitle title='Teachers'>
+    <>
+      <PageTitle title='Teachers' />
       <PageHeader label='Teachers'>
         <AddTeacher />
       </PageHeader>
       <TeacherTable />
-    </PageTitle>
+    </>
   );
 }
 

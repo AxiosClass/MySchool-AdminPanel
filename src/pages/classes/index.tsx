@@ -8,12 +8,13 @@ import { CreateClass } from './CreateClass';
 
 export default function ClassesPage() {
   return (
-    <PageTitle title='Classes'>
+    <>
+      <PageTitle title='Classes' />
       <PageHeader label='Classes'>
         <CreateClass />
       </PageHeader>
       <ClassList />
-    </PageTitle>
+    </>
   );
 }
 

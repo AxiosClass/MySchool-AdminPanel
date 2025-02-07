@@ -1,4 +1,4 @@
-import { TClass, TServerResponse } from '@/types';
+import { TClass, TClassroom, TServerResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
@@ -14,6 +14,16 @@ export const getClasses = async (): Promise<TServerResponse<TGetClassResponse[]>
 
 export const getClassDetails = async (classId: string): Promise<TServerResponse<TGetClassDetails>> => {
   const { data } = await axiosInstance.get(apiUrl.getClassDetails(classId));
+  return data;
+};
+
+export const getClassList = async (): Promise<TServerResponse<TClassList[]>> => {
+  const { data } = await axiosInstance.get(apiUrl.getClassList);
+  return data;
+};
+
+export const getClassroomList = async (level: string): Promise<TServerResponse<TClassroomList[]>> => {
+  const { data } = await axiosInstance.get(apiUrl.getClassroomList(level));
   return data;
 };
 
@@ -34,3 +44,6 @@ export type TGetClassDetails = {
   level: string;
   classrooms: { id: string; name: string; classTeacher: { id: string; name: string }; students: { id: string }[] }[];
 };
+
+type TClassList = Pick<TClass, 'level' | 'name'>;
+type TClassroomList = Pick<TClassroom, 'id' | 'name'>;

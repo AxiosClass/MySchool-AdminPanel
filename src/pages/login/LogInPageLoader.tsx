@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
-export function LogInPageLoader() {
+export const LogInPageLoader = () => {
   return (
     <section className='mt-6 flex h-dvh items-center justify-center'>
       <div className='flex w-36 flex-col items-center justify-center rounded-md border md:w-[350px]'>
@@ -12,4 +12,4 @@ export function LogInPageLoader() {
       </div>
     </section>
   );
-}
+};

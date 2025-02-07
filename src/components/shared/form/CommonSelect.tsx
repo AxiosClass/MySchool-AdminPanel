@@ -1,7 +1,7 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Message } from '../Message';
 import { useMemo } from 'react';
+import { Message } from '../Message';
 import { Loading } from '@/components/ui/loader';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export const CommonSelect = ({
   options,
@@ -9,10 +9,16 @@ export const CommonSelect = ({
   onChange,
   isLoading = false,
   placeholder = 'Select any',
+  disabled = false,
 }: TCommonSelectProps) => {
   const content = useMemo(() => {
-    if (isLoading) return <Loading />;
-    if (!options.length) return <Message message='No options available' />;
+    if (isLoading)
+      return (
+        <div className='my-1 flex justify-center'>
+          <Loading />
+        </div>
+      );
+    if (!options.length) return <Message className='my-2' message='No options available' />;
 
     return (
       <>
@@ -26,7 +32,7 @@ export const CommonSelect = ({
   }, [options, isLoading]);
 
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -42,6 +48,7 @@ type TCommonSelectProps = {
   onChange: (value: string) => void;
   isLoading?: boolean;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 type TOption = { label: string; value: string };

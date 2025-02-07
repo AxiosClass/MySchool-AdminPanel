@@ -1,7 +1,6 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { useEffect } from 'react';
 
-type TPageTitleProps = PropsWithChildren<{ title: string }>;
-export const PageTitle = ({ title, children }: TPageTitleProps) => {
+export const PageTitle = ({ title }: TPageTitleProps) => {
   useEffect(() => {
     document.title = `MySchool | ${title}`;
     return () => {
@@ -9,5 +8,7 @@ export const PageTitle = ({ title, children }: TPageTitleProps) => {
     };
   }, [title]);
 
-  return children;
+  return null;
 };
+
+type TPageTitleProps = { title: string };

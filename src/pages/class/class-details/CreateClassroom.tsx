@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { usePopupState } from '@/hooks';
 import { useForm } from 'react-hook-form';
 import { ActionButton } from '@/components/ui/button';
-import { FormDialog } from '@/components/ui/dialog';
+import { FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { CommonFormField, CommonSelect } from '@/components/shared/form';
@@ -14,18 +14,11 @@ import { createClassroom, getTeacherList } from '@/api/query';
 import { errorMessageGen } from '@/helpers';
 import { useParams } from 'react-router-dom';
 
-const createClassroomFormSchema = z.object({
-  name: z.string().min(1, { message: 'Classroom name is required' }),
-  classTeacherId: z.string().min(1, { message: 'TeacherId is required' }),
-});
-
-type TCreateClassroomForm = z.infer<typeof createClassroomFormSchema>;
-
-const formId = QK.CLASSROOM + '_CREATE';
-
 export const CreateClassroom = () => {
   const { open, onOpenChange } = usePopupState();
   const { classId } = useParams();
+
+  const formId = QK.CLASSROOM + '_CREATE';
   const qc = useQueryClient();
 
   const form = useForm<TCreateClassroomForm>({
@@ -88,3 +81,12 @@ export const CreateClassroom = () => {
     </>
   );
 };
+
+// schema
+const createClassroomFormSchema = z.object({
+  name: z.string().min(1, { message: 'Classroom name is required' }),
+  classTeacherId: z.string().min(1, { message: 'TeacherId is required' }),
+});
+
+// types
+type TCreateClassroomForm = z.infer<typeof createClassroomFormSchema>;

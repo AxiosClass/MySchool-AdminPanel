@@ -1,14 +1,14 @@
 import { QK } from '@/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageHeader } from '@/components/shared/PageHeader';
-import { Message } from '@/components/shared/Message';
-import { PageTitle } from '@/components/shared/PageTitle';
+import { getClassDetails } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { Message } from '@/components/shared/Message';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageTitle } from '@/components/shared/PageTitle';
 import { FaGraduationCap, FaUserTie } from 'react-icons/fa';
-import { getClassDetails } from '@/api/query';
-import { ClassDetailsPageLoader } from './ClassDetailsPageLoader';
 import { CreateClassroom } from './CreateClassroom';
+import { CardsLoader, PageHeaderLoader } from '@/components/loader';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
@@ -20,7 +20,8 @@ export default function ClassDetailsPage() {
   if (isLoading) return <ClassDetailsPageLoader />;
 
   return (
-    <PageTitle title='Class Details'>
+    <>
+      <PageTitle title='Class Details' />
       <PageHeader label={`${classData?.data ? 'Class : ' + classData?.data?.name : ''}`} backLink='/classes'>
         <CreateClassroom />
       </PageHeader>
@@ -31,16 +32,9 @@ export default function ClassDetailsPage() {
       ) : (
         <Message message='No classroom found' />
       )}
-    </PageTitle>
+    </>
   );
 }
-
-type TClassroomCardProps = {
-  id: string;
-  name: string;
-  classTeacher: { id: string; name: string };
-  students: { id: string }[];
-};
 
 const ClassroomCard = ({ name, classTeacher, students }: TClassroomCardProps) => {
   return (
@@ -58,4 +52,22 @@ const ClassroomCard = ({ name, classTeacher, students }: TClassroomCardProps) =>
       </CardContent>
     </Card>
   );
+};
+
+// loader
+const ClassDetailsPageLoader = () => {
+  return (
+    <section className='my-6'>
+      <PageHeaderLoader />
+      <CardsLoader />
+    </section>
+  );
+};
+
+// types
+type TClassroomCardProps = {
+  id: string;
+  name: string;
+  classTeacher: { id: string; name: string };
+  students: { id: string }[];
 };

@@ -1,9 +1,6 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-
 import { cn } from '@/lib/utils';
-import { useIsMutating } from '@tanstack/react-query';
-import { Button } from './button';
 
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -81,50 +78,6 @@ const DialogDescription = React.forwardRef<
 
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
-type TFormDialogProps = {
-  formId: string;
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-  submitButtonTitle?: string;
-  submitLoadingTitle?: string;
-  open: boolean;
-  onOpenChange(open: boolean): void;
-};
-
-const FormDialog = ({
-  formId,
-  title,
-  description,
-  children,
-  submitButtonTitle,
-  submitLoadingTitle,
-  open,
-  onOpenChange,
-}: TFormDialogProps) => {
-  const isMutating = useIsMutating({ mutationKey: [formId] });
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        {children}
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant='destructive'>Cancel</Button>
-          </DialogClose>
-          <Button form={formId} type='submit' isLoading={!!isMutating}>
-            {!!isMutating ? submitLoadingTitle || 'Submitting...' : submitButtonTitle || 'Submit'}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
 export {
   Dialog,
   DialogPortal,
@@ -136,5 +89,4 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-  FormDialog,
 };
