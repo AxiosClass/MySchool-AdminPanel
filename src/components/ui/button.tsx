@@ -21,7 +21,7 @@ const buttonVariants = cva(
         'destructive-ghost': 'hover:bg-destructive hover:text-white text-destructive',
       },
       size: {
-        default: 'h-9 px-4 py-2',
+        default: 'h-input px-4 py-2',
         sm: 'h-8 rounded-md px-3 text-xs',
         lg: 'h-10 rounded-md px-8',
         icon: 'h-9 w-9',

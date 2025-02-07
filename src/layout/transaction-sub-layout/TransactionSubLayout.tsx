@@ -25,7 +25,7 @@ export const TransactionSubLayout = () => {
           ))}
         </div>
       </div>
-      <section className='flex-grow pl-6'>
+      <section className='flex-grow p-6'>
         <Outlet />
       </section>
     </div>
