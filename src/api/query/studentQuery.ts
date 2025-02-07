@@ -1,10 +1,15 @@
-import { TServerResponse } from '@/types';
+import { TClassroom, TPromiseResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 import { TStudent } from '@/types';
 
-export const addStudent = async (payload: TAddStudentPayload): Promise<TServerResponse<null>> => {
+export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse<null> => {
   const { data } = await axiosInstance.post(apiUrl.addStudent, payload);
+  return data;
+};
+
+export const getStudents = async (): TPromiseResponse<TGetStudentResult[]> => {
+  const { data } = await axiosInstance.get(apiUrl.getStudents);
   return data;
 };
 
@@ -14,13 +19,6 @@ type TAddStudentPayload = Pick<
   'name' | 'birthId' | 'class' | 'classroomId' | 'bloodGroup' | 'dob' | 'address' | 'parents' | 'guardian'
 >;
 
-// {
-//   name: string;
-//   birthId: string;
-//   dob: string;
-//   bloodGroup: string;
-//   address: string;
-//   parents: { fatherName: string; motherName: string };
-//   guardian: { name: string; phone: string; relation: string };
-//   classroomId: string;
-// };
+type TGetStudentResult = Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' | 'admittedAt' | 'class'> & {
+  classroom: Pick<TClassroom, 'name'>;
+};

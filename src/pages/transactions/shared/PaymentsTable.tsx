@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { UserIcon } from '@/components/shared/UserIcon';
-import { CustomTable } from '@/components/shared/CustomTable';
+import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { IGetPayment } from '@/data-fetching/hooks/payment';
 import { PAYMENT_TYPES } from '@/types/commonType';
@@ -14,7 +14,7 @@ interface IProps {
 
 export function PaymentsTable({ payments, className }: IProps) {
   return (
-    <CustomTable
+    <CommonTable
       className={{ tableContainer: className?.table }}
       head={
         <>
@@ -63,6 +63,6 @@ export function PaymentsTable({ payments, className }: IProps) {
           <TableCell className='text-right text-muted-foreground'>{format(createdAt, 'PPP')}</TableCell>
         </TableRow>
       ))}
-    </CustomTable>
+    </CommonTable>
   );
 }

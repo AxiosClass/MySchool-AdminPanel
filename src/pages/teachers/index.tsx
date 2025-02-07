@@ -4,7 +4,7 @@ import { Message } from '@/components/shared/Message';
 import { UserIcon } from '@/components/shared/UserIcon';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { CustomTable } from '@/components/shared/CustomTable';
+import { CommonTable } from '@/components/shared/CommonTable';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { TableLoader } from '@/components/loader/TableLoader';
 import { useQuery } from '@tanstack/react-query';
@@ -29,7 +29,7 @@ const TeacherTable = () => {
   if (!teachersData || teachersData.data.length === 0) return <Message message='No Teacher Found' />;
 
   return (
-    <CustomTable
+    <CommonTable
       head={
         <>
           <TableHead>Teacher Info</TableHead>
@@ -69,6 +69,6 @@ const TeacherTable = () => {
           <TableCell className='text-right capitalize'>{format(joinedAt, 'PPP')}</TableCell>
         </TableRow>
       ))}
-    </CustomTable>
+    </CommonTable>
   );
 };

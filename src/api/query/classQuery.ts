@@ -1,28 +1,28 @@
-import { TClass, TClassroom, TServerResponse } from '@/types';
+import { TClass, TClassroom, TPromiseResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
-export const createClass = async (payload: TCreateClassPayload): Promise<TServerResponse<null>> => {
+export const createClass = async (payload: TCreateClassPayload): TPromiseResponse<null> => {
   const { data } = await axiosInstance.post(apiUrl.createClass, payload);
   return data;
 };
 
-export const getClasses = async (): Promise<TServerResponse<TGetClassResponse[]>> => {
+export const getClasses = async (): TPromiseResponse<TGetClassResponse[]> => {
   const { data } = await axiosInstance.get(apiUrl.getClasses);
   return data;
 };
 
-export const getClassDetails = async (classId: string): Promise<TServerResponse<TGetClassDetails>> => {
+export const getClassDetails = async (classId: string): TPromiseResponse<TGetClassDetails> => {
   const { data } = await axiosInstance.get(apiUrl.getClassDetails(classId));
   return data;
 };
 
-export const getClassList = async (): Promise<TServerResponse<TClassList[]>> => {
+export const getClassList = async (): TPromiseResponse<TClassList[]> => {
   const { data } = await axiosInstance.get(apiUrl.getClassList);
   return data;
 };
 
-export const getClassroomList = async (level: string): Promise<TServerResponse<TClassroomList[]>> => {
+export const getClassroomList = async (level: string): TPromiseResponse<TClassroomList[]> => {
   const { data } = await axiosInstance.get(apiUrl.getClassroomList(level));
   return data;
 };

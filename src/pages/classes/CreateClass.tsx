@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { CommonFormField } from '@/components/shared/form';
 import { ActionButton } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FormDialog } from '@/components/ui/dialog';
+import { FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { errorMessageGen, zodNumber } from '@/helpers';
