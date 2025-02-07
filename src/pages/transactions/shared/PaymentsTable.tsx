@@ -3,16 +3,11 @@ import { format } from 'date-fns';
 import { UserIcon } from '@/components/shared/UserIcon';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { IGetPayment } from '@/data-fetching/hooks/payment';
-import { PAYMENT_TYPES } from '@/types/commonType';
 import { months } from '@/data/constants';
+import { TGetPaymentResponse } from '@/api/query';
+import { PAYMENT_TYPE } from '@/types';
 
-interface IProps {
-  payments: IGetPayment[];
-  className?: { table?: string };
-}
-
-export function PaymentsTable({ payments, className }: IProps) {
+export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
   return (
     <CommonTable
       className={{ tableContainer: className?.table }}
@@ -28,41 +23,47 @@ export function PaymentsTable({ payments, className }: IProps) {
         </>
       }
     >
-      {payments.map(({ id, student, type, description, amount, month, year, createdAt }) => (
-        <TableRow className='border-b' key={id}>
-          <TableCell>
-            <div className='flex gap-4'>
-              <UserIcon username={student.name} />
-              <div>
-                <h2 className='text-base font-semibold'>{student.name}</h2>
-                <p className='text-muted-foreground'>ID : {student.id} </p>
+      {payments.map(({ id, student, type, description, amount, month, year, createdAt }) => {
+        const paymentConfig = PAYMENT_TYPE_CONFIG[type];
+        return (
+          <TableRow className='border-b' key={id}>
+            <TableCell>
+              <div className='flex gap-4'>
+                <UserIcon username={student.name} />
+                <div>
+                  <h2 className='text-base font-semibold'>{student.name}</h2>
+                  <p className='text-muted-foreground'>ID : {student.id} </p>
+                </div>
               </div>
-            </div>
-          </TableCell>
-          <TableCell className='font-semibold'>
-            {student.classroom.name} ({student.class})
-          </TableCell>
-          <TableCell className='font-semibold'>{amount} TK</TableCell>
-          <TableCell className='text-center'>
-            <span
-              className={cn(
-                'rounded p-1 text-xs font-semibold text-white',
-                type === PAYMENT_TYPES.ADMISSION_FEE && 'bg-orange-600',
-                type === PAYMENT_TYPES.MONTHLY_FEE && 'bg-green-600',
-                type === PAYMENT_TYPES.OTHERS && 'bg-blue-600',
-              )}
-            >
-              {type}
-            </span>
-          </TableCell>
-          <TableCell className='text-muted-foreground'>{description || 'N/A'} TK</TableCell>
-          <TableCell className='font-semibold text-muted-foreground'>
-            {month && `${months[month]}, `}
-            {year}
-          </TableCell>
-          <TableCell className='text-right text-muted-foreground'>{format(createdAt, 'PPP')}</TableCell>
-        </TableRow>
-      ))}
+            </TableCell>
+            <TableCell className='font-semibold'>
+              {student.classroom.name} ({student.class})
+            </TableCell>
+            <TableCell className='font-semibold'>{amount} TK</TableCell>
+            <TableCell className='text-center'>
+              <span className={cn('rounded p-1 text-xs font-semibold text-white', paymentConfig.className)}>
+                {type}
+              </span>
+            </TableCell>
+            <TableCell className='text-muted-foreground'>{description + 'TK' || 'N/A'} </TableCell>
+            <TableCell className='font-semibold text-muted-foreground'>
+              {month && `${months[month]}, `}
+              {year}
+            </TableCell>
+            <TableCell className='text-right text-muted-foreground'>{format(createdAt, 'PPP')}</TableCell>
+          </TableRow>
+        );
+      })}
     </CommonTable>
   );
-}
+};
+
+// config
+const PAYMENT_TYPE_CONFIG = {
+  [PAYMENT_TYPE.ADMISSION_FEE]: { className: 'bg-orange-600' },
+  [PAYMENT_TYPE.MONTHLY_FEE]: { className: 'bg-blue-600' },
+  [PAYMENT_TYPE.OTHERS]: { className: 'bg-green-600' },
+};
+
+// types
+type TPaymentsTableProps = { payments: TGetPaymentResponse[]; className?: { table?: string } };

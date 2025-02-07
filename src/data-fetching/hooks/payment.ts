@@ -5,7 +5,6 @@ import { axiosInstance } from '../axiosInstance';
 import { IServerResponse, PAYMENT_TYPES } from '@/types/commonType';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { makeQueryUrl, removeEmptyProperties } from '@/helpers/helpers';
-import { queryClient } from '../QueryProvider';
 
 // payment summary
 export interface IPaymentSummary {

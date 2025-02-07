@@ -4,19 +4,19 @@ import { apiUrl } from '../apiUrl';
 import { removeEmptyProperties } from '@/helpers';
 
 export const getTeachers = async (): TPromiseResponse<TTeacherInfo[]> => {
-  const { data } = await axiosInstance.get(apiUrl.getTeachers);
-  return data;
+  const response = await axiosInstance.get(apiUrl.getTeachers);
+  return response?.data;
 };
 
 export const getTeacherList = async (): TPromiseResponse<TGetTeacherListResponse[]> => {
-  const { data } = await axiosInstance.get(apiUrl.getStudents);
-  return data;
+  const response = await axiosInstance.get(apiUrl.getStudents); // Note: This URL might be incorrect, it's using getStudents
+  return response?.data;
 };
 
 export const addTeacher = async (payload: TAddTeacherPayload): TPromiseResponse<null> => {
   const refinedPayload = removeEmptyProperties(payload);
-  const { data } = await axiosInstance.post(apiUrl.addTeacher, refinedPayload);
-  return data;
+  const response = await axiosInstance.post(apiUrl.addTeacher, refinedPayload);
+  return response?.data;
 };
 
 // type

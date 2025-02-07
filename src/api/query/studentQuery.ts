@@ -4,13 +4,13 @@ import { apiUrl } from '../apiUrl';
 import { TStudent } from '@/types';
 
 export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse<null> => {
-  const { data } = await axiosInstance.post(apiUrl.addStudent, payload);
-  return data;
+  const response = await axiosInstance.post(apiUrl.addStudent, payload);
+  return response?.data;
 };
 
 export const getStudents = async (): TPromiseResponse<TGetStudentResult[]> => {
-  const { data } = await axiosInstance.get(apiUrl.getStudents);
-  return data;
+  const response = await axiosInstance.get(apiUrl.getStudents);
+  return response?.data;
 };
 
 // types
