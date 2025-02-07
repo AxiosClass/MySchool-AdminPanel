@@ -38,7 +38,9 @@ export const removeAccessTokenFromLocal = () => {
   localStorage.removeItem(TOKEN_KEYS.ACCESS_TOKEN);
 };
 
-type TZodNumberArgs = { min: number; message: string };
 export const zodNumber = ({ min, message }: TZodNumberArgs) => {
   return z.string().refine((value) => value && Number(value) >= min, { message });
 };
+
+// type
+type TZodNumberArgs = { min: number; message: string };

@@ -1,6 +1,7 @@
 import { TClassroom, TPayment, TPromiseResponse, TStudent, USER_STATUS } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
+import { removeEmptyProperties } from '@/helpers';
 
 export const getPayments = async (): TPromiseResponse<TGetPaymentResponse[]> => {
   const response = await axiosInstance.get(apiUrl.getPayments);
@@ -9,6 +10,12 @@ export const getPayments = async (): TPromiseResponse<TGetPaymentResponse[]> => 
 
 export const getPaymentSummary = async (studentId: string): TPromiseResponse<TGetPaymentSummaryResponse> => {
   const response = await axiosInstance.get(apiUrl.getPaymentSummary(studentId));
+  return response?.data;
+};
+
+export const makePayment = async (payload: TMakePayment): TPromiseResponse<null> => {
+  const refinedPayload = removeEmptyProperties(payload);
+  const response = await axiosInstance.post(apiUrl.makePayment, refinedPayload);
   return response?.data;
 };
 
@@ -26,3 +33,5 @@ export type TGetPaymentSummaryResponse = Pick<TStudent, 'id' | 'name' | 'class' 
   totalPaid: number;
   totalDue: number;
 };
+
+type TMakePayment = Pick<TPayment, 'amount' | 'description' | 'type' | 'month' | 'year' | 'studentId'>;
