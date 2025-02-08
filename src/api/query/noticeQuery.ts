@@ -21,6 +21,11 @@ export const updateNotice = async (payload: TUpdateNoticePayload): TPromiseRespo
   return response?.data;
 };
 
+export const deleteNotice = async (noticeId: string): TPromiseResponse<null> => {
+  const response = await axiosInstance.delete(apiUrl.deleteNotice(noticeId));
+  return response.data;
+};
+
 // types
 type TAddNoticePayload = Pick<TNotice, 'title' | 'description' | 'noticeFor'>;
 type TUpdateNoticePayload = TAddNoticePayload & { id: string };

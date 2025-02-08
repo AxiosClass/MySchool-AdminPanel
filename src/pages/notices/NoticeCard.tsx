@@ -4,6 +4,7 @@ import { NOTICE_FOR, TNotice } from '@/types';
 import { format } from 'date-fns';
 import { UpdateNotice } from './UpdateNotice';
 import { cn } from '@/lib/utils';
+import { DeleteNotice } from './DeleteNotice';
 
 export const NoticeCard = (props: TNotice) => {
   const { title, description, noticeFor, createdAt } = props;
@@ -11,8 +12,9 @@ export const NoticeCard = (props: TNotice) => {
 
   return (
     <Card className='bg-transparent'>
-      <CardHeader className='flex flex-row items-center'>
+      <CardHeader className='flex flex-row items-center gap-2'>
         <CardTitle className='mr-auto'>{title}</CardTitle>
+        <DeleteNotice noticeId={props.id} />
         <UpdateNotice {...props} />
       </CardHeader>
       <CardContent>

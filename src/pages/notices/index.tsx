@@ -28,13 +28,7 @@ const NoticeList = () => {
     select: (res) => res.data,
   });
 
-  if (isLoading)
-    return (
-      <div className='px-6'>
-        <CardsLoader />
-      </div>
-    );
-
+  if (isLoading) return <CardsLoader />;
   if (!notices?.length) return <Message message='No Notices Found!' className='mt-4' />;
 
   return (

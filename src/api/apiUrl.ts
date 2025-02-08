@@ -26,4 +26,5 @@ export const apiUrl = {
   addNotice: `${SERVER_ADDRESS}/notice`,
   getNotices: (searchParams: string) => `${SERVER_ADDRESS}/notices${searchParams}`,
   updateNotice: (noticeId: string) => `${SERVER_ADDRESS}/notice/${noticeId}`,
+  deleteNotice: (noticeId: string) => `${SERVER_ADDRESS}/notice/${noticeId}`,
 };
