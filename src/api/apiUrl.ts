@@ -24,4 +24,5 @@ export const apiUrl = {
   getPayments: (searchParams: string) => `${SERVER_ADDRESS}/payments${searchParams}`,
   // notice
   addNotice: `${SERVER_ADDRESS}/notice`,
+  getNotices: (searchParams: string) => `${SERVER_ADDRESS}/notices${searchParams}`,
 };
