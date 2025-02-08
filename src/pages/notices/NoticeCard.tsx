@@ -1,21 +1,25 @@
-import { Badge, badgeVariants } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { NOTICE_FOR, TNotice } from '@/types';
 import { format } from 'date-fns';
+import { UpdateNotice } from './UpdateNotice';
+import { cn } from '@/lib/utils';
 
-export const NoticeCard = ({ title, description, noticeFor, createdAt }: TNotice) => {
+export const NoticeCard = (props: TNotice) => {
+  const { title, description, noticeFor, createdAt } = props;
   const noticeForConfig = NOTICE_FOR_CONFIG[noticeFor];
 
   return (
     <Card className='bg-transparent'>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
+      <CardHeader className='flex flex-row items-center'>
+        <CardTitle className='mr-auto'>{title}</CardTitle>
+        <UpdateNotice {...props} />
       </CardHeader>
       <CardContent>
         <CardDescription className='text-justify'>{description}</CardDescription>
         <div className='mt-2 flex items-center justify-between'>
           <p className='font-semibold text-muted-foreground'>{format(createdAt, 'PPP')}</p>
-          <Badge variant={noticeForConfig.variant as keyof typeof badgeVariants}>{noticeFor}</Badge>
+          <Badge className={cn(noticeForConfig.classname)}>{noticeFor}</Badge>
         </div>
       </CardContent>
     </Card>
@@ -24,9 +28,9 @@ export const NoticeCard = ({ title, description, noticeFor, createdAt }: TNotice
 
 // config
 const NOTICE_FOR_CONFIG = {
-  [NOTICE_FOR.ALL]: { variant: 'default' },
-  [NOTICE_FOR.STUDENT]: { variant: 'secondary' },
-  [NOTICE_FOR.TEACHER]: { variant: 'destructive' },
+  [NOTICE_FOR.ALL]: { classname: 'bg-primary' },
+  [NOTICE_FOR.STUDENT]: { classname: 'bg-orange-600' },
+  [NOTICE_FOR.TEACHER]: { classname: 'bg-emerald-600' },
 };
 
 // types

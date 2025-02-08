@@ -15,5 +15,12 @@ export const getNotices = async (args: TObject = {}): TPromiseResponse<TNotice[]
   return response?.data;
 };
 
+export const updateNotice = async (payload: TUpdateNoticePayload): TPromiseResponse<null> => {
+  const { id, title, description, noticeFor } = payload;
+  const response = await axiosInstance.patch(apiUrl.updateNotice(id!), { title, description, noticeFor });
+  return response?.data;
+};
+
 // types
 type TAddNoticePayload = Pick<TNotice, 'title' | 'description' | 'noticeFor'>;
+type TUpdateNoticePayload = TAddNoticePayload & { id: string };
