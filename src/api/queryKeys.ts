@@ -6,4 +6,5 @@ export const QK = {
   CLASSROOM: 'CLASSROOM',
   PAYMENT_DETAILS: 'PAYMENT_DETAILS',
   PAYMENT: 'PAYMENT',
+  NOTICE: 'NOTICE',
 } as const;

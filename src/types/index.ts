@@ -1,6 +1,7 @@
 export * from './classroomType';
 export * from './classType';
 export * from './commonType';
+export * from './noticeType';
 export * from './paymentType';
 export * from './studentType';
 export * from './teacherType';

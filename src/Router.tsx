@@ -20,6 +20,7 @@ const StudentsPage = lazy(() => import('@/pages/students'));
 const ClassDetailsPage = lazy(() => import('@/pages/class/class-details'));
 const TakePaymentPage = lazy(() => import('@/pages/transactions/take-payment'));
 const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
+const NoticesPage = lazy(() => import('@/pages/notices'));
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,14 @@ const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: '/notices',
+        element: (
+          <Suspense fallback='Notices Page is loading'>
+            <NoticesPage />
+          </Suspense>
+        ),
       },
     ],
   },

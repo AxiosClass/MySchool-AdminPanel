@@ -22,4 +22,6 @@ export const apiUrl = {
   getPaymentSummary: (studentId: string) => `${SERVER_ADDRESS}/payment/summary/${studentId}`,
   makePayment: `${SERVER_ADDRESS}/payment`,
   getPayments: (searchParams: string) => `${SERVER_ADDRESS}/payments${searchParams}`,
+  // notice
+  addNotice: `${SERVER_ADDRESS}/notice`,
 };
