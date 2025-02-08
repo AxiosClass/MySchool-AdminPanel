@@ -3,10 +3,11 @@ import { getPaymentSummary } from '@/api/query';
 import { MakePayment, Message } from '@/components/shared';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useQuery } from '@tanstack/react-query';
+import { Payments } from './Payments';
 
 export const PaymentSummary = ({ studentId }: { studentId: string }) => {
   const { data: paymentSummary, isLoading } = useQuery({
-    queryKey: [QK.PAYMENT, { studentId }],
+    queryKey: [QK.PAYMENT, 'SUMMARY', { studentId }],
     queryFn: () => getPaymentSummary(studentId),
     enabled: !!studentId,
     select: (res) => res.data,
@@ -41,6 +42,7 @@ export const PaymentSummary = ({ studentId }: { studentId: string }) => {
           <MakePayment studentId={studentId} />
         </div>
       </section>
+      <Payments key={studentId} studentId={studentId} />
     </>
   );
 };
@@ -63,7 +65,7 @@ const PaymentSummaryLoader = () => {
           </div>
         </div>
         <div className='ml-auto'>
-          <Skeleton className='h-10 w-32 animate-pulse' /> {/* Skeleton for the button */}
+          <Skeleton className='h-10 w-32 animate-pulse' />
         </div>
       </section>
     </div>

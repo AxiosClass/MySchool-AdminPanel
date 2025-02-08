@@ -1,20 +1,19 @@
+import { QK } from '@/api';
 import { Message } from '@/components/shared/Message';
 import { PaymentsTable } from '../shared/PaymentsTable';
-import { useGetPaymentsQuery } from '@/data-fetching/hooks/payment';
 import { TableLoader } from '@/components/loader/TableLoader';
+import { useQuery } from '@tanstack/react-query';
+import { getPayments } from '@/api/query';
 
 export function Payments({ studentId }: { studentId: string }) {
-  const { data: paymentsData, isLoading } = useGetPaymentsQuery({ studentId });
+  const { data: payments, isLoading } = useQuery({
+    queryKey: [QK.PAYMENT, { studentId }],
+    queryFn: () => getPayments({ studentId }),
+    select: (res) => res.data,
+  });
 
-  if (isLoading) return <TableLoader />;
+  if (isLoading) return <TableLoader className='mt-12' />;
+  if (!payments?.length) return <Message className='mt-12' message='No Payments Found' />;
 
-  return (
-    <>
-      {paymentsData?.data && paymentsData.data.length > 0 ? (
-        <PaymentsTable className={{ table: 'mt-12' }} payments={paymentsData.data} />
-      ) : (
-        <Message className='mt-12' message='No payments found' />
-      )}
-    </>
-  );
+  return <PaymentsTable className={{ table: 'mt-12' }} payments={payments} />;
 }

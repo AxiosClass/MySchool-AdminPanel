@@ -5,3 +5,5 @@ export type TClassroom = {
   classId: string;
   classTeacherId: string;
 };
+
+export type TObject<TValue = string> = Record<string, TValue>;

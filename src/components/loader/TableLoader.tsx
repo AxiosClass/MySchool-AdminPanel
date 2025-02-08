@@ -1,8 +1,9 @@
+import { cn } from '@/lib/utils';
 import { Skeleton } from '../ui/skeleton';
 
-export const TableLoader = () => {
+export const TableLoader = ({ className }: { className?: string }) => {
   return (
-    <div className='flex flex-col gap-2'>
+    <div className={cn('flex flex-col gap-2', className)}>
       <Skeleton className='h-10' />
       {[...Array(4)].map((_, index) => (
         <div key={index} className='flex items-center gap-2'>

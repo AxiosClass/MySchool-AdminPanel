@@ -1,10 +1,12 @@
-import { TClassroom, TPayment, TPromiseResponse, TStudent, USER_STATUS } from '@/types';
+import { TClassroom, TObject, TPayment, TPromiseResponse, TStudent, USER_STATUS } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 import { removeEmptyProperties } from '@/helpers';
 
-export const getPayments = async (): TPromiseResponse<TGetPaymentResponse[]> => {
-  const response = await axiosInstance.get(apiUrl.getPayments);
+export const getPayments = async (args: TObject = {}): TPromiseResponse<TGetPaymentResponse[]> => {
+  const refinedArgs = removeEmptyProperties(args) as TObject;
+  const searchParams = new URLSearchParams(refinedArgs).toString();
+  const response = await axiosInstance.get(apiUrl.getPayments(searchParams ? `?${searchParams}` : ''));
   return response?.data;
 };
 
