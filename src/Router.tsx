@@ -1,12 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
-import { ClassesPageLoader } from '@/pages/classes/ClassesPageLoader';
 import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
 import { StudentPageLoader } from './pages/students/StudentPageLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
-import { ClassDetailsPageLoader } from './pages/class/class-details/ClassDetailsPageLoader';
 import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
