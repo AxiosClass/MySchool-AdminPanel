@@ -40,6 +40,7 @@ const TeacherTable = () => {
           <TableHead className='text-right'>Joined at</TableHead>
         </>
       }
+      className={{ tableContainer: 'px-6' }}
     >
       {teachersData.data.map(({ id, name, salary, joinedAt, classroomsClassTeacher, phone }) => (
         <TableRow className='border-b' key={id}>

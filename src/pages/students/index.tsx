@@ -43,6 +43,7 @@ const StudentTable = () => {
           <TableHead className='text-right'>Admitted At</TableHead>{' '}
         </>
       }
+      className={{ tableContainer: 'px-6' }}
     >
       {students.map(({ id, name, class: classInfo, classroom, guardian, address, admittedAt }) => {
         return (

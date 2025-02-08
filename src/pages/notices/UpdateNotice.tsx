@@ -6,7 +6,7 @@ import { errorMessageGen } from '@/helpers';
 import { usePopupState } from '@/hooks';
 import { NOTICE_FOR, TNotice } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { NoticeForm, TNoticeForm } from './notice-form';
+import { NoticeForm, TNoticeForm } from './NoticeForm';
 import { FormDialog } from '@/components/shared/form';
 import { PencilLineIcon } from 'lucide-react';
 

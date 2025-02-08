@@ -39,7 +39,7 @@ const ClassList = () => {
 };
 
 const ClassCard = ({ name, level, id, classrooms }: TGetClassResponse) => {
-  const totalStudents = classrooms.reduce((count, classroom) => {
+  const totalStudents = classrooms?.reduce((count, classroom) => {
     count += classroom.students?.length || 0;
     return count;
   }, 0);

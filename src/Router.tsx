@@ -10,6 +10,7 @@ import { ClassDetailsPageLoader } from './pages/class/class-details/ClassDetails
 import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
+import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
       {
         path: '/classes',
         element: (
-          <Suspense fallback={<ClassesPageLoader />}>
+          <Suspense fallback={<PageWithCardLoader />}>
             <ClassesPage />
           </Suspense>
         ),
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
       {
         path: '/class/:classId',
         element: (
-          <Suspense fallback={<ClassDetailsPageLoader />}>
+          <Suspense fallback={<PageWithCardLoader />}>
             <ClassDetailsPage />
           </Suspense>
         ),
@@ -100,7 +101,7 @@ const router = createBrowserRouter([
       {
         path: '/notices',
         element: (
-          <Suspense fallback='Notices Page is loading'>
+          <Suspense fallback={<PageWithCardLoader />}>
             <NoticesPage />
           </Suspense>
         ),

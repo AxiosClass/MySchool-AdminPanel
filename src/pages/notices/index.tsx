@@ -3,9 +3,9 @@ import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { AddNotice } from './AddNotice';
 import { useQuery } from '@tanstack/react-query';
 import { getNotices } from '@/api/query/noticeQuery';
-import { Loading } from '@/components/ui/loader';
 import { NoticeCard } from './NoticeCard';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { CardsLoader } from '@/components/loader';
 
 export default function NoticesPage() {
   return (
@@ -28,8 +28,14 @@ const NoticeList = () => {
     select: (res) => res.data,
   });
 
-  if (isLoading) return <Loading />;
-  if (!notices?.length) return <Message message='No Notices Found!' />;
+  if (isLoading)
+    return (
+      <div className='px-6'>
+        <CardsLoader />
+      </div>
+    );
+
+  if (!notices?.length) return <Message message='No Notices Found!' className='mt-4' />;
 
   return (
     <div className='grid gap-4 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>

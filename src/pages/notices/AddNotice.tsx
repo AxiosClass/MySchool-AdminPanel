@@ -2,7 +2,7 @@ import { QK } from '@/api';
 import { FormDialog } from '@/components/shared/form';
 import { ActionButton } from '@/components/ui/button';
 import { usePopupState } from '@/hooks';
-import { NoticeForm, TNoticeForm } from './notice-form';
+import { NoticeForm, TNoticeForm } from './NoticeForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNotice } from '@/api/query/noticeQuery';
 import { toast } from 'sonner';

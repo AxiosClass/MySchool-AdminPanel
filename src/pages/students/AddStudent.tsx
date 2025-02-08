@@ -40,7 +40,7 @@ export const AddStudent = () => {
 
   // data fetching
   const { data: classes, isLoading: isClassDataLoading } = useQuery({
-    queryKey: [QK.CLASS],
+    queryKey: [QK.CLASS, 'LIST'],
     queryFn: getClassList,
     select: (res) => res.data.map(({ level, name }) => ({ label: name, value: level })),
   });
