@@ -15,10 +15,8 @@ export const PageHeader = ({ label, children, backLink, className }: TPageHeader
     <section className={cn('my-6 flex items-center gap-4 px-6', className?.container)}>
       {backLink && (
         <Link to={backLink}>
-          <Button className='size-8'>
-            <span>
-              <ArrowBigLeftDashIcon className='size-6 text-white' />
-            </span>
+          <Button size='icon'>
+            <ArrowBigLeftDashIcon className='size-6 text-white' />
           </Button>
         </Link>
       )}

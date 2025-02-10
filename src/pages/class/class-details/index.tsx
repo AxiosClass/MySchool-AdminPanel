@@ -9,7 +9,7 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { FaGraduationCap, FaUserTie } from 'react-icons/fa';
 import { CreateClassroom } from './CreateClassroom';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ClassDetailsPageLoader } from './ClassDetailsPageLoader';
+import { PageWithCardLoader } from '@/components/loader/PageWithCardLoader';
 
 export default function ClassDetailsPage() {
   const { classId } = useParams();
@@ -19,7 +19,7 @@ export default function ClassDetailsPage() {
     select: (res) => res.data,
   });
 
-  if (isLoading) return <ClassDetailsPageLoader />;
+  if (isLoading) return <PageWithCardLoader />;
   if (!classData) return <Message message='No Class Found!' />;
 
   return (
