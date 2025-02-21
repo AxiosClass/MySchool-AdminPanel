@@ -26,13 +26,13 @@ export const FormSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className='flex h-dvh flex-col'>
-        <SheetHeader>
+      <SheetContent className='flex h-dvh flex-col p-0'>
+        <SheetHeader className='px-6 pt-6'>
           <SheetTitle>{title}</SheetTitle>
           <SheetDescription>{description}</SheetDescription>
         </SheetHeader>
-        <ScrollArea className='grow'>{children}</ScrollArea>
-        <SheetFooter>
+        <ScrollArea className='grow px-6'>{children}</ScrollArea>
+        <SheetFooter className='px-6 pb-6'>
           <SheetClose asChild>
             <Button variant='destructive'>Cancel</Button>
           </SheetClose>

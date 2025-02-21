@@ -8,10 +8,10 @@ export const ActionMenu = ({ open, onOpenChange, children, className }: TActionM
   <DropdownMenu open={open} onOpenChange={onOpenChange}>
     <DropdownMenuTrigger asChild>
       <Button variant='ghost'>
-        <BsThreeDots />
+        <BsThreeDots size={24} />
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent className='min-w-60'>
+    <DropdownMenuContent align='end' className='min-w-60'>
       <DropdownMenuLabel className='text-center'>Actions</DropdownMenuLabel>
       <div className={cn('flex flex-col gap-2', className?.childrenContainer)}>{children}</div>
     </DropdownMenuContent>

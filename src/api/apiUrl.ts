@@ -2,29 +2,31 @@ export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
 
 export const apiUrl = {
   // auth
-  login: `${SERVER_ADDRESS}/auth/login?type=admin`,
+  login: `/auth/login?type=admin`,
   // class
-  createClass: `${SERVER_ADDRESS}/class`,
-  getClasses: `${SERVER_ADDRESS}/classes`,
-  getClassDetails: (classId: string) => `${SERVER_ADDRESS}/class/${classId}`,
-  getClassList: `${SERVER_ADDRESS}/classes/list`,
-  getClassroomList: (level: string) => `${SERVER_ADDRESS}/classes/list/classroom/${level}`,
+  createClass: `/class`,
+  getClasses: `/classes`,
+  getClassDetails: (classId: string) => `/class/${classId}`,
+  getClassList: `/classes/list`,
+  getClassroomList: (level: string) => `/classes/list/classroom/${level}`,
+  getAssignedSubjects: (classId: string) => `/class/${classId}/subjects`,
+  assignSubject: `/class/subjects`,
   //classroom
-  createClassroom: `${SERVER_ADDRESS}/classroom`,
+  createClassroom: `/classroom`,
   // teacher
-  addTeacher: `${SERVER_ADDRESS}/teacher`,
-  getTeachers: `${SERVER_ADDRESS}/teachers`,
-  getTeacherList: `${SERVER_ADDRESS}/teachers/list`,
+  addTeacher: `/teacher`,
+  getTeachers: `/teachers`,
+  getTeacherList: `/teachers/list`,
   // student
-  addStudent: `${SERVER_ADDRESS}/student`,
-  getStudents: `${SERVER_ADDRESS}/students`,
+  addStudent: `/student`,
+  getStudents: `/students`,
   // payment
-  getPaymentSummary: (studentId: string) => `${SERVER_ADDRESS}/payment/summary/${studentId}`,
-  makePayment: `${SERVER_ADDRESS}/payment`,
-  getPayments: (searchParams: string) => `${SERVER_ADDRESS}/payments${searchParams}`,
+  getPaymentSummary: (studentId: string) => `/payment/summary/${studentId}`,
+  makePayment: `/payment`,
+  getPayments: (searchParams: string) => `/payments${searchParams}`,
   // notice
-  addNotice: `${SERVER_ADDRESS}/notice`,
-  getNotices: (searchParams: string) => `${SERVER_ADDRESS}/notices${searchParams}`,
-  updateNotice: (noticeId: string) => `${SERVER_ADDRESS}/notice/${noticeId}`,
-  deleteNotice: (noticeId: string) => `${SERVER_ADDRESS}/notice/${noticeId}`,
+  addNotice: `/notice`,
+  getNotices: (searchParams: string) => `/notices${searchParams}`,
+  updateNotice: (noticeId: string) => `/notice/${noticeId}`,
+  deleteNotice: (noticeId: string) => `/notice/${noticeId}`,
 };

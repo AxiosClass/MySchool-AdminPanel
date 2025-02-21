@@ -19,6 +19,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         'primary-ghost': 'hover:bg-primary hover:text-white',
         'destructive-ghost': 'hover:bg-destructive hover:text-white text-destructive',
+        'destructive-outline': 'border border-destructive text-destructive shadow-sm hover:bg-destructive/90',
       },
       size: {
         default: 'h-input px-4 py-2',
