@@ -2,18 +2,18 @@ import { QK } from '@/api';
 import { z } from 'zod';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useQuery } from '@tanstack/react-query';
-import { getAssignedSubjects } from '@/api/query';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormLabel } from '@/components/ui/form';
 import { CommonFormField } from '@/components/shared/form';
 import { Input } from '@/components/ui/input';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
+import { getSubjects } from '@/api/query';
 
 export const AssignedSubjectFormContainer = ({ classId, ...props }: TAssignSubjectsFormContainerProps) => {
   const { data: defaultValues, isLoading } = useQuery({
     queryKey: [QK.SUBJECTS, { classId }],
-    queryFn: () => getAssignedSubjects(classId),
+    queryFn: () => getSubjects({ classId }),
     select: (res) => ({ subjects: res.data.map((subject) => ({ name: subject.name })) || [] }),
   });
 

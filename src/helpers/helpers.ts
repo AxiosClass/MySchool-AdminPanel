@@ -2,8 +2,8 @@ import { TOKEN_KEYS } from '@/data/keys';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 
-export const removeEmptyProperties = (obj: Record<string, unknown>) => {
-  return Object.keys(obj).reduce((acc: Record<string, unknown>, key) => {
+export const removeEmptyProperties = <TData = unknown>(obj: Record<string, TData>) => {
+  return Object.keys(obj).reduce((acc: Record<string, TData>, key) => {
     if (obj[key]) acc[key] = obj[key];
     return acc;
   }, {});
@@ -20,7 +20,6 @@ export const makeQueryUrl = (baseAddress: string, obj: Record<string, any>) => {
 
 export const errorMessageGen = (error: unknown, defaultMessage: string = 'Something went wrong') => {
   let message = defaultMessage;
-  console.log(typeof error);
   if (error instanceof AxiosError) message = error.response?.data?.message;
   else if (error instanceof Error) message = error.message;
   return message;
