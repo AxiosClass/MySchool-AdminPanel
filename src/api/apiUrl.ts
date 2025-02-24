@@ -9,10 +9,11 @@ export const apiUrl = {
   getClassDetails: (classId: string) => `/class/${classId}`,
   getClassList: `/classes/list`,
   getClassroomList: (level: string) => `/classes/list/classroom/${level}`,
-  getAssignedSubjects: (classId: string) => `/class/${classId}/subjects`,
-  assignSubject: `/class/subjects`,
   //classroom
   createClassroom: `/classroom`,
+  // subjects
+  assignSubjects: '/subjects',
+  getSubjects: (searchParams: string) => `/subjects${searchParams}`,
   // teacher
   addTeacher: `/teacher`,
   getTeachers: `/teachers`,
