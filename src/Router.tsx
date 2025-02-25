@@ -10,10 +10,12 @@ import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 
+
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
 const ClassesPage = lazy(() => import('@/pages/classes'));
+const ClassroomPage = lazy(() => import('@/pages/classroom'));
 const TeachersPage = lazy(() => import('@/pages/teachers'));
 const StudentsPage = lazy(() => import('@/pages/students'));
 const ClassDetailsPage = lazy(() => import('@/pages/class/class-details'));
@@ -51,6 +53,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PageWithCardLoader />}>
             <ClassDetailsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/classroom/:classroomId',
+        element: (
+          <Suspense fallback={<PageWithCardLoader />}>
+            <ClassroomPage /> 
           </Suspense>
         ),
       },
