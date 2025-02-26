@@ -1,5 +1,4 @@
 import { QK } from '@/api';
-import { getClassroomSubjectsWithTeacher, getSubjects } from '@/api/query';
 import { TableLoader } from '@/components/loader';
 import { CommonTable, Message, PageHeader, PageTitle, UserIcon } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -7,12 +6,13 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import AssignSubjectTeacher from './AssignSubjectTeacher';
+import { getSubjectsWithTeacher } from '@/api/query';
 
 export default function ClassroomPage() {
   return (
     <ScrollArea>
       <PageTitle title='Classroom' />
-      <PageHeader label='Classroom'></PageHeader>
+      <PageHeader label='Classroom' />
       <section className='mt-6 grid grid-cols-2 gap-4 px-6'>
         <SubjectsTable />
       </section>
@@ -24,14 +24,12 @@ const SubjectsTable = () => {
   const { classroomId } = useParams();
   const { data: subjectsData, isLoading } = useQuery({
     queryKey: [QK.CLASSROOM, { classroomId }],
-    queryFn: () => getClassroomSubjectsWithTeacher(classroomId as string),
+    queryFn: () => getSubjectsWithTeacher(classroomId as string),
     select: (res) => res.data,
   });
 
-  console.log(subjectsData);
-
   if (isLoading) return <TableLoader />;
-  if (!subjectsData || subjectsData.length === 0) return <Message message='No Subjects has been Found' />;
+  if (!subjectsData?.length) return <Message message='No Subjects has been Found' className='my-6' />;
 
   return (
     <CommonTable
@@ -41,7 +39,7 @@ const SubjectsTable = () => {
           <TableHead>Teacher</TableHead>
         </>
       }
-      className={{ tableContainer: 'w-fit px-6' }}
+      className={{ tableContainer: 'w-fit' }}
     >
       {subjectsData?.map(({ id, name, teacher }, index) => (
         <TableRow className='border-b' key={id}>

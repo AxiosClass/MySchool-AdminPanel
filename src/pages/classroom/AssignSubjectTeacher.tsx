@@ -10,13 +10,16 @@ import { CheckIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { errorMessageGen } from '@/helpers';
 import { Loader } from '@/components/ui/loader';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function AssignSubjectTeacher({ classroomId, classSubjectId }: TAssignSubjectTeacherProps) {
   const formId = QK.CLASSROOM + '_ASSIGN_SUBJECT_TEACHER';
   const qc = useQueryClient();
 
   // form
-  const form = useForm<TAssignTeacherForm>();
+  const form = useForm<TAssignTeacherForm>({
+    resolver: zodResolver(assignTeacherSchema),
+  });
 
   // watch
   const selectedTeacher = form.watch('teacherId');
@@ -47,7 +50,7 @@ export default function AssignSubjectTeacher({ classroomId, classSubjectId }: TA
 
   return (
     <Form {...form}>
-      <form id={formId} className='grid grid-cols-2 gap-4 p-1' onSubmit={handleAssignSubjectTeacher}>
+      <form id={formId} className='grid grid-cols-2 items-center gap-4 p-1' onSubmit={handleAssignSubjectTeacher}>
         <CommonFormField control={form.control} name='teacherId'>
           {({ field }) => (
             <CommonSelect
@@ -59,8 +62,8 @@ export default function AssignSubjectTeacher({ classroomId, classSubjectId }: TA
           )}
         </CommonFormField>
 
-        <Button size='icon' type='submit' disabled={!selectedTeacher || isPending}>
-          {isPending ? <Loader className='w-fit' /> : <CheckIcon className='size-4' />}
+        <Button size='icon' type='submit' disabled={!selectedTeacher} isLoading={isPending}>
+          {!isPending && <CheckIcon />}
         </Button>
       </form>
     </Form>

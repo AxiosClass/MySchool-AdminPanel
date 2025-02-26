@@ -7,9 +7,7 @@ export const createClassroom = async (payload: TCreateClassroomPayload): TPromis
   return response?.data;
 };
 
-export const getClassroomSubjectsWithTeacher = async (
-  classroomId: string,
-): TPromiseResponse<TGetClassroomSubjectsWithTeacher[]> => {
+export const getSubjectsWithTeacher = async (classroomId: string): TPromiseResponse<TGetSubjectsWithTeacher[]> => {
   const response = await axiosInstance.get(apiUrl.getClassroomSubjectsWithTeacher(classroomId));
   return response?.data;
 };
@@ -22,7 +20,7 @@ export const assignSubjectTeacher = async (payload: TAssignSubjectTeacherPayload
 // type
 type TCreateClassroomPayload = { name: string; classId: string; classTeacherId: string };
 
-type TGetClassroomSubjectsWithTeacher = {
+type TGetSubjectsWithTeacher = {
   name: string;
   id: string;
   teacher: { id: string; name: string };
