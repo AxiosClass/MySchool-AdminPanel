@@ -2,6 +2,7 @@ import { TGetClassDetails } from '@/api/query';
 import { Message } from '@/components/shared';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaGraduationCap, FaUserTie } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const ClassRoomList = ({ classrooms }: { classrooms: TGetClassDetails['classrooms'] }) => {
   if (!classrooms.length) return <Message message='No Classrooms Found!' />;
@@ -15,8 +16,9 @@ export const ClassRoomList = ({ classrooms }: { classrooms: TGetClassDetails['cl
   );
 };
 
-const ClassroomCard = ({ name, classTeacher, students }: TClassroomCardProps) => {
+const ClassroomCard = ({ id, name, classTeacher, students }: TClassroomCardProps) => {
   return (
+    <Link to={`/classroom/${id}`}>
     <Card className='border-primary-100 bg-transparent'>
       <CardHeader className='px-4 pb-2 pt-4'>
         <CardTitle className='text-xl'>{name}</CardTitle>
@@ -30,6 +32,7 @@ const ClassroomCard = ({ name, classTeacher, students }: TClassroomCardProps) =>
         </div>
       </CardContent>
     </Card>
+    </Link>
   );
 };
 
