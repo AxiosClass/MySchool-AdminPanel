@@ -10,7 +10,6 @@ import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 
-
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
@@ -60,7 +59,7 @@ const router = createBrowserRouter([
         path: '/classroom/:classroomId',
         element: (
           <Suspense fallback={<PageWithCardLoader />}>
-            <ClassroomPage /> 
+            <ClassroomPage />
           </Suspense>
         ),
       },

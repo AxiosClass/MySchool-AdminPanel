@@ -1,27 +1,19 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { QK } from '@/api';
+import { toast } from 'sonner';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import { CommonFormField, CommonSelect } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
 import { assignSubjectTeacher, getTeachers } from '@/api/query';
 import { Button } from '@/components/ui/button';
 import { CheckIcon } from 'lucide-react';
-import { toast } from 'sonner';
 import { errorMessageGen } from '@/helpers';
-import { Loader } from '@/components/ui/loader';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-export default function AssignSubjectTeacher({ classroomId, classSubjectId }: TAssignSubjectTeacherProps) {
-  const formId = QK.CLASSROOM + '_ASSIGN_SUBJECT_TEACHER';
+export const AssignSubjectTeacher = ({ classroomId, classSubjectId }: TAssignSubjectTeacherProps) => {
   const qc = useQueryClient();
-
-  // form
-  const form = useForm<TAssignTeacherForm>({
-    resolver: zodResolver(assignTeacherSchema),
-  });
-
-  // watch
+  const form = useForm<TAssignTeacherForm>({ resolver: zodResolver(assignTeacherSchema) });
   const selectedTeacher = form.watch('teacherId');
 
   // data fetching
@@ -32,25 +24,22 @@ export default function AssignSubjectTeacher({ classroomId, classSubjectId }: TA
   });
 
   const { mutate, isPending } = useMutation({
-    mutationKey: [formId],
     mutationFn: assignSubjectTeacher,
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: [QK.TEACHER, 'LIST'] });
-      toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.CLASSROOM, { classroomId }] });
+      toast.success(res.message);
     },
     onError: (error) => toast.error(errorMessageGen(error)),
   });
 
   const handleAssignSubjectTeacher = form.handleSubmit((formData) => {
-    const assignSubjectTeacherData = { teacherId: formData.teacherId, classroomId, classSubjectId };
-
-    mutate(assignSubjectTeacherData);
+    mutate({ teacherId: formData.teacherId, classroomId, classSubjectId });
   });
 
   return (
     <Form {...form}>
-      <form id={formId} className='grid grid-cols-2 items-center gap-4 p-1' onSubmit={handleAssignSubjectTeacher}>
+      <form className='grid grid-cols-2 items-center gap-4 p-1' onSubmit={handleAssignSubjectTeacher}>
         <CommonFormField control={form.control} name='teacherId'>
           {({ field }) => (
             <CommonSelect
@@ -68,7 +57,7 @@ export default function AssignSubjectTeacher({ classroomId, classSubjectId }: TA
       </form>
     </Form>
   );
-}
+};
 
 // schema
 const assignTeacherSchema = z.object({
@@ -80,4 +69,5 @@ type TAssignSubjectTeacherProps = {
   classroomId: string;
   classSubjectId: string;
 };
+
 type TAssignTeacherForm = z.infer<typeof assignTeacherSchema>;

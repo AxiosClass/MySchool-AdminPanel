@@ -5,23 +5,26 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import AssignSubjectTeacher from './AssignSubjectTeacher';
+import { AssignSubjectTeacher } from './AssignSubjectTeacher';
 import { getSubjectsWithTeacher } from '@/api/query';
 
 export default function ClassroomPage() {
   return (
-    <ScrollArea>
+    <>
       <PageTitle title='Classroom' />
-      <PageHeader label='Classroom' />
-      <section className='mt-6 grid grid-cols-2 gap-4 px-6'>
-        <SubjectsTable />
-      </section>
-    </ScrollArea>
+      <ScrollArea>
+        <PageHeader label='Classroom' />
+        <section className='mb-6 mt-6 grid grid-cols-2 gap-4 px-6'>
+          <SubjectsTable />
+        </section>
+      </ScrollArea>
+    </>
   );
 }
 
 const SubjectsTable = () => {
   const { classroomId } = useParams();
+
   const { data: subjectsData, isLoading } = useQuery({
     queryKey: [QK.CLASSROOM, { classroomId }],
     queryFn: () => getSubjectsWithTeacher(classroomId as string),
