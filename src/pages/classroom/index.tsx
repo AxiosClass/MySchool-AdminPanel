@@ -31,8 +31,6 @@ const SubjectsTable = () => {
     select: (res) => res.data,
   });
 
-  console.log(subjectsData);
-
   if (isLoading) return <TableLoader />;
   if (!subjectsData?.length) return <Message message='No Subjects has been Found' className='my-6' />;
 

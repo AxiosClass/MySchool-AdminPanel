@@ -11,7 +11,7 @@ export const apiUrl = {
   getClassroomList: (level: string) => `/classes/list/classroom/${level}`,
   //classroom
   createClassroom: `/classroom`,
-  getClassroomSubjectsWithTeacher: (classroomId: string) => `/classroom/${classroomId}/subjects`,
+  getSubjectsWithTeacher: (classroomId: string) => `/classroom/${classroomId}/subjects`,
   assignSubjectTeacher: 'classroom/subject-teacher',
   deleteSubjectTeacher: (classSubjectTeacherId: string) => `classroom/subject-teacher/${classSubjectTeacherId}`,
   // subjects
