@@ -1,12 +1,12 @@
 import { QK } from '@/api';
-import { TableLoader } from '@/components/loader';
-import { CommonTable, Message, PageHeader, PageTitle, UserIcon } from '@/components/shared';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { AssignSubjectTeacher } from './AssignSubjectTeacher';
+import { TableLoader } from '@/components/loader';
+import { CommonTable, Message, PageHeader, PageTitle } from '@/components/shared';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { TableHead } from '@/components/ui/table';
+import { useQuery } from '@tanstack/react-query';
 import { getSubjectsWithTeacher } from '@/api/query';
+import SubjectTeacherCard from './SubjectTeacherCard';
 
 export default function ClassroomPage() {
   return (
@@ -44,28 +44,8 @@ const SubjectsTable = () => {
       }
       className={{ tableContainer: 'w-fit' }}
     >
-      {subjectsData?.map(({ id, name, teacher }, index) => (
-        <TableRow className='border-b' key={id}>
-          <TableCell>
-            <div className='flex gap-4'>
-              <p className='text-base font-semibold'>
-                {index + 1}. {name}
-              </p>
-            </div>
-          </TableCell>
-          <TableCell>
-            <div className='flex gap-4'>
-              {teacher?.name ? (
-                <div className='flex items-center justify-center gap-4'>
-                  <UserIcon username={teacher?.name || 'N/A'} />
-                  <p className='text-base font-semibold'>{teacher?.name}</p>
-                </div>
-              ) : (
-                <AssignSubjectTeacher classroomId={classroomId as string} classSubjectId={id} />
-              )}
-            </div>
-          </TableCell>
-        </TableRow>
+      {subjectsData?.map((subject, index) => (
+        <SubjectTeacherCard key={subject.id} index={index} data={subject} classroomId={classroomId as string} />
       ))}
     </CommonTable>
   );
