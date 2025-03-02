@@ -17,12 +17,18 @@ export const assignSubjectTeacher = async (payload: TAssignSubjectTeacherPayload
   return response?.data;
 };
 
+export const deleteSubjectTeacher = async (classRoomSubjectTeacherId: string): TPromiseResponse<null> => {
+  const response = await axiosInstance.delete(apiUrl.deleteSubjectTeacher(classRoomSubjectTeacherId));
+  return response?.data;
+};
+
 // type
 type TCreateClassroomPayload = { name: string; classId: string; classTeacherId: string };
 
-type TGetSubjectsWithTeacher = {
+export type TGetSubjectsWithTeacher = {
   name: string;
   id: string;
+  classroomSubjectTeacherId: string;
   teacher: { id: string; name: string };
 };
 
