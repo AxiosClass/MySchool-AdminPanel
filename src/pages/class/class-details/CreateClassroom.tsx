@@ -50,14 +50,14 @@ export const CreateClassroom = () => {
 
   return (
     <>
-      <ActionButton actionType='ADD' label='Add Classroom' onClick={() => onOpenChange(true)} />
+      <ActionButton actionType='ADD' label='Add Section' onClick={() => onOpenChange(true)} />
       <FormDialog
         formId={formId}
         open={open}
         onOpenChange={onOpenChange}
-        title='Create Classroom'
-        description='Provide following information to create classroom'
-        submitButtonTitle='Create Classroom'
+        title='Create Section'
+        description='Provide following information to create Section'
+        submitButtonTitle='Create Section'
         submitLoadingTitle='Creating...'
       >
         <Form {...form}>
@@ -68,7 +68,8 @@ export const CreateClassroom = () => {
             <CommonFormField control={form.control} name='classTeacherId' label='Class Teacher'>
               {({ field }) => (
                 <CommonSelect
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
                   placeholder='Select Teacher'
                   options={teacherData || []}
                   isLoading={isLoading}

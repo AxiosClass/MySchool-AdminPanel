@@ -75,10 +75,17 @@ export const AddTeacher = () => {
               {({ field }) => <Input {...field} placeholder='Input phone number' />}
             </CommonFormField>
             <CommonFormField control={form.control} name='dob' label='Date of Birth'>
-              {({ field }) => <DatePicker {...field} />}
+              {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
             </CommonFormField>
             <CommonFormField control={form.control} name='bloodGroup' label='Blood Group'>
-              {({ field }) => <CommonSelect {...field} placeholder='Select blood group' options={bloodGroups} />}
+              {({ field }) => (
+                <CommonSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder='Select blood group'
+                  options={bloodGroups}
+                />
+              )}
             </CommonFormField>
             <CommonFormField
               className={{ formItem: 'col-span-2' }}

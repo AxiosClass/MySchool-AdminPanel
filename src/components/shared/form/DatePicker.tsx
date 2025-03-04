@@ -18,37 +18,31 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
     switch (part) {
       case 'year':
         newDate.setFullYear(newValue);
+        setYearShown(false);
         break;
       case 'month':
         newDate.setMonth(newValue);
+        setIsMonthShown(false);
         break;
       case 'day':
         newDate.setDate(newValue);
+        setIsDayShown(false);
         break;
     }
+
     onChange(newDate);
   };
 
   return (
     <div className='flex items-center gap-4'>
-      <DatePartPicker
-        isOpen={isYearShown}
-        onOpenChange={setYearShown}
-        label='Year'
-        displayValue={value.getFullYear()}
-        value={value}
-        onChange={onChange}
-      >
+      <DatePartPicker isOpen={isYearShown} onOpenChange={setYearShown} label='Year' displayValue={value.getFullYear()}>
         <div className='grid grid-cols-4 gap-2'>
-          {[...Array(YEARS_TO_SHOW)].map((_, index) => {
+          {Array.from({ length: YEARS_TO_SHOW }).map((_, index) => {
             const year = currentYear - index;
             return (
               <div
                 key={year}
-                onClick={() => {
-                  updateDate('year', year);
-                  setYearShown(false);
-                }}
+                onClick={() => updateDate('year', year)}
                 className={cn(
                   'flex cursor-pointer justify-center rounded-md border p-1',
                   value.getFullYear() === year && 'bg-primary text-white',
@@ -66,17 +60,12 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
         onOpenChange={setIsMonthShown}
         label='Month'
         displayValue={MONTHS[value.getMonth()]}
-        value={value}
-        onChange={onChange}
       >
         <div className='grid grid-cols-3 gap-2'>
           {MONTHS.map((month, index) => (
             <div
               key={month}
-              onClick={() => {
-                updateDate('month', index);
-                setIsMonthShown(false);
-              }}
+              onClick={() => updateDate('month', index)}
               className={cn(
                 'flex cursor-pointer justify-center rounded-md border p-1',
                 value.getMonth() === index && 'bg-primary text-white',
@@ -88,24 +77,14 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
         </div>
       </DatePartPicker>
 
-      <DatePartPicker
-        isOpen={isDayShown}
-        onOpenChange={setIsDayShown}
-        label='Day'
-        displayValue={value.getDate()}
-        value={value}
-        onChange={onChange}
-      >
+      <DatePartPicker isOpen={isDayShown} onOpenChange={setIsDayShown} label='Day' displayValue={value.getDate()}>
         <div className='grid grid-cols-7 gap-2'>
           {[...Array(daysInMonth)].map((_, index) => {
             const day = index + 1;
             return (
               <div
                 key={day}
-                onClick={() => {
-                  updateDate('day', day);
-                  setIsDayShown(false);
-                }}
+                onClick={() => updateDate('day', day)}
                 className={cn(
                   'flex cursor-pointer justify-center rounded-md border p-1',
                   value.getDate() === day && 'bg-primary text-white',
@@ -123,9 +102,13 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
 
 // Reusable date part picker component
 const DatePartPicker = ({ isOpen, onOpenChange, label, displayValue, children }: TDatePartPickerProps) => (
-  <Popover open={isOpen} onOpenChange={onOpenChange}>
-    <PopoverTrigger className='w-full focus:border-primary focus:ring-1 focus:ring-primary' asChild>
-      <Button variant='outline' className='w-full justify-start rounded-md'>
+  <Popover open={isOpen} onOpenChange={onOpenChange} modal>
+    <PopoverTrigger
+      onClick={() => onOpenChange(true)}
+      className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
+      asChild
+    >
+      <Button variant='outline' type='button' className='w-full justify-start rounded-md'>
         {label} : {displayValue}
       </Button>
     </PopoverTrigger>
@@ -147,7 +130,7 @@ type TDatePickerProps = {
   onChange: (date: Date) => void;
 };
 
-type TDatePartPickerProps = TDatePickerProps & {
+type TDatePartPickerProps = {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   label: string;

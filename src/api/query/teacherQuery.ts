@@ -9,7 +9,7 @@ export const getTeachers = async (): TPromiseResponse<TTeacherInfo[]> => {
 };
 
 export const getTeacherList = async (): TPromiseResponse<TGetTeacherListResponse[]> => {
-  const response = await axiosInstance.get(apiUrl.getStudents); // Note: This URL might be incorrect, it's using getStudents
+  const response = await axiosInstance.get(apiUrl.getTeacherList);
   return response?.data;
 };
 

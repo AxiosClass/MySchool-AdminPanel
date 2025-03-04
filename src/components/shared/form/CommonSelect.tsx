@@ -18,6 +18,7 @@ export const CommonSelect = ({
           <Loading />
         </div>
       );
+
     if (!options.length) return <Message className='my-2' message='No options available' />;
 
     return (
