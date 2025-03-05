@@ -15,6 +15,7 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
 
   const updateDate = (part: 'year' | 'month' | 'day', newValue: number) => {
     const newDate = new Date(value);
+
     switch (part) {
       case 'year':
         newDate.setFullYear(newValue);
@@ -79,7 +80,7 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
 
       <DatePartPicker isOpen={isDayShown} onOpenChange={setIsDayShown} label='Day' displayValue={value.getDate()}>
         <div className='grid grid-cols-7 gap-2'>
-          {[...Array(daysInMonth)].map((_, index) => {
+          {Array.from({ length: daysInMonth }).map((_, index) => {
             const day = index + 1;
             return (
               <div
