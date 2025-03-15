@@ -39,4 +39,5 @@ export const apiUrl = {
   // exam
   addExam: `/exam`,
   getExams: (searchParams: string) => `/exams${searchParams}`,
+  updateExam: (examId: string) => `/exam/${examId}`,
 };

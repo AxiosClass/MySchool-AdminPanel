@@ -1,11 +1,12 @@
 import { QK } from '@/api';
 import { AddExam } from './AddExam';
-import { CommonTable, Message, PageHeader, PageTitle } from '@/components/shared';
+import { getExams } from '@/api/query';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
 import { useQuery } from '@tanstack/react-query';
+import { CommonTable, Message, PageHeader, PageTitle } from '@/components/shared';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { getExams } from '@/api/query';
 import { TableLoader } from '@/components/loader';
+import { UpdateExamStatus } from './UpdateExamStatus';
 
 export default function ExamsPage() {
   return (
@@ -39,7 +40,6 @@ const ExamTable = () => {
           <TableHead>Exam Name</TableHead>
           <TableHead>Year</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Action</TableHead>
         </>
       }
       className={{ tableContainer: 'px-6' }}
@@ -49,10 +49,8 @@ const ExamTable = () => {
           <TableCell>{index + 1}</TableCell>
           <TableCell>{name}</TableCell>
           <TableCell>{year}</TableCell>
-          <TableCell>{status}</TableCell>
           <TableCell>
-            {/* <ActionButton actionType='EDIT' label='Edit' />
-            <ActionButton actionType='DELETE' label='Delete' /> */}
+            <UpdateExamStatus examId={id} status={status} />
           </TableCell>
         </TableRow>
       ))}

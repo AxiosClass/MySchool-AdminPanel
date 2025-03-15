@@ -15,4 +15,10 @@ export const getExams = async (args: TObject): TPromiseResponse<TExam[]> => {
   return response.data;
 };
 
+export const updateExam = async (args: TUpdateExamPayload): TPromiseResponse<null> => {
+  const response = await axiosInstance.patch(apiUrl.updateExam(args.id), args.payload);
+  return response.data;
+};
+
 type TAddExamPayload = Pick<TExam, 'name' | 'year'>;
+type TUpdateExamPayload = { id: string; payload: Partial<Pick<TExam, 'name' | 'year' | 'status'>> };
