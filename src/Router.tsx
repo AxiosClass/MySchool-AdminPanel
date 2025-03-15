@@ -93,7 +93,7 @@ const router = createBrowserRouter([
           {
             path: 'take-payment',
             element: (
-              <Suspense fallback={<TeachersPageLoader />}>
+              <Suspense fallback={<TakePaymentLoader />}>
                 <TakePaymentPage />
               </Suspense>
             ),
