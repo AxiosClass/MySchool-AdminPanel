@@ -34,4 +34,8 @@ export const apiUrl = {
   getNotices: (searchParams: string) => `/notices${searchParams}`,
   updateNotice: (noticeId: string) => `/notice/${noticeId}`,
   deleteNotice: (noticeId: string) => `/notice/${noticeId}`,
+
+  // holidays
+  addHoliday: `/holiday`,
+  getHolidays: `/holidays`,
 };
