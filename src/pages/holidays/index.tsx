@@ -24,7 +24,7 @@ export default function HolidaysPage() {
 
 const HolidaysTable = () => {
   const { data: holidaysData, isLoading } = useQuery({
-    queryKey: [QK.HOLIDAYS],
+    queryKey: [QK.HOLIDAY],
     queryFn: getHolidays,
     select: (res) => res.data,
   });

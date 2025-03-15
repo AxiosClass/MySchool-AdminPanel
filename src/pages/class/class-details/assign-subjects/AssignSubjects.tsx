@@ -10,7 +10,7 @@ import { errorMessageGen } from '@/helpers';
 
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
-  const formId = QK.SUBJECTS + '_ASSIGN_SUBJECT_' + classId;
+  const formId = QK.SUBJECT + '_ASSIGN_SUBJECT_' + classId;
 
   const { open, onOpenChange } = usePopupState();
   const qc = useQueryClient();
@@ -26,7 +26,7 @@ export const AssignSubjects = ({ classId }: { classId: string }) => {
         onSuccess: (res) => {
           toast.success(res.message);
           qc.invalidateQueries({ queryKey: [QK.CLASS, { classId }] });
-          qc.invalidateQueries({ queryKey: [QK.SUBJECTS, { classId }] });
+          qc.invalidateQueries({ queryKey: [QK.SUBJECT, { classId }] });
           reset();
           onOpenChange(false);
         },

@@ -10,6 +10,7 @@ import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
+import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -127,7 +128,7 @@ const router = createBrowserRouter([
       {
         path: '/exams',
         element: (
-          <Suspense fallback='Loading'>
+          <Suspense fallback={<PageWithTableLoader />}>
             <ExamsPage />
           </Suspense>
         ),

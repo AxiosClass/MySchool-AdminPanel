@@ -12,7 +12,7 @@ import { getSubjects } from '@/api/query';
 
 export const AssignedSubjectFormContainer = ({ classId, ...props }: TAssignSubjectsFormContainerProps) => {
   const { data: defaultValues, isLoading } = useQuery({
-    queryKey: [QK.SUBJECTS, { classId }],
+    queryKey: [QK.SUBJECT, { classId }],
     queryFn: () => getSubjects({ classId }),
     select: (res) => ({ subjects: res.data.map((subject) => ({ name: subject.name })) || [] }),
   });
@@ -29,10 +29,7 @@ const AssignSubjectsForm = ({ formId, onSubmit, defaultValues }: TAssignSubjects
     defaultValues: defaultValues || { subjects: [{ name: '' }] },
   });
 
-  const { append, remove, fields } = useFieldArray({
-    control: form.control,
-    name: 'subjects',
-  });
+  const { append, remove, fields } = useFieldArray({ control: form.control, name: 'subjects' });
 
   const handleSubmit = form.handleSubmit((data) => {
     onSubmit(data, form.reset);

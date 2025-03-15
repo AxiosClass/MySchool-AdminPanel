@@ -38,5 +38,5 @@ export const apiUrl = {
   getHolidays: `/holidays`,
   // exam
   addExam: `/exam`,
-  getExams: `/exams`,
+  getExams: (searchParams: string) => `/exams${searchParams}`,
 };

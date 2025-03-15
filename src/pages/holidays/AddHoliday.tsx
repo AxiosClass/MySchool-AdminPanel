@@ -13,19 +13,14 @@ import { ActionButton } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 export const AddHoliday = () => {
-  const formId = QK.HOLIDAYS + '_CREATE';
+  const formId = QK.HOLIDAY + '_CREATE';
   const qc = useQueryClient();
   const { open, onOpenChange } = usePopupState();
 
   const form = useForm<TAddHolidayForm>({
     resolver: zodResolver(addHolidayFormSchema),
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      description: '',
-      startDate: new Date(),
-      endDate: new Date(),
-    },
+    defaultValues: { name: '', description: '', startDate: new Date(), endDate: new Date() },
   });
 
   const { mutate } = useMutation({
@@ -34,7 +29,7 @@ export const AddHoliday = () => {
     onSuccess: (res) => {
       toast.success(res.message);
       onOpenChange(false);
-      qc.invalidateQueries({ queryKey: [QK.HOLIDAYS] });
+      qc.invalidateQueries({ queryKey: [QK.HOLIDAY] });
     },
   });
 
@@ -90,11 +85,7 @@ const addHolidayFormSchema = z
   })
   .superRefine((values, ctx) => {
     if (values.endDate < values.startDate) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'End date must be after start date',
-        path: ['endDate'],
-      });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'End date must be after start date', path: ['endDate'] });
     }
   });
 
