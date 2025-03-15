@@ -56,17 +56,22 @@ export const AddHoliday = () => {
       >
         <Form {...form}>
           <form id={formId} onSubmit={handleAddHoliday} className='grid grid-cols-2 gap-4 p-1'>
-            <CommonFormField control={form.control} name='name' label='Name'>
-              {({ field }) => <Input {...field} placeholder='Input holiday name' />}
-            </CommonFormField>
-            <CommonFormField control={form.control} name='description' label='Description'>
-              {({ field }) => <Textarea {...field} placeholder='Input description' />}
-            </CommonFormField>
             <CommonFormField control={form.control} name='startDate' label='Start Date'>
               {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
             </CommonFormField>
             <CommonFormField control={form.control} name='endDate' label='End Date'>
               {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
+            </CommonFormField>
+            <CommonFormField control={form.control} name='name' label='Name' className={{ formItem: 'col-span-2' }}>
+              {({ field }) => <Input {...field} placeholder='Input holiday name' />}
+            </CommonFormField>
+            <CommonFormField
+              control={form.control}
+              name='description'
+              label='Description'
+              className={{ formItem: 'col-span-2' }}
+            >
+              {({ field }) => <Textarea {...field} placeholder='Input description' />}
             </CommonFormField>
           </form>
         </Form>
