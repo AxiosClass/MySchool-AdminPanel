@@ -1,6 +1,7 @@
 import { TPromiseResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
+import { THoliday } from '@/types/holidayType';
 
 export const getHolidays = async (): TPromiseResponse<TGetHolidaysResult[]> => {
   const response = await axiosInstance.get(apiUrl.getHolidays);
@@ -14,17 +15,6 @@ export const addHoliday = async (payload: TAddHolidayPayload): TPromiseResponse<
 
 // types
 
-export type TGetHolidaysResult = {
-  id: string;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-};
+type TGetHolidaysResult = Pick<THoliday, 'id' | 'name' | 'description' | 'startDate' | 'endDate'>;
 
-export type TAddHolidayPayload = {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-};
+type TAddHolidayPayload = Pick<THoliday, 'name' | 'description' | 'startDate' | 'endDate'>;

@@ -9,6 +9,7 @@ import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
+import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
           {
             path: 'take-payment',
             element: (
-              <Suspense fallback={<TakePaymentLoader />}>
+              <Suspense fallback={<TeachersPageLoader />}>
                 <TakePaymentPage />
               </Suspense>
             ),
@@ -117,7 +118,7 @@ const router = createBrowserRouter([
       {
         path: '/holidays',
         element: (
-          <Suspense fallback={<PageWithCardLoader />}>
+          <Suspense fallback={<HolidaysPageLoader />}>
             <HolidaysPage />
           </Suspense>
         ),

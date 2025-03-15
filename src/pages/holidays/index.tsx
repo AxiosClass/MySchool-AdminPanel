@@ -23,10 +23,14 @@ export default function HolidaysPage() {
 }
 
 const HolidaysTable = () => {
-  const { data: holidaysData, isLoading } = useQuery({ queryKey: [QK.HOLIDAYS], queryFn: getHolidays });
+  const { data: holidaysData, isLoading } = useQuery({
+    queryKey: [QK.HOLIDAYS],
+    queryFn: getHolidays,
+    select: (res) => res.data,
+  });
 
   if (isLoading) return <TableLoader />;
-  if (!holidaysData || holidaysData.data.length === 0) return <Message message='No holiday Found' />;
+  if (!holidaysData?.length) return <Message message='No holiday Found' />;
 
   return (
     <CommonTable
@@ -39,7 +43,7 @@ const HolidaysTable = () => {
       }
       className={{ tableContainer: 'px-6' }}
     >
-      {holidaysData.data.map(({ id, name, description, startDate, endDate }) => (
+      {holidaysData.map(({ id, name, description, startDate, endDate }) => (
         <TableRow className='border-b' key={id}>
           <TableCell>
             <div className='flex gap-4'>
