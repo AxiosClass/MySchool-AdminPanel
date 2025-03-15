@@ -17,7 +17,6 @@ export const apiUrl = {
   // subjects
   assignSubjects: '/subjects',
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,
-
   // teacher
   addTeacher: `/teacher`,
   getTeachers: `/teachers`,
@@ -34,8 +33,10 @@ export const apiUrl = {
   getNotices: (searchParams: string) => `/notices${searchParams}`,
   updateNotice: (noticeId: string) => `/notice/${noticeId}`,
   deleteNotice: (noticeId: string) => `/notice/${noticeId}`,
-
   // holidays
   addHoliday: `/holiday`,
   getHolidays: `/holidays`,
+  // exam
+  addExam: `/exam`,
+  getExams: `/exams`,
 };

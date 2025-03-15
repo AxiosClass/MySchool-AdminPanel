@@ -1,10 +1,10 @@
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { NOTICE_FOR, TNotice } from '@/types';
-import { format } from 'date-fns';
-import { UpdateNotice } from './UpdateNotice';
-import { cn } from '@/lib/utils';
 import { DeleteNotice } from './DeleteNotice';
+import { UpdateNotice } from './UpdateNotice';
 
 export const NoticeCard = (props: TNotice) => {
   const { title, description, noticeFor, createdAt } = props;

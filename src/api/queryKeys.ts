@@ -9,4 +9,5 @@ export const QK = {
   NOTICE: 'NOTICE',
   SUBJECTS: 'SUBJECTS',
   HOLIDAYS: 'HOLIDAYS',
+  EXAM: 'EXAM',
 } as const;
