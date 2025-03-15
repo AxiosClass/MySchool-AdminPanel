@@ -6,13 +6,16 @@ import { UserIcon } from '@/components/shared/UserIcon';
 import { useQuery } from '@tanstack/react-query';
 import { getHolidays } from '@/api/query';
 import { QK } from '@/api/queryKeys';
+import { AddHoliday } from './AddHoliday';
 
 export default function HolidaysPage() {
   return (
     <>
       <PageTitle title='Holidays' />
       <ScrollArea>
-        <PageHeader label='Holidays' />
+        <PageHeader label='Holidays'>
+          <AddHoliday />
+        </PageHeader>
         <HolidaysTable />
       </ScrollArea>
     </>
