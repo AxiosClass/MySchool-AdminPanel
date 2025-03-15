@@ -1,10 +1,10 @@
 import { QK } from '@/api';
 import { toast } from 'sonner';
-import { updateNotice } from '@/api/query/noticeQuery';
-import { Button } from '@/components/ui/button';
-import { errorMessageGen } from '@/helpers';
+import { updateNotice } from '@/api/query';
 import { usePopupState } from '@/hooks';
+import { errorMessageGen } from '@/helpers';
 import { NOTICE_FOR, TNotice } from '@/types';
+import { Button } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { NoticeForm, TNoticeForm } from './NoticeForm';
 import { FormDialog } from '@/components/shared/form';

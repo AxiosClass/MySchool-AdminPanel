@@ -1,8 +1,8 @@
 import { QK } from '@/api';
 import { toast } from 'sonner';
 import { usePopupState } from '@/hooks';
+import { deleteNotice } from '@/api/query';
 import { errorMessageGen } from '@/helpers';
-import { deleteNotice } from '@/api/query/noticeQuery';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DeleteDialog } from '@/components/shared/DeleteDialog';
 import { Button } from '@/components/ui/button';

@@ -13,19 +13,14 @@ import { ActionButton } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 export const AddHoliday = () => {
-  const formId = QK.HOLIDAYS + '_CREATE';
+  const formId = QK.HOLIDAY + '_CREATE';
   const qc = useQueryClient();
   const { open, onOpenChange } = usePopupState();
 
   const form = useForm<TAddHolidayForm>({
     resolver: zodResolver(addHolidayFormSchema),
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      description: '',
-      startDate: new Date(),
-      endDate: new Date(),
-    },
+    defaultValues: { name: '', description: '', startDate: new Date(), endDate: new Date() },
   });
 
   const { mutate } = useMutation({
@@ -34,7 +29,7 @@ export const AddHoliday = () => {
     onSuccess: (res) => {
       toast.success(res.message);
       onOpenChange(false);
-      qc.invalidateQueries({ queryKey: [QK.HOLIDAYS] });
+      qc.invalidateQueries({ queryKey: [QK.HOLIDAY] });
     },
   });
 
@@ -61,17 +56,22 @@ export const AddHoliday = () => {
       >
         <Form {...form}>
           <form id={formId} onSubmit={handleAddHoliday} className='grid grid-cols-2 gap-4 p-1'>
-            <CommonFormField control={form.control} name='name' label='Name'>
-              {({ field }) => <Input {...field} placeholder='Input holiday name' />}
-            </CommonFormField>
-            <CommonFormField control={form.control} name='description' label='Description'>
-              {({ field }) => <Textarea {...field} placeholder='Input description' />}
-            </CommonFormField>
             <CommonFormField control={form.control} name='startDate' label='Start Date'>
               {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
             </CommonFormField>
             <CommonFormField control={form.control} name='endDate' label='End Date'>
               {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
+            </CommonFormField>
+            <CommonFormField control={form.control} name='name' label='Name' className={{ formItem: 'col-span-2' }}>
+              {({ field }) => <Input {...field} placeholder='Input holiday name' />}
+            </CommonFormField>
+            <CommonFormField
+              control={form.control}
+              name='description'
+              label='Description'
+              className={{ formItem: 'col-span-2' }}
+            >
+              {({ field }) => <Textarea {...field} placeholder='Input description' />}
             </CommonFormField>
           </form>
         </Form>
@@ -90,11 +90,7 @@ const addHolidayFormSchema = z
   })
   .superRefine((values, ctx) => {
     if (values.endDate < values.startDate) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'End date must be after start date',
-        path: ['endDate'],
-      });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'End date must be after start date', path: ['endDate'] });
     }
   });
 

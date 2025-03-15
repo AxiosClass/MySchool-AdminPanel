@@ -10,6 +10,7 @@ export const CommonSelect = ({
   isLoading = false,
   placeholder = 'Select any',
   disabled = false,
+  className,
 }: TCommonSelectProps) => {
   const content = useMemo(() => {
     if (isLoading)
@@ -34,7 +35,7 @@ export const CommonSelect = ({
 
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger>
+      <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>{content}</SelectContent>
@@ -50,6 +51,7 @@ type TCommonSelectProps = {
   isLoading?: boolean;
   placeholder?: string;
   disabled?: boolean;
+  className?: string;
 };
 
 type TOption = { label: string; value: string };

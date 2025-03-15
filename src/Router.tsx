@@ -10,6 +10,7 @@ import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { MainLayout } from './layout/main-layout';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
+import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -23,6 +24,7 @@ const TakePaymentPage = lazy(() => import('@/pages/transactions/take-payment'));
 const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
 const NoticesPage = lazy(() => import('@/pages/notices'));
 const HolidaysPage = lazy(() => import('@/pages/holidays'));
+const ExamsPage = lazy(() => import('@/pages/exams'));
 
 const router = createBrowserRouter([
   {
@@ -92,7 +94,7 @@ const router = createBrowserRouter([
           {
             path: 'take-payment',
             element: (
-              <Suspense fallback={<TeachersPageLoader />}>
+              <Suspense fallback={<TakePaymentLoader />}>
                 <TakePaymentPage />
               </Suspense>
             ),
@@ -120,6 +122,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<HolidaysPageLoader />}>
             <HolidaysPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/exams',
+        element: (
+          <Suspense fallback={<PageWithTableLoader />}>
+            <ExamsPage />
           </Suspense>
         ),
       },
