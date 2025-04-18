@@ -29,7 +29,7 @@ export const AddExam = () => {
   const remainingPercentile = 100 - percentile;
   const form = useForm<TExamForm>({
     resolver: zodResolver(generateExamFormSchema(remainingPercentile)),
-    defaultValues: { name: '', year: '' },
+    defaultValues: { name: '' },
   });
 
   const { mutate } = useMutation({
@@ -45,7 +45,7 @@ export const AddExam = () => {
   });
 
   const handleAddExam = form.handleSubmit((formData) => {
-    mutate({ ...formData, year: Number(formData.year), percentile: Number(formData.percentile) });
+    mutate({ ...formData, year: Number(year), percentile: Number(formData.percentile) });
   });
 
   return (
@@ -68,9 +68,6 @@ export const AddExam = () => {
             <CommonFormField control={form.control} name='name' label='Exam Name'>
               {({ field }) => <Input {...field} placeholder='Input exam name' />}
             </CommonFormField>
-            <CommonFormField control={form.control} name='year' label='Exam Year'>
-              {({ field }) => <Input {...field} placeholder='Input exam year' />}
-            </CommonFormField>
             <CommonFormField control={form.control} name='percentile' label='Exam Percentile'>
               {({ field }) => <Input {...field} placeholder='Input exam year' />}
             </CommonFormField>
@@ -85,17 +82,9 @@ const generateExamFormSchema = (remainingPercentile: number) => {
   return z
     .object({
       name: z.string().min(1, { message: 'Name is required' }),
-      year: z.string().min(1, { message: 'Year is required' }),
       percentile: z.string(),
     })
     .superRefine((val, ctx) => {
-      const year = Number(val.year);
-      if (!year) ctx.addIssue({ code: 'custom', message: 'Invalid Year', path: ['year'] });
-
-      const currentYear = new Date().getFullYear();
-      if (year > currentYear)
-        ctx.addIssue({ code: 'custom', message: 'Year must be less than or equal to current year', path: ['year'] });
-
       const percentile = Number(val.percentile);
       if (!percentile || percentile < 0 || percentile > 100)
         ctx.addIssue({ code: 'custom', message: 'Invalid Percentile', path: ['percentile'] });
