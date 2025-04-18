@@ -7,6 +7,9 @@ import { CommonTable, Message, PageHeader, PageTitle } from '@/components/shared
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { TableLoader } from '@/components/loader';
 import { UpdateExamStatus } from './UpdateExamStatus';
+import { usePopupState } from '@/hooks';
+import { ActionMenu } from '@/components/shared/ActionMenu';
+import { DeleteExam } from './DeleteExam';
 
 export default function ExamsPage() {
   return (
@@ -41,6 +44,7 @@ const ExamTable = () => {
           <TableHead>Year</TableHead>
           <TableHead>Percentile</TableHead>
           <TableHead>Status</TableHead>
+          <TableHead>Actions</TableHead>
         </>
       }
       className={{ tableContainer: 'px-6' }}
@@ -54,8 +58,23 @@ const ExamTable = () => {
           <TableCell>
             <UpdateExamStatus examId={id} status={status} />
           </TableCell>
+          <TableCell>
+            <ExamTableActions examId={id} />
+          </TableCell>
         </TableRow>
       ))}
     </CommonTable>
   );
 };
+
+const ExamTableActions = ({ examId }: TExamTableActionsProps) => {
+  const { open, onOpenChange } = usePopupState();
+
+  return (
+    <ActionMenu open={open} onOpenChange={onOpenChange}>
+      <DeleteExam examId={examId} closeActionDialog={() => onOpenChange(false)} />
+    </ActionMenu>
+  );
+};
+
+type TExamTableActionsProps = { examId: string };

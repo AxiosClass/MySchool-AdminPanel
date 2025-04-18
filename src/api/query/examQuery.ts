@@ -20,5 +20,10 @@ export const updateExam = async (args: TUpdateExamPayload): TPromiseResponse<nul
   return response.data;
 };
 
+export const deleteExam = async (examId: string): TPromiseResponse<null> => {
+  const response = await axiosInstance.delete(apiUrl.deleteExam(examId));
+  return response.data;
+};
+
 type TAddExamPayload = Pick<TExam, 'name' | 'year' | 'percentile'>;
 type TUpdateExamPayload = { id: string; payload: Partial<Pick<TExam, 'name' | 'year' | 'status'>> };

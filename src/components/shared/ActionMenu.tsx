@@ -8,12 +8,12 @@ export const ActionMenu = ({ open, onOpenChange, children, className }: TActionM
   <DropdownMenu open={open} onOpenChange={onOpenChange}>
     <DropdownMenuTrigger asChild>
       <Button variant='ghost'>
-        <BsThreeDots size={24} />
+        <BsThreeDots className='size-4' />
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align='end' className='min-w-60'>
-      <DropdownMenuLabel className='text-center'>Actions</DropdownMenuLabel>
-      <div className={cn('flex flex-col gap-2', className?.childrenContainer)}>{children}</div>
+    <DropdownMenuContent align='end' className='min-w-60 p-0'>
+      <DropdownMenuLabel className='border-b text-center'>Actions</DropdownMenuLabel>
+      <div className={cn('flex flex-col gap-2 p-2', className?.childrenContainer)}>{children}</div>
     </DropdownMenuContent>
   </DropdownMenu>
 );

@@ -19,7 +19,7 @@ export const DeleteDialog = ({
   description = 'This action cannot be undone.',
   onDelete,
 }: TDeleteDialogProps) => {
-  const isMutating = useIsMutating({ mutationKey: [formId] });
+  const isMutating = !!useIsMutating({ mutationKey: [formId] });
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -30,8 +30,8 @@ export const DeleteDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button isLoading={!!isMutating} variant='destructive' onClick={onDelete}>
-            {!!isMutating ? 'Deleting...' : 'Delete'}
+          <Button isLoading={isMutating} variant='destructive' onClick={onDelete}>
+            {isMutating ? 'Deleting...' : 'Delete'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
