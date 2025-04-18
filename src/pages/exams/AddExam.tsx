@@ -3,8 +3,8 @@ import { QK } from '@/api';
 import { toast } from 'sonner';
 import { usePopupState } from '@/hooks';
 import { addExam, getExams } from '@/api/query';
-import { CommonFormField, FormDialog } from '@/components/shared/form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { CommonFormField, FormDialog } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ActionButton } from '@/components/ui/button';
 import { errorMessageGen } from '@/helpers';
@@ -38,16 +38,13 @@ export const AddExam = () => {
     onSuccess: (res) => {
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.EXAM] });
-      form.reset();
       onOpenChange(false);
+      form.reset();
     },
     onError: (error) => toast.error(errorMessageGen(error)),
   });
 
   const handleAddExam = form.handleSubmit((formData) => {
-    if (Number(formData.percentile) > remainingPercentile)
-      form.setError('percentile', { message: 'Percentile must be less than or equal to remaining percentile' });
-
     mutate({ ...formData, year: Number(formData.year), percentile: Number(formData.percentile) });
   });
 
@@ -102,8 +99,6 @@ const generateExamFormSchema = (remainingPercentile: number) => {
       const percentile = Number(val.percentile);
       if (!percentile || percentile < 0 || percentile > 100)
         ctx.addIssue({ code: 'custom', message: 'Invalid Percentile', path: ['percentile'] });
-
-      console.log({ percentile, remainingPercentile });
 
       if (percentile > remainingPercentile)
         ctx.addIssue({

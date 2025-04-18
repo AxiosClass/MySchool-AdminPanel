@@ -39,16 +39,18 @@ const ExamTable = () => {
           <TableHead>SL</TableHead>
           <TableHead>Exam Name</TableHead>
           <TableHead>Year</TableHead>
+          <TableHead>Percentile</TableHead>
           <TableHead>Status</TableHead>
         </>
       }
       className={{ tableContainer: 'px-6' }}
     >
-      {exams.map(({ id, name, year, status }, index) => (
+      {exams.map(({ id, name, year, status, percentile }, index) => (
         <TableRow key={id}>
           <TableCell>{index + 1}</TableCell>
           <TableCell>{name}</TableCell>
           <TableCell>{year}</TableCell>
+          <TableCell>{percentile}</TableCell>
           <TableCell>
             <UpdateExamStatus examId={id} status={status} />
           </TableCell>
