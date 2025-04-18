@@ -20,5 +20,5 @@ export const updateExam = async (args: TUpdateExamPayload): TPromiseResponse<nul
   return response.data;
 };
 
-type TAddExamPayload = Pick<TExam, 'name' | 'year'>;
+type TAddExamPayload = Pick<TExam, 'name' | 'year' | 'percentile'>;
 type TUpdateExamPayload = { id: string; payload: Partial<Pick<TExam, 'name' | 'year' | 'status'>> };
