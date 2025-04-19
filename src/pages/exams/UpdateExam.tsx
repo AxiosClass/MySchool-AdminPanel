@@ -1,0 +1,3 @@
+const UpdateExam = () => {
+  return;
+};
