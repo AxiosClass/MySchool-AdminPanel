@@ -1,16 +1,12 @@
-import { z } from 'zod';
 import { QK } from '@/api';
 import { toast } from 'sonner';
 import { usePopupState } from '@/hooks';
 import { addExam, getExams } from '@/api/query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CommonFormField, FormDialog } from '@/components/shared/form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { ExamForm, TExamForm } from './ExamForm';
+import { FormDialog } from '@/components/shared/form';
 import { ActionButton } from '@/components/ui/button';
 import { errorMessageGen } from '@/helpers';
-import { Form } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
 
 const date = new Date();
 const year = date.getFullYear().toString();
@@ -26,27 +22,23 @@ export const AddExam = () => {
     select: (res) => res.data.reduce((acc, exam) => acc + exam.percentile, 0),
   });
 
+  const { mutate } = useMutation({ mutationKey: [formId], mutationFn: addExam });
   const remainingPercentile = 100 - percentile;
-  const form = useForm<TExamForm>({
-    resolver: zodResolver(generateExamFormSchema(remainingPercentile)),
-    defaultValues: { name: '' },
-  });
 
-  const { mutate } = useMutation({
-    mutationKey: [formId],
-    mutationFn: addExam,
-    onSuccess: (res) => {
-      toast.success(res.message);
-      qc.invalidateQueries({ queryKey: [QK.EXAM] });
-      onOpenChange(false);
-      form.reset();
-    },
-    onError: (error) => toast.error(errorMessageGen(error)),
-  });
-
-  const handleAddExam = form.handleSubmit((formData) => {
-    mutate({ ...formData, year: Number(year), percentile: Number(formData.percentile) });
-  });
+  const handleAddExam = (formData: TExamForm, resetForm: () => void) => {
+    mutate(
+      { ...formData, year: Number(year), percentile: Number(formData.percentile) },
+      {
+        onSuccess: (res) => {
+          toast.success(res.message);
+          qc.invalidateQueries({ queryKey: [QK.EXAM] });
+          onOpenChange(false);
+          resetForm();
+        },
+        onError: (error) => toast.error(errorMessageGen(error)),
+      },
+    );
+  };
 
   return (
     <>
@@ -60,43 +52,8 @@ export const AddExam = () => {
         submitButtonTitle='Add Exam'
         submitLoadingTitle='Adding...'
       >
-        <Form {...form}>
-          <form className='flex flex-col gap-3' id={formId} onSubmit={handleAddExam}>
-            <p className='rounded-md bg-primary-100 p-1 text-center'>
-              Remaining Percentile : <span className='font-semibold'>{remainingPercentile}%</span>{' '}
-            </p>
-            <CommonFormField control={form.control} name='name' label='Exam Name'>
-              {({ field }) => <Input {...field} placeholder='Input exam name' />}
-            </CommonFormField>
-            <CommonFormField control={form.control} name='percentile' label='Exam Percentile'>
-              {({ field }) => <Input {...field} placeholder='Input exam year' />}
-            </CommonFormField>
-          </form>
-        </Form>
+        <ExamForm formId={formId} onSubmit={handleAddExam} remainingPercentile={remainingPercentile} />
       </FormDialog>
     </>
   );
 };
-
-const generateExamFormSchema = (remainingPercentile: number) => {
-  return z
-    .object({
-      name: z.string().min(1, { message: 'Name is required' }),
-      percentile: z.string(),
-    })
-    .superRefine((val, ctx) => {
-      const percentile = Number(val.percentile);
-      if (!percentile || percentile < 0 || percentile > 100)
-        ctx.addIssue({ code: 'custom', message: 'Invalid Percentile', path: ['percentile'] });
-
-      if (percentile > remainingPercentile)
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Percentile must be less than or equal to remaining percentile',
-          path: ['percentile'],
-        });
-    });
-};
-
-// type
-type TExamForm = z.infer<ReturnType<typeof generateExamFormSchema>>;
