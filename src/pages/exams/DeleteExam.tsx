@@ -8,7 +8,7 @@ import { Trash2Icon } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
-export const DeleteExam = ({ examId, closeActionDialog }: TDeleteExamProps) => {
+export const DeleteExam = ({ examId, onCloseActionMenu }: TDeleteExamProps) => {
   const qc = useQueryClient();
   const formId = QK.EXAM + '_DELETE_' + examId;
   const { open, onOpenChange } = usePopupState();
@@ -20,7 +20,7 @@ export const DeleteExam = ({ examId, closeActionDialog }: TDeleteExamProps) => {
       qc.invalidateQueries({ queryKey: [QK.EXAM] });
       toast.success(res.message);
       onOpenChange(false);
-      closeActionDialog();
+      onCloseActionMenu();
     },
     onError: (error) => toast.error(errorMessageGen(error)),
   });
@@ -47,4 +47,4 @@ export const DeleteExam = ({ examId, closeActionDialog }: TDeleteExamProps) => {
   );
 };
 
-type TDeleteExamProps = { examId: string; closeActionDialog: () => void };
+type TDeleteExamProps = { examId: string; onCloseActionMenu: () => void };

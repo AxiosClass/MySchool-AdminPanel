@@ -1,15 +1,17 @@
 import { QK } from '@/api';
 import { AddExam } from './AddExam';
 import { getExams } from '@/api/query';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
 import { useQuery } from '@tanstack/react-query';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 import { CommonTable, Message, PageHeader, PageTitle } from '@/components/shared';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { TableLoader } from '@/components/loader';
-import { UpdateExamStatus } from './UpdateExamStatus';
-import { usePopupState } from '@/hooks';
 import { ActionMenu } from '@/components/shared/ActionMenu';
+import { UpdateExamStatus } from './UpdateExamStatus';
+import { TableLoader } from '@/components/loader';
 import { DeleteExam } from './DeleteExam';
+import { UpdateExam } from './UpdateExam';
+import { usePopupState } from '@/hooks';
+import { TExam } from '@/types';
 
 export default function ExamsPage() {
   return (
@@ -36,19 +38,7 @@ const ExamTable = () => {
   if (!exams?.length) return <Message className='my-6' message='No exams found' />;
 
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>SL</TableHead>
-          <TableHead>Exam Name</TableHead>
-          <TableHead>Year</TableHead>
-          <TableHead>Percentile</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Actions</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'px-6' }}
-    >
+    <CommonTable head={<ExamTableHead />} className={{ tableContainer: 'px-6' }}>
       {exams.map(({ id, name, year, status, percentile }, index) => (
         <TableRow key={id}>
           <TableCell>{index + 1}</TableCell>
@@ -59,7 +49,7 @@ const ExamTable = () => {
             <UpdateExamStatus examId={id} status={status} />
           </TableCell>
           <TableCell>
-            <ExamTableActions examId={id} />
+            <ExamTableActions id={id} name={name} percentile={percentile} year={year} />
           </TableCell>
         </TableRow>
       ))}
@@ -67,14 +57,27 @@ const ExamTable = () => {
   );
 };
 
-const ExamTableActions = ({ examId }: TExamTableActionsProps) => {
+const ExamTableHead = () => (
+  <>
+    <TableHead>SL</TableHead>
+    <TableHead>Exam Name</TableHead>
+    <TableHead>Year</TableHead>
+    <TableHead>Percentile</TableHead>
+    <TableHead>Status</TableHead>
+    <TableHead>Actions</TableHead>
+  </>
+);
+
+const ExamTableActions = ({ id, name, percentile, year }: TExamTableActionsProps) => {
   const { open, onOpenChange } = usePopupState();
+  const onClose = () => onOpenChange(false);
 
   return (
     <ActionMenu open={open} onOpenChange={onOpenChange}>
-      <DeleteExam examId={examId} closeActionDialog={() => onOpenChange(false)} />
+      <DeleteExam examId={id} onCloseActionMenu={onClose} />
+      <UpdateExam id={id} name={name} year={year} percentile={percentile} onCloseActionMenu={onClose} />
     </ActionMenu>
   );
 };
 
-type TExamTableActionsProps = { examId: string };
+type TExamTableActionsProps = Pick<TExam, 'id' | 'name' | 'percentile' | 'year'>;

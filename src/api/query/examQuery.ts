@@ -26,4 +26,4 @@ export const deleteExam = async (examId: string): TPromiseResponse<null> => {
 };
 
 type TAddExamPayload = Pick<TExam, 'name' | 'year' | 'percentile'>;
-type TUpdateExamPayload = { id: string; payload: Partial<Pick<TExam, 'name' | 'year' | 'status'>> };
+type TUpdateExamPayload = { id: string; payload: Partial<Pick<TExam, 'name' | 'year' | 'status' | 'percentile'>> };
