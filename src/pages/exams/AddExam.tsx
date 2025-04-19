@@ -1,26 +1,22 @@
 import { QK } from '@/api';
 import { toast } from 'sonner';
-import { usePopupState } from '@/hooks';
-import { addExam, getExams } from '@/api/query';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useGetPercentile, usePopupState } from '@/hooks';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ExamForm, TExamForm } from './ExamForm';
 import { FormDialog } from '@/components/shared/form';
 import { ActionButton } from '@/components/ui/button';
 import { errorMessageGen } from '@/helpers';
+import { addExam } from '@/api/query';
 
 const date = new Date();
-const year = date.getFullYear().toString();
+const year = date.getFullYear();
 const formId = QK.EXAM + '_ADD';
 
 export const AddExam = () => {
   const { open, onOpenChange } = usePopupState();
   const qc = useQueryClient();
 
-  const { data: percentile = 0 } = useQuery({
-    queryKey: [QK.EXAM, { year }],
-    queryFn: () => getExams({ year }),
-    select: (res) => res.data.reduce((acc, exam) => acc + exam.percentile, 0),
-  });
+  const { data: percentile = 0 } = useGetPercentile(year);
 
   const { mutate } = useMutation({ mutationKey: [formId], mutationFn: addExam });
   const remainingPercentile = 100 - percentile;

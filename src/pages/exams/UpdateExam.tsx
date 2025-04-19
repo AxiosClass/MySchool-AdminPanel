@@ -1,3 +1,3 @@
-const UpdateExam = () => {
+export const UpdateExam = () => {
   return;
 };
