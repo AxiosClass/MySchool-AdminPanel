@@ -9,8 +9,8 @@ export enum USER_ROLE {
   ADMIN = 'ADMIN',
   SUPER_ADMIN = 'SUPER_ADMIN',
   ACCOUNTANT = 'ACCOUNTANT',
-  TEACHER = 'teacher',
-  STUDENT = 'student',
+  TEACHER = 'TEACHER',
+  STUDENT = 'STUDENT',
 }
 
 export enum USER_STATUS {

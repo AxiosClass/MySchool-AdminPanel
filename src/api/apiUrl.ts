@@ -2,7 +2,7 @@ export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
 
 export const apiUrl = {
   // auth
-  login: `/auth/login?type=admin`,
+  login: (type: string) => `/auth/login?type=${type}`,
   // class
   createClass: `/class`,
   getClasses: `/classes`,

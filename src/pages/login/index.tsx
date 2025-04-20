@@ -7,32 +7,38 @@ import { Button } from '@/components/ui/button';
 import { PageTitle, AppLogo } from '@/components/shared';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { errorMessageGen, setAccessTokenToLocal } from '@/helpers';
-import { CommonFormField } from '@/components/shared/form';
+import { CommonFormField, CommonSelect } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { Input } from '@/components/ui/input';
+import { Input, PasswordInput } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 
 export default function LoginPage() {
-  const form = useForm<TFormSchema>({ resolver: zodResolver(formSchema), defaultValues: { id: '', password: '' } });
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { id: '', password: '', type: 'admin' },
+  });
+
   const user = useAuthStore((state) => state.user);
   const updateUser = useAuthStore((state) => state.updateUser);
   const navigation = useNavigate();
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: login,
-    onSuccess: (res) => {
-      setAccessTokenToLocal(res.data.accessToken);
-      updateUser(res.data.accessToken);
-      toast.success(res.message);
-      navigation('/');
-    },
-    onError: (error) => toast.error(errorMessageGen(error)),
+  const { mutate, isPending } = useMutation({ mutationFn: login });
+
+  const handleLogin = form.handleSubmit((formData) => {
+    mutate(formData, {
+      onSuccess: (res) => {
+        setAccessTokenToLocal(res.data.accessToken);
+        updateUser(res.data.accessToken);
+        toast.success(res.message);
+        const url = NAVIGATION_CONFIG[formData.type as TNavigationConfig];
+        navigation(url);
+      },
+      onError: (error) => toast.error(errorMessageGen(error)),
+    });
   });
 
-  const handleLogin = form.handleSubmit((formData) => mutate(formData));
-
-  if (user) return <Navigate to={'/'} />;
+  if (user) return <Navigate to={NAVIGATION_CONFIG[user.role as TNavigationConfig]} />;
 
   return (
     <>
@@ -47,7 +53,7 @@ export default function LoginPage() {
 
         <Form {...form}>
           <form
-            className='flex w-full max-w-[350px] flex-col items-center gap-3 rounded-md border p-6 px-6'
+            className='z-50 flex w-full max-w-[350px] flex-col items-center gap-3 rounded-md border p-6 px-6'
             onSubmit={handleLogin}
           >
             <AppLogo />
@@ -56,7 +62,10 @@ export default function LoginPage() {
               {({ field }) => <Input {...field} placeholder='Input your id' />}
             </CommonFormField>
             <CommonFormField control={form.control} name='password' label='Password' className={{ formItem: 'w-full' }}>
-              {({ field }) => <Input {...field} placeholder='Input your password' type='password' />}
+              {({ field }) => <PasswordInput {...field} placeholder='Input your password' />}
+            </CommonFormField>
+            <CommonFormField control={form.control} name='type' label='Login As' className={{ formItem: 'w-full' }}>
+              {({ field }) => <CommonSelect value={field.value} onChange={field.onChange} options={loginTypeOptions} />}
             </CommonFormField>
             <Button className='mt-4 w-full' isLoading={isPending}>
               {isPending ? 'Logging in...' : 'Login'}
@@ -75,11 +84,29 @@ export default function LoginPage() {
   );
 }
 
+// const
+const loginTypeOptions = [
+  { label: 'Admin', value: 'admin' },
+  { label: 'Teacher', value: 'teacher' },
+  { label: 'Student', value: 'student' },
+];
+
+const NAVIGATION_CONFIG = {
+  admin: '/',
+  teacher: '/teacher',
+  student: '/student',
+  ADMIN: '/',
+  TEACHER: '/teacher',
+  STUDENT: '/student',
+};
+
 // schema
 const formSchema = z.object({
   id: z.string().min(1, { message: 'UserId is required' }),
   password: z.string().min(4, { message: 'Password is required' }),
+  type: z.string(),
 });
 
 // types
 export type TFormSchema = z.infer<typeof formSchema>;
+type TNavigationConfig = keyof typeof NAVIGATION_CONFIG;

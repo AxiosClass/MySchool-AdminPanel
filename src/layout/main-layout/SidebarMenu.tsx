@@ -2,12 +2,13 @@ import { cn } from '@/lib/utils';
 import { MenuIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppLogo } from '@/components/shared/AppLogo';
-import { isActive, sidebarLinks } from './sidebarLinks';
 import { CustomSheet } from '@/components/shared/CustomSheet';
 import { SheetClose, SheetHeader } from '@/components/ui/sheet';
+import { isActive, useSidebarLinks } from './sidebarLinks';
 
 export const SidebarMenu = () => {
   const location = useLocation();
+  const sidebarLinks = useSidebarLinks();
 
   return (
     <CustomSheet
@@ -20,7 +21,7 @@ export const SidebarMenu = () => {
       className={{ content: 'p-0' }}
     >
       <section className='mt-4 flex flex-col gap-1 px-4'>
-        {sidebarLinks.map(({ icon, title, url }) => (
+        {sidebarLinks?.map(({ icon, title, url }) => (
           <Link
             key={url}
             to={url}
