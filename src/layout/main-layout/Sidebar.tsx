@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { FaUser } from 'react-icons/fa6';
 import { useAuthStore } from '@/stores/auth';
 import { IoMdSettings } from 'react-icons/io';
-import { isActive, sidebarLinks } from './sidebarLinks';
+import { isActive, useSidebarLinks } from './sidebarLinks';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 import { AppLogo } from '@/components/shared/AppLogo';
@@ -11,6 +11,7 @@ import { AppLogo } from '@/components/shared/AppLogo';
 export const Sidebar = () => {
   const { pathname } = useLocation();
   const removeUser = useAuthStore((state) => state.removeUser);
+  const sidebarLinks = useSidebarLinks();
 
   const handleLogout = () => {
     toast.info('You have been logged out');
@@ -21,7 +22,7 @@ export const Sidebar = () => {
     <aside className='hidden min-h-screen min-w-[240px] flex-col border-r shadow md:flex'>
       <AppLogo />
       <div className='mt-2 flex flex-col gap-1 px-6'>
-        {sidebarLinks.map(({ url, icon, title }) => (
+        {sidebarLinks?.map(({ url, icon, title }) => (
           <Link
             key={url}
             to={url}
