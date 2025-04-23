@@ -98,6 +98,7 @@ const NAVIGATION_CONFIG = {
   ADMIN: '/',
   TEACHER: '/teacher',
   STUDENT: '/student',
+  SUPER_ADMIN: '/',
 };
 
 // schema

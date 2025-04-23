@@ -13,14 +13,15 @@ export const apiUrl = {
   createClassroom: `/classroom`,
   getSubjectsWithTeacher: (classroomId: string) => `/classroom/${classroomId}/subjects`,
   assignSubjectTeacher: 'classroom/subject-teacher',
-  deleteSubjectTeacher: (classSubjectTeacherId: string) => `classroom/subject-teacher/${classSubjectTeacherId}`,
+  deleteSubjectTeacher: (classSubjectTeacherId: string) => `/classroom/subject-teacher/${classSubjectTeacherId}`,
+  getClassroomsForTeacher : (teacherId:string)=>`/classrooms/teacher/${teacherId}`,
   // subjects
   assignSubjects: '/subjects',
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,
   // teacher
   addTeacher: `/teacher`,
   getTeachers: `/teachers`,
-  getTeacherList: `/teachers/list`,
+  getTeacherList: `/teachers/list`, 
   // student
   addStudent: `/student`,
   getStudents: `/students`,

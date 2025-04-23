@@ -22,6 +22,11 @@ export const deleteSubjectTeacher = async (classRoomSubjectTeacherId: string): T
   return response?.data;
 };
 
+export const getClassroomsForTeacher = async (teacherId: string): TPromiseResponse<TGetClassroomForTeacher> => {
+  const response = await axiosInstance.get(apiUrl.getClassroomsForTeacher(teacherId));
+  return response?.data;
+};
+
 // type
 type TCreateClassroomPayload = { name: string; classId: string; classTeacherId: string };
 
@@ -33,3 +38,5 @@ export type TGetSubjectsWithTeacher = {
 };
 
 type TAssignSubjectTeacherPayload = { teacherId: string; classroomId: string; classSubjectId: string };
+type TClassroomDetails = { id: string; name: string; class: { name: string }; students: { id: string }[] };
+type TGetClassroomForTeacher = { asClassTeacher: TClassroomDetails[]; asSubjectTeacher: TClassroomDetails[] };
