@@ -27,6 +27,7 @@ const NoticesPage = lazy(() => import('@/pages/notices'));
 const HolidaysPage = lazy(() => import('@/pages/holidays'));
 const ExamsPage = lazy(() => import('@/pages/exams'));
 const TeacherDashboardPage = lazy(() => import('@/pages/teacher'));
+const TeacherClassroom = lazy(() => import('@/pages/teacher-classroom'));
 
 const router = createBrowserRouter([
   {
@@ -137,11 +138,24 @@ const router = createBrowserRouter([
       },
       {
         path: '/teacher',
-        element: (
-          <Suspense fallback={<TeacherDashboardPageLoader />}>
-            <TeacherDashboardPage />
-          </Suspense>
-        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<TeacherDashboardPageLoader />}>
+                <TeacherDashboardPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: 'classroom/:classroomId',
+            element: (
+              <Suspense fallback='Loading'>
+                <TeacherClassroom />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },

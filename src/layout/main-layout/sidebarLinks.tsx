@@ -27,9 +27,11 @@ export const useSidebarLinks = () => {
 
 export const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
-  if (url === '/classes' && pathname.startsWith('/class')) return true;
-  if (url.startsWith('/transactions') && pathname.startsWith('/transactions')) return true;
+  if (url === '/classes') return partialMatch(['/classes', '/class'], pathname);
+  if (url === '/transactions') return partialMatch(['/transactions'], pathname);
+  if (url === '/teacher') return partialMatch(['/teacher', '/classroom'], pathname);
 };
 
-// types
-// type TLink = { title: string; url: string; icon: ReactNode };
+const partialMatch = (urls: string[], pathname: string): boolean => {
+  return urls.some((url) => pathname.startsWith(url));
+};
