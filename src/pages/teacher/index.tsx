@@ -22,9 +22,6 @@ export default function TeacherDashboardPage() {
       {classroomList?.asClassTeacher.map((classroom) => (
         <ClassroomCard key={classroom.id} {...classroom} linkPrefix='/teacher/classroom' isClassTeacher />
       ))}
-      {classroomList?.asSubjectTeacher.map((classroom) => (
-        <ClassroomCard key={classroom.id} {...classroom} linkPrefix='/teacher/classroom' />
-      ))}
     </section>
   );
 }

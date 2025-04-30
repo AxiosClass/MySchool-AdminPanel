@@ -1,3 +1,7 @@
+import { useParams } from 'react-router-dom';
+
 export default function TeacherClassroom() {
-  return <div>Teacher Class room</div>;
+  const { classroomId } = useParams();
+
+  return <div>Teacher Class room {classroomId}</div>;
 }
