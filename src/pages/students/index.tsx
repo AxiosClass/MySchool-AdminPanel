@@ -40,7 +40,7 @@ const StudentTable = () => {
           <TableHead>Class</TableHead>
           <TableHead>Address</TableHead>
           <TableHead>Guardian</TableHead>
-          <TableHead className='text-right'>Admitted At</TableHead>{' '}
+          <TableHead className='text-right'>Admitted At</TableHead>
         </>
       }
       className={{ tableContainer: 'px-6' }}

@@ -106,7 +106,8 @@ export const AddStudent = () => {
             <CommonFormField control={form.control} name='classroomId' label='Classroom'>
               {({ field }) => (
                 <CommonSelect
-                  {...field}
+                  value={field.value}
+                  onChange={field.onChange}
                   placeholder='Select classroom'
                   options={classrooms || []}
                   isLoading={isClassroomDataLoading}
@@ -116,10 +117,17 @@ export const AddStudent = () => {
             </CommonFormField>
 
             <CommonFormField control={form.control} name='bloodGroup' label='Blood Group'>
-              {({ field }) => <CommonSelect {...field} placeholder='Select blood group' options={bloodGroups} />}
+              {({ field }) => (
+                <CommonSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder='Select blood group'
+                  options={bloodGroups}
+                />
+              )}
             </CommonFormField>
             <CommonFormField control={form.control} name='dob' label='Date of Birth'>
-              {({ field }) => <DatePicker {...field} />}
+              {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
             </CommonFormField>
 
             <CommonFormField
