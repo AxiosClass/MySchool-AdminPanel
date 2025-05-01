@@ -10,4 +10,5 @@ export const QK = {
   SUBJECT: 'SUBJECT',
   HOLIDAY: 'HOLIDAY',
   EXAM: 'EXAM',
-} as const;
+  ATTENDANCE: 'ATTENDANCE',
+};

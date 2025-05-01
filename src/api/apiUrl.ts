@@ -14,14 +14,14 @@ export const apiUrl = {
   getSubjectsWithTeacher: (classroomId: string) => `/classroom/${classroomId}/subjects`,
   assignSubjectTeacher: 'classroom/subject-teacher',
   deleteSubjectTeacher: (classSubjectTeacherId: string) => `/classroom/subject-teacher/${classSubjectTeacherId}`,
-  getClassroomsForTeacher : (teacherId:string)=>`/classrooms/teacher/${teacherId}`,
+  getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
   // subjects
   assignSubjects: '/subjects',
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,
   // teacher
   addTeacher: `/teacher`,
   getTeachers: `/teachers`,
-  getTeacherList: `/teachers/list`, 
+  getTeacherList: `/teachers/list`,
   // student
   addStudent: `/student`,
   getStudents: `/students`,
@@ -42,4 +42,7 @@ export const apiUrl = {
   getExams: (searchParams: string) => `/exams${searchParams}`,
   updateExam: (examId: string) => `/exam/${examId}`,
   deleteExam: (examId: string) => `/exam/${examId}`,
+  // attendance
+  getAttendanceForClassroom: (classroomId: string, range: number) =>
+    `/attendances/classroom/${classroomId}?range=${range}`,
 };

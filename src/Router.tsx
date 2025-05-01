@@ -12,6 +12,7 @@ import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
 import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
 import { TeacherDashboardPageLoader } from './pages/teacher/TeacherDashboardPageLoader';
+import { TableLoader } from './components/loader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -150,7 +151,7 @@ const router = createBrowserRouter([
           {
             path: 'classroom/:classroomId',
             element: (
-              <Suspense fallback='Loading'>
+              <Suspense fallback={<TableLoader className='my-6' />}>
                 <TeacherClassroom />
               </Suspense>
             ),
