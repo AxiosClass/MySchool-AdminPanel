@@ -13,12 +13,19 @@ export const getStudents = async (): TPromiseResponse<TGetStudentResult[]> => {
   return response?.data;
 };
 
+export const issueNfcCard = async (payload: TIssueNfcCardPayload): TPromiseResponse<null> => {
+  const response = await axiosInstance.post(apiUrl.issueNfcCard, payload);
+  return response.data;
+};
+
 // types
 type TAddStudentPayload = Pick<
   TStudent,
   'name' | 'birthId' | 'class' | 'classroomId' | 'bloodGroup' | 'dob' | 'address' | 'parents' | 'guardian'
 >;
 
-type TGetStudentResult = Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' | 'admittedAt' | 'class'> & {
+type TGetStudentResult = Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' | 'admittedAt' | 'class' | 'cardId'> & {
   classroom: Pick<TClassroom, 'name'>;
 };
+
+type TIssueNfcCardPayload = Pick<TStudent, 'id' | 'cardId'>;

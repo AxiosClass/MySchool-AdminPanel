@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QK } from '@/api';
-import { getStudents } from '@/api/query';
+import { getStudents, issueNfcCard } from '@/api/query';
 import { TableLoader } from '@/components/loader';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
@@ -16,6 +16,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { errorMessageGen } from '@/helpers';
 
 export const StudentTable = () => {
   const { data: students, isLoading } = useQuery({
@@ -41,7 +43,7 @@ export const StudentTable = () => {
       }
       className={{ tableContainer: 'px-6' }}
     >
-      {students.map(({ id, name, class: classInfo, classroom, guardian, address, admittedAt }) => {
+      {students.map(({ id, name, cardId, class: classInfo, classroom, guardian, address, admittedAt }) => {
         return (
           <TableRow key={id} className='border-b'>
             <TableCell>
@@ -50,6 +52,7 @@ export const StudentTable = () => {
                 <div>
                   <p className='text-base font-semibold'>{name}</p>
                   <p className='text-sm text-muted-foreground'>ID : {id}</p>
+                  {cardId && <p className='text-sm text-muted-foreground'>CardID : {cardId}</p>}
                 </div>
               </div>
             </TableCell>
@@ -64,7 +67,7 @@ export const StudentTable = () => {
             </TableCell>
             <TableCell>{moment(admittedAt).format(dateFormatString.basic)}</TableCell>
             <TableCell>
-              <IssueNfcCard studentId={id} />
+              <IssueNfcCard key={cardId} studentId={id} cardId={cardId} />
             </TableCell>
           </TableRow>
         );
@@ -75,11 +78,28 @@ export const StudentTable = () => {
 
 const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
   const formId = 'ISSUE_NFC_CARD_' + studentId;
+  const qc = useQueryClient();
+
   const { open, onOpenChange } = usePopupState();
 
   const form = useForm<TIssueNfcCardForm>({
     resolver: zodResolver(issueNfcCardSchema),
     defaultValues: { cardId: cardId || '' },
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: [formId],
+    mutationFn: issueNfcCard,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.STUDENT] });
+      onOpenChange(false);
+    },
+    onError: (error) => toast.error(errorMessageGen(error)),
+  });
+
+  const handleIssueNfcCard = form.handleSubmit((formData) => {
+    mutate({ cardId: formData.cardId, id: studentId });
   });
 
   return (
@@ -94,9 +114,11 @@ const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
         submitLoadingTitle='Issuing...'
       >
         <Form {...form}>
-          <CommonFormField control={form.control} name='cardId'>
-            {({ field }) => <Input {...field} />}
-          </CommonFormField>
+          <form id={formId} onSubmit={handleIssueNfcCard}>
+            <CommonFormField control={form.control} name='cardId'>
+              {({ field }) => <Input {...field} />}
+            </CommonFormField>
+          </form>
         </Form>
       </FormDialog>
     </div>

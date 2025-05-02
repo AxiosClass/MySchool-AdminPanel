@@ -13,4 +13,5 @@ export type TStudent = {
   class: string;
   classroomId: string;
   monthlyFee: number | null;
+  cardId?: string;
 };
