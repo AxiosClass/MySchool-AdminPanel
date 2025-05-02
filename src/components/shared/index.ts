@@ -6,3 +6,4 @@ export * from './PageHeader';
 export * from './PageTitle';
 export * from './TooltipContainer';
 export * from './UserIcon';
+export * from './AttendanceTable';

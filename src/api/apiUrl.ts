@@ -45,4 +45,6 @@ export const apiUrl = {
   // attendance
   getAttendanceForClassroom: (classroomId: string, range: number) =>
     `/attendances/classroom/${classroomId}?range=${range}`,
+  addAttendance: '/attendance',
+  deleteAttendance: (attendanceId: string) => `/attendance/${attendanceId}`,
 };

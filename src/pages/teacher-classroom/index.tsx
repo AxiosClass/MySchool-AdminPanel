@@ -3,9 +3,9 @@ import { getAttendancesForClassroom } from '@/api/query';
 import { TableLoader } from '@/components/loader';
 import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { AttendanceTable } from '@/components/shared';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { AttendanceTable } from './AttendanceTable';
 
 export default function TeacherClassroom() {
   const { classroomId } = useParams();
