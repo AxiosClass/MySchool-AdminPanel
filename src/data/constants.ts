@@ -14,3 +14,7 @@ export const months = [
   'November',
   'December',
 ];
+
+export const dateFormatString = {
+  basic: 'DD MMM YYYY',
+};

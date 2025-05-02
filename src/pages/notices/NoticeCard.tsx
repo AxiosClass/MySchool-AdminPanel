@@ -1,10 +1,12 @@
+import moment from 'moment';
+
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { NOTICE_FOR, TNotice } from '@/types';
 import { DeleteNotice } from './DeleteNotice';
 import { UpdateNotice } from './UpdateNotice';
+import { dateFormatString } from '@/data';
 
 export const NoticeCard = (props: TNotice) => {
   const { title, description, noticeFor, createdAt } = props;
@@ -20,7 +22,7 @@ export const NoticeCard = (props: TNotice) => {
       <CardContent>
         <CardDescription className='text-justify'>{description}</CardDescription>
         <div className='mt-2 flex items-center justify-between'>
-          <p className='font-semibold text-muted-foreground'>{format(createdAt, 'PPP')}</p>
+          <p className='font-semibold text-muted-foreground'>{moment(createdAt).format(dateFormatString.basic)}</p>
           <Badge className={cn(noticeForConfig.classname)}>{noticeFor}</Badge>
         </div>
       </CardContent>
@@ -34,5 +36,3 @@ const NOTICE_FOR_CONFIG = {
   [NOTICE_FOR.STUDENT]: { classname: 'bg-orange-600' },
   [NOTICE_FOR.TEACHER]: { classname: 'bg-emerald-600' },
 };
-
-// types

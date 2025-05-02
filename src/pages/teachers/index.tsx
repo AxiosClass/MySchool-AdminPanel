@@ -1,5 +1,4 @@
 import { QK } from '@/api';
-import { format } from 'date-fns';
 import { Message } from '@/components/shared/Message';
 import { UserIcon } from '@/components/shared/UserIcon';
 import { PageTitle } from '@/components/shared/PageTitle';
@@ -10,6 +9,9 @@ import { TableLoader } from '@/components/loader/TableLoader';
 import { useQuery } from '@tanstack/react-query';
 import { getTeachers } from '@/api/query';
 import { AddTeacher } from './AddTeacher';
+import { dateFormatString } from '@/data';
+
+import moment from 'moment';
 
 export default function TeachersPage() {
   return (
@@ -68,7 +70,7 @@ const TeacherTable = () => {
             </div>
           </TableCell>
           <TableCell>{salary} TK</TableCell>
-          <TableCell className='text-right capitalize'>{format(joinedAt, 'PPP')}</TableCell>
+          <TableCell className='text-right capitalize'>{moment(joinedAt).format(dateFormatString.basic)}</TableCell>
         </TableRow>
       ))}
     </CommonTable>

@@ -18,5 +18,5 @@ type TAttendanceForClassroom = {
   classroomInfo: { name: string; class: string };
 };
 
-type TAttendance = { date: string; status: TAttendanceStatus };
+type TAttendance = { date: string; status: TAttendanceStatus; attendanceId: string };
 type TAttendanceStatus = 'PRESENT' | 'ABSENT' | 'HOLIDAY';

@@ -1,9 +1,10 @@
+import moment from 'moment';
+
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
 import { UserIcon } from '@/components/shared/UserIcon';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { months } from '@/data/constants';
+import { dateFormatString, months } from '@/data/constants';
 import { TGetPaymentResponse } from '@/api/query';
 import { PAYMENT_TYPE } from '@/types';
 
@@ -50,7 +51,9 @@ export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
               {month && `${months[month]}, `}
               {year}
             </TableCell>
-            <TableCell className='text-right text-muted-foreground'>{format(createdAt, 'PPP')}</TableCell>
+            <TableCell className='text-right text-muted-foreground'>
+              {moment(createdAt).format(dateFormatString.basic)}
+            </TableCell>
           </TableRow>
         );
       })}

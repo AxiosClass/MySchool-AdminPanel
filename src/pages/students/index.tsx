@@ -8,7 +8,9 @@ import { TableLoader } from '@/components/loader';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { UserIcon } from '@/components/shared';
-import { format } from 'date-fns';
+
+import moment from 'moment';
+import { dateFormatString } from '@/data';
 
 export default function StudentsPage() {
   return (
@@ -66,7 +68,7 @@ const StudentTable = () => {
               <p className='text-base font-semibold'> {guardian.name}</p>
               <p className='text-sm text-muted-foreground'>Cell : {guardian.phone}</p>
             </TableCell>
-            <TableCell className='text-right capitalize'>{format(admittedAt, 'PPP')}</TableCell>
+            <TableCell className='text-right capitalize'>{moment(admittedAt).format(dateFormatString.basic)}</TableCell>
           </TableRow>
         );
       })}
