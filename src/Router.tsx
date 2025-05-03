@@ -5,14 +5,15 @@ import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
 import { StudentPageLoader } from './pages/students/StudentPageLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
-import { LogInPageLoader } from './pages/login/LogInPageLoader';
-import { TransactionSubLayout } from './layout/transaction-sub-layout';
-import { MainLayout } from './layout/main-layout';
+import { TeacherDashboardPageLoader } from './pages/teacher-dashboard/TeacherDashboardPageLoader';
+import { StudentDashboardPageLoader } from './pages/student-dashboard/StudentDashboardPageLoader';
+import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
-import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
-import { TeacherDashboardPageLoader } from './pages/teacher/TeacherDashboardPageLoader';
+import { TransactionSubLayout } from './layout/transaction-sub-layout';
+import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TableLoader } from './components/loader';
+import { MainLayout } from './layout/main-layout';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -27,8 +28,9 @@ const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
 const NoticesPage = lazy(() => import('@/pages/notices'));
 const HolidaysPage = lazy(() => import('@/pages/holidays'));
 const ExamsPage = lazy(() => import('@/pages/exams'));
-const TeacherDashboardPage = lazy(() => import('@/pages/teacher'));
+const TeacherDashboardPage = lazy(() => import('@/pages/teacher-dashboard'));
 const TeacherClassroom = lazy(() => import('@/pages/teacher-classroom'));
+const StudentDashboardPage = lazy(() => import('@/pages/student-dashboard'));
 
 const router = createBrowserRouter([
   {
@@ -158,6 +160,19 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '/student',
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<StudentDashboardPageLoader />}>
+                <StudentDashboardPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
     ],
   },
   {
@@ -170,6 +185,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-export const Router = () => {
-  return <RouterProvider router={router} />;
-};
+export const Router = () => <RouterProvider router={router} />;
