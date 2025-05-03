@@ -21,8 +21,8 @@ export const useSidebarLinks = () => {
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Exams', url: '/exams', icon: <FaNoteSticky /> },
     ];
-
-  if (user?.role === USER_ROLE.TEACHER) return [{ title: 'Home', url: '/teacher', icon: <FaHome /> }];
+  else if (user?.role === USER_ROLE.TEACHER) return [{ title: 'Home', url: '/teacher', icon: <FaHome /> }];
+  else if (user?.role === USER_ROLE.STUDENT) return [{ title: 'Home', url: '/student', icon: <FaHome /> }];
 };
 
 export const isActive = (url: string, pathname: string) => {

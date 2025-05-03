@@ -26,6 +26,7 @@ export const apiUrl = {
   addStudent: `/student`,
   getStudents: `/students`,
   issueNfcCard: `/student/issue-nfc`,
+  getStudentInfo: `/student/mine`,
   // payment
   getPaymentSummary: (studentId: string) => `/payment/summary/${studentId}`,
   makePayment: `/payment`,

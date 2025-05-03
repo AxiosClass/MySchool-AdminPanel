@@ -1,3 +1,11 @@
+import { PageTitle } from '@/components/shared';
+import { StudentProfile } from './StudentProfile';
+
 export default function StudentDashboardPage() {
-  return <div>Student Dashboard Page</div>;
+  return (
+    <>
+      <PageTitle title='Student Profile' />
+      <StudentProfile />
+    </>
+  );
 }
