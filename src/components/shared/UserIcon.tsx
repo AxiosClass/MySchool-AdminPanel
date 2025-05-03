@@ -4,7 +4,7 @@ const UserIconConfig = {
   sm: 'text-xl size-10',
   md: 'text-2xl size-16',
   lg: 'text-6xl size-32',
-  xl: 'text-9xl size-40',
+  xl: 'text-8xl size-40',
 };
 
 export const UserIcon = ({ username, className, size = 'sm' }: TUserIconProps) => {
