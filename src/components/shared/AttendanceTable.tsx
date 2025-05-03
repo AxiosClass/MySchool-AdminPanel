@@ -54,7 +54,7 @@ export const AttendanceTable = ({ attendanceList }: TAttendanceTableProps) => {
               )}
 
               {todaysAttendance && todaysAttendance.status === 'HOLIDAY' && (
-                <p className='flex items-center gap-1 text-muted-foreground'>
+                <p className='flex items-center justify-center gap-1 text-muted-foreground'>
                   <MdError /> Today is holiday
                 </p>
               )}
