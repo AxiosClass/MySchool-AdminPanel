@@ -38,9 +38,7 @@ const AttendanceList = ({ range }: TAttendanceListProps) => {
 
   return (
     <div className='grid grid-cols-10 gap-4'>
-      {attendanceList?.attendances.map((attendance) => (
-        <AttendanceCard key={attendance.attendanceId} {...attendance} />
-      ))}
+      {attendanceList?.attendances.map((attendance) => <AttendanceCard key={attendance.date} {...attendance} />)}
     </div>
   );
 };
