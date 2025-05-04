@@ -40,7 +40,7 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
 
   const handleMakePayment = form.handleSubmit((formData) => {
     const amount = Number(formData.amount);
-    const month = Number(formData.month) ?? null;
+    const month = Number(formData.month) || null;
     const year = Number(formData.year);
     const description = formData.description ?? null;
     const type = formData.type as PAYMENT_TYPE;
@@ -67,7 +67,12 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
             </CommonFormField>
             <CommonFormField control={form.control} name='type' label='Payment Type'>
               {({ field }) => (
-                <CommonSelect options={paymentTypeOptions} {...field} placeholder='Select payment type' />
+                <CommonSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={paymentTypeOptions}
+                  placeholder='Select payment type'
+                />
               )}
             </CommonFormField>
 
@@ -84,7 +89,14 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
               </CommonFormField>
             )}
             <CommonFormField control={form.control} name='year' label='Year'>
-              {({ field }) => <CommonSelect options={yearOptions} {...field} placeholder='Select year' />}
+              {({ field }) => (
+                <CommonSelect
+                  options={yearOptions}
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder='Select year'
+                />
+              )}
             </CommonFormField>
           </form>
         </Form>

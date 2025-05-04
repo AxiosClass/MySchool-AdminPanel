@@ -43,7 +43,8 @@ export const AssignSubjectTeacher = ({ classroomId, classSubjectId }: TAssignSub
         <CommonFormField control={form.control} name='teacherId'>
           {({ field }) => (
             <CommonSelect
-              {...field}
+              value={field.value}
+              onChange={field.onChange}
               placeholder='Select teacher'
               options={teachers || []}
               isLoading={isTeacherDataLoading}

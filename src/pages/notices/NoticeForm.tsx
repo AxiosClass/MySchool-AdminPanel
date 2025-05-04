@@ -23,7 +23,14 @@ export const NoticeForm = ({ formId, defaultValues, onSubmit }: TNoticeFormProps
           {({ field }) => <Textarea {...field} placeholder='Enter description' />}
         </CommonFormField>
         <CommonFormField control={form.control} name='noticeFor' label='Notice For'>
-          {({ field }) => <CommonSelect options={noticeForOptions} {...field} placeholder='Select any' />}
+          {({ field }) => (
+            <CommonSelect
+              options={noticeForOptions}
+              value={field.value}
+              onChange={field.onChange}
+              placeholder='Select any'
+            />
+          )}
         </CommonFormField>
       </form>
     </Form>
