@@ -10,7 +10,10 @@ export const getAttendancesForClassroom = async ({
   return response.data;
 };
 
-export const getAttendancesForStudent = async ({ start, end }: TGetAttendancesForStudentArgs) => {
+export const getAttendancesForStudent = async ({
+  start,
+  end,
+}: TGetAttendancesForStudentArgs): TPromiseResponse<TAttendanceList> => {
   const response = await axiosInstance.get(apiUrl.getAttendancesForStudent({ start, end }));
   return response.data;
 };
@@ -27,14 +30,9 @@ export const deleteAttendance = async (attendanceId: string): TPromiseResponse<n
 
 // type
 type TGetAttendancesForClassroomArgs = { classroomId: string; range: number };
-
-type TAttendanceForClassroom = {
-  attendanceList: { id: string; name: string; attendances: TAttendance[] }[];
-  classroomInfo: { name: string; class: string };
-};
-
+type TAttendanceForClassroom = { attendanceList: TAttendanceList[]; classroomInfo: { name: string; class: string } };
+type TGetAttendancesForStudentArgs = { start: string; end: string };
 type TAddAttendancePayload = { studentId: string; date?: string };
-
 type TAttendance = { date: string; status: TAttendanceStatus; attendanceId: string };
 type TAttendanceStatus = 'PRESENT' | 'ABSENT' | 'HOLIDAY';
-type TGetAttendancesForStudentArgs = { start: string; end: string };
+type TAttendanceList = { id: string; name: string; attendances: TAttendance[] };
