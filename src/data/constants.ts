@@ -17,4 +17,5 @@ export const months = [
 
 export const dateFormatString = {
   basic: 'DD MMM YYYY',
+  isoBasic: 'YYYY-MM-DD',
 };
