@@ -3,10 +3,11 @@ import { PropsWithChildren, ReactNode } from 'react';
 import { Table, TableBody, TableHeader, TableRow } from '../ui/table';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
-export const CommonTable = ({ head, children, className }: TCommonTableProps) => {
+export const CommonTable = ({ head, children, className, header }: TCommonTableProps) => {
   return (
     <ScrollArea fixedLayout disableScrollbar className={cn(className?.tableContainer)}>
       <section className={cn('w-full overflow-hidden rounded-md border')}>
+        {header && <section className='bg-primary-50 p-3'>{header}</section>}
         <Table>
           <TableHeader>
             <TableRow className='border-none'>{head}</TableRow>
@@ -19,4 +20,8 @@ export const CommonTable = ({ head, children, className }: TCommonTableProps) =>
   );
 };
 
-type TCommonTableProps = PropsWithChildren<{ className?: { tableContainer?: string }; head: ReactNode }>;
+type TCommonTableProps = PropsWithChildren<{
+  className?: { tableContainer?: string };
+  head: ReactNode;
+  header?: ReactNode;
+}>;

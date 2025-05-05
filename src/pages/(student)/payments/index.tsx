@@ -6,40 +6,62 @@ import { CommonTable, Message, PageTitle } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { useGetStudentPayments } from '@/hooks';
+import { useGetPaymentSummary, useGetStudentPayments } from '@/hooks';
+import { FiDollarSign } from 'react-icons/fi';
 import { useAuthStore } from '@/stores/auth';
 import { PAYMENT_TYPE } from '@/types';
+import { PaymentSummaryLoader } from './StudentPaymentPageLoader';
 
 export default function StudentPaymentPage() {
   return (
     <>
       <PageTitle title='Payments' />
       <ScrollArea>
-        <Payments />
+        <PaymentSummary />
+        <CommonTable
+          head={
+            <>
+              <TableHead>SL</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead className='text-center'>Type</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Month / Year</TableHead>
+              <TableHead className='text-right'>Paid At</TableHead>
+            </>
+          }
+          className={{ tableContainer: 'p-6' }}
+        >
+          <PaymentTableBody />
+        </CommonTable>
       </ScrollArea>
     </>
   );
 }
 
-const Payments = () => {
+const PaymentSummary = () => {
+  const user = useAuthStore((state) => state.user);
+  const { data: payments, isLoading } = useGetPaymentSummary(user?.id as string);
+
+  if (isLoading) return <PaymentSummaryLoader />;
+
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>SL</TableHead>
-          <TableHead>Amount</TableHead>
-          <TableHead className='text-center'>Type</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Month / Year</TableHead>
-          <TableHead className='text-right'>Paid At</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'p-6' }}
-    >
-      <PaymentTableBody />
-    </CommonTable>
+    <div className='grid grid-cols-3 gap-6 p-6'>
+      <PaymentCard label='Demand' value={(payments?.totalPaid || 0) + (payments?.totalDue || 0)} />
+      <PaymentCard label='Paid' value={payments?.totalPaid || 0} />
+      <PaymentCard label='Due' value={payments?.totalDue || 0} />
+    </div>
   );
 };
+
+const PaymentCard = ({ label, value }: { label: string; value: number }) => (
+  <div className='rounded-lg border border-gray-200 bg-gray-50 p-6'>
+    <h3 className='text-lg font-semibold'>{label}</h3>
+    <div className='mt-2 flex items-center justify-between gap-2'>
+      <h2 className='text-3xl font-bold'>{value}</h2>
+      <FiDollarSign className='text-3xl' />
+    </div>
+  </div>
+);
 
 const PAYMENT_TYPE_CONFIG = {
   [PAYMENT_TYPE.ADMISSION_FEE]: { className: 'bg-orange-600' },
@@ -81,6 +103,7 @@ const PaymentTableBody = () => {
   );
 };
 
+// Utils
 const PaymentTableLoader = () => (
   <>
     {Array.from({ length: 4 }).map((_, index) => (

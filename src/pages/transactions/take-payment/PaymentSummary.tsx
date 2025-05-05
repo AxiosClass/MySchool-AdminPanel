@@ -1,17 +1,10 @@
-import { QK } from '@/api';
-import { getPaymentSummary } from '@/api/query';
 import { MakePayment, Message } from '@/components/shared';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useQuery } from '@tanstack/react-query';
 import { Payments } from './Payments';
+import { useGetPaymentSummary } from '@/hooks';
 
 export const PaymentSummary = ({ studentId }: { studentId: string }) => {
-  const { data: paymentSummary, isLoading } = useQuery({
-    queryKey: [QK.PAYMENT, 'SUMMARY', { studentId }],
-    queryFn: () => getPaymentSummary(studentId),
-    enabled: !!studentId,
-    select: (res) => res.data,
-  });
+  const { data: paymentSummary, isLoading } = useGetPaymentSummary(studentId);
 
   if (isLoading) return <PaymentSummaryLoader />;
   if (!paymentSummary) return <Message className='my-12' message='No Student Found' />;
