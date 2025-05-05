@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '@/stores/auth';
 import { getAttendancesForStudent } from '@/api/query';
 import { cn } from '@/lib/utils';
+import { StudentAttendanceLoader } from './StudentDashboardPageLoader';
 
 // Const
 const timePeriodOptions = [
@@ -24,9 +25,9 @@ export const StudentAttendance = () => {
 
   return (
     <div className='mb-6 mt-12 rounded-md'>
-      <div className='mb-6 flex items-center justify-between'>
-        <h2 className='text-2xl font-semibold'>Attendances</h2>
-        <CommonSelect className='max-w-52' value={range} onChange={rangeChange} options={timePeriodOptions} />
+      <div className='mb-6 flex flex-col items-center justify-between gap-x-4 gap-y-2 sm:flex-row'>
+        <h2 className='text-lg font-semibold sm:text-2xl'>Attendances</h2>
+        <CommonSelect className='sm:max-w-52' value={range} onChange={rangeChange} options={timePeriodOptions} />
       </div>
       <AttendanceList range={range} />
     </div>
@@ -34,10 +35,11 @@ export const StudentAttendance = () => {
 };
 
 const AttendanceList = ({ range }: TAttendanceListProps) => {
-  const { data: attendanceList } = useGetAttendancesForStudent(range);
+  const { data: attendanceList, isLoading } = useGetAttendancesForStudent(range);
+  if (isLoading) return <StudentAttendanceLoader />;
 
   return (
-    <div className='grid grid-cols-10 gap-4'>
+    <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7'>
       {attendanceList?.attendances.map((attendance) => <AttendanceCard key={attendance.date} {...attendance} />)}
     </div>
   );
@@ -56,7 +58,7 @@ const AttendanceCard = ({ date, status }: TAttendanceCardProps) => {
     <div className={cn('flex flex-col gap-1 rounded-md p-4 text-center text-white shadow-sm', config?.className)}>
       <p className='font-semibold'>{moment(date).format('ddd')}</p>
       <p className='font-semibold'>{moment(date).format('Do MMM')}</p>
-      <h2 className='mt-2 text-xl font-semibold'>{config?.label}</h2>
+      <h2 className='mt-4 text-xl font-semibold'>{config?.label}</h2>
     </div>
   );
 };
