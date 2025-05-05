@@ -22,7 +22,11 @@ export const useSidebarLinks = () => {
       { title: 'Exams', url: '/exams', icon: <FaNoteSticky /> },
     ];
   else if (user?.role === USER_ROLE.TEACHER) return [{ title: 'Home', url: '/teacher', icon: <FaHome /> }];
-  else if (user?.role === USER_ROLE.STUDENT) return [{ title: 'Home', url: '/student', icon: <FaHome /> }];
+  else if (user?.role === USER_ROLE.STUDENT)
+    return [
+      { title: 'Home', url: '/student', icon: <FaHome /> },
+      { title: 'Payments', url: '/student/payments', icon: <IoWallet /> },
+    ];
 };
 
 export const isActive = (url: string, pathname: string) => {

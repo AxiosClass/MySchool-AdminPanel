@@ -178,7 +178,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: '/payments',
+            path: 'payments',
             element: (
               <Suspense fallback={<StudentPaymentPageLoader />}>
                 <StudentPaymentPage />

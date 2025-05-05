@@ -14,7 +14,6 @@ export const CommonTable = ({ head, children, className }: TCommonTableProps) =>
           <TableBody>{children}</TableBody>
         </Table>
       </section>
-
       <ScrollBar />
     </ScrollArea>
   );

@@ -18,7 +18,7 @@ export default function PaymentsPage() {
 const PaymentList = () => {
   const { data: payments, isLoading } = useQuery({
     queryKey: [QK.PAYMENT],
-    queryFn: getPayments,
+    queryFn: () => getPayments({}),
     select: (res) => res.data,
   });
 
