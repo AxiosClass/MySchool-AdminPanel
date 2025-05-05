@@ -9,7 +9,6 @@ import { useParams } from 'react-router-dom';
 
 export default function TeacherClassroom() {
   const { classroomId } = useParams();
-
   const { data, isLoading } = useGetAttendances(classroomId!);
 
   if (isLoading) return <TableLoader className='my-6' />;

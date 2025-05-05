@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import type { TGetAttendanceQueryResult } from '../../pages/teacher-classroom';
+import type { TGetAttendanceQueryResult } from '../../pages/(teacher)/teacher-classroom';
 import { CommonTable, Message, TooltipContainer, UserIcon } from '@/components/shared';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

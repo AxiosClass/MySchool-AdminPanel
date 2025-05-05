@@ -5,8 +5,8 @@ import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
 import { StudentPageLoader } from './pages/students/StudentPageLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
-import { TeacherDashboardPageLoader } from './pages/teacher-dashboard/TeacherDashboardPageLoader';
-import { StudentDashboardPageLoader } from './pages/student-dashboard/StudentDashboardPageLoader';
+import { TeacherDashboardPageLoader } from './pages/(teacher)/teacher-dashboard/TeacherDashboardPageLoader';
+import { StudentDashboardPageLoader } from './pages/(student)/student-dashboard/StudentDashboardPageLoader';
 import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
 import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
 import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
@@ -14,6 +14,7 @@ import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TableLoader } from './components/loader';
 import { MainLayout } from './layout/main-layout';
+import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -28,12 +29,14 @@ const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
 const NoticesPage = lazy(() => import('@/pages/notices'));
 const HolidaysPage = lazy(() => import('@/pages/holidays'));
 const ExamsPage = lazy(() => import('@/pages/exams'));
-const TeacherDashboardPage = lazy(() => import('@/pages/teacher-dashboard'));
-const TeacherClassroom = lazy(() => import('@/pages/teacher-classroom'));
-const StudentDashboardPage = lazy(() => import('@/pages/student-dashboard'));
+const TeacherDashboardPage = lazy(() => import('@/pages/(teacher)/teacher-dashboard'));
+const TeacherClassroom = lazy(() => import('@/pages/(teacher)/teacher-classroom'));
+const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
+const StudentPaymentPage = lazy(() => import('@/pages/(student)/payments'));
 
 const router = createBrowserRouter([
   {
+    // main layout
     path: '/',
     element: (
       <Suspense fallback={<MainLayoutLoader />}>
@@ -41,6 +44,7 @@ const router = createBrowserRouter([
       </Suspense>
     ),
     children: [
+      // admin panel
       {
         path: '/',
         element: (
@@ -140,6 +144,7 @@ const router = createBrowserRouter([
         ),
       },
       {
+        // teacher panel
         path: '/teacher',
         children: [
           {
@@ -161,6 +166,7 @@ const router = createBrowserRouter([
         ],
       },
       {
+        // student panel
         path: '/student',
         children: [
           {
@@ -168,6 +174,14 @@ const router = createBrowserRouter([
             element: (
               <Suspense fallback={<StudentDashboardPageLoader />}>
                 <StudentDashboardPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/payments',
+            element: (
+              <Suspense fallback={<StudentPaymentPageLoader />}>
+                <StudentPaymentPage />
               </Suspense>
             ),
           },
