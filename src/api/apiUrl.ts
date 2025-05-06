@@ -1,4 +1,5 @@
-export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
+// export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
+export const SERVER_ADDRESS = 'https://my-school-server-cyan.vercel.app/api/v1';
 
 export const apiUrl = {
   // auth
