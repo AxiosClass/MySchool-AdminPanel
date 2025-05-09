@@ -7,3 +7,5 @@ export const AttendanceSummarySkeleton = () => (
     ))}
   </div>
 );
+
+export const BarChartLoader = () => <Skeleton className='h-40 w-full' />;
