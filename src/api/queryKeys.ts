@@ -11,4 +11,5 @@ export const QK = {
   HOLIDAY: 'HOLIDAY',
   EXAM: 'EXAM',
   ATTENDANCE: 'ATTENDANCE',
+  META_DATA: 'META_DATA',
 };

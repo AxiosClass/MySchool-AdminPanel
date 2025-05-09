@@ -1,5 +1,5 @@
-// export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
-export const SERVER_ADDRESS = 'https://my-school-server-cyan.vercel.app/api/v1';
+export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
+// export const SERVER_ADDRESS = 'https://my-school-server-cyan.vercel.app/api/v1';
 
 export const apiUrl = {
   // auth
@@ -52,4 +52,8 @@ export const apiUrl = {
   deleteAttendance: (attendanceId: string) => `/attendance/${attendanceId}`,
   getAttendancesForStudent: ({ start, end }: { start: string; end: string }) =>
     `/attendances/student?start=${start}&end=${end}`,
+  // metadata
+  getAttendanceSummary: '/meta-data/attendance/summary',
+  getAttendanceTrends: '/meta-data/attendance/trends',
+  getPaymentTrends: '/meta-data/payment/trends',
 };
