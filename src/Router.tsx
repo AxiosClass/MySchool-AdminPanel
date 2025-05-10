@@ -15,6 +15,7 @@ import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TableLoader } from './components/loader';
 import { MainLayout } from './layout/main-layout';
 import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
+import { DashboardPageLoader } from './pages/home/DashboardLoader';
 
 // pages
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: (
-          <Suspense fallback='Home Page is loading'>
+          <Suspense fallback={<DashboardPageLoader />}>
             <HomePage />
           </Suspense>
         ),

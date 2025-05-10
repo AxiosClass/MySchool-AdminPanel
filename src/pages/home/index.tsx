@@ -5,6 +5,7 @@ import { USER_ROLE } from '@/types';
 import { Navigate } from 'react-router-dom';
 import { AttendanceSummary } from './AttendanceSummary';
 import { AttendanceTrends } from './AttendanceTrends';
+import { PaymentTrends } from './PaymentTrends';
 
 export default function HomePage() {
   const user = useAuthStore((state) => state.user);
@@ -15,10 +16,11 @@ export default function HomePage() {
   return (
     <>
       <PageTitle title='Dashboard' />
-      <ScrollArea className='grow p-6'>
+      <ScrollArea className='grow p-6' fixedLayout>
         <AttendanceSummary />
         <div className='mt-6 flex items-center gap-6'>
           <AttendanceTrends />
+          <PaymentTrends />
         </div>
       </ScrollArea>
     </>

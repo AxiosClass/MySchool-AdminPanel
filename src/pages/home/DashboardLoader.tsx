@@ -8,4 +8,12 @@ export const AttendanceSummarySkeleton = () => (
   </div>
 );
 
-export const BarChartLoader = () => <Skeleton className='h-40 w-full' />;
+export const BarChartLoader = () => <Skeleton className='h-[500px] w-full' />;
+
+export const DashboardPageLoader = () => (
+  <div className='p-6'>
+    <AttendanceSummarySkeleton />
+    <div className='mt-6' />
+    <BarChartLoader />
+  </div>
+);

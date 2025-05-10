@@ -8,7 +8,7 @@ export const MainLayout = () => {
   if (!user) return <Navigate to='/login' />;
 
   return (
-    <section className='grid min-h-screen bg-background md:grid-cols-[auto_1fr]'>
+    <section className='grid min-h-screen bg-gray-50 md:grid-cols-[auto_1fr]'>
       <Sidebar />
       <section className='flex h-dvh flex-col'>
         <TopBar />

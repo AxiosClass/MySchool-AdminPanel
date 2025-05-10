@@ -12,5 +12,11 @@ export const getAttendanceTrends = async (): TPromiseResponse<TAttendanceTrend[]
   return response.data;
 };
 
+export const getPaymentTrends = async (): TPromiseResponse<TPaymentTrend[]> => {
+  const response = await axiosInstance.get(apiUrl.getPaymentTrends);
+  return response.data;
+};
+
 type TAttendanceSummary = { totalStudents: number; present: number; absent: number };
 export type TAttendanceTrend = { date: string; count: number };
+export type TPaymentTrend = { month: string; amount: number };
