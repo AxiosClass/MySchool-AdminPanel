@@ -21,11 +21,16 @@ export const useSidebarLinks = () => {
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Exams', url: '/exams', icon: <FaNoteSticky /> },
     ];
-  else if (user?.role === USER_ROLE.TEACHER) return [{ title: 'Home', url: '/teacher', icon: <FaHome /> }];
+  else if (user?.role === USER_ROLE.TEACHER)
+    return [
+      { title: 'Home', url: '/teacher', icon: <FaHome /> },
+      { title: 'Notice', url: '/teacher/notices', icon: <FaBellConcierge /> },
+    ];
   else if (user?.role === USER_ROLE.STUDENT)
     return [
       { title: 'Home', url: '/student', icon: <FaHome /> },
       { title: 'Payments', url: '/student/payments', icon: <IoWallet /> },
+      { title: 'Notice', url: '/student/notices', icon: <FaBellConcierge /> },
     ];
 };
 
@@ -33,7 +38,7 @@ export const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes') return partialMatch(['/classes', '/class'], pathname);
   if (url === '/transactions') return partialMatch(['/transactions'], pathname);
-  if (url === '/teacher') return partialMatch(['/teacher', '/classroom'], pathname);
+  if (url === '/teacher') return partialMatch(['/teacher', '/classroom'], pathname) && pathname !== '/teacher/notices';
 };
 
 const partialMatch = (urls: string[], pathname: string): boolean => {

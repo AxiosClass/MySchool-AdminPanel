@@ -32,8 +32,10 @@ const HolidaysPage = lazy(() => import('@/pages/holidays'));
 const ExamsPage = lazy(() => import('@/pages/exams'));
 const TeacherDashboardPage = lazy(() => import('@/pages/(teacher)/teacher-dashboard'));
 const TeacherClassroom = lazy(() => import('@/pages/(teacher)/teacher-classroom'));
+const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
 const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
 const StudentPaymentPage = lazy(() => import('@/pages/(student)/payments'));
+const NoticePageForStudent = lazy(() => import('@/pages/(student)/notices'));
 
 const router = createBrowserRouter([
   {
@@ -164,6 +166,14 @@ const router = createBrowserRouter([
               </Suspense>
             ),
           },
+          {
+            path: 'notices',
+            element: (
+              <Suspense fallback={<PageWithCardLoader />}>
+                <NoticePageForTeacher />
+              </Suspense>
+            ),
+          },
         ],
       },
       {
@@ -183,6 +193,14 @@ const router = createBrowserRouter([
             element: (
               <Suspense fallback={<StudentPaymentPageLoader />}>
                 <StudentPaymentPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: 'notices',
+            element: (
+              <Suspense fallback={<PageWithCardLoader />}>
+                <NoticePageForStudent />
               </Suspense>
             ),
           },
