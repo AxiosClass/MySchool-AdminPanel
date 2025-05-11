@@ -11,7 +11,7 @@ import { FormDialog } from '@/components/shared/form';
 import { PencilLineIcon } from 'lucide-react';
 
 export const UpdateNotice = (payload: TNotice) => {
-  const { id, createdAt: _, ...defaultValues } = payload;
+  const { id, ...defaultValues } = payload;
   const formId = `${QK.NOTICE}_UPDATE_${id}`;
 
   const qc = useQueryClient();

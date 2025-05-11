@@ -8,22 +8,24 @@ import { DeleteNotice } from './DeleteNotice';
 import { UpdateNotice } from './UpdateNotice';
 import { dateFormatString } from '@/data';
 
-export const NoticeCard = (props: TNotice) => {
-  const { title, description, noticeFor, createdAt } = props;
+type TNoticeCardProps = { notice: TNotice; updateNotice?: boolean; deleteNotice?: boolean; showNoticeFor?: boolean };
+export const NoticeCard = ({ notice, deleteNotice, updateNotice, showNoticeFor }: TNoticeCardProps) => {
+  const { id, title, description, noticeFor, createdAt } = notice;
   const noticeForConfig = NOTICE_FOR_CONFIG[noticeFor];
 
   return (
     <Card className='bg-transparent'>
       <CardHeader className='flex flex-row items-center gap-2'>
         <CardTitle className='mr-auto'>{title}</CardTitle>
-        <DeleteNotice noticeId={props.id} />
-        <UpdateNotice {...props} />
+        {deleteNotice && <DeleteNotice noticeId={id} />}
+        {updateNotice && <UpdateNotice {...notice} />}
       </CardHeader>
+
       <CardContent>
         <CardDescription className='text-justify'>{description}</CardDescription>
         <div className='mt-2 flex items-center justify-between'>
           <p className='font-semibold text-muted-foreground'>{moment(createdAt).format(dateFormatString.basic)}</p>
-          <Badge className={cn(noticeForConfig.classname)}>{noticeFor}</Badge>
+          {showNoticeFor && <Badge className={cn(noticeForConfig.classname)}>{noticeFor}</Badge>}
         </div>
       </CardContent>
     </Card>

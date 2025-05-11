@@ -3,7 +3,7 @@ import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { AddNotice } from './AddNotice';
 import { useQuery } from '@tanstack/react-query';
 import { getNotices } from '@/api/query/noticeQuery';
-import { NoticeCard } from './NoticeCard';
+import { NoticeCard } from '@/components/shared/notice';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CardsLoader } from '@/components/loader';
 
@@ -34,7 +34,7 @@ const NoticeList = () => {
   return (
     <div className='grid gap-4 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
       {notices.map((notice) => (
-        <NoticeCard key={notice.id} {...notice} />
+        <NoticeCard key={notice.id} notice={notice} deleteNotice updateNotice showNoticeFor />
       ))}
     </div>
   );
