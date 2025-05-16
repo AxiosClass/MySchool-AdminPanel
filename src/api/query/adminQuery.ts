@@ -18,6 +18,11 @@ export const deleteAdmin = async (email: string): TPromiseResponse => {
   return response.data;
 };
 
+export const resetAdminPassword = async (email: string): TPromiseResponse => {
+  const response = await axiosInstance.patch(apiUrl.resetPassword(email));
+  return response.data;
+};
+
 // types
 type TCreateAdminPayload = { name: string; email: string; role: USER_ROLE };
 type TGetAdminArgs = { searchTerm?: string; role?: string };
