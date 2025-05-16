@@ -1,7 +1,7 @@
 import { apiUrl } from '../apiUrl';
 import { TNotice, TObject, TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
-import { removeEmptyProperties } from '@/helpers';
+import { makeUrlParams } from '@/helpers';
 
 export const addNotice = async (payload: TAddNoticePayload): TPromiseResponse<null> => {
   const response = await axiosInstance.post(apiUrl.addNotice, payload);
@@ -9,9 +9,7 @@ export const addNotice = async (payload: TAddNoticePayload): TPromiseResponse<nu
 };
 
 export const getNotices = async (args: TObject = {}): TPromiseResponse<TNotice[]> => {
-  const refinedArgs = removeEmptyProperties(args);
-  const searchParams = new URLSearchParams(refinedArgs as TObject).toString();
-  const response = await axiosInstance.get(apiUrl.getNotices(searchParams ? `?${searchParams}` : ''));
+  const response = await axiosInstance.get(apiUrl.getNotices(makeUrlParams(args)));
   return response.data;
 };
 

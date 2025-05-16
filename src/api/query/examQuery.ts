@@ -1,7 +1,7 @@
 import { TExam, TObject, TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
-import { removeEmptyProperties } from '@/helpers';
+import { makeUrlParams } from '@/helpers';
 
 export const addExam = async (payload: TAddExamPayload): TPromiseResponse<null> => {
   const response = await axiosInstance.post(apiUrl.addExam, payload);
@@ -9,9 +9,7 @@ export const addExam = async (payload: TAddExamPayload): TPromiseResponse<null> 
 };
 
 export const getExams = async (args: TObject): TPromiseResponse<TExam[]> => {
-  const refinedArgs = removeEmptyProperties(args);
-  const searchParams = new URLSearchParams(refinedArgs).toString();
-  const response = await axiosInstance.get(apiUrl.getExams(searchParams ? `?${searchParams}` : ''));
+  const response = await axiosInstance.get(apiUrl.getExams(makeUrlParams(args)));
   return response.data;
 };
 

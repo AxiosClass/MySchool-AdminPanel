@@ -1,13 +1,10 @@
 import { apiUrl } from '../apiUrl';
 import { TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
-import { removeEmptyProperties } from '@/helpers';
+import { makeUrlParams } from '@/helpers';
 
 export const getSubjects = async (args: Record<string, string>): TPromiseResponse<TAssignedSubject[]> => {
-  const refinedArgs = removeEmptyProperties<string>(args);
-  const searchParams = new URLSearchParams(refinedArgs).toString();
-
-  const response = await axiosInstance.get(apiUrl.getSubjects(searchParams ? `?${searchParams}` : ''));
+  const response = await axiosInstance.get(makeUrlParams(args));
   return response?.data;
 };
 
