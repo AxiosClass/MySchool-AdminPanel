@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Message } from '../Message';
-import { Loading } from '@/components/ui/loader';
+import { Loading } from '@/components/loader';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export const CommonSelect = ({

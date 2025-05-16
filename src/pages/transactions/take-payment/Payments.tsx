@@ -1,6 +1,6 @@
 import { Message } from '@/components/shared/Message';
 import { PaymentsTable } from '../shared/PaymentsTable';
-import { TableLoader } from '@/components/loader/TableLoader';
+import { TableLoader } from '@/components/loader';
 import { useGetStudentPayments } from '@/hooks';
 
 export const Payments = ({ studentId }: { studentId: string }) => {

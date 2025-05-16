@@ -5,14 +5,6 @@ export type TMeta = { page: number; limit: number; total: number; totalPages: nu
 export type TServerResponse<TData> = { ok: boolean; message: string; data: TData; meta?: TMeta };
 export type TPromiseResponse<TData> = Promise<TServerResponse<TData>>;
 
-// User
-export type TLoggedUser = {
-  id: string;
-  name: string;
-  role: USER_ROLE;
-  needPasswordChange: boolean;
-};
-
 export enum USER_ROLE {
   ADMIN = 'ADMIN',
   SUPER_ADMIN = 'SUPER_ADMIN',
@@ -25,6 +17,22 @@ export enum USER_STATUS {
   ACTIVE = 'ACTIVE',
   BLOCKED = 'BLOCKED',
 }
+
+// User
+export type TLoggedUser = {
+  id: string;
+  name: string;
+  role: USER_ROLE;
+  needPasswordChange: boolean;
+};
+
+// Admin Types
+export type TAdmin = {
+  id: string;
+  name: string;
+  status: USER_STATUS;
+  role: USER_ROLE;
+};
 
 // Student
 export type TStudent = {

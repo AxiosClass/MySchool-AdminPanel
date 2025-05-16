@@ -3,7 +3,7 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
-import { Loader } from './loader';
+import { Loader } from '../loader';
 import { PenLineIcon, PlusIcon, TrashIcon } from 'lucide-react';
 
 const buttonVariants = cva(

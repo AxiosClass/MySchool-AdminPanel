@@ -7,7 +7,7 @@ import { Message } from '@/components/shared/Message';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { CreateClassroom } from './CreateClassroom';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { PageWithCardLoader } from '@/components/loader/PageWithCardLoader';
+import { PageWithCardLoader } from '@/components/loader';
 import { ClassRoomList } from './ClassRoomList';
 import { AssignSubjects } from './assign-subjects';
 

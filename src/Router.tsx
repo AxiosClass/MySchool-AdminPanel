@@ -1,15 +1,11 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
-import { TeachersPageLoader } from './pages/teachers/TeachersPageLoader';
-import { StudentPageLoader } from './pages/students/StudentPageLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
-import { TeacherDashboardPageLoader } from './pages/(teacher)/teacher-dashboard/TeacherDashboardPageLoader';
 import { StudentDashboardPageLoader } from './pages/(student)/student-dashboard/StudentDashboardPageLoader';
-import { PageWithTableLoader } from './components/loader/PageWithTableLoader';
-import { PageWithCardLoader } from './components/loader/PageWithCardLoader';
-import { HolidaysPageLoader } from './pages/holidays/HolidaysPageLoader';
+import { CardsLoader, PageWithTableLoader } from './components/loader';
+import { PageWithCardLoader } from './components/loader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { TableLoader } from './components/loader';
@@ -36,6 +32,7 @@ const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
 const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
 const StudentPaymentPage = lazy(() => import('@/pages/(student)/payments'));
 const NoticePageForStudent = lazy(() => import('@/pages/(student)/notices'));
+const AdminsPage = lazy(() => import('@/pages/admins'));
 
 const router = createBrowserRouter([
   {
@@ -83,7 +80,7 @@ const router = createBrowserRouter([
       {
         path: '/teachers',
         element: (
-          <Suspense fallback={<TeachersPageLoader />}>
+          <Suspense fallback={<PageWithTableLoader />}>
             <TeachersPage />
           </Suspense>
         ),
@@ -91,7 +88,7 @@ const router = createBrowserRouter([
       {
         path: '/students',
         element: (
-          <Suspense fallback={<StudentPageLoader />}>
+          <Suspense fallback={<PageWithTableLoader />}>
             <StudentsPage />
           </Suspense>
         ),
@@ -133,7 +130,7 @@ const router = createBrowserRouter([
       {
         path: '/holidays',
         element: (
-          <Suspense fallback={<HolidaysPageLoader />}>
+          <Suspense fallback={<PageWithTableLoader />}>
             <HolidaysPage />
           </Suspense>
         ),
@@ -147,13 +144,21 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: '/admins',
+        element: (
+          <Suspense fallback={<PageWithTableLoader />}>
+            <AdminsPage />
+          </Suspense>
+        ),
+      },
+      {
         // teacher panel
         path: '/teacher',
         children: [
           {
             index: true,
             element: (
-              <Suspense fallback={<TeacherDashboardPageLoader />}>
+              <Suspense fallback={<CardsLoader />}>
                 <TeacherDashboardPage />
               </Suspense>
             ),
