@@ -1,3 +1,4 @@
+import { QK } from '@/api';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CommonFormField, FormDialog } from '@/components/shared/form';
@@ -7,8 +8,12 @@ import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { ActionButton } from '@/components/ui/button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createAdmin } from '@/api/query';
+import { errorMessageGen } from '@/helpers';
+import { toast } from 'sonner';
 
-const formId = 'CREATE_ADMIN';
+const formId = QK.ADMINS + '_CREATE_';
 
 export const CreateAdmin = () => {
   const form = useForm<TCreateAdminForm>({
@@ -16,10 +21,23 @@ export const CreateAdmin = () => {
     defaultValues: { name: '', email: '', role: USER_ROLE.ADMIN },
   });
 
+  const qc = useQueryClient();
   const { open, onOpenChange } = usePopupState();
 
+  const { mutate } = useMutation({
+    mutationKey: [formId],
+    mutationFn: createAdmin,
+    onSuccess: (res) => {
+      qc.invalidateQueries({ queryKey: [QK.ADMINS] });
+      toast.success(res.message);
+      onOpenChange(false);
+      form.reset();
+    },
+    onError: (error) => toast.error(errorMessageGen(error)),
+  });
+
   const handleCreateAdmin = form.handleSubmit((formData) => {
-    console.log(formData);
+    mutate(formData);
   });
 
   return (
@@ -53,7 +71,7 @@ export const CreateAdmin = () => {
 const createAdminFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email'),
-  role: z.string().min(1, 'Role is required'),
+  role: z.nativeEnum(USER_ROLE),
 });
 
 // types
