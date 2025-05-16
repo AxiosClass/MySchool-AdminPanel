@@ -1,12 +1,10 @@
 import { TClassroom, TObject, TPayment, TPromiseResponse, TStudent, USER_STATUS } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
-import { removeEmptyProperties } from '@/helpers';
+import { makeUrlParams, removeEmptyProperties } from '@/helpers';
 
 export const getPayments = async (args: TObject = {}): TPromiseResponse<TGetPaymentResponse[]> => {
-  const refinedArgs = removeEmptyProperties(args) as TObject;
-  const searchParams = new URLSearchParams(refinedArgs).toString();
-  const response = await axiosInstance.get(apiUrl.getPayments(searchParams ? `?${searchParams}` : ''));
+  const response = await axiosInstance.get(apiUrl.getPayments(makeUrlParams(args)));
   return response?.data;
 };
 
@@ -15,7 +13,7 @@ export const getPaymentSummary = async (studentId: string): TPromiseResponse<TGe
   return response?.data;
 };
 
-export const makePayment = async (payload: TMakePayment): TPromiseResponse<null> => {
+export const makePayment = async (payload: TMakePayment): TPromiseResponse => {
   const refinedPayload = removeEmptyProperties(payload);
   const response = await axiosInstance.post(apiUrl.makePayment, refinedPayload);
   return response?.data;

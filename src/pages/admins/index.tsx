@@ -7,6 +7,8 @@ import { TableLoader } from '@/components/loader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useQuery } from '@tanstack/react-query';
 import { CreateAdmin } from './CreateAdmin';
+import { DeleteAdmin } from './DeleteAdmin';
+import { ResetAdminPassword } from './ResetAdminPassword';
 
 export default function AdminsPage() {
   return (
@@ -66,8 +68,10 @@ const AdminTableBody = ({ admins }: TAdminTableBodyProps) => {
         <Badge>{role}</Badge>
       </TableCell>
       <TableCell>
-        {/* <Button>Delete Admin</Button>
-        <Button>Reset Password</Button> */}
+        <div className='flex items-center gap-2'>
+          <DeleteAdmin email={id} />
+          <ResetAdminPassword email={id} />
+        </div>
       </TableCell>
     </TableRow>
   ));

@@ -1,17 +1,15 @@
 import { apiUrl } from '../apiUrl';
 import { TNotice, TObject, TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
-import { removeEmptyProperties } from '@/helpers';
+import { makeUrlParams } from '@/helpers';
 
-export const addNotice = async (payload: TAddNoticePayload): TPromiseResponse<null> => {
+export const addNotice = async (payload: TAddNoticePayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addNotice, payload);
   return response.data;
 };
 
 export const getNotices = async (args: TObject = {}): TPromiseResponse<TNotice[]> => {
-  const refinedArgs = removeEmptyProperties(args);
-  const searchParams = new URLSearchParams(refinedArgs as TObject).toString();
-  const response = await axiosInstance.get(apiUrl.getNotices(searchParams ? `?${searchParams}` : ''));
+  const response = await axiosInstance.get(apiUrl.getNotices(makeUrlParams(args)));
   return response.data;
 };
 
@@ -20,13 +18,13 @@ export const getMyNotices = async (): TPromiseResponse<TNotice[]> => {
   return notices.data;
 };
 
-export const updateNotice = async (payload: TUpdateNoticePayload): TPromiseResponse<null> => {
+export const updateNotice = async (payload: TUpdateNoticePayload): TPromiseResponse => {
   const { id, title, description, noticeFor } = payload;
   const response = await axiosInstance.patch(apiUrl.updateNotice(id!), { title, description, noticeFor });
   return response.data;
 };
 
-export const deleteNotice = async (noticeId: string): TPromiseResponse<null> => {
+export const deleteNotice = async (noticeId: string): TPromiseResponse => {
   const response = await axiosInstance.delete(apiUrl.deleteNotice(noticeId));
   return response.data;
 };

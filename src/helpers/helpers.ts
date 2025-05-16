@@ -9,13 +9,10 @@ export const removeEmptyProperties = <TData = unknown>(obj: Record<string, TData
   }, {});
 };
 
-export const makeQueryUrl = (baseAddress: string, obj: Record<string, any>) => {
+export const makeUrlParams = (obj: Record<string, string>) => {
   const refinedObj = removeEmptyProperties(obj);
-  return Object.keys(refinedObj).reduce((acc: string, key, index) => {
-    if (index === 0) acc += `?${key}=${obj[key]}`;
-    else acc += `&${key}=${obj[key]}`;
-    return acc;
-  }, baseAddress);
+  const searchParams = new URLSearchParams(refinedObj).toString();
+  return searchParams ? `?${searchParams}` : '';
 };
 
 export const errorMessageGen = (error: unknown, defaultMessage: string = 'Something went wrong') => {

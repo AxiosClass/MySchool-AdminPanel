@@ -18,12 +18,12 @@ export const getAttendancesForStudent = async ({
   return response.data;
 };
 
-export const addAttendance = async (payload: TAddAttendancePayload): TPromiseResponse<null> => {
+export const addAttendance = async (payload: TAddAttendancePayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addAttendance, payload);
   return response.data;
 };
 
-export const deleteAttendance = async (attendanceId: string): TPromiseResponse<null> => {
+export const deleteAttendance = async (attendanceId: string): TPromiseResponse => {
   const response = await axiosInstance.delete(apiUrl.deleteAttendance(attendanceId));
   return response.data;
 };

@@ -2,7 +2,7 @@ import { TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
-export const createClassroom = async (payload: TCreateClassroomPayload): TPromiseResponse<null> => {
+export const createClassroom = async (payload: TCreateClassroomPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.createClassroom, payload);
   return response?.data;
 };
@@ -12,12 +12,12 @@ export const getSubjectsWithTeacher = async (classroomId: string): TPromiseRespo
   return response?.data;
 };
 
-export const assignSubjectTeacher = async (payload: TAssignSubjectTeacherPayload): TPromiseResponse<null> => {
+export const assignSubjectTeacher = async (payload: TAssignSubjectTeacherPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.assignSubjectTeacher, payload);
   return response?.data;
 };
 
-export const deleteSubjectTeacher = async (classRoomSubjectTeacherId: string): TPromiseResponse<null> => {
+export const deleteSubjectTeacher = async (classRoomSubjectTeacherId: string): TPromiseResponse => {
   const response = await axiosInstance.delete(apiUrl.deleteSubjectTeacher(classRoomSubjectTeacherId));
   return response?.data;
 };
