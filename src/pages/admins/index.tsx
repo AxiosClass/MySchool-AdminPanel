@@ -6,13 +6,16 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { TableLoader } from '@/components/loader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useQuery } from '@tanstack/react-query';
+import { CreateAdmin } from './CreateAdmin';
 
 export default function AdminsPage() {
   return (
     <>
       <PageTitle title='Admins' />
       <ScrollArea>
-        <PageHeader label='Admins'></PageHeader>
+        <PageHeader label='Admins'>
+          <CreateAdmin />
+        </PageHeader>
         <AdminsTable />
       </ScrollArea>
     </>
