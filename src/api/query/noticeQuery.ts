@@ -1,5 +1,5 @@
 import { apiUrl } from '../apiUrl';
-import { TNotice, TObject, TPromiseResponse } from '@/types';
+import { TNotice, TObject, TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { removeEmptyProperties } from '@/helpers';
 

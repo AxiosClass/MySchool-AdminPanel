@@ -9,7 +9,7 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useGetPaymentSummary, useGetStudentPayments } from '@/hooks';
 import { FiDollarSign } from 'react-icons/fi';
 import { useAuthStore } from '@/stores/auth';
-import { PAYMENT_TYPE } from '@/types';
+import { PAYMENT_TYPE } from '@/lib/types';
 import { PaymentSummaryLoader } from './StudentPaymentPageLoader';
 
 export default function StudentPaymentPage() {

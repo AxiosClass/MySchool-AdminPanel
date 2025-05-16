@@ -1,5 +1,5 @@
 import { apiUrl } from '../apiUrl';
-import { TPromiseResponse } from '@/types';
+import { TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 
 export const getAttendancesForClassroom = async ({

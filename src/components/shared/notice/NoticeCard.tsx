@@ -3,7 +3,7 @@ import moment from 'moment';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { NOTICE_FOR, TNotice } from '@/types';
+import { NOTICE_FOR, TNotice } from '@/lib/types';
 import { DeleteNotice } from './DeleteNotice';
 import { UpdateNotice } from './UpdateNotice';
 import { dateFormatString } from '@/data';

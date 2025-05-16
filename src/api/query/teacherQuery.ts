@@ -1,4 +1,4 @@
-import { TPromiseResponse, TTeacher } from '@/types';
+import { TPromiseResponse, TTeacher } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 import { removeEmptyProperties } from '@/helpers';

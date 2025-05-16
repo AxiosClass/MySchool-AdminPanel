@@ -1,4 +1,4 @@
-import { USER_ROLE } from '@/types';
+import { USER_ROLE } from '@/lib/types';
 import { PiStudentFill } from 'react-icons/pi';
 import { FaHome, FaBook } from 'react-icons/fa';
 import { IoNotificationsOff, IoWallet } from 'react-icons/io5';

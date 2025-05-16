@@ -1,7 +1,6 @@
-import { TPromiseResponse } from '@/types';
+import { TPromiseResponse, THoliday } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
-import { THoliday } from '@/types/holidayType';
 
 export const getHolidays = async (): TPromiseResponse<TGetHolidaysResult[]> => {
   const response = await axiosInstance.get(apiUrl.getHolidays);

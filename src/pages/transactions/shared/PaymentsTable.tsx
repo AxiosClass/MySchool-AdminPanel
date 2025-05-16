@@ -6,7 +6,7 @@ import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { dateFormatString, months } from '@/data/constants';
 import { TGetPaymentResponse } from '@/api/query';
-import { PAYMENT_TYPE } from '@/types';
+import { PAYMENT_TYPE } from '@/lib/types';
 
 export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
   return (

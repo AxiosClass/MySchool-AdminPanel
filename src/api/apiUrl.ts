@@ -57,4 +57,9 @@ export const apiUrl = {
   getAttendanceSummary: '/meta-data/attendance/summary',
   getAttendanceTrends: '/meta-data/attendance/trends',
   getPaymentTrends: '/meta-data/payment/trends',
+  // admin
+  createAdmin: '/admin',
+  getAdmins: (query: string) => `/admins${query}`,
+  deleteAdmin: (email: string) => `/admin/${email}`,
+  resetPassword: (email: string) => `/admin/reset-password/${email}`,
 };

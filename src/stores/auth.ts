@@ -1,7 +1,7 @@
 import { getAccessTokenFormLocal, removeAccessTokenFromLocal } from '@/helpers';
 import { jwtDecode } from 'jwt-decode';
 import { create } from 'zustand';
-import { TLoggedUser } from '@/types';
+import { TLoggedUser } from '@/lib/types';
 
 export type TAuthStore = {
   user: TLoggedUser | null;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { NOTICE_FOR } from '@/types';
+import { NOTICE_FOR } from '@/lib/types';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';

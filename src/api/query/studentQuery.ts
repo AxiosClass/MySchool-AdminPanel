@@ -1,7 +1,6 @@
-import { TClassroom, TPromiseResponse } from '@/types';
+import { TClassroom, TPromiseResponse, TStudent } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
-import { TStudent } from '@/types';
 
 export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse<null> => {
   const response = await axiosInstance.post(apiUrl.addStudent, payload);

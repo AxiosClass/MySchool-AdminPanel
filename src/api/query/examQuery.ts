@@ -1,4 +1,4 @@
-import { TExam, TObject, TPromiseResponse } from '@/types';
+import { TExam, TObject, TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 import { removeEmptyProperties } from '@/helpers';

@@ -7,7 +7,7 @@ import { NoticeForm, TNoticeForm } from '@/components/shared/notice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNotice } from '@/api/query';
 import { errorMessageGen } from '@/helpers';
-import { NOTICE_FOR } from '@/types';
+import { NOTICE_FOR } from '@/lib/types';
 
 export const AddNotice = () => {
   const { open, onOpenChange } = usePopupState();

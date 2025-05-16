@@ -11,7 +11,7 @@ import { TableLoader } from '@/components/loader';
 import { DeleteExam } from './DeleteExam';
 import { UpdateExam } from './UpdateExam';
 import { usePopupState } from '@/hooks';
-import { TExam } from '@/types';
+import { TExam } from '@/lib/types';
 
 export default function ExamsPage() {
   return (

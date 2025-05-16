@@ -1,7 +1,7 @@
 import { PageTitle } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuthStore } from '@/stores/auth';
-import { USER_ROLE } from '@/types';
+import { USER_ROLE } from '@/lib/types';
 import { Navigate } from 'react-router-dom';
 import { AttendanceSummary } from './AttendanceSummary';
 import { AttendanceTrends } from './AttendanceTrends';

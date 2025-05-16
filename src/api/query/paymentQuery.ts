@@ -1,4 +1,4 @@
-import { TClassroom, TObject, TPayment, TPromiseResponse, TStudent, USER_STATUS } from '@/types';
+import { TClassroom, TObject, TPayment, TPromiseResponse, TStudent, USER_STATUS } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 import { removeEmptyProperties } from '@/helpers';

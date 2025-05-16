@@ -12,7 +12,7 @@ import { errorMessageGen, zodNumber } from '@/helpers';
 import { Form } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { PAYMENT_TYPE } from '@/types';
+import { PAYMENT_TYPE } from '@/lib/types';
 import { makePayment } from '@/api/query';
 
 export const MakePayment = ({ studentId }: { studentId: string }) => {

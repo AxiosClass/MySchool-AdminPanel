@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { updateNotice } from '@/api/query';
 import { usePopupState } from '@/hooks';
 import { errorMessageGen } from '@/helpers';
-import { NOTICE_FOR, TNotice } from '@/types';
+import { NOTICE_FOR, TNotice } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { NoticeForm, TNoticeForm } from './NoticeForm';

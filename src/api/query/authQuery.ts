@@ -1,4 +1,4 @@
-import { TPromiseResponse } from '@/types';
+import { TPromiseResponse } from '@/lib/types';
 import { apiUrl } from '../apiUrl';
 import { axiosInstance } from '../axiosInstance';
 

@@ -2,7 +2,7 @@ import { QK } from '@/api';
 import { updateExam } from '@/api/query';
 import { CommonSelect } from '@/components/shared/form';
 import { errorMessageGen } from '@/helpers';
-import { EXAM_STATUS } from '@/types';
+import { EXAM_STATUS } from '@/lib/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 

@@ -1,6 +1,6 @@
 import { QK } from '@/api';
 import { toast } from 'sonner';
-import { TExam } from '@/types';
+import { TExam } from '@/lib/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useGetPercentile, usePopupState } from '@/hooks';
 import { FormDialog } from '@/components/shared/form';
