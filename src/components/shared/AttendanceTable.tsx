@@ -11,7 +11,7 @@ import { MdError } from 'react-icons/md';
 import { cn } from '@/lib/utils';
 import { QK } from '@/api';
 import { errorMessageGen } from '@/helpers';
-import { Loader } from '../ui/loader';
+import { Loader } from '@/components/loader';
 
 export const AttendanceTable = ({ attendanceList }: TAttendanceTableProps) => {
   if (!attendanceList.length) return <Message message='No Attendance Found' />;

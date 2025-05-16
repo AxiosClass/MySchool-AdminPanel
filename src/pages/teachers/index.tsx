@@ -5,7 +5,7 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { PageHeader } from '@/components/shared/PageHeader';
-import { TableLoader } from '@/components/loader/TableLoader';
+import { TableLoader } from '@/components/loader';
 import { useQuery } from '@tanstack/react-query';
 import { getTeachers } from '@/api/query';
 import { AddTeacher } from './AddTeacher';
