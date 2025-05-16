@@ -32,6 +32,7 @@ const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
 const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
 const StudentPaymentPage = lazy(() => import('@/pages/(student)/payments'));
 const NoticePageForStudent = lazy(() => import('@/pages/(student)/notices'));
+const AdminsPage = lazy(() => import('@/pages/admins'));
 
 const router = createBrowserRouter([
   {
@@ -139,6 +140,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PageWithTableLoader />}>
             <ExamsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/admins',
+        element: (
+          <Suspense fallback={<PageWithTableLoader />}>
+            <AdminsPage />
           </Suspense>
         ),
       },

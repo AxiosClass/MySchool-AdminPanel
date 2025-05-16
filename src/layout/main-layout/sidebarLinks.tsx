@@ -1,6 +1,6 @@
 import { USER_ROLE } from '@/lib/types';
 import { PiStudentFill } from 'react-icons/pi';
-import { FaHome, FaBook } from 'react-icons/fa';
+import { FaHome, FaBook, FaUserSecret } from 'react-icons/fa';
 import { IoNotificationsOff, IoWallet } from 'react-icons/io5';
 import { FaBellConcierge, FaUserTie, FaNoteSticky } from 'react-icons/fa6';
 import { useAuthStore } from '@/stores/auth';
@@ -20,6 +20,7 @@ export const useSidebarLinks = () => {
       { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Exams', url: '/exams', icon: <FaNoteSticky /> },
+      { title: 'Admins', url: '/admins', icon: <FaUserSecret /> },
     ];
   else if (user?.role === USER_ROLE.TEACHER)
     return [

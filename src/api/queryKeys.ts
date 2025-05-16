@@ -1,4 +1,5 @@
 export const QK = {
+  ADMINS: 'ADMINS',
   AUTH: 'AUTH',
   CLASS: 'CLASS',
   TEACHER: 'TEACHER',

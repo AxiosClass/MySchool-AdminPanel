@@ -1,3 +1,4 @@
+export * from './adminQuery';
 export * from './attendanceQuery';
 export * from './authQuery';
 export * from './classQuery';
