@@ -13,7 +13,7 @@ export const getPaymentSummary = async (studentId: string): TPromiseResponse<TGe
   return response?.data;
 };
 
-export const makePayment = async (payload: TMakePayment): TPromiseResponse<null> => {
+export const makePayment = async (payload: TMakePayment): TPromiseResponse => {
   const refinedPayload = removeEmptyProperties(payload);
   const response = await axiosInstance.post(apiUrl.makePayment, refinedPayload);
   return response?.data;

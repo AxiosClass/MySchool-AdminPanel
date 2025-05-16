@@ -8,7 +8,7 @@ export const getSubjects = async (args: Record<string, string>): TPromiseRespons
   return response?.data;
 };
 
-export const assignSubjects = async (payload: TAssignedSubjectPayload): TPromiseResponse<null> => {
+export const assignSubjects = async (payload: TAssignedSubjectPayload): TPromiseResponse => {
   const response = await axiosInstance.put(apiUrl.assignSubjects, payload);
   return response?.data;
 };

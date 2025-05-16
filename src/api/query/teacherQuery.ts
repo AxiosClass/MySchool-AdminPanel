@@ -13,7 +13,7 @@ export const getTeacherList = async (): TPromiseResponse<TGetTeacherListResponse
   return response?.data;
 };
 
-export const addTeacher = async (payload: TAddTeacherPayload): TPromiseResponse<null> => {
+export const addTeacher = async (payload: TAddTeacherPayload): TPromiseResponse => {
   const refinedPayload = removeEmptyProperties(payload);
   const response = await axiosInstance.post(apiUrl.addTeacher, refinedPayload);
   return response?.data;

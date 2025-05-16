@@ -3,7 +3,7 @@ import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 import { makeUrlParams } from '@/helpers';
 
-export const addExam = async (payload: TAddExamPayload): TPromiseResponse<null> => {
+export const addExam = async (payload: TAddExamPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addExam, payload);
   return response.data;
 };
@@ -13,12 +13,12 @@ export const getExams = async (args: TObject): TPromiseResponse<TExam[]> => {
   return response.data;
 };
 
-export const updateExam = async (args: TUpdateExamPayload): TPromiseResponse<null> => {
+export const updateExam = async (args: TUpdateExamPayload): TPromiseResponse => {
   const response = await axiosInstance.patch(apiUrl.updateExam(args.id), args.payload);
   return response.data;
 };
 
-export const deleteExam = async (examId: string): TPromiseResponse<null> => {
+export const deleteExam = async (examId: string): TPromiseResponse => {
   const response = await axiosInstance.delete(apiUrl.deleteExam(examId));
   return response.data;
 };

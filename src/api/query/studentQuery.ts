@@ -2,7 +2,7 @@ import { TClassroom, TPromiseResponse, TStudent } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
-export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse<null> => {
+export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addStudent, payload);
   return response?.data;
 };
@@ -12,7 +12,7 @@ export const getStudents = async (): TPromiseResponse<TGetStudentResult[]> => {
   return response?.data;
 };
 
-export const issueNfcCard = async (payload: TIssueNfcCardPayload): TPromiseResponse<null> => {
+export const issueNfcCard = async (payload: TIssueNfcCardPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.issueNfcCard, payload);
   return response.data;
 };

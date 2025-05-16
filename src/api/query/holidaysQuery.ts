@@ -7,7 +7,7 @@ export const getHolidays = async (): TPromiseResponse<TGetHolidaysResult[]> => {
   return response?.data;
 };
 
-export const addHoliday = async (payload: TAddHolidayPayload): TPromiseResponse<null> => {
+export const addHoliday = async (payload: TAddHolidayPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addHoliday, payload);
   return response?.data;
 };

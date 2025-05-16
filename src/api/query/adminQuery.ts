@@ -3,13 +3,18 @@ import { makeUrlParams } from '@/helpers';
 import { axiosInstance } from '../axiosInstance';
 import { TAdmin, TPromiseResponse, USER_ROLE } from '@/lib/types';
 
-export const createAdmin = async (payload: TCreateAdminPayload): TPromiseResponse<null> => {
+export const createAdmin = async (payload: TCreateAdminPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.createAdmin, payload);
   return response.data;
 };
 
 export const getAdmins = async (query: TGetAdminArgs): TPromiseResponse<TGetAdminQueryResult> => {
   const response = await axiosInstance.get(apiUrl.getAdmins(makeUrlParams(query)));
+  return response.data;
+};
+
+export const deleteAdmin = async (email: string): TPromiseResponse => {
+  const response = await axiosInstance.delete(apiUrl.deleteAdmin(email));
   return response.data;
 };
 
