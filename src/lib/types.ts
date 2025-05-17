@@ -147,3 +147,20 @@ export enum NOTICE_FOR {
   STUDENT = 'STUDENT',
   ALL = 'ALL',
 }
+
+// Subjects
+export type TSubject = {
+  id: string;
+  name: string;
+  type: SUBJECT_TYPE;
+  parentId?: string;
+  description?: string;
+};
+
+export enum SUBJECT_TYPE {
+  CQ_MCQ = 'CQ_MCQ',
+  CQ_MCQ_PRACTICAL = 'CQ_MCQ_PRACTICAL',
+  WRITTEN_FULL = 'WRITTEN_FULL',
+  WRITTEN_HALF = 'WRITTEN_HALF',
+  COMBINED = 'COMBINED',
+}
