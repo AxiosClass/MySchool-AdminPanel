@@ -62,4 +62,6 @@ export const apiUrl = {
   getAdmins: (query: string) => `/admins${query}`,
   deleteAdmin: (email: string) => `/admin/${email}`,
   resetPassword: (email: string) => `/admin/reset-password/${email}`,
+  // subjects
+  createSubject: `/subject`,
 };

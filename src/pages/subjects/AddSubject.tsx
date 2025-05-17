@@ -1,16 +1,20 @@
+import { z } from 'zod';
 import { QK } from '@/api';
 import { TooltipContainer } from '@/components/shared';
 import { CommonFormField, CommonSelect, FormSheet } from '@/components/shared/form';
+import { useFieldArray, UseFieldArrayRemove, useForm, useFormContext } from 'react-hook-form';
 import { ActionButton, Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { usePopupState } from '@/hooks';
 import { SUBJECT_TYPE } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlusIcon, TrashIcon } from 'lucide-react';
-import { useFieldArray, UseFieldArrayRemove, useForm, useFormContext } from 'react-hook-form';
-import { z } from 'zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createSubject } from '@/api/query';
+import { toast } from 'sonner';
+import { errorMessageGen } from '@/helpers';
 
 // Consts
 const formId = QK.SUBJECTS + '_ADD_';
@@ -29,9 +33,28 @@ const subjectTypeOptions = [
 
 export const AddSubject = () => {
   const { open, onOpenChange } = usePopupState();
+  const qc = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationKey: [formId],
+    mutationFn: createSubject,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.SUBJECTS] });
+      onOpenChange(false);
+    },
+    onError: (error) => errorMessageGen(error),
+  });
 
   const handleAddSubject = (formData: TAddSubjectForm) => {
-    console.log(formData);
+    const { name, type, description, children } = formData;
+
+    if (type === SUBJECT_TYPE.COMBINED && (!children?.length || children.length < 2)) {
+      toast.error('Please add at least two sub subjects');
+      return;
+    }
+
+    mutate({ name, type, ...(description && { description }), ...(children?.length && { children }) });
   };
 
   return (
@@ -62,7 +85,6 @@ const AddSubjectForm = ({ onSubmit }: TAddSubjectFormProps) => {
 
   const { control, watch } = form;
   const { fields, append, remove } = useFieldArray({ control, name: 'children' });
-
   const watchedType = watch('type');
 
   const handleAddChildren = () => {
@@ -135,11 +157,13 @@ const SubSubjectField = ({ index, remove }: TSubSubjectFieldProps) => {
       >
         {({ field }) => <CommonSelect value={field.value} onChange={field.onChange} options={subjectTypeOptions} />}
       </CommonFormField>
-      <TooltipContainer label='Remove Sub Subject'>
-        <Button className='mt-6' type='button' onClick={() => remove(index)} variant='destructive'>
-          <TrashIcon size={16} />
-        </Button>
-      </TooltipContainer>
+      <div className='mt-6'>
+        <TooltipContainer label='Remove Sub Subject'>
+          <Button type='button' onClick={() => remove(index)} variant='destructive'>
+            <TrashIcon size={16} />
+          </Button>
+        </TooltipContainer>
+      </div>
     </div>
   );
 };
@@ -152,7 +176,7 @@ const subjectSubSchema = z.object({
 });
 
 const addSubjectFormSchema = subjectSubSchema.extend({
-  children: subjectSubSchema.array().min(2, 'Minimum 2 subject are required').optional(),
+  children: subjectSubSchema.array().optional(),
 });
 
 // Types
