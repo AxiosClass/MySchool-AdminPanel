@@ -4,6 +4,7 @@ import { FaHome, FaBook, FaUserSecret } from 'react-icons/fa';
 import { IoNotificationsOff, IoWallet } from 'react-icons/io5';
 import { FaBellConcierge, FaUserTie, FaNoteSticky } from 'react-icons/fa6';
 import { useAuthStore } from '@/stores/auth';
+import { IoIosBookmarks } from 'react-icons/io';
 
 const adminRoles = [USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN];
 
@@ -18,6 +19,7 @@ export const useSidebarLinks = () => {
       { title: 'Students', url: '/students', icon: <PiStudentFill /> },
       { title: 'Transactions', url: '/transactions/take-payment', icon: <IoWallet /> },
       { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
+      { title: 'Subjects', url: '/subjects', icon: <IoIosBookmarks /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Exams', url: '/exams', icon: <FaNoteSticky /> },
       { title: 'Admins', url: '/admins', icon: <FaUserSecret /> },

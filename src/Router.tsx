@@ -13,7 +13,7 @@ import { MainLayout } from './layout/main-layout';
 import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 import { DashboardPageLoader } from './pages/home/DashboardLoader';
 
-// pages
+// Admin Panel
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
 const ClassesPage = lazy(() => import('@/pages/classes'));
@@ -26,13 +26,16 @@ const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
 const NoticesPage = lazy(() => import('@/pages/notices'));
 const HolidaysPage = lazy(() => import('@/pages/holidays'));
 const ExamsPage = lazy(() => import('@/pages/exams'));
+const AdminsPage = lazy(() => import('@/pages/admins'));
+const SubjectsPage = lazy(() => import('@/pages/subjects'));
+// Teacher Panel
 const TeacherDashboardPage = lazy(() => import('@/pages/(teacher)/teacher-dashboard'));
 const TeacherClassroom = lazy(() => import('@/pages/(teacher)/teacher-classroom'));
 const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
+// Student Panel
 const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
 const StudentPaymentPage = lazy(() => import('@/pages/(student)/payments'));
 const NoticePageForStudent = lazy(() => import('@/pages/(student)/notices'));
-const AdminsPage = lazy(() => import('@/pages/admins'));
 
 const router = createBrowserRouter([
   {
@@ -118,6 +121,14 @@ const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: '/subjects',
+        element: (
+          <Suspense fallback={<PageWithTableLoader />}>
+            <SubjectsPage />
+          </Suspense>
+        ),
       },
       {
         path: '/notices',

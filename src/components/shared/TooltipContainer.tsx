@@ -3,7 +3,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 export const TooltipContainer = ({ children, label }: TTooltipContainerProps) => (
   <Tooltip>
-    <TooltipTrigger>{children}</TooltipTrigger>
+    <TooltipTrigger asChild>{children}</TooltipTrigger>
     <TooltipContent>
       <p>{label}</p>
     </TooltipContent>
