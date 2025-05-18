@@ -8,8 +8,8 @@ export const createSubject = async (payload: TCreateSubjectPayload): TPromiseRes
   return response.data;
 };
 
-export const getSubjects = async (args: Record<string, string>): TPromiseResponse<TAssignedSubject[]> => {
-  const response = await axiosInstance.get(makeUrlParams(args));
+export const getSubjects = async (args: Record<string, string>): TPromiseResponse<TGetSubjectsQueryResult[]> => {
+  const response = await axiosInstance.get(apiUrl.getSubjects(makeUrlParams(args)));
   return response?.data;
 };
 
@@ -22,5 +22,8 @@ type TCreateSubjectPayload = Pick<TSubject, 'name' | 'description' | 'type'> & {
   children?: Pick<TSubject, 'name' | 'description' | 'type'>[];
 };
 
-type TAssignedSubject = { id: string; name: string; classId: string };
+export type TGetSubjectsQueryResult = Pick<TSubject, 'id' | 'name' | 'type' | 'description'> & {
+  childSubject: Pick<TSubject, 'id' | 'name' | 'type'>[];
+};
+
 type TAssignedSubjectPayload = { classId: string; subjects: string[] };

@@ -1,6 +1,7 @@
 import { PageHeader, PageTitle } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AddSubject } from './AddSubject';
+import { SubjectTable } from './SubjectTable';
 
 export default function SubjectsPage() {
   return (
@@ -10,6 +11,7 @@ export default function SubjectsPage() {
         <PageHeader label='Subjects.'>
           <AddSubject />
         </PageHeader>
+        <SubjectTable />
       </ScrollArea>
     </>
   );

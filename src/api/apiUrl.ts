@@ -18,6 +18,7 @@ export const apiUrl = {
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
   // subjects
   assignSubjects: '/subjects',
+  createSubject: `/subject`,
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,
   // teacher
   addTeacher: `/teacher`,
@@ -62,6 +63,4 @@ export const apiUrl = {
   getAdmins: (query: string) => `/admins${query}`,
   deleteAdmin: (email: string) => `/admin/${email}`,
   resetPassword: (email: string) => `/admin/reset-password/${email}`,
-  // subjects
-  createSubject: `/subject`,
 };
