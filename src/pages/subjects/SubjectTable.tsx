@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { TUserSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { AddSubject } from './AddSubject';
+import { DeleteSubject } from './DeleteSubject';
 
 export const SubjectTable = () => {
   const { searchTerm, value, onSearchChange } = useSearch();
@@ -62,6 +63,9 @@ const SubjectTableBody = ({ subjects }: TSubjectTableBodyProps) => {
       <TableCell>
         <Badge>{type}</Badge>
       </TableCell>
+      <TableCell>
+        <DeleteSubject id={id} />
+      </TableCell>
     </TableRow>
   ));
 };
@@ -76,7 +80,7 @@ const SubSubject = ({ subSubjects }: TSubSubjectProps) => {
       {subSubjects.map(({ id, name, type }) => (
         <li key={id} className='flex items-center gap-2'>
           <div className='size-3 rounded-full bg-black' />
-          <h2 className='font-medium- mr-2 text-sm'>Name : {name}</h2>
+          <h2 className='mr-2 text-sm font-medium'>Name : {name}</h2>
           <p className='text-sm font-medium'>Type : {type}</p>
         </li>
       ))}

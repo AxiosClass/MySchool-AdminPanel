@@ -13,6 +13,11 @@ export const getSubjects = async (args: Record<string, string>): TPromiseRespons
   return response?.data;
 };
 
+export const deleteSubject = async (subjectId: string): TPromiseResponse => {
+  const response = await axiosInstance.delete(apiUrl.deleteSubject(subjectId));
+  return response.data;
+};
+
 export const assignSubjects = async (payload: TAssignedSubjectPayload): TPromiseResponse => {
   const response = await axiosInstance.put(apiUrl.assignSubjects, payload);
   return response?.data;
