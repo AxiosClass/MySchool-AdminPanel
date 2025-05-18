@@ -7,7 +7,7 @@ export const CommonTable = ({ head, children, className, header }: TCommonTableP
   return (
     <ScrollArea fixedLayout disableScrollbar className={cn(className?.tableContainer)}>
       <section className={cn('w-full overflow-hidden rounded-md border')}>
-        {header && <section className='bg-primary-50 p-3'>{header}</section>}
+        {header && <section className='border-b p-4'>{header}</section>}
         <Table>
           <TableHeader>
             <TableRow className='border-none'>{head}</TableRow>

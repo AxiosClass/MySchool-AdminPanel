@@ -9,5 +9,7 @@ export * from './MakePayment';
 export * from './Message';
 export * from './PageHeader';
 export * from './PageTitle';
+export * from './SearchInput';
+export * from './TableNodata';
 export * from './TooltipContainer';
 export * from './UserIcon';

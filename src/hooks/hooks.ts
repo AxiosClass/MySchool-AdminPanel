@@ -1,7 +1,23 @@
 import { QK } from '@/api';
 import { getExams, getPayments, getPaymentSummary } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+export const useDebounce = <T>(value: T, delay = 500): T => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
 
 export const usePopupState = () => {
   const [open, setOpen] = useState(false);
@@ -27,6 +43,16 @@ export const usePagination = ({ totalPage = 1 }: { totalPage: number | undefined
 
   return { page, goToPage, goNextPage, goPrevPage, hasNextPage, hasPrevPage };
 };
+
+export const useSearch = () => {
+  const [value, setValue] = useState('');
+  const searchTerm = useDebounce(value);
+  const onSearchChange = useCallback((value: string) => setValue(value), []);
+
+  return { value, searchTerm, onSearchChange };
+};
+
+export type TUserSearch = ReturnType<typeof useSearch>;
 
 // data fetching
 export const useGetPercentile = (year: number) => {
