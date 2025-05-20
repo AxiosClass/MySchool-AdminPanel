@@ -1,7 +1,7 @@
 import { PageHeader } from '@/components/shared';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { AddStudent } from './AddStudent';
-import { StudentTable } from './StudentTable';
+// import { StudentTable } from './StudentTable';
 
 export default function StudentsPage() {
   return (
@@ -10,7 +10,7 @@ export default function StudentsPage() {
       <PageHeader label='Students'>
         <AddStudent />
       </PageHeader>
-      <StudentTable />
+      {/* <StudentTable /> */}
     </>
   );
 }

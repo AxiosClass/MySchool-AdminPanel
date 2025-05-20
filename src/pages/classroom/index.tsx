@@ -14,9 +14,7 @@ export default function ClassroomPage() {
       <PageTitle title='Classroom' />
       <ScrollArea>
         <PageHeader label='Classroom' />
-        <section className='mb-6 mt-6 grid grid-cols-2 gap-4 px-6'>
-          <SubjectsTable />
-        </section>
+        <section className='mb-6 mt-6 grid grid-cols-2 gap-4 px-6'>{/* <SubjectsTable /> */}</section>
       </ScrollArea>
     </>
   );

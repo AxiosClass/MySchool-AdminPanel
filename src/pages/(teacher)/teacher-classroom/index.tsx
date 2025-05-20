@@ -5,10 +5,13 @@ import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AttendanceTable } from '@/components/shared';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { FileTextIcon } from 'lucide-react';
 
 export default function TeacherClassroom() {
   const { classroomId } = useParams();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetAttendances(classroomId!);
 
   if (isLoading) return <TableLoader className='my-6' />;
@@ -17,7 +20,16 @@ export default function TeacherClassroom() {
   return (
     <>
       <PageTitle title={`Section - ${data.classroomInfo?.name}`} />
-      <PageHeader label={`${data.classroomInfo?.name}`} />
+      <div className='flex items-center justify-between'>
+        <PageHeader label={`${data.classroomInfo?.name}`} />
+        <Button
+          onClick={() => navigate(`/teacher/classroom/${classroomId}/notes`)}
+          className='mx-4 flex items-center gap-2 bg-primary text-white'
+        >
+          <FileTextIcon className='size-4' />
+          View Notes
+        </Button>
+      </div>
       <ScrollArea>
         <AttendanceTable attendanceList={data.attendanceList} />
       </ScrollArea>

@@ -16,6 +16,9 @@ export const apiUrl = {
   assignSubjectTeacher: 'classroom/subject-teacher',
   deleteSubjectTeacher: (classSubjectTeacherId: string) => `/classroom/subject-teacher/${classSubjectTeacherId}`,
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
+  uploadClassroomMaterial: '/classrooms/upload-material',
+  getClassroomMaterials: (classroomId: string) => `/classrooms/materials/${classroomId}`,
+  deleteClassroomMaterial: (materialId: string) => `/classrooms/materials/${materialId}`,
   // subjects
   assignSubjects: '/subjects',
   createSubject: `/subject`,

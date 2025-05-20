@@ -27,6 +27,15 @@ export const getClassroomsForTeacher = async (teacherId: string): TPromiseRespon
   return response?.data;
 };
 
+export const uploadMaterial = async (formData: FormData) => {
+  const response = await axiosInstance.post('/classroom/upload-material', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
 // type
 type TCreateClassroomPayload = { name: string; classId: string; classTeacherId: string };
 

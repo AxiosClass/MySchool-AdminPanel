@@ -31,6 +31,7 @@ const SubjectsPage = lazy(() => import('@/pages/subjects'));
 // Teacher Panel
 const TeacherDashboardPage = lazy(() => import('@/pages/(teacher)/teacher-dashboard'));
 const TeacherClassroom = lazy(() => import('@/pages/(teacher)/teacher-classroom'));
+const TeacherClassroomNotes = lazy(() => import('@/pages/(teacher)/teacher-classroom/notes'));
 const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
 // Student Panel
 const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
@@ -179,6 +180,14 @@ const router = createBrowserRouter([
             element: (
               <Suspense fallback={<TableLoader className='my-6' />}>
                 <TeacherClassroom />
+              </Suspense>
+            ),
+          },
+          {
+            path: 'classroom/:classroomId/notes',
+            element: (
+              <Suspense fallback={<TableLoader className='my-6' />}>
+                <TeacherClassroomNotes />
               </Suspense>
             ),
           },
