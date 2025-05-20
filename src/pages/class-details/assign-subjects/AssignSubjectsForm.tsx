@@ -75,7 +75,11 @@ const SelectedSubjects = ({ subjects, onRemove }: TSelectedSubjectProps) => {
       {subjects.map((subject) => (
         <Badge key={subject.id} className='flex items-center gap-2'>
           {subject.name}
-          <button type='button' onClick={() => onRemove(subject.id)}>
+          <button
+            type='button'
+            className='transition duration-500 hover:rotate-90'
+            onClick={() => onRemove(subject.id)}
+          >
             <XIcon size={16} />
           </button>
         </Badge>
