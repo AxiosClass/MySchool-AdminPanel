@@ -1,5 +1,5 @@
 import { apiUrl } from '../apiUrl';
-import { TPromiseResponse, TSubject } from '@/lib/types';
+import { TObject, TPromiseResponse, TSubject } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { makeUrlParams } from '@/helpers';
 
@@ -8,7 +8,7 @@ export const createSubject = async (payload: TCreateSubjectPayload): TPromiseRes
   return response.data;
 };
 
-export const getSubjects = async (args: Record<string, string>): TPromiseResponse<TGetSubjectsQueryResult[]> => {
+export const getSubjects = async (args: TObject): TPromiseResponse<TGetSubjectsQueryResult[]> => {
   const response = await axiosInstance.get(apiUrl.getSubjects(makeUrlParams(args)));
   return response?.data;
 };

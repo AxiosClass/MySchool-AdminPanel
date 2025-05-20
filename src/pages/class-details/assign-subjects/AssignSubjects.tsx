@@ -2,7 +2,7 @@ import { QK } from '@/api';
 import { toast } from 'sonner';
 import { usePopupState } from '@/hooks';
 import { FormSheet } from '@/components/shared/form';
-import { type TAssignSubjectFormSubmitFn, AssignedSubjectFormContainer } from './AssignSubjectsForm';
+import { type TAssignSubjectFormSubmitFn, AssignSubjectsForm } from './AssignSubjectsForm';
 import { ActionButton } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { assignSubjects } from '@/api/query';
@@ -10,7 +10,7 @@ import { errorMessageGen } from '@/helpers';
 
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
-  const formId = QK.SUBJECT + '_ASSIGN_SUBJECT_' + classId;
+  const formId = QK.SUBJECTS + '_ASSIGN_SUBJECT_' + classId;
 
   const { open, onOpenChange } = usePopupState();
   const qc = useQueryClient();
@@ -26,7 +26,7 @@ export const AssignSubjects = ({ classId }: { classId: string }) => {
         onSuccess: (res) => {
           toast.success(res.message);
           qc.invalidateQueries({ queryKey: [QK.CLASS, { classId }] });
-          qc.invalidateQueries({ queryKey: [QK.SUBJECT, { classId }] });
+          qc.invalidateQueries({ queryKey: [QK.SUBJECTS, { classId }] });
           reset();
           onOpenChange(false);
         },
@@ -47,7 +47,7 @@ export const AssignSubjects = ({ classId }: { classId: string }) => {
         submitButtonTitle='Save'
         submitLoadingTitle='Saving...'
       >
-        <AssignedSubjectFormContainer classId={classId} formId={formId} onSubmit={handleAssignSubject} />
+        <AssignSubjectsForm formId={formId} onSubmit={handleAssignSubject} />
       </FormSheet>
     </>
   );

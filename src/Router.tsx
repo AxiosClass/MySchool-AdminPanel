@@ -20,7 +20,7 @@ const ClassesPage = lazy(() => import('@/pages/classes'));
 const ClassroomPage = lazy(() => import('@/pages/classroom'));
 const TeachersPage = lazy(() => import('@/pages/teachers'));
 const StudentsPage = lazy(() => import('@/pages/students'));
-const ClassDetailsPage = lazy(() => import('@/pages/class/class-details'));
+const ClassDetailsPage = lazy(() => import('@/pages/class-details'));
 const TakePaymentPage = lazy(() => import('@/pages/transactions/take-payment'));
 const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
 const NoticesPage = lazy(() => import('@/pages/notices'));
