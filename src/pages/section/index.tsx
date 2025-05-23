@@ -5,6 +5,7 @@ import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import { SubjectTable } from './SubjectTable';
 
 export default function SectionPage() {
   const { sectionId } = useParams();
@@ -24,7 +25,9 @@ export default function SectionPage() {
       <PageTitle title='Section' />
       <ScrollArea>
         <PageHeader label={`Section : ${classroomDetails?.name} (${classroomDetails?.level})`} />
-        <section className='mb-6 mt-6 grid grid-cols-2 gap-4 px-6'>{/* <SubjectsTable /> */}</section>
+        <section className='gap-4 px-6'>
+          <SubjectTable sectionId={sectionId as string} />
+        </section>
       </ScrollArea>
     </>
   );
