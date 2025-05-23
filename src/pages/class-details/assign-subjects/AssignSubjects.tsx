@@ -11,17 +11,16 @@ import { errorMessageGen } from '@/helpers';
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
   const formId = QK.SUBJECTS + '_ASSIGN_SUBJECT_' + classId;
-
-  const { open, onOpenChange } = usePopupState();
   const qc = useQueryClient();
 
+  const { open, onOpenChange } = usePopupState();
   const { mutate } = useMutation({ mutationKey: [formId], mutationFn: assignSubjects });
 
   const handleAssignSubject: TAssignSubjectFormSubmitFn = (data, reset) => {
-    const subjects = data.subjects.map((subject) => subject.name);
+    const subjectIds = data.subjects.map((subject) => subject.id);
 
     mutate(
-      { classId, subjects },
+      { classId, subjectIds },
       {
         onSuccess: (res) => {
           toast.success(res.message);
