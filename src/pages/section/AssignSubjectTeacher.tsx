@@ -1,60 +1,73 @@
 import { z } from 'zod';
 import { QK } from '@/api';
-import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { CommonFormField, CommonSelect } from '@/components/shared/form';
+import { CommonFormField, CommonSelect, FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
-import { assignSubjectTeacher, getTeachers } from '@/api/query';
+import { getTeacherList } from '@/api/query';
 import { Button } from '@/components/ui/button';
-import { CheckIcon } from 'lucide-react';
-import { errorMessageGen } from '@/helpers';
+import { UserPlusIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePopupState } from '@/hooks';
+import { TooltipContainer } from '@/components/shared';
 
-export const AssignSubjectTeacher = ({ classroomId, classSubjectId }: TAssignSubjectTeacherProps) => {
-  const qc = useQueryClient();
-  const form = useForm<TAssignTeacherForm>({ resolver: zodResolver(assignTeacherSchema) });
-  const selectedTeacher = form.watch('teacherId');
+const formId = 'ASSIGN_SUBJECT';
+type TAssignSubjectTeacherProps = { sectionId: string; subjectId: string };
 
-  // data fetching
-  const { data: teachers, isLoading: isTeacherDataLoading } = useQuery({
-    queryKey: [QK.TEACHER, 'LIST'],
-    queryFn: getTeachers,
-    select: (res) => res.data.map(({ name, id }) => ({ label: name, value: id })),
+export const AssignSubjectTeacher = ({ sectionId, subjectId }: TAssignSubjectTeacherProps) => {
+  const { open, onOpenChange } = usePopupState();
+
+  return (
+    <>
+      <TooltipContainer label='Assign Teacher'>
+        <Button onClick={() => onOpenChange(true)}>
+          <UserPlusIcon size={16} />
+        </Button>
+      </TooltipContainer>
+
+      <FormDialog
+        formId={formId}
+        open={open}
+        onOpenChange={onOpenChange}
+        title='Assign Teacher'
+        submitButtonTitle='Assign'
+        submitLoadingTitle='Assigning...'
+      >
+        <AssignSubjectForm onOpenChange={onOpenChange} />
+      </FormDialog>
+    </>
+  );
+};
+
+type AssignSubjectFormProps = { onOpenChange: (open: boolean) => void };
+
+const AssignSubjectForm = ({ onOpenChange }: AssignSubjectFormProps) => {
+  const { data: teacherList, isLoading } = useQuery({
+    queryKey: [QK.TEACHER, 'FOR_ASSIGN_TEACHER'],
+    queryFn: getTeacherList,
+    select: (res) => res.data.map((teacher) => ({ label: teacher.name, value: teacher.id })),
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: assignSubjectTeacher,
-    onSuccess: (res) => {
-      qc.invalidateQueries({ queryKey: [QK.TEACHER, 'LIST'] });
-      qc.invalidateQueries({ queryKey: [QK.CLASSROOM, { classroomId }] });
-      toast.success(res.message);
-    },
-    onError: (error) => toast.error(errorMessageGen(error)),
-  });
-
-  const handleAssignSubjectTeacher = form.handleSubmit((formData) => {
-    mutate({ teacherId: formData.teacherId, classroomId, classSubjectId });
+  const form = useForm<TAssignTeacherForm>({
+    resolver: zodResolver(assignTeacherSchema),
+    defaultValues: { teacherId: '' },
   });
 
   return (
     <Form {...form}>
-      <form className='grid grid-cols-2 items-center gap-4 p-1' onSubmit={handleAssignSubjectTeacher}>
-        <CommonFormField control={form.control} name='teacherId'>
+      <form id={formId}>
+        <CommonFormField control={form.control} name='teacherId' label='Teacher'>
           {({ field }) => (
             <CommonSelect
               value={field.value}
               onChange={field.onChange}
-              placeholder='Select teacher'
-              options={teachers || []}
-              isLoading={isTeacherDataLoading}
+              options={teacherList || []}
+              disabled={isLoading}
+              isLoading={isLoading}
+              placeholder='Select Teacher'
             />
           )}
         </CommonFormField>
-
-        <Button size='icon' type='submit' disabled={!selectedTeacher} isLoading={isPending}>
-          {!isPending && <CheckIcon />}
-        </Button>
       </form>
     </Form>
   );
@@ -64,11 +77,5 @@ export const AssignSubjectTeacher = ({ classroomId, classSubjectId }: TAssignSub
 const assignTeacherSchema = z.object({
   teacherId: z.string().min(1, { message: 'Teacher id is required' }),
 });
-
-// type
-type TAssignSubjectTeacherProps = {
-  classroomId: string;
-  classSubjectId: string;
-};
 
 type TAssignTeacherForm = z.infer<typeof assignTeacherSchema>;
