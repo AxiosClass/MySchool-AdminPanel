@@ -1,4 +1,4 @@
-import { TClass, TClassroom, TPromiseResponse } from '@/lib/types';
+import { TClass, TClassroom, TPromiseResponse, TSubject } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
@@ -32,8 +32,14 @@ export const assignSubjects = async (payload: TAssignedSubjectPayload): TPromise
   return response?.data;
 };
 
+export const getAssignedSubjects = async (classId: string): TPromiseResponse<TAssignedSubject[]> => {
+  const response = await axiosInstance.get(apiUrl.getAssignedSubjects(classId));
+  return response.data;
+};
+
 // type
 type TCreateClassPayload = Pick<TClass, 'name' | 'level' | 'monthlyFee' | 'admissionFee'>;
+type TAssignedSubject = Pick<TSubject, 'id' | 'name' | 'description' | 'type'>;
 
 export type TGetClassResponse = {
   id: string;

@@ -1,27 +1,51 @@
+import { QK } from '@/api';
 import { z } from 'zod';
+import { XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useCallback, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { CommonFormField } from '@/components/shared/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Badge } from '@/components/ui/badge';
-import { XIcon } from 'lucide-react';
-import { useCallback, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { QK } from '@/api';
-import { getSubjects } from '@/api/query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { assignSubjects, getSubjects } from '@/api/query';
 import { Message, SearchInput } from '@/components/shared';
-import { useSearch } from '@/hooks';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
+import { errorMessageGen } from '@/helpers';
+import { useSearch } from '@/hooks';
+import { toast } from 'sonner';
 
-export const AssignSubjectsForm = ({ formId, onSubmit, defaultValues }: TAssignSubjectsFormProps) => {
+export type TAssignSubjectsFormProps = {
+  formId: string;
+  classId: string;
+  onOpenChange: (open: boolean) => void;
+  defaultValues?: TAssignSubjectsForm;
+};
+
+export const AssignSubjectsForm = ({ formId, classId, onOpenChange, defaultValues }: TAssignSubjectsFormProps) => {
+  const qc = useQueryClient();
   const form = useForm<TAssignSubjectsForm>({
     resolver: zodResolver(assignSubjectFormSchema),
     defaultValues: defaultValues || { subjects: [] },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    onSubmit(data, form.reset);
+  const { mutate } = useMutation({
+    mutationKey: [formId],
+    mutationFn: assignSubjects,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.CLASS, { classId }] });
+      qc.invalidateQueries({ queryKey: [QK.SUBJECTS, { classId }] });
+      form.reset();
+      onOpenChange(false);
+    },
+    onError: (error) => toast.error(errorMessageGen(error)),
+  });
+
+  const handleSubmit = form.handleSubmit((formData) => {
+    const subjectIds = formData.subjects.map((subject) => subject.id);
+    mutate({ classId, subjectIds });
   });
 
   return (
@@ -161,12 +185,6 @@ const assignSubjectFormSchema = z.object({
   subjects: subjectSubSchema.array().min(1, 'Please at least select one subject'),
 });
 
+// Types
 type TSubject = z.infer<typeof subjectSubSchema>;
 export type TAssignSubjectsForm = z.infer<typeof assignSubjectFormSchema>;
-export type TAssignSubjectFormSubmitFn = (data: TAssignSubjectsForm, reset: () => void) => void;
-
-export type TAssignSubjectsFormProps = {
-  formId: string;
-  onSubmit: TAssignSubjectFormSubmitFn;
-  defaultValues?: TAssignSubjectsForm;
-};

@@ -1,38 +1,16 @@
 import { QK } from '@/api';
-import { toast } from 'sonner';
 import { usePopupState } from '@/hooks';
 import { FormSheet } from '@/components/shared/form';
-import { type TAssignSubjectFormSubmitFn, AssignSubjectsForm } from './AssignSubjectsForm';
+import { AssignSubjectsForm, TAssignSubjectsForm } from './AssignSubjectsForm';
 import { ActionButton } from '@/components/ui/button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { assignSubjects } from '@/api/query';
-import { errorMessageGen } from '@/helpers';
+import { useQuery } from '@tanstack/react-query';
+import { getAssignedSubjects } from '@/api/query';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
   const formId = QK.SUBJECTS + '_ASSIGN_SUBJECT_' + classId;
-  const qc = useQueryClient();
-
   const { open, onOpenChange } = usePopupState();
-  const { mutate } = useMutation({ mutationKey: [formId], mutationFn: assignSubjects });
-
-  const handleAssignSubject: TAssignSubjectFormSubmitFn = (data, reset) => {
-    const subjectIds = data.subjects.map((subject) => subject.id);
-
-    mutate(
-      { classId, subjectIds },
-      {
-        onSuccess: (res) => {
-          toast.success(res.message);
-          qc.invalidateQueries({ queryKey: [QK.CLASS, { classId }] });
-          qc.invalidateQueries({ queryKey: [QK.SUBJECTS, { classId }] });
-          reset();
-          onOpenChange(false);
-        },
-        onError: (error) => toast.error(errorMessageGen(error)),
-      },
-    );
-  };
 
   return (
     <>
@@ -46,8 +24,30 @@ export const AssignSubjects = ({ classId }: { classId: string }) => {
         submitButtonTitle='Save'
         submitLoadingTitle='Saving...'
       >
-        <AssignSubjectsForm formId={formId} onSubmit={handleAssignSubject} />
+        <AssignedSubjects classId={classId} formId={formId} onOpenChange={onOpenChange} />
       </FormSheet>
     </>
   );
 };
+
+type AssignedSubjectsProps = { classId: string; formId: string; onOpenChange: (open: boolean) => void };
+
+const AssignedSubjects = ({ classId, formId, onOpenChange }: AssignedSubjectsProps) => {
+  const { data, isLoading } = useQuery({
+    queryKey: [QK.SUBJECTS, { classId }],
+    queryFn: () => getAssignedSubjects(classId),
+    select: (res) => res.data,
+  });
+
+  const defaultValues: TAssignSubjectsForm = {
+    subjects: data?.map(({ id, name, type, description }) => ({ id, name, type, description })) || [],
+  };
+
+  if (isLoading) return <AssignSubjectLoading />;
+
+  return (
+    <AssignSubjectsForm formId={formId} defaultValues={defaultValues} onOpenChange={onOpenChange} classId={classId} />
+  );
+};
+
+const AssignSubjectLoading = () => <Skeleton className='h-20 w-full' />;
