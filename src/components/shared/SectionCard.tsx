@@ -2,15 +2,17 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { FaGraduationCap, FaUserTie, FaChalkboardTeacher } from 'react-icons/fa';
 
-export const ClassroomCard = ({
-  id,
-  name,
-  classTeacher,
-  students,
-  linkPrefix,
-  isClassTeacher,
-}: TClassroomCardProps) => (
-  <Link to={`${linkPrefix}/${id}`} data-is_teacher={isClassTeacher ?? undefined}>
+type TSectionCardProps = {
+  id: string;
+  name: string;
+  classTeacher?: { id: string; name: string };
+  students: { id: string }[];
+  linkPrefix: string;
+  isClassTeacher?: boolean;
+};
+
+export const SectionCard = ({ id, name, classTeacher, students, linkPrefix, isClassTeacher }: TSectionCardProps) => (
+  <Link to={`${linkPrefix}/${id}`} data-teacher={isClassTeacher ?? undefined}>
     <Card
       data-teacher={isClassTeacher ?? undefined}
       className='border-primary-100 bg-transparent data-[teacher]:bg-primary-50'
@@ -33,12 +35,3 @@ export const ClassroomCard = ({
     </Card>
   </Link>
 );
-
-type TClassroomCardProps = {
-  id: string;
-  name: string;
-  classTeacher?: { id: string; name: string };
-  students: { id: string }[];
-  linkPrefix: string;
-  isClassTeacher?: boolean;
-};
