@@ -18,11 +18,6 @@ export const deleteSubject = async (subjectId: string): TPromiseResponse => {
   return response.data;
 };
 
-export const assignSubjects = async (payload: TAssignedSubjectPayload): TPromiseResponse => {
-  const response = await axiosInstance.put(apiUrl.assignSubjects, payload);
-  return response?.data;
-};
-
 type TCreateSubjectPayload = Pick<TSubject, 'name' | 'description' | 'type'> & {
   children?: Pick<TSubject, 'name' | 'description' | 'type'>[];
 };
@@ -30,5 +25,3 @@ type TCreateSubjectPayload = Pick<TSubject, 'name' | 'description' | 'type'> & {
 export type TGetSubjectsQueryResult = Pick<TSubject, 'id' | 'name' | 'type' | 'description'> & {
   childSubject: Pick<TSubject, 'id' | 'name' | 'type'>[];
 };
-
-type TAssignedSubjectPayload = { classId: string; subjects: string[] };
