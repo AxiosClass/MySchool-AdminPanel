@@ -5,6 +5,7 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CommonTable, TableNoData } from '@/components/shared';
 import { AssignSubjectTeacher } from './AssignSubjectTeacher';
 import { useQuery } from '@tanstack/react-query';
+import { RemoveSubjectTeacher } from './RemoveSubjectTeacher';
 
 type SubjectTableProps = { sectionId: string };
 
@@ -38,7 +39,7 @@ type TSubjectTableBodyProps = { subjectList: TGetSubjectsForClassroom[]; section
 const SubjectTableBody = ({ subjectList, sectionId }: TSubjectTableBodyProps) => {
   if (!subjectList.length) return <TableNoData colSpan={3} message='No Subject Found' />;
 
-  return subjectList.map(({ subjectId, subjectName, teacher }) => (
+  return subjectList.map(({ id, subjectId, subjectName, teacher }) => (
     <TableRow key={subjectId}>
       <TableCell>{subjectName}</TableCell>
       <TableCell>
@@ -51,7 +52,10 @@ const SubjectTableBody = ({ subjectList, sectionId }: TSubjectTableBodyProps) =>
           <p className='text-muted-foreground'>No Teacher Assigned</p>
         )}
       </TableCell>
-      <TableCell>{teacher ? <></> : <AssignSubjectTeacher sectionId={sectionId} subjectId={subjectId} />}</TableCell>
+      <TableCell>
+        {!id && <AssignSubjectTeacher sectionId={sectionId} subjectId={subjectId} />}
+        {id && <RemoveSubjectTeacher classroomSubjectTeacherId={id} sectionId={sectionId} />}
+      </TableCell>
     </TableRow>
   ));
 };
