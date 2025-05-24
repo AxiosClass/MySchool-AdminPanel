@@ -42,7 +42,7 @@ export type TGetSubjectsForClassroom = {
   teacher?: { id: string; name: string; phone?: string };
 };
 
-type TAssignSubjectTeacherPayload = { teacherId: string; classroomId: string; classSubjectId: string };
+type TAssignSubjectTeacherPayload = { teacherId: string; classroomId: string; subjectId: string };
 type TClassroomInfo = { id: string; name: string; class: { name: string }; students: { id: string }[] };
 type TGetClassroomForTeacher = { asClassTeacher: TClassroomInfo[]; asSubjectTeacher: TClassroomInfo[] };
 type TGetClassroomDetails = { name: string; level: string };

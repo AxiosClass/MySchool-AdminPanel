@@ -25,9 +25,7 @@ export default function SectionPage() {
       <PageTitle title='Section' />
       <ScrollArea>
         <PageHeader label={`Section : ${classroomDetails?.name} (${classroomDetails?.level})`} />
-        <section className='gap-4 px-6'>
-          <SubjectTable sectionId={sectionId as string} />
-        </section>
+        <SubjectTable sectionId={sectionId as string} />
       </ScrollArea>
     </>
   );

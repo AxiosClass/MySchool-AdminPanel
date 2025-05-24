@@ -1,15 +1,17 @@
 import { z } from 'zod';
 import { QK } from '@/api';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { CommonFormField, CommonSelect, FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
-import { getTeacherList } from '@/api/query';
+import { assignSubjectTeacher, getTeacherList } from '@/api/query';
 import { Button } from '@/components/ui/button';
 import { UserPlusIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePopupState } from '@/hooks';
 import { TooltipContainer } from '@/components/shared';
+import { toast } from 'sonner';
+import { errorMessageGen } from '@/helpers';
 
 const formId = 'ASSIGN_SUBJECT';
 type TAssignSubjectTeacherProps = { sectionId: string; subjectId: string };
@@ -33,15 +35,17 @@ export const AssignSubjectTeacher = ({ sectionId, subjectId }: TAssignSubjectTea
         submitButtonTitle='Assign'
         submitLoadingTitle='Assigning...'
       >
-        <AssignSubjectForm onOpenChange={onOpenChange} />
+        <AssignSubjectForm sectionId={sectionId} subjectId={subjectId} onOpenChange={onOpenChange} />
       </FormDialog>
     </>
   );
 };
 
-type AssignSubjectFormProps = { onOpenChange: (open: boolean) => void };
+type AssignSubjectFormProps = { sectionId: string; subjectId: string; onOpenChange: (open: boolean) => void };
 
-const AssignSubjectForm = ({ onOpenChange }: AssignSubjectFormProps) => {
+const AssignSubjectForm = ({ sectionId, subjectId, onOpenChange }: AssignSubjectFormProps) => {
+  const qc = useQueryClient();
+
   const { data: teacherList, isLoading } = useQuery({
     queryKey: [QK.TEACHER, 'FOR_ASSIGN_TEACHER'],
     queryFn: getTeacherList,
@@ -53,9 +57,24 @@ const AssignSubjectForm = ({ onOpenChange }: AssignSubjectFormProps) => {
     defaultValues: { teacherId: '' },
   });
 
+  const { mutate } = useMutation({
+    mutationKey: [formId],
+    mutationFn: assignSubjectTeacher,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECTS, { sectionId }] });
+      onOpenChange(false);
+    },
+    onError: (error) => toast.error(errorMessageGen(error)),
+  });
+
+  const handleAssignedSubject = form.handleSubmit((formData) => {
+    mutate({ subjectId, classroomId: sectionId, teacherId: formData.teacherId });
+  });
+
   return (
     <Form {...form}>
-      <form id={formId}>
+      <form id={formId} onSubmit={handleAssignedSubject}>
         <CommonFormField control={form.control} name='teacherId' label='Teacher'>
           {({ field }) => (
             <CommonSelect
