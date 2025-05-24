@@ -14,10 +14,11 @@ export const apiUrl = {
   getAssignedSubjects: (classId: string) => `/class/${classId}/subjects`,
   //classroom
   createClassroom: `/classroom`,
-  getSubjectsWithTeacher: (classroomId: string) => `/classroom/${classroomId}/subjects`,
   assignSubjectTeacher: 'classroom/subject-teacher',
+  getSubjectListForClassroom: (classroomId: string) => `/classroom/${classroomId}/subjects`,
   deleteSubjectTeacher: (classSubjectTeacherId: string) => `/classroom/subject-teacher/${classSubjectTeacherId}`,
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
+  getClassroomDetails: (classroomId: string) => `/classroom/${classroomId}`,
   // subjects
   createSubject: `/subject`,
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,

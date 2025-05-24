@@ -1,7 +1,6 @@
 export * from './ActionMenu';
 export * from './AppLogo';
 export * from './AttendanceTable';
-export * from './ClassroomCard';
 export * from './CommonTable';
 export * from './CustomSheet';
 export * from './DeleteDialog';
@@ -10,6 +9,7 @@ export * from './Message';
 export * from './PageHeader';
 export * from './PageTitle';
 export * from './SearchInput';
+export * from './SectionCard';
 export * from './TableNodata';
 export * from './TooltipContainer';
 export * from './UserIcon';

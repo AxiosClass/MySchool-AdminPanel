@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 import { getClassroomsForTeacher } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
 import { CardsLoader } from '@/components/loader';
-import { ClassroomCard } from '@/components/shared/ClassroomCard';
+import { SectionCard } from '@/components/shared';
 
 export default function TeacherDashboardPage() {
   const user = useAuthStore((state) => state.user);
@@ -20,7 +20,7 @@ export default function TeacherDashboardPage() {
   return (
     <section className='my-6 grid gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {classroomList?.asClassTeacher.map((classroom) => (
-        <ClassroomCard key={classroom.id} {...classroom} linkPrefix='/teacher/classroom' isClassTeacher />
+        <SectionCard key={classroom.id} {...classroom} linkPrefix='/teacher/classroom' isClassTeacher />
       ))}
     </section>
   );

@@ -17,7 +17,7 @@ import { DashboardPageLoader } from './pages/home/DashboardLoader';
 const LoginPage = lazy(() => import('@/pages/login'));
 const HomePage = lazy(() => import('@/pages/home'));
 const ClassesPage = lazy(() => import('@/pages/classes'));
-const ClassroomPage = lazy(() => import('@/pages/classroom'));
+const SectionPage = lazy(() => import('@/pages/section'));
 const TeachersPage = lazy(() => import('@/pages/teachers'));
 const StudentsPage = lazy(() => import('@/pages/students'));
 const ClassDetailsPage = lazy(() => import('@/pages/class-details'));
@@ -73,10 +73,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/classroom/:classroomId',
+        path: '/section/:sectionId',
         element: (
-          <Suspense fallback={<PageWithCardLoader />}>
-            <ClassroomPage />
+          <Suspense fallback={<PageWithTableLoader />}>
+            <SectionPage />
           </Suspense>
         ),
       },
