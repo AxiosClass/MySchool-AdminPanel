@@ -1,55 +1,108 @@
-import { TMedia } from '@/lib/types';
-import { ChangeEvent, useMemo, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import { UploadIcon, XIcon } from 'lucide-react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 
-type TFile = TMedia[] | File[];
+type TOldFile = { type: string; url: string; id: string };
 type TMediaInputProps = {
-  value: TFile[];
-  onChange: (value: TFile[]) => void;
-  onDelete?: (id: string) => Promise<void>;
+  value: { old: TOldFile[]; new: File[] };
+  onChange: (value: { old: TOldFile[]; new: File[] }) => void;
+  onOldFileRemove?: (file: TOldFile) => void;
 };
 
-export const MediaInput = ({ value, onChange }: TMediaInputProps) => {
-  const fileRef = useRef<HTMLInputElement>(null);
-  console.log({ value });
+export const MediaInput = ({ value, onChange, onOldFileRemove }: TMediaInputProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const totalFiles = value.old.length + value.new.length;
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    console.log(files);
+  useEffect(() => {
+    return () => {
+      value.new.forEach((file) => URL.revokeObjectURL(file as unknown as string));
+    };
+  }, [value.new]);
 
-    if (!files || files.length === 0) return;
-    onChange(files as unknown as TFile[]);
+  const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    onChange({ ...value, new: [...value.new, ...files] });
   };
 
-  const previewUrls = useMemo<TMedia[]>(() => {
-    const files =
-      value
-        ?.map((eachValue) => {
-          if (eachValue instanceof File)
-            return {
-              url: URL.createObjectURL(eachValue),
-              type: eachValue.type,
-              id: `${new Date().getTime()}-${eachValue.name}`,
-            };
+  const removeNewFile = (index: number) => {
+    const updatedNew = [...value.new];
+    updatedNew.splice(index, 1);
+    onChange({ ...value, new: updatedNew });
 
-          if ('id' in eachValue && 'url' in eachValue && 'type' in eachValue) return eachValue;
-          return null;
-        })
-        .filter((file): file is TMedia => file !== null) || [];
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
-    return files;
-  }, [value]);
+  const removeOldFile = (file: TOldFile) => {
+    const updatedOld = value.old.filter((f) => f.id !== file.id);
+    onChange({ ...value, old: updatedOld });
+    onOldFileRemove?.(file);
+
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
   return (
-    <>
-      <div className='flex flex-wrap gap-4 gap-x-4'>
-        {previewUrls.map((preview) => (
-          <div key={preview.id}>
-            {preview.type === 'IMAGE'}
-            {preview.url} {preview.type}
-          </div>
+    <div className='space-y-2'>
+      <Input
+        className='hidden'
+        type='file'
+        multiple
+        accept='image/*,application/pdf'
+        ref={fileInputRef}
+        onChange={handleFilesChange}
+      />
+      <button
+        type='button'
+        onClick={() => fileInputRef.current?.click()}
+        className='flex h-40 w-full flex-col items-center justify-center gap-4 rounded border border-dashed px-3 py-1 text-sm'
+      >
+        <UploadIcon />
+        {!!totalFiles && (
+          <p className='font-semibold'>
+            Total : {totalFiles > 1 ? `${totalFiles} files` : `${totalFiles} file`} has been selected
+          </p>
+        )}
+      </button>
+
+      <div className='grid grid-cols-2 gap-3 sm:grid-cols-3'>
+        {value?.old?.map((file) => (
+          <MediaPreviewCard key={file.id} src={file.url} type={file.type} onRemove={() => removeOldFile(file)} />
+        ))}
+
+        {value?.new?.map((file, index) => (
+          <MediaPreviewCard
+            key={index}
+            src={URL.createObjectURL(file)}
+            type={file.type}
+            name={file.name}
+            onRemove={() => removeNewFile(index)}
+          />
         ))}
       </div>
-      <input type='file' accept='image/*,application/pdf' ref={fileRef} onChange={handleFileChange} />
-    </>
+    </div>
+  );
+};
+
+type MediaPreviewCardProps = { src: string; type: string; name?: string; onRemove?: () => void };
+export const MediaPreviewCard = ({ src, type, name, onRemove }: MediaPreviewCardProps) => {
+  const isImage = type.startsWith('image/');
+
+  return (
+    <div className='relative rounded p-2 text-sm'>
+      {isImage ? (
+        <img src={src} alt={name || 'media'} className='h-32 w-full rounded object-cover' />
+      ) : (
+        <p className='line-clamp-3 flex h-32 items-center justify-center break-all rounded-md border border-dashed p-2 text-center'>
+          {name || src.split('/').pop()}
+        </p>
+      )}
+
+      <button
+        type='button'
+        onClick={onRemove}
+        className='absolute right-1 top-1 rounded-md bg-black/70 p-1 text-xs text-white'
+      >
+        <XIcon size={16} />
+      </button>
+    </div>
   );
 };
