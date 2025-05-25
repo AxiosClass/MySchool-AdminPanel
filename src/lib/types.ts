@@ -1,9 +1,10 @@
 // Common
-
 export type TObject<TValue = string> = Record<string, TValue>;
 export type TMeta = { page: number; limit: number; total: number; totalPages: number };
 export type TServerResponse<TData> = { ok: boolean; message: string; data: TData; meta?: TMeta };
 export type TPromiseResponse<TData = null> = Promise<TServerResponse<TData>>;
+export type TMedia = { id: string; url: string; type: string };
+export type TMediaType = 'string' | 'PDF';
 
 export enum USER_ROLE {
   ADMIN = 'ADMIN',

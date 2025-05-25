@@ -4,14 +4,12 @@ import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
 import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
 import { StudentDashboardPageLoader } from './pages/(student)/student-dashboard/StudentDashboardPageLoader';
-import { CardsLoader, PageWithTableLoader } from './components/loader';
-import { PageWithCardLoader } from './components/loader';
+import { CardsLoader, PageWithCoverLoader, PageWithTableLoader, PageWithCardLoader } from './components/loader';
+import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { LogInPageLoader } from './pages/login/LogInPageLoader';
-import { TableLoader } from './components/loader';
-import { MainLayout } from './layout/main-layout';
-import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 import { DashboardPageLoader } from './pages/home/DashboardLoader';
+import { MainLayout } from './layout/main-layout';
 
 // Admin Panel
 const LoginPage = lazy(() => import('@/pages/login'));
@@ -30,7 +28,7 @@ const AdminsPage = lazy(() => import('@/pages/admins'));
 const SubjectsPage = lazy(() => import('@/pages/subjects'));
 // Teacher Panel
 const TeacherDashboardPage = lazy(() => import('@/pages/(teacher)/teacher-dashboard'));
-const TeacherClassroom = lazy(() => import('@/pages/(teacher)/teacher-classroom'));
+const TeacherSection = lazy(() => import('@/pages/(teacher)/teacher-section'));
 const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
 // Student Panel
 const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
@@ -175,10 +173,10 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'classroom/:classroomId',
+            path: 'section/:sectionId',
             element: (
-              <Suspense fallback={<TableLoader className='my-6' />}>
-                <TeacherClassroom />
+              <Suspense fallback={<PageWithCoverLoader />}>
+                <TeacherSection />
               </Suspense>
             ),
           },

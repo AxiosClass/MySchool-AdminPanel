@@ -76,3 +76,15 @@ export const PageWithTableLoader = () => (
     </div>
   </section>
 );
+
+export const CoverLoader = () => (
+  <div className='h-60 border p-4'>
+    <Skeleton className='h-10 w-1/3' />
+  </div>
+);
+
+export const PageWithCoverLoader = () => (
+  <>
+    <CoverLoader />
+  </>
+);

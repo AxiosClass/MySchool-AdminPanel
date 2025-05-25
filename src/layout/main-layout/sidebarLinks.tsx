@@ -41,7 +41,7 @@ export const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes') return partialMatch(['/classes', '/section'], pathname);
   if (url === '/transactions') return partialMatch(['/transactions'], pathname);
-  if (url === '/teacher') return partialMatch(['/teacher', '/classroom'], pathname) && pathname !== '/teacher/notices';
+  if (url === '/teacher') return partialMatch(['/teacher', '/section'], pathname) && pathname !== '/teacher/notices';
 };
 
 const partialMatch = (urls: string[], pathname: string): boolean => {

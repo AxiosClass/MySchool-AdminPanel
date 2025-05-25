@@ -45,4 +45,4 @@ export type TGetSubjectsForClassroom = {
 type TAssignSubjectTeacherPayload = { teacherId: string; classroomId: string; subjectId: string };
 type TClassroomInfo = { id: string; name: string; class: { name: string }; students: { id: string }[] };
 type TGetClassroomForTeacher = { asClassTeacher: TClassroomInfo[]; asSubjectTeacher: TClassroomInfo[] };
-type TGetClassroomDetails = { name: string; level: string };
+type TGetClassroomDetails = { name: string; level: string; classTeacher: { id: string; name: string } | null };

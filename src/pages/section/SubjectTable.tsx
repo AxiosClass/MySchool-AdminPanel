@@ -11,7 +11,7 @@ type SubjectTableProps = { sectionId: string };
 
 export const SubjectTable = ({ sectionId }: SubjectTableProps) => {
   const { data: subjectList, isLoading } = useQuery({
-    queryKey: [QK.CLASSROOM, QK.SUBJECTS, { sectionId }],
+    queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }],
     queryFn: () => getSubjectListForClassroom(sectionId),
     select: (res) => res.data,
   });

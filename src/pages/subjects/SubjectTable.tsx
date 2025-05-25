@@ -13,7 +13,7 @@ export const SubjectTable = () => {
   const { searchTerm, value, onSearchChange } = useSearch();
 
   const { data, isLoading } = useQuery({
-    queryKey: [QK.SUBJECTS, { searchTerm }],
+    queryKey: [QK.SUBJECT, { searchTerm }],
     queryFn: () => getSubjects({ ...(searchTerm && { searchTerm }) }),
     select: (res) => res.data,
   });

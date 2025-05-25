@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 import { errorMessageGen } from '@/helpers';
 
 // Consts
-const formId = QK.SUBJECTS + '_ADD_';
+const formId = QK.SUBJECT + '_ADD_';
 
 const subSubjectTypeOptions = [
   { label: 'CQ-70 + MCQ-30 = 100', value: SUBJECT_TYPE.CQ_MCQ },
@@ -40,7 +40,7 @@ export const AddSubject = () => {
     mutationFn: createSubject,
     onSuccess: (res) => {
       toast.success(res.message);
-      qc.invalidateQueries({ queryKey: [QK.SUBJECTS] });
+      qc.invalidateQueries({ queryKey: [QK.SUBJECT] });
       onOpenChange(false);
     },
     onError: (error) => errorMessageGen(error),
