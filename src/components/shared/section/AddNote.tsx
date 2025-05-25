@@ -4,25 +4,39 @@ import { usePopupState } from '@/hooks';
 import { PlusIcon } from 'lucide-react';
 import { NoteForm, TNoteForm } from './NoteForm';
 import { FormSheet } from '../form';
-import { useMutation } from '@tanstack/react-query';
-import { uploadToCloudinary } from '@/helpers';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { errorMessageGen, uploadToCloudinary } from '@/helpers';
+import { addNote } from '@/api/query';
+import { TMedia } from '@/lib/types';
+import { toast } from 'sonner';
 
 const formId = QK.NOTE + '_ADD';
 type TAddNoteProps = { sectionId: string };
 
 export const AddNote = ({ sectionId }: TAddNoteProps) => {
+  const qc = useQueryClient();
+
   const { open, onOpenChange } = usePopupState();
   const { mutateAsync: uploadFile } = useMutation({ mutationKey: [formId], mutationFn: uploadToCloudinary });
 
-  const onAddNote = async (formData: TNoteForm) => {
-    const { files } = formData;
-    if (files.new.length) {
-      const response = await uploadFile(files.new);
-      console.log({ response });
-    }
-  };
+  const { mutate: handleAddNote } = useMutation({
+    mutationKey: [formId],
+    mutationFn: addNote,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.NOTE, { sectionId }] });
+      onOpenChange(false);
+    },
+    onError: (error) => toast.error(errorMessageGen(error)),
+  });
 
-  console.log(sectionId);
+  const onAddNote = async (formData: TNoteForm) => {
+    const { title, description, files } = formData;
+
+    let media: TMedia[] = [];
+    if (files.new.length) media = await uploadFile(files.new);
+    handleAddNote({ classroomId: sectionId, title, description, ...(media.length && { media }) });
+  };
 
   return (
     <>

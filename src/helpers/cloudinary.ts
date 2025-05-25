@@ -1,6 +1,7 @@
+import { TMedia } from '@/lib/types';
 import axios from 'axios';
 
-export const uploadToCloudinary = async (files: File[]) => {
+export const uploadToCloudinary = async (files: File[]): Promise<TMedia[]> => {
   const cloudName = 'dluask542';
   const uploadPreset = 'my-school-content';
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;

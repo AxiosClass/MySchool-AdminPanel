@@ -13,8 +13,8 @@ export const NoteForm = ({ formId, defaultValues, onSubmit }: TNoteFormProps) =>
   const form = useForm<TNoteForm>({
     resolver: zodResolver(addNoteFormSchema),
     defaultValues: {
-      title: defaultValues?.title,
-      description: defaultValues?.description,
+      title: defaultValues?.title || '',
+      description: defaultValues?.description || '',
       files: { old: defaultValues?.files?.old || [], new: defaultValues?.files?.new || [] },
     },
   });
