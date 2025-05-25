@@ -2,16 +2,26 @@ import { QK } from '@/api';
 import { Button } from '@/components/ui/button';
 import { usePopupState } from '@/hooks';
 import { PlusIcon } from 'lucide-react';
-import { NoteForm } from './NoteForm';
+import { NoteForm, TNoteForm } from './NoteForm';
 import { FormSheet } from '../form';
-
-// import { MediaInput } from '../media';
+import { useMutation } from '@tanstack/react-query';
+import { uploadToCloudinary } from '@/helpers';
 
 const formId = QK.NOTE + '_ADD';
 type TAddNoteProps = { sectionId: string };
 
 export const AddNote = ({ sectionId }: TAddNoteProps) => {
   const { open, onOpenChange } = usePopupState();
+  const { mutateAsync: uploadFile } = useMutation({ mutationKey: [formId], mutationFn: uploadToCloudinary });
+
+  const onAddNote = async (formData: TNoteForm) => {
+    const { files } = formData;
+    if (files.new.length) {
+      const response = await uploadFile(files.new);
+      console.log({ response });
+    }
+  };
+
   console.log(sectionId);
 
   return (
@@ -29,7 +39,7 @@ export const AddNote = ({ sectionId }: TAddNoteProps) => {
         submitButtonTitle='Add'
         submitLoadingTitle='Adding...'
       >
-        <NoteForm formId={formId} />
+        <NoteForm formId={formId} onSubmit={onAddNote} />
       </FormSheet>
     </>
   );

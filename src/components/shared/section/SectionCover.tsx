@@ -9,7 +9,7 @@ type TSectionCoverProps = PropsWithChildren<{ sectionId: string; className?: str
 export const SectionCover = ({ sectionId, className, children }: TSectionCoverProps) => {
   const { data, isLoading } = useGetClassroomDetails(sectionId);
 
-  if (isLoading) return <CoverLoader />;
+  if (isLoading) return <CoverLoader className='mt-6' />;
 
   return (
     <div
@@ -24,12 +24,12 @@ export const SectionCover = ({ sectionId, className, children }: TSectionCoverPr
             {data?.name} ({data?.level})
           </h2>
           {data?.classTeacher && (
-            <p className='flex items-center gap-2 text-xl text-white'>
+            <div className='flex items-center gap-2 text-xl text-white'>
               <div className='rounded-full border p-2'>
                 <FaUserSecret size={16} />
               </div>
               <h3 className='font-semibold'>{data.classTeacher.name}</h3>
-            </p>
+            </div>
           )}
         </div>
         {children}

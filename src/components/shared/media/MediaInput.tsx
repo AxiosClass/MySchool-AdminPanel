@@ -1,6 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { UploadIcon, XIcon } from 'lucide-react';
 import { ChangeEvent, useEffect, useRef } from 'react';
+import { FaFilePdf } from 'react-icons/fa6';
 
 type TOldFile = { type: string; url: string; id: string };
 type TMediaInputProps = {
@@ -41,7 +42,7 @@ export const MediaInput = ({ value, onChange, onOldFileRemove }: TMediaInputProp
   };
 
   return (
-    <div className='space-y-2'>
+    <div>
       <Input
         className='hidden'
         type='file'
@@ -55,15 +56,15 @@ export const MediaInput = ({ value, onChange, onOldFileRemove }: TMediaInputProp
         onClick={() => fileInputRef.current?.click()}
         className='flex h-40 w-full flex-col items-center justify-center gap-4 rounded border border-dashed px-3 py-1 text-sm'
       >
-        <UploadIcon />
+        <UploadIcon className='text-primary' />
         {!!totalFiles && (
-          <p className='font-semibold'>
-            Total : {totalFiles > 1 ? `${totalFiles} files` : `${totalFiles} file`} has been selected
+          <p className='font-semibold text-muted-foreground'>
+            Total : {totalFiles > 1 ? `${totalFiles} files` : `${totalFiles} file`} Has Been Selected
           </p>
         )}
       </button>
 
-      <div className='grid grid-cols-2 gap-3 sm:grid-cols-3'>
+      <div className='mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3'>
         {value?.old?.map((file) => (
           <MediaPreviewCard key={file.id} src={file.url} type={file.type} onRemove={() => removeOldFile(file)} />
         ))}
@@ -87,19 +88,20 @@ export const MediaPreviewCard = ({ src, type, name, onRemove }: MediaPreviewCard
   const isImage = type.startsWith('image/');
 
   return (
-    <div className='relative rounded p-2 text-sm'>
+    <div className='relative rounded text-sm'>
       {isImage ? (
         <img src={src} alt={name || 'media'} className='h-32 w-full rounded object-cover' />
       ) : (
-        <p className='line-clamp-3 flex h-32 items-center justify-center break-all rounded-md border border-dashed p-2 text-center'>
-          {name || src.split('/').pop()}
-        </p>
+        <div className='flex h-32 flex-col items-center justify-center gap-4 rounded-md border border-dashed p-2'>
+          <FaFilePdf className='text-primary' size={32} />
+          <p className='line-clamp-1 break-all text-center text-muted-foreground'>{name || src.split('/').pop()}</p>
+        </div>
       )}
 
       <button
         type='button'
         onClick={onRemove}
-        className='absolute right-1 top-1 rounded-md bg-black/70 p-1 text-xs text-white'
+        className='absolute right-2 top-2 rounded-md bg-black/90 p-1 text-xs text-white'
       >
         <XIcon size={16} />
       </button>

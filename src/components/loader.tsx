@@ -77,14 +77,14 @@ export const PageWithTableLoader = () => (
   </section>
 );
 
-export const CoverLoader = () => (
-  <div className='h-60 border p-4'>
+export const CoverLoader = ({ className }: { className?: string }) => (
+  <div className={cn('h-60 rounded-lg border p-4', className)}>
     <Skeleton className='h-10 w-1/3' />
   </div>
 );
 
 export const PageWithCoverLoader = () => (
   <>
-    <CoverLoader />
+    <CoverLoader className='mx-6 mt-6' />
   </>
 );
