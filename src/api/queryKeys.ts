@@ -12,5 +12,6 @@ export const QK = {
   EXAM: 'EXAM',
   ATTENDANCE: 'ATTENDANCE',
   META_DATA: 'META_DATA',
-  SUBJECTS: 'SUBJECTS',
+  SUBJECT: 'SUBJECT',
+  NOTE: 'NOTE',
 };

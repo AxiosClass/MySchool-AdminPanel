@@ -36,7 +36,7 @@ export const AssignSubjectsForm = ({ formId, classId, onOpenChange, defaultValue
     onSuccess: (res) => {
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.CLASS, { classId }] });
-      qc.invalidateQueries({ queryKey: [QK.SUBJECTS, { classId }] });
+      qc.invalidateQueries({ queryKey: [QK.SUBJECT, { classId }] });
       form.reset();
       onOpenChange(false);
     },
@@ -118,7 +118,7 @@ const SubjectSelection = ({ selectedSubjects, onAdd }: TSubjectSelectionProps) =
   const { value, onSearchChange, searchTerm } = useSearch();
 
   const { data: subjects, isLoading } = useQuery({
-    queryKey: [QK.SUBJECTS, { searchTerm }],
+    queryKey: [QK.SUBJECT, { searchTerm }],
     queryFn: () => getSubjects({ searchTerm }),
     select: (res) => res.data,
   });

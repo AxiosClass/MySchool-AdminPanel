@@ -20,7 +20,7 @@ export default function TeacherDashboardPage() {
   return (
     <section className='my-6 grid gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {classroomList?.asClassTeacher.map((classroom) => (
-        <SectionCard key={classroom.id} {...classroom} linkPrefix='/teacher/classroom' isClassTeacher />
+        <SectionCard key={classroom.id} {...classroom} linkPrefix='/teacher/section' isClassTeacher />
       ))}
     </section>
   );

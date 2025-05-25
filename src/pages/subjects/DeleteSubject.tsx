@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 type TDeleteSubjectProps = { id: string };
 
 export const DeleteSubject = ({ id }: TDeleteSubjectProps) => {
-  const formId = QK.SUBJECTS + '_DELETE_' + id;
+  const formId = QK.SUBJECT + '_DELETE_' + id;
   const qc = useQueryClient();
 
   const { open, onOpenChange } = usePopupState();
@@ -20,7 +20,7 @@ export const DeleteSubject = ({ id }: TDeleteSubjectProps) => {
     mutationFn: () => deleteSubject(id),
     onSuccess: (res) => {
       toast.success(res.message);
-      qc.invalidateQueries({ queryKey: [QK.SUBJECTS] });
+      qc.invalidateQueries({ queryKey: [QK.SUBJECT] });
       onOpenChange(false);
     },
   });

@@ -19,6 +19,7 @@ export const apiUrl = {
   deleteSubjectTeacher: (classSubjectTeacherId: string) => `/classroom/subject-teacher/${classSubjectTeacherId}`,
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
   getClassroomDetails: (classroomId: string) => `/classroom/${classroomId}`,
+  addNote: `/classroom/note`,
   // subjects
   createSubject: `/subject`,
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,

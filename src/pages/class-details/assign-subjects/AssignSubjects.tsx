@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
-  const formId = QK.SUBJECTS + '_ASSIGN_SUBJECT_' + classId;
+  const formId = QK.SUBJECT + '_ASSIGN_SUBJECT_' + classId;
   const { open, onOpenChange } = usePopupState();
 
   return (
@@ -34,7 +34,7 @@ type AssignedSubjectsProps = { classId: string; formId: string; onOpenChange: (o
 
 const AssignedSubjects = ({ classId, formId, onOpenChange }: AssignedSubjectsProps) => {
   const { data, isLoading } = useQuery({
-    queryKey: [QK.SUBJECTS, { classId }],
+    queryKey: [QK.SUBJECT, { classId }],
     queryFn: () => getAssignedSubjects(classId),
     select: (res) => res.data,
   });

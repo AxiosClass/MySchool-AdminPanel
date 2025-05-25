@@ -62,7 +62,7 @@ const AssignSubjectForm = ({ sectionId, subjectId, onOpenChange }: AssignSubject
     mutationFn: assignSubjectTeacher,
     onSuccess: (res) => {
       toast.success(res.message);
-      qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECTS, { sectionId }] });
+      qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }] });
       onOpenChange(false);
     },
     onError: (error) => toast.error(errorMessageGen(error)),
