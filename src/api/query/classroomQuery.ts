@@ -57,7 +57,7 @@ type TGetClassroomForTeacher = { asClassTeacher: TClassroomInfo[]; asSubjectTeac
 type TGetClassroomDetails = { name: string; level: string; classTeacher: { id: string; name: string } | null };
 type TAddNotePayload = { classroomId: string; title: string; description: string; media?: TMedia[] };
 
-type TGetNotesQueryResult = Array<
+export type TGetNotesQueryResult = Array<
   Pick<TNote, 'id' | 'title' | 'description' | 'media' | 'createdAt'> & {
     teacher: Pick<TTeacher, 'id' | 'name'>;
   }
