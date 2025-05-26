@@ -20,6 +20,7 @@ export const apiUrl = {
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
   getClassroomDetails: (classroomId: string) => `/classroom/${classroomId}`,
   addNote: `/classroom/note`,
+  getNotes: (classroomId: string) => `/classroom/${classroomId}/notes`,
   // subjects
   createSubject: `/subject`,
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,

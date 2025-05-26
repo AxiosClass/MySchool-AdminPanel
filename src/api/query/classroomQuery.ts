@@ -1,4 +1,4 @@
-import { TMedia, TPromiseResponse } from '@/lib/types';
+import { TMedia, TNote, TPromiseResponse, TTeacher } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
@@ -37,6 +37,11 @@ export const addNote = async (payload: TAddNotePayload): TPromiseResponse => {
   return response.data;
 };
 
+export const getNotes = async (classroomId: string): TPromiseResponse<TGetNotesQueryResult> => {
+  const response = await axiosInstance.get(apiUrl.getNotes(classroomId));
+  return response.data;
+};
+
 // type
 export type TGetSubjectsForClassroom = {
   id: string | null;
@@ -51,3 +56,9 @@ type TClassroomInfo = { id: string; name: string; class: { name: string }; stude
 type TGetClassroomForTeacher = { asClassTeacher: TClassroomInfo[]; asSubjectTeacher: TClassroomInfo[] };
 type TGetClassroomDetails = { name: string; level: string; classTeacher: { id: string; name: string } | null };
 type TAddNotePayload = { classroomId: string; title: string; description: string; media?: TMedia[] };
+
+type TGetNotesQueryResult = Array<
+  Pick<TNote, 'id' | 'title' | 'description' | 'media' | 'createdAt'> & {
+    teacher: Pick<TTeacher, 'id' | 'name'>;
+  }
+>;
