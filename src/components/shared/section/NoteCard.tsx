@@ -1,10 +1,11 @@
 import moment from 'moment';
-import { CalendarIcon, UserIcon, FileTextIcon, ImageIcon } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { CalendarIcon, UserIcon, FileTextIcon, ImageIcon } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { dateFormatString } from '@/data';
 import { TGetNotesQueryResult } from '@/api/query';
+import { dateFormatString } from '@/data';
 
 type TNoteCardProps = {
   note: TGetNotesQueryResult[number];
@@ -86,11 +87,11 @@ const MediaPreview = ({ media }: { media: NonNullable<TNoteCardProps['note']['me
         <img
           src={media.url || '/placeholder.svg'}
           alt='Note attachment'
-          className='h-40 w-full rounded-lg border border-gray-200 object-cover transition-colors group-hover:border-gray-300'
+          className='h-40 w-full rounded-lg border border-input object-cover transition-colors group-hover:border-gray-300'
         />
       ) : (
-        <div className='flex h-32 w-full items-center justify-center rounded-lg border border-gray-200 bg-gray-50 transition-colors group-hover:bg-gray-100'>
-          <FileTextIcon className='h-8 w-8 text-gray-400' />
+        <div className='flex h-40 w-full items-center justify-center rounded-lg border border-input bg-background transition-colors group-hover:bg-gray-100'>
+          <FileTextIcon className='size-8 text-muted-foreground' />
         </div>
       )}
       <div className='absolute right-2 top-2 rounded-full bg-white/90 p-1 backdrop-blur-sm'>
@@ -101,6 +102,6 @@ const MediaPreview = ({ media }: { media: NonNullable<TNoteCardProps['note']['me
 };
 
 const getMediaIcon = (type: string) => {
-  if (type.startsWith('image/')) return <ImageIcon className='h-4 w-4' />;
-  return <FileTextIcon className='h-4 w-4' />;
+  if (type.startsWith('image/')) return <ImageIcon className='size-4' />;
+  return <FileTextIcon className='size-4' />;
 };

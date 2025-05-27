@@ -28,7 +28,7 @@ export const NoteForm = ({ formId, defaultValues, onSubmit }: TNoteFormProps) =>
           {({ field }) => <Input {...field} placeholder='Enter title' />}
         </CommonFormField>
         <CommonFormField control={form.control} name='description' label='Description'>
-          {({ field }) => <Textarea {...field} placeholder='Write a short description' />}
+          {({ field }) => <Textarea {...field} placeholder='Write a short description' rows={4} />}
         </CommonFormField>
         <CommonFormField control={form.control} name='files' label='Files'>
           {({ field }) => <MediaInput value={field.value} onChange={field.onChange} />}
