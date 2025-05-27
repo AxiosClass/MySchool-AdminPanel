@@ -58,7 +58,7 @@ type TGetClassroomDetails = { name: string; level: string; classTeacher: { id: s
 type TAddNotePayload = { classroomId: string; title: string; description: string; media?: TMedia[] };
 
 export type TGetNotesQueryResult = Array<
-  Pick<TNote, 'id' | 'title' | 'description' | 'media' | 'createdAt'> & {
+  Pick<TNote, 'id' | 'title' | 'description' | 'media' | 'createdAt' | 'classroomId'> & {
     teacher: Pick<TTeacher, 'id' | 'name'>;
   }
 >;

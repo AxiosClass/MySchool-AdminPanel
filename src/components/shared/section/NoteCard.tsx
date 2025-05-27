@@ -6,13 +6,12 @@ import { CalendarIcon, UserIcon, FileTextIcon, ImageIcon } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { TGetNotesQueryResult } from '@/api/query';
 import { dateFormatString } from '@/data';
+import { usePopupState } from '@/hooks';
+import { ActionMenu } from '../ActionMenu';
+import { EditNote } from './EditNote';
+import { useAuthStore } from '@/stores/auth';
 
-type TNoteCardProps = {
-  note: TGetNotesQueryResult[number];
-  userId?: string;
-  onEdit?: (noteId: string) => void;
-  onRemove?: (noteId: string) => void;
-};
+type TNoteCardProps = { note: TGetNotesQueryResult[number] };
 
 export const NoteCard = ({ note }: TNoteCardProps) => {
   return (
@@ -27,11 +26,12 @@ export const NoteCard = ({ note }: TNoteCardProps) => {
 };
 
 const NoteHeader = ({ note }: { note: TNoteCardProps['note'] }) => {
+  const user = useAuthStore((state) => state.user);
   const formattedDate = moment(note.createdAt).format(dateFormatString.basic);
 
   return (
     <CardHeader className='pb-3'>
-      <div className='flex items-start justify-between'>
+      <div className='flex items-center'>
         <div className='flex items-center space-x-3'>
           <Avatar className='size-12'>
             <AvatarFallback className='bg-primary-100 text-2xl font-bold uppercase text-primary'>
@@ -48,13 +48,25 @@ const NoteHeader = ({ note }: { note: TNoteCardProps['note'] }) => {
         </div>
 
         {!!note.media?.length && (
-          <Badge variant='outline' className='flex items-center space-x-1'>
+          <Badge variant='outline' className='ml-auto flex items-center space-x-1'>
             {getMediaIcon(note.media[0].type)}
             <span>{note.media.length}</span>
           </Badge>
         )}
+
+        {user?.id === note.teacher.id && <NoteAction note={note} />}
       </div>
     </CardHeader>
+  );
+};
+
+const NoteAction = ({ note }: { note: TNoteCardProps['note'] }) => {
+  const { open, onOpenChange } = usePopupState();
+
+  return (
+    <ActionMenu open={open} onOpenChange={onOpenChange}>
+      <EditNote note={note} />
+    </ActionMenu>
   );
 };
 

@@ -169,6 +169,7 @@ export type TNote = {
   id: string;
   title: string;
   description: string;
+  classroomId: string;
   media?: TMedia[];
   createdBy: string;
   createdAt: string;
