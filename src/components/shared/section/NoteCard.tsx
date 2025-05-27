@@ -90,9 +90,14 @@ const MediaPreview = ({ media }: { media: NonNullable<TNoteCardProps['note']['me
           className='h-40 w-full rounded-lg border border-input object-cover transition-colors group-hover:border-gray-300'
         />
       ) : (
-        <div className='flex h-40 w-full items-center justify-center rounded-lg border border-input bg-background transition-colors group-hover:bg-gray-100'>
-          <FileTextIcon className='size-8 text-muted-foreground' />
-        </div>
+        <a
+          href={media.url}
+          download
+          target='_blank'
+          className='flex h-40 w-full items-center justify-center rounded-lg border border-input bg-background transition-colors group-hover:bg-gray-100'
+        >
+          <FileTextIcon className='size-6 text-muted-foreground' />
+        </a>
       )}
       <div className='absolute right-2 top-2 rounded-full bg-white/90 p-1 backdrop-blur-sm'>
         {getMediaIcon(media.type)}
