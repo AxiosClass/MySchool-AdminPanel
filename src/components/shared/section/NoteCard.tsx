@@ -10,6 +10,7 @@ import { usePopupState } from '@/hooks';
 import { ActionMenu } from '../ActionMenu';
 import { EditNote } from './EditNote';
 import { useAuthStore } from '@/stores/auth';
+import { DeleteNote } from './DeleteNote';
 
 type TNoteCardProps = { note: TGetNotesQueryResult[number] };
 
@@ -66,6 +67,7 @@ const NoteAction = ({ note }: { note: TNoteCardProps['note'] }) => {
   return (
     <ActionMenu open={open} onOpenChange={onOpenChange}>
       <EditNote note={note} onActionChange={onOpenChange} />
+      <DeleteNote noteId={note.id} sectionId={note.classroomId} onActionChange={onOpenChange} />
     </ActionMenu>
   );
 };

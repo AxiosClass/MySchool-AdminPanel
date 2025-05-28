@@ -48,6 +48,11 @@ export const updateNote = async (payload: TUpdateNotePayload): TPromiseResponse 
   return response.data;
 };
 
+export const deleteNote = async (noteId: string): TPromiseResponse => {
+  const response = await axiosInstance.delete(apiUrl.deleteNote(noteId));
+  return response.data;
+};
+
 // type
 export type TGetSubjectsForClassroom = {
   id: string | null;

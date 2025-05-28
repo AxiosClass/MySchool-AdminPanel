@@ -22,6 +22,7 @@ export const apiUrl = {
   addNote: `/classroom/note`,
   getNotes: (classroomId: string) => `/classroom/${classroomId}/notes`,
   updateNote: (noteId: string) => `/classroom/note/${noteId}`,
+  deleteNote: (noteId: string) => `/classroom/note/${noteId}`,
   // subjects
   createSubject: `/subject`,
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,
