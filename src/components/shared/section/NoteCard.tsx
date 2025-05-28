@@ -65,7 +65,7 @@ const NoteAction = ({ note }: { note: TNoteCardProps['note'] }) => {
 
   return (
     <ActionMenu open={open} onOpenChange={onOpenChange}>
-      <EditNote note={note} />
+      <EditNote note={note} onActionChange={onOpenChange} />
     </ActionMenu>
   );
 };

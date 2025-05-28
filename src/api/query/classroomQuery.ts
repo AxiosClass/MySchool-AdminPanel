@@ -42,6 +42,12 @@ export const getNotes = async (classroomId: string): TPromiseResponse<TGetNotesQ
   return response.data;
 };
 
+export const updateNote = async (payload: TUpdateNotePayload): TPromiseResponse => {
+  const { id, ...restPayload } = payload;
+  const response = await axiosInstance.patch(apiUrl.updateNote(id), restPayload);
+  return response.data;
+};
+
 // type
 export type TGetSubjectsForClassroom = {
   id: string | null;
@@ -62,3 +68,7 @@ export type TGetNotesQueryResult = Array<
     teacher: Pick<TTeacher, 'id' | 'name'>;
   }
 >;
+
+export type TUpdateNotePayload = Pick<TNote, 'id' | 'title' | 'description'> & {
+  media: { old: TMedia[]; new: TMedia[] };
+};
