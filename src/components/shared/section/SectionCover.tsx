@@ -9,14 +9,11 @@ type TSectionCoverProps = PropsWithChildren<{ sectionId: string; className?: str
 export const SectionCover = ({ sectionId, className, children }: TSectionCoverProps) => {
   const { data, isLoading } = useGetClassroomDetails(sectionId);
 
-  if (isLoading) return <CoverLoader className='mt-6' />;
+  if (isLoading) return <CoverLoader />;
 
   return (
     <div
-      className={cn(
-        'mt-6 flex h-60 flex-col rounded-lg bg-gradient-to-br from-primary-800 to-primary-600 p-6',
-        className,
-      )}
+      className={cn('flex h-60 flex-col rounded-lg bg-gradient-to-br from-primary-800 to-primary-600 p-6', className)}
     >
       <div className='mt-auto flex items-end justify-between'>
         <div className='space-y-2'>

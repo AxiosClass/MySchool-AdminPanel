@@ -16,7 +16,7 @@ type TNoteCardProps = { note: TGetNotesQueryResult[number] };
 
 export const NoteCard = ({ note }: TNoteCardProps) => {
   return (
-    <Card className='w-full border border-input shadow-sm transition-shadow duration-200 hover:shadow-md'>
+    <Card className='w-full shadow-sm transition-shadow duration-200 hover:shadow-md'>
       <NoteHeader note={note} />
       <CardContent className='mt-1 space-y-4'>
         <p className='leading-relaxed text-black/80'>{note.description}</p>

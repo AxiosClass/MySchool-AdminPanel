@@ -9,11 +9,13 @@ export const SearchInput = ({ value, onSearchChange, className, ...props }: TSea
   <div className={cn('relative', className)}>
     <Input className={cn('px-10')} value={value} onChange={(e) => onSearchChange(e.target.value)} {...props} />
     <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 text-input' size={16} />
-    <button
-      className='absolute right-3 top-1/2 -translate-y-1/2 transition-colors hover:text-destructive'
-      onClick={() => onSearchChange('')}
-    >
-      <XIcon size={16} />
-    </button>
+    {value && (
+      <button
+        className='absolute right-3 top-1/2 -translate-y-1/2 transition-colors hover:text-destructive'
+        onClick={() => onSearchChange('')}
+      >
+        <XIcon size={16} />
+      </button>
+    )}
   </div>
 );

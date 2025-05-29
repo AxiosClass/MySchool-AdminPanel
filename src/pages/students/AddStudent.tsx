@@ -59,6 +59,7 @@ export const AddStudent = () => {
     onSuccess: (res) => {
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.STUDENT] });
+      form.reset();
       onOpenChange(false);
     },
     onError: (error) => toast.error(errorMessageGen(error)),

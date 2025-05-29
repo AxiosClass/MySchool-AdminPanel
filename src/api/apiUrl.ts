@@ -55,8 +55,8 @@ export const apiUrl = {
   updateExam: (examId: string) => `/exam/${examId}`,
   deleteExam: (examId: string) => `/exam/${examId}`,
   // attendance
-  getAttendanceForClassroom: (classroomId: string, range: number) =>
-    `/attendances/classroom/${classroomId}?range=${range}`,
+  getAttendanceForClassroom: (classroomId: string, date: string) =>
+    `/attendances/classroom/${classroomId}?date=${date}`,
   addAttendance: '/attendance',
   deleteAttendance: (attendanceId: string) => `/attendance/${attendanceId}`,
   getAttendancesForStudent: ({ start, end }: { start: string; end: string }) =>

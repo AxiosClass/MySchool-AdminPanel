@@ -3,6 +3,7 @@ import { CircleDashed, LucideProps } from 'lucide-react';
 import { forwardRef } from 'react';
 import { Skeleton } from './ui/skeleton';
 import { Card, CardContent, CardHeader } from './ui/card';
+import { ScrollArea } from './ui/scroll-area';
 
 export const Loading = forwardRef<SVGSVGElement, LucideProps>(({ className, ...props }, ref) => (
   <CircleDashed ref={ref} className={cn('size-5 animate-spin', className)} {...props} />
@@ -79,11 +80,11 @@ export const PageWithTableLoader = () => (
 );
 
 export const PageWithCoverLoader = () => (
-  <main>
+  <ScrollArea>
     <CoverLoader className='mx-6 mt-6' />
     <div className='mt-6' />
-    <PostCardLoader />
-  </main>
+    <PostCardLoader className='px-6' />
+  </ScrollArea>
 );
 
 export const CoverLoader = ({ className }: { className?: string }) => (
@@ -95,9 +96,9 @@ export const CoverLoader = ({ className }: { className?: string }) => (
   </div>
 );
 
-export const PostCardLoader = () => {
+export const PostCardLoader = ({ className }: { className?: string }) => {
   return (
-    <div className='flex w-full flex-col gap-6'>
+    <div className={cn('flex w-full flex-col gap-6', className)}>
       {Array.from({ length: 2 }).map((_, index) => (
         <Card key={index} className='mx-auto w-full shadow-sm'>
           <CardHeader className='pb-3'>
