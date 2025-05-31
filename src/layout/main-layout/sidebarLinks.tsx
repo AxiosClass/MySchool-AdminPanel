@@ -21,7 +21,7 @@ export const useSidebarLinks = () => {
       { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
       { title: 'Subjects', url: '/subjects', icon: <IoIosBookmarks /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
-      { title: 'Exams', url: '/exams', icon: <FaNoteSticky /> },
+      { title: 'Terms', url: '/terms', icon: <FaNoteSticky /> },
       { title: 'Admins', url: '/admins', icon: <FaUserSecret /> },
     ];
   else if (user?.role === USER_ROLE.TEACHER)

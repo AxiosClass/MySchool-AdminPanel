@@ -50,10 +50,10 @@ export const apiUrl = {
   addHoliday: `/holiday`,
   getHolidays: `/holidays`,
   // exam
-  addExam: `/exam`,
-  getExams: (searchParams: string) => `/exams${searchParams}`,
-  updateExam: (examId: string) => `/exam/${examId}`,
-  deleteExam: (examId: string) => `/exam/${examId}`,
+  // addExam: `/exam`,
+  // getExams: (searchParams: string) => `/exams${searchParams}`,
+  // updateExam: (examId: string) => `/exam/${examId}`,
+  // deleteExam: (examId: string) => `/exam/${examId}`,
   // attendance
   getAttendanceForClassroom: (classroomId: string, date: string) =>
     `/attendances/classroom/${classroomId}?date=${date}`,
@@ -70,4 +70,6 @@ export const apiUrl = {
   getAdmins: (query: string) => `/admins${query}`,
   deleteAdmin: (email: string) => `/admin/${email}`,
   resetPassword: (email: string) => `/admin/reset-password/${email}`,
+  //Term
+  addTerm: '/term',
 };

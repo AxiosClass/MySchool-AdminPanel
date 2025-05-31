@@ -176,3 +176,12 @@ export type TNote = {
 };
 
 export type TMedia = { id: string; url: string; type: string };
+
+// Term
+export type TTerm = {
+  id: string;
+  name: string;
+  year: string;
+  classSubjects: Record<string, string[]>;
+  StudentClass: Record<string, string>;
+};
