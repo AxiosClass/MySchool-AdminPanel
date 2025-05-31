@@ -1,8 +1,6 @@
-import { lazy, Suspense } from 'react';
+import { lazy, LazyExoticComponent, ReactNode, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { MainLayoutLoader } from '@/layout/main-layout/MainLayoutLoader';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
-import { TransactionSubLayoutLoader } from './layout/transaction-sub-layout/TransactionSubLayoutLoader';
 import { StudentDashboardPageLoader } from './pages/(student)/student-dashboard/StudentDashboardPageLoader';
 import { CardsLoader, PageWithCoverLoader, PageWithTableLoader, PageWithCardLoader } from './components/loader';
 import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
@@ -11,224 +9,88 @@ import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { DashboardPageLoader } from './pages/home/DashboardLoader';
 import { MainLayout } from './layout/main-layout';
 
-// Admin Panel
-const LoginPage = lazy(() => import('@/pages/login'));
-const HomePage = lazy(() => import('@/pages/home'));
-const ClassesPage = lazy(() => import('@/pages/classes'));
-const SectionPage = lazy(() => import('@/pages/section'));
-const TeachersPage = lazy(() => import('@/pages/teachers'));
-const StudentsPage = lazy(() => import('@/pages/students'));
-const ClassDetailsPage = lazy(() => import('@/pages/class-details'));
-const TakePaymentPage = lazy(() => import('@/pages/transactions/take-payment'));
-const PaymentsPage = lazy(() => import('@/pages/transactions/payments'));
-const NoticesPage = lazy(() => import('@/pages/notices'));
-const HolidaysPage = lazy(() => import('@/pages/holidays'));
-const ExamsPage = lazy(() => import('@/pages/exams'));
-const AdminsPage = lazy(() => import('@/pages/admins'));
-const SubjectsPage = lazy(() => import('@/pages/subjects'));
-// Teacher Panel
-const TeacherDashboardPage = lazy(() => import('@/pages/(teacher)/teacher-dashboard'));
-const TeacherSection = lazy(() => import('@/pages/(teacher)/teacher-section'));
-const NoticePageForTeacher = lazy(() => import('@/pages/(teacher)/notices'));
-// Student Panel
-const StudentDashboardPage = lazy(() => import('@/pages/(student)/student-dashboard'));
-const StudentPaymentPage = lazy(() => import('@/pages/(student)/payments'));
-const NoticePageForStudent = lazy(() => import('@/pages/(student)/notices'));
+const lazyPages = {
+  // auth
+  login: lazy(() => import('@/pages/login')),
+  // admin
+  home: lazy(() => import('@/pages/home')),
+  adminClasses: lazy(() => import('@/pages/classes')),
+  adminSection: lazy(() => import('@/pages/section')),
+  adminTeachers: lazy(() => import('@/pages/teachers')),
+  adminStudents: lazy(() => import('@/pages/students')),
+  adminClassDetails: lazy(() => import('@/pages/class-details')),
+  takePayment: lazy(() => import('@/pages/transactions/take-payment')),
+  adminPayments: lazy(() => import('@/pages/transactions/payments')),
+  adminNotices: lazy(() => import('@/pages/notices')),
+  subjects: lazy(() => import('@/pages/subjects')),
+  holidays: lazy(() => import('@/pages/holidays')),
+  // to do terms
+  admins: lazy(() => import('@/pages/admins')),
+  // teacher
+  teacherDashboard: lazy(() => import('@/pages/(teacher)/teacher-dashboard')),
+  teacherSection: lazy(() => import('@/pages/(teacher)/teacher-section')),
+  teacherNotices: lazy(() => import('@/pages/(teacher)/notices')),
+  // student
+  studentDashboard: lazy(() => import('@/pages/(student)/student-dashboard')),
+  studentPayments: lazy(() => import('@/pages/(student)/payments')),
+  studentNotices: lazy(() => import('@/pages/(student)/notices')),
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const withSuspense = (Component: LazyExoticComponent<any>, FallBack: ReactNode) => (
+  <Suspense fallback={FallBack}>
+    <Component />
+  </Suspense>
+);
 
 const router = createBrowserRouter([
+  // auth
+  { path: '/login', element: withSuspense(lazyPages.login, <LogInPageLoader />) },
+  // main layout
   {
-    // main layout
     path: '/',
-    element: (
-      <Suspense fallback={<MainLayoutLoader />}>
-        <MainLayout />
-      </Suspense>
-    ),
+    element: <MainLayout />,
     children: [
-      // admin panel
-      {
-        path: '/',
-        element: (
-          <Suspense fallback={<DashboardPageLoader />}>
-            <HomePage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/classes',
-        element: (
-          <Suspense fallback={<PageWithCardLoader />}>
-            <ClassesPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/class/:classId',
-        element: (
-          <Suspense fallback={<PageWithCardLoader />}>
-            <ClassDetailsPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/section/:sectionId',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <SectionPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/teachers',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <TeachersPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/students',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <StudentsPage />
-          </Suspense>
-        ),
-      },
+      // admins
+      { path: '/', element: withSuspense(lazyPages.home, <DashboardPageLoader />) },
+      { path: '/classes', element: withSuspense(lazyPages.adminClasses, <PageWithCardLoader />) },
+      { path: '/class/:classId', element: withSuspense(lazyPages.adminClassDetails, <PageWithCardLoader />) },
+      { path: '/section/:sectionId', element: withSuspense(lazyPages.adminSection, <PageWithTableLoader />) },
+      { path: '/teachers', element: withSuspense(lazyPages.adminTeachers, <PageWithTableLoader />) },
+      { path: '/students', element: withSuspense(lazyPages.adminStudents, <PageWithTableLoader />) },
+      { path: '/transactions', element: withSuspense(lazyPages.adminStudents, <PageWithTableLoader />) },
       {
         path: '/transactions',
-        element: (
-          <Suspense fallback={<TransactionSubLayoutLoader />}>
-            <TransactionSubLayout />
-          </Suspense>
-        ),
+        element: <TransactionSubLayout />,
         children: [
-          {
-            path: 'take-payment',
-            element: (
-              <Suspense fallback={<TakePaymentLoader />}>
-                <TakePaymentPage />
-              </Suspense>
-            ),
-          },
-          {
-            path: 'payments',
-            element: (
-              <Suspense fallback='Payments Page is loading'>
-                <PaymentsPage />
-              </Suspense>
-            ),
-          },
+          { path: 'take-payment', element: withSuspense(lazyPages.takePayment, <TakePaymentLoader />) },
+          { path: 'payments', element: withSuspense(lazyPages.adminPayments, <PageWithTableLoader />) },
         ],
       },
+      { path: '/subjects', element: withSuspense(lazyPages.subjects, <PageWithTableLoader />) },
+      { path: '/notices', element: withSuspense(lazyPages.adminNotices, <PageWithCardLoader />) },
+      { path: '/holidays', element: withSuspense(lazyPages.holidays, <PageWithTableLoader />) },
+      // to do : Terms page
+      { path: '/admins', element: withSuspense(lazyPages.admins, <PageWithTableLoader />) },
       {
-        path: '/subjects',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <SubjectsPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/notices',
-        element: (
-          <Suspense fallback={<PageWithCardLoader />}>
-            <NoticesPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/holidays',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <HolidaysPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/exams',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <ExamsPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/admins',
-        element: (
-          <Suspense fallback={<PageWithTableLoader />}>
-            <AdminsPage />
-          </Suspense>
-        ),
-      },
-      {
-        // teacher panel
+        // Teacher Panel
         path: '/teacher',
         children: [
-          {
-            index: true,
-            element: (
-              <Suspense fallback={<CardsLoader />}>
-                <TeacherDashboardPage />
-              </Suspense>
-            ),
-          },
-          {
-            path: 'section/:sectionId',
-            element: (
-              <Suspense fallback={<PageWithCoverLoader />}>
-                <TeacherSection />
-              </Suspense>
-            ),
-          },
-          {
-            path: 'notices',
-            element: (
-              <Suspense fallback={<PageWithCardLoader />}>
-                <NoticePageForTeacher />
-              </Suspense>
-            ),
-          },
+          { index: true, element: withSuspense(lazyPages.teacherDashboard, <CardsLoader />) },
+          { path: 'section/:sectionId', element: withSuspense(lazyPages.teacherSection, <PageWithCoverLoader />) },
+          { path: 'notices', element: withSuspense(lazyPages.teacherNotices, <PageWithCardLoader />) },
         ],
       },
       {
-        // student panel
+        // Student Panel
         path: '/student',
         children: [
-          {
-            index: true,
-            element: (
-              <Suspense fallback={<StudentDashboardPageLoader />}>
-                <StudentDashboardPage />
-              </Suspense>
-            ),
-          },
-          {
-            path: 'payments',
-            element: (
-              <Suspense fallback={<StudentPaymentPageLoader />}>
-                <StudentPaymentPage />
-              </Suspense>
-            ),
-          },
-          {
-            path: 'notices',
-            element: (
-              <Suspense fallback={<PageWithCardLoader />}>
-                <NoticePageForStudent />
-              </Suspense>
-            ),
-          },
+          { index: true, element: withSuspense(lazyPages.studentDashboard, <StudentDashboardPageLoader />) },
+          { path: 'payments', element: withSuspense(lazyPages.studentPayments, <StudentPaymentPageLoader />) },
+          { path: 'notices', element: withSuspense(lazyPages.studentNotices, <PageWithCardLoader />) },
         ],
       },
     ],
-  },
-  {
-    path: '/login',
-    element: (
-      <Suspense fallback={<LogInPageLoader />}>
-        <LoginPage />
-      </Suspense>
-    ),
   },
 ]);
 
