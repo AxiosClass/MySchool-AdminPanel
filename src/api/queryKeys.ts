@@ -14,4 +14,5 @@ export const QK = {
   META_DATA: 'META_DATA',
   SUBJECT: 'SUBJECT',
   NOTE: 'NOTE',
+  TERM: 'TERM',
 };

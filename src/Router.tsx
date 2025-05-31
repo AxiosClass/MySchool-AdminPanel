@@ -24,7 +24,7 @@ const lazyPages = {
   adminNotices: lazy(() => import('@/pages/notices')),
   subjects: lazy(() => import('@/pages/subjects')),
   holidays: lazy(() => import('@/pages/holidays')),
-  // to do terms
+  terms: lazy(() => import('@/pages/terms')),
   admins: lazy(() => import('@/pages/admins')),
   // teacher
   teacherDashboard: lazy(() => import('@/pages/(teacher)/teacher-dashboard')),
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
       { path: '/subjects', element: withSuspense(lazyPages.subjects, <PageWithTableLoader />) },
       { path: '/notices', element: withSuspense(lazyPages.adminNotices, <PageWithCardLoader />) },
       { path: '/holidays', element: withSuspense(lazyPages.holidays, <PageWithTableLoader />) },
-      // to do : Terms page
+      { path: '/terms', element: withSuspense(lazyPages.terms, <PageWithTableLoader />) },
       { path: '/admins', element: withSuspense(lazyPages.admins, <PageWithTableLoader />) },
       {
         // Teacher Panel
