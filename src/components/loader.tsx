@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 import { Skeleton } from './ui/skeleton';
 import { Card, CardContent, CardHeader } from './ui/card';
 import { ScrollArea } from './ui/scroll-area';
+import { TableCell, TableRow } from './ui/table';
 
 export const Loading = forwardRef<SVGSVGElement, LucideProps>(({ className, ...props }, ref) => (
   <CircleDashed ref={ref} className={cn('size-5 animate-spin', className)} {...props} />
@@ -78,6 +79,19 @@ export const PageWithTableLoader = () => (
     </div>
   </section>
 );
+
+type TTableBodyLoaderProps = { rows?: number; cols?: number };
+export const TableBodyLoader = ({ rows = 4, cols = 4 }: TTableBodyLoaderProps) => {
+  return Array.from({ length: rows }).map((_, rowIndex) => (
+    <TableRow key={rowIndex}>
+      {Array.from({ length: cols }).map((_, colIndex) => (
+        <TableCell key={colIndex}>
+          <Skeleton className='h-10 w-full' />
+        </TableCell>
+      ))}
+    </TableRow>
+  ));
+};
 
 export const PageWithCoverLoader = () => (
   <ScrollArea>

@@ -1,15 +1,16 @@
 import { TOKEN_KEYS } from '@/data/keys';
+import { TObject } from '@/lib/types';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 
-export const removeEmptyProperties = <TData = unknown>(obj: Record<string, TData>) => {
-  return Object.keys(obj).reduce((acc: Record<string, TData>, key) => {
+export const removeEmptyProperties = <TData = unknown>(obj: TObject<TData>) => {
+  return Object.keys(obj).reduce((acc: TObject<TData>, key) => {
     if (obj[key]) acc[key] = obj[key];
     return acc;
   }, {});
 };
 
-export const makeUrlParams = (obj: Record<string, string>) => {
+export const makeUrlParams = (obj: TObject) => {
   const refinedObj = removeEmptyProperties(obj);
   const searchParams = new URLSearchParams(refinedObj).toString();
   return searchParams ? `?${searchParams}` : '';

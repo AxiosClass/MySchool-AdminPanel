@@ -182,6 +182,13 @@ export type TTerm = {
   id: string;
   name: string;
   year: string;
+  status: TERM_STATUS;
   classSubjects: Record<string, string[]>;
   StudentClass: Record<string, string>;
 };
+
+export enum TERM_STATUS {
+  PENDING = 'PENDING',
+  ONGOING = 'ONGOING',
+  ENDED = 'ENDED',
+}

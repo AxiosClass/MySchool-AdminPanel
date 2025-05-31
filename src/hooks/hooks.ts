@@ -1,5 +1,5 @@
 import { QK } from '@/api';
-import { getClassroomDetails, getExams, getPayments, getPaymentSummary } from '@/api/query';
+import { getClassroomDetails, getPayments, getPaymentSummary } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -55,14 +55,6 @@ export const useSearch = () => {
 export type TUserSearch = ReturnType<typeof useSearch>;
 
 // data fetching
-export const useGetPercentile = (year: number) => {
-  return useQuery({
-    queryKey: [QK.EXAM, { year }],
-    queryFn: () => getExams({ year: String(year) }),
-    select: (res) => res.data.reduce((acc, exam) => acc + exam.percentile, 0),
-  });
-};
-
 export const useGetStudentPayments = (studentId: string) => {
   return useQuery({
     queryKey: [QK.PAYMENT, { studentId }],
