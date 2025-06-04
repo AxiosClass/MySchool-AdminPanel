@@ -6,8 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 import { QK } from '@/api';
 import { getTerms } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
-import { Badge } from '@/components/ui/badge';
 import { UpdateTerm } from './UpdateTerm';
+import { UpdateTermStatus } from './UpateTermStatus';
 
 export const TermsTable = () => {
   const { value, onSearchChange, searchTerm } = useSearch();
@@ -51,7 +51,7 @@ const TermTableBody = ({ terms, isLoading }: TTermTableBodyProps) => {
       <TableCell>{term.name}</TableCell>
       <TableCell>{term.year}</TableCell>
       <TableCell>
-        <Badge>{term.status}</Badge>
+        <UpdateTermStatus id={term.id} status={term.status} />
       </TableCell>
       <TableCell>
         <TermTableActions {...term} />
