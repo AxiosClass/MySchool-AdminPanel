@@ -14,5 +14,11 @@ export const getTerms = async (args: TObject): TPromiseResponse<TGetTermsRespons
   return response.data;
 };
 
+export const updateTerm = async ({ id, ...payload }: TUpdateTermPayload): TPromiseResponse => {
+  const response = await axiosInstance.patch(apiUrl.updateTerm(id), payload);
+  return response.data;
+};
+
 type TAddTermPayload = Pick<TTerm, 'name'>;
 type TGetTermsResponse = Pick<TTerm, 'id' | 'name' | 'status' | 'year'>[];
+type TUpdateTermPayload = Pick<TTerm, 'id' | 'name'>;

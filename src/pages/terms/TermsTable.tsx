@@ -7,6 +7,7 @@ import { QK } from '@/api';
 import { getTerms } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
 import { Badge } from '@/components/ui/badge';
+import { UpdateTerm } from './UpdateTerm';
 
 export const TermsTable = () => {
   const { value, onSearchChange, searchTerm } = useSearch();
@@ -21,7 +22,7 @@ export const TermsTable = () => {
           <TableHead>Name</TableHead>
           <TableHead>Year</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Action</TableHead>
+          <TableHead className='text-center'>Action</TableHead>
         </>
       }
     >
@@ -52,9 +53,20 @@ const TermTableBody = ({ terms, isLoading }: TTermTableBodyProps) => {
       <TableCell>
         <Badge>{term.status}</Badge>
       </TableCell>
+      <TableCell>
+        <TermTableActions {...term} />
+      </TableCell>
     </TableRow>
   ));
 };
+
+type TTermTableActionsProps = NonNullable<TQueryResult>[number];
+
+const TermTableActions = ({ id, name }: TTermTableActionsProps) => (
+  <div className='flex items-center justify-center'>
+    <UpdateTerm id={id} name={name} />
+  </div>
+);
 
 // Hooks
 const useGetTermsData = (searchTerm: string) => {
