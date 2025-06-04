@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { useMemo } from 'react';
 import { TGetNotesQueryResult, updateNote } from '@/api/query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorMessageGen, uploadToCloudinary } from '@/helpers';
+import { errorToast, uploadToCloudinary } from '@/helpers';
 import { NoteForm, TNoteForm } from './NoteForm';
 import { Button } from '@/components/ui/button';
 import { EditIcon } from 'lucide-react';
@@ -33,7 +33,7 @@ export const EditNote = ({ note, onActionChange }: TEditNoteProps) => {
       onOpenChange(false);
       onActionChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleUpdateNote = async (formData: TNoteForm) => {

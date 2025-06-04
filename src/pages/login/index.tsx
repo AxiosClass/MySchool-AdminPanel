@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores/auth';
 import { Button } from '@/components/ui/button';
 import { PageTitle, AppLogo } from '@/components/shared';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { errorMessageGen, setAccessTokenToLocal } from '@/helpers';
+import { errorToast, setAccessTokenToLocal } from '@/helpers';
 import { CommonFormField, CommonSelect } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -34,7 +34,7 @@ export default function LoginPage() {
         const url = NAVIGATION_CONFIG[formData.type as TNavigationConfig];
         navigation(url);
       },
-      onError: (error) => toast.error(errorMessageGen(error)),
+      onError: (error) => errorToast(error),
     });
   });
 

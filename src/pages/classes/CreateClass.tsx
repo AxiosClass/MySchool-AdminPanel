@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { errorMessageGen, zodNumber } from '@/helpers';
+import { errorToast, zodNumber } from '@/helpers';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export const CreateClass = () => {
@@ -31,7 +31,7 @@ export const CreateClass = () => {
       qc.invalidateQueries({ queryKey: [QK.CLASS] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleCreateClass = form.handleSubmit((formData) => {

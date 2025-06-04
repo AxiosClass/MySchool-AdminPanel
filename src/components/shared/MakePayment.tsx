@@ -8,7 +8,7 @@ import { usePopupState } from '@/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CommonFormField, CommonSelect, FormDialog } from './form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorMessageGen, zodNumber } from '@/helpers';
+import { errorToast, zodNumber } from '@/helpers';
 import { Form } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -35,7 +35,7 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
       qc.invalidateQueries({ queryKey: [QK.PAYMENT] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleMakePayment = form.handleSubmit((formData) => {

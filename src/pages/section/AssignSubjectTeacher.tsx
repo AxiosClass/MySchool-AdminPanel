@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { usePopupState } from '@/hooks';
 import { TooltipContainer } from '@/components/shared';
 import { toast } from 'sonner';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 
 const formId = 'ASSIGN_SUBJECT';
 type TAssignSubjectTeacherProps = { sectionId: string; subjectId: string };
@@ -65,7 +65,7 @@ const AssignSubjectForm = ({ sectionId, subjectId, onOpenChange }: AssignSubject
       qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleAssignedSubject = form.handleSubmit((formData) => {

@@ -8,8 +8,9 @@ import { TermForm, TTermForm } from './TermForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateTerm } from '@/api/query';
 import { toast } from 'sonner';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 import { memo } from 'react';
+import { TooltipContainer } from '@/components/shared';
 
 type TUpdateTermProps = Pick<TTerm, 'id' | 'name'>;
 const formId = QK.TERM + '_UPDATE';
@@ -29,16 +30,18 @@ const UpdateTerm = memo(({ id, name }: TUpdateTermProps) => {
           reset();
           onOpenChange(false);
         },
-        onError: (error) => toast.error(errorMessageGen(error)),
+        onError: (error) => errorToast(error),
       },
     );
   };
 
   return (
     <>
-      <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
-        <FilePenLineIcon size={16} />
-      </Button>
+      <TooltipContainer label='Update Term'>
+        <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
+          <FilePenLineIcon size={16} />
+        </Button>
+      </TooltipContainer>
       <FormDialog
         formId={formId}
         open={open}

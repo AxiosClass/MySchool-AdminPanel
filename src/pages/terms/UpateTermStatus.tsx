@@ -3,7 +3,7 @@ import { updateTermStatus } from '@/api/query';
 import { Loader } from '@/components/loader';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 import { TERM_STATUS, TTerm } from '@/lib/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -31,7 +31,7 @@ export const UpdateTermStatus = ({ id, status }: TUpdateStatusProps) => {
           qc.invalidateQueries({ queryKey: [QK.TERM] });
           setSelectedStatus(value);
         },
-        onError: (error) => toast.error(errorMessageGen(error)),
+        onError: (error) => errorToast(error),
       },
     );
   };

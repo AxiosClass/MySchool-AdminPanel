@@ -14,7 +14,7 @@ import { PlusIcon, TrashIcon } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createSubject } from '@/api/query';
 import { toast } from 'sonner';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 
 // Consts
 const formId = QK.SUBJECT + '_ADD_';
@@ -43,7 +43,7 @@ export const AddSubject = () => {
       qc.invalidateQueries({ queryKey: [QK.SUBJECT] });
       onOpenChange(false);
     },
-    onError: (error) => errorMessageGen(error),
+    onError: (error) => errorToast(error),
   });
 
   const handleAddSubject = (formData: TAddSubjectForm) => {

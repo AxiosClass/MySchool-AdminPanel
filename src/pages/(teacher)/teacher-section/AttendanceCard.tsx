@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 
 type TAttendanceCardProps = TAttendanceForClassroom['attendanceList'][number] & { isClassTeacher: boolean };
 
@@ -76,7 +76,7 @@ const AttendanceController = ({ attendanceId, studentId, date }: TAttendanceCont
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const { mutate: handleDeleteAttendance, isPending: isRemovingAttendance } = useMutation({
@@ -85,7 +85,7 @@ const AttendanceController = ({ attendanceId, studentId, date }: TAttendanceCont
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleToggleAttendance = () => {

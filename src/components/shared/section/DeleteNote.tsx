@@ -6,7 +6,7 @@ import { QK } from '@/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteNote } from '@/api/query';
 import { toast } from 'sonner';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 
 const formId = QK.NOTE + '_DELETE';
 type TDeleteNoteProps = { noteId: string; sectionId: string; onActionChange: (open: boolean) => void };
@@ -24,7 +24,7 @@ export const DeleteNote = ({ noteId, onActionChange, sectionId }: TDeleteNotePro
       onOpenChange(false);
       onActionChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   return (

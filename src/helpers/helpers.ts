@@ -1,6 +1,7 @@
 import { TOKEN_KEYS } from '@/data/keys';
 import { TObject } from '@/lib/types';
 import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 export const removeEmptyProperties = <TData = unknown>(obj: TObject<TData>) => {
@@ -38,6 +39,8 @@ export const removeAccessTokenFromLocal = () => {
 export const zodNumber = ({ min, message }: TZodNumberArgs) => {
   return z.string().refine((value) => value && Number(value) >= min, { message });
 };
+
+export const errorToast = (error: unknown) => toast.error(errorMessageGen(error));
 
 // type
 type TZodNumberArgs = { min: number; message: string };

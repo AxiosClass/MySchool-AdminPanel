@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { MdError } from 'react-icons/md';
 import { cn } from '@/lib/utils';
 import { QK } from '@/api';
-import { errorMessageGen } from '@/helpers';
+
 import { Loader } from '@/components/loader';
 
 export const AttendanceTable = ({ attendanceList }: TAttendanceTableProps) => {
@@ -95,7 +95,7 @@ const AddOrRemoveAttendance = ({ status, studentId, attendanceId }: TAddOrRemove
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const { mutate: deleteAttendanceMutation, isPending: isDeleting } = useMutation({
@@ -104,7 +104,7 @@ const AddOrRemoveAttendance = ({ status, studentId, attendanceId }: TAddOrRemove
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   if (isAdding || isDeleting)

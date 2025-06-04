@@ -5,7 +5,7 @@ import { PlusIcon } from 'lucide-react';
 import { NoteForm, TNoteForm } from './NoteForm';
 import { FormSheet } from '../form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorMessageGen, uploadToCloudinary } from '@/helpers';
+import { errorToast, uploadToCloudinary } from '@/helpers';
 import { addNote } from '@/api/query';
 import { TMedia } from '@/lib/types';
 import { toast } from 'sonner';
@@ -27,7 +27,7 @@ export const AddNote = ({ sectionId }: TAddNoteProps) => {
       qc.invalidateQueries({ queryKey: [QK.NOTE, { sectionId }] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const onAddNote = async (formData: TNoteForm) => {

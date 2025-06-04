@@ -12,7 +12,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addStudent, getClassList, getClassroomList } from '@/api/query';
 import { BLOOD_GROUP } from '@/data';
 import { toast } from 'sonner';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 
 export const AddStudent = () => {
   const formId = QK.STUDENT + '_CREATE';
@@ -62,7 +62,7 @@ export const AddStudent = () => {
       form.reset();
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   // handler

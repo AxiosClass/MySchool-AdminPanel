@@ -12,9 +12,9 @@ import { assignSubjects, getSubjects } from '@/api/query';
 import { Message, SearchInput } from '@/components/shared';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
-import { errorMessageGen } from '@/helpers';
 import { useSearch } from '@/hooks';
 import { toast } from 'sonner';
+import { errorToast } from '@/helpers';
 
 export type TAssignSubjectsFormProps = {
   formId: string;
@@ -40,7 +40,7 @@ export const AssignSubjectsForm = ({ formId, classId, onOpenChange, defaultValue
       form.reset();
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleSubmit = form.handleSubmit((formData) => {

@@ -11,8 +11,8 @@ import { CommonFormField, CommonSelect } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createClassroom, getTeacherList } from '@/api/query';
-import { errorMessageGen } from '@/helpers';
 import { useParams } from 'react-router-dom';
+import { errorToast } from '@/helpers';
 
 export const CreateClassroom = () => {
   const { open, onOpenChange } = usePopupState();
@@ -40,7 +40,7 @@ export const CreateClassroom = () => {
       toast.success(res.message);
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleCreateClassroom = form.handleSubmit((formData) => {

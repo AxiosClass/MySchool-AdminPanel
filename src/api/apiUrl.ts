@@ -70,4 +70,5 @@ export const apiUrl = {
   getTerms: (searchParams: string) => `/terms${searchParams}`,
   updateTerm: (termId: string) => `/term/${termId}`,
   updateTermStatus: (termId: string) => `/term/${termId}/status`,
+  deleteTerm: (termId: string) => `/term/${termId}`,
 };

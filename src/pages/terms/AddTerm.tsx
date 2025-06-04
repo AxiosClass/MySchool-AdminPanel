@@ -5,7 +5,7 @@ import { addTerm } from '@/api/query';
 import { ActionButton } from '@/components/ui/button';
 import { FormDialog } from '@/components/shared/form';
 import { usePopupState } from '@/hooks';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TermForm, TTermForm } from './TermForm';
 
@@ -30,7 +30,7 @@ const AddTerm = memo(() => {
           reset();
           onOpenChange(false);
         },
-        onError: (error) => toast.error(errorMessageGen(error)),
+        onError: (error) => errorToast(error),
       },
     );
   };

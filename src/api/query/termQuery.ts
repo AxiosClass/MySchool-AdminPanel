@@ -24,6 +24,11 @@ export const updateTermStatus = async ({ id, status }: TUpdateTermStatusPayload)
   return response.data;
 };
 
+export const deleteTerm = async (id: string): TPromiseResponse => {
+  const response = await axiosInstance.delete(apiUrl.deleteTerm(id));
+  return response.data;
+};
+
 type TAddTermPayload = Pick<TTerm, 'name'>;
 type TGetTermsResponse = Pick<TTerm, 'id' | 'name' | 'status' | 'year'>[];
 type TUpdateTermPayload = Pick<TTerm, 'id' | 'name'>;

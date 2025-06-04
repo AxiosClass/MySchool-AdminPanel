@@ -10,8 +10,8 @@ import { Input } from '@/components/ui/input';
 import { ActionButton } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createAdmin } from '@/api/query';
-import { errorMessageGen } from '@/helpers';
 import { toast } from 'sonner';
+import { errorToast } from '@/helpers';
 
 const formId = QK.ADMINS + '_CREATE_';
 
@@ -33,7 +33,7 @@ export const CreateAdmin = () => {
       onOpenChange(false);
       form.reset();
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleCreateAdmin = form.handleSubmit((formData) => {

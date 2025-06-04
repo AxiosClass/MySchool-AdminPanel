@@ -6,8 +6,8 @@ import { usePopupState } from '@/hooks';
 import { NoticeForm, TNoticeForm } from '@/components/shared/notice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNotice } from '@/api/query';
-import { errorMessageGen } from '@/helpers';
 import { NOTICE_FOR } from '@/lib/types';
+import { errorToast } from '@/helpers';
 
 export const AddNotice = () => {
   const { open, onOpenChange } = usePopupState();
@@ -22,7 +22,7 @@ export const AddNotice = () => {
       qc.invalidateQueries({ queryKey: [QK.NOTICE] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleAddNotice = (formData: TNoticeForm) => {

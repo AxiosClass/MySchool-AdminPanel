@@ -11,11 +11,11 @@ import {
 import { resetAdminPassword } from '@/api/query';
 import { TooltipContainer } from '@/components/shared';
 import { Button } from '@/components/ui/button';
-import { errorMessageGen } from '@/helpers';
 import { usePopupState } from '@/hooks';
 import { useMutation } from '@tanstack/react-query';
 import { KeySquareIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import { errorToast } from '@/helpers';
 
 type TResetAdminPasswordProps = { email: string };
 
@@ -28,7 +28,7 @@ export const ResetAdminPassword = ({ email }: TResetAdminPasswordProps) => {
       toast.success(res.message);
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   return (

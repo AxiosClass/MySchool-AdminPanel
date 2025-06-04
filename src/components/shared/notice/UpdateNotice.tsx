@@ -2,13 +2,13 @@ import { QK } from '@/api';
 import { toast } from 'sonner';
 import { updateNotice } from '@/api/query';
 import { usePopupState } from '@/hooks';
-import { errorMessageGen } from '@/helpers';
 import { NOTICE_FOR, TNotice } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { NoticeForm, TNoticeForm } from './NoticeForm';
 import { FormDialog } from '@/components/shared/form';
 import { PencilLineIcon } from 'lucide-react';
+import { errorToast } from '@/helpers';
 
 export const UpdateNotice = (payload: TNotice) => {
   const { id, ...defaultValues } = payload;
@@ -25,7 +25,7 @@ export const UpdateNotice = (payload: TNotice) => {
       qc.invalidateQueries({ queryKey: [QK.NOTICE] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleUpdateNotice = (formData: TNoticeForm) => {

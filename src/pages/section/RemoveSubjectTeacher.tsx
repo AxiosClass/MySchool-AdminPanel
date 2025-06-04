@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DeleteDialog } from '@/components/shared/DeleteDialog';
 import { Button } from '@/components/ui/button';
 import { deleteSubjectTeacher } from '@/api/query';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 import { TrashIcon } from 'lucide-react';
 import { TooltipContainer } from '@/components/shared';
 
@@ -25,7 +25,7 @@ export const RemoveSubjectTeacher = ({ classroomSubjectTeacherId, sectionId }: T
       qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   return (

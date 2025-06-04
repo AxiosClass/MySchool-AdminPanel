@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { errorMessageGen } from '@/helpers';
+import { errorToast } from '@/helpers';
 
 export const StudentTable = () => {
   const { data: students, isLoading } = useQuery({
@@ -95,7 +95,7 @@ const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
       qc.invalidateQueries({ queryKey: [QK.STUDENT] });
       onOpenChange(false);
     },
-    onError: (error) => toast.error(errorMessageGen(error)),
+    onError: (error) => errorToast(error),
   });
 
   const handleIssueNfcCard = form.handleSubmit((formData) => {
