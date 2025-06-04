@@ -1,6 +1,5 @@
 export * from './ActionMenu';
 export * from './AppLogo';
-export * from './AttendanceTable';
 export * from './CommonTable';
 export * from './CustomSheet';
 export * from './DeleteDialog';
