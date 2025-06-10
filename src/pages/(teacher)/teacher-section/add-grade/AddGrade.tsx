@@ -4,7 +4,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { useGetTeacherSubjects, usePopupState } from '@/hooks';
 import { BookPlusIcon } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
-// import { z } from 'zod';
 
 export const AddGrade = ({ sectionId }: { sectionId: string }) => {
   const { open, onOpenChange } = usePopupState();
@@ -49,11 +48,3 @@ const SubjectSelection = ({ sectionId, subject, onSubjectChange }: TSubjectSelec
     />
   );
 };
-
-// const GradeForm = () => {};
-
-// // Schema
-// const gardeFormSchema = z.object({
-//   studentId: z.string(),
-//   subjectId: z.string(),
-// });

@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getOngoingTerm } from '@/api/query';
 import { useGetTeacherSubjects } from '@/hooks';
-import { AddGrade } from './AddGrade';
+import { AddGrade } from './add-grade';
 
 export default function TeacherSection() {
   const params = useParams();
