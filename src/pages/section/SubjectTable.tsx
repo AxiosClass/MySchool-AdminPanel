@@ -23,6 +23,7 @@ export const SubjectTable = ({ sectionId }: SubjectTableProps) => {
       head={
         <>
           <TableHead>Name</TableHead>
+          <TableHead>Type</TableHead>
           <TableHead>Teacher Info</TableHead>
           <TableHead>Action</TableHead>
         </>
@@ -37,11 +38,12 @@ export const SubjectTable = ({ sectionId }: SubjectTableProps) => {
 type TSubjectTableBodyProps = { subjectList: TGetSubjectsForClassroom[]; sectionId: string };
 
 const SubjectTableBody = ({ subjectList, sectionId }: TSubjectTableBodyProps) => {
-  if (!subjectList.length) return <TableNoData colSpan={3} message='No Subject Found' />;
+  if (!subjectList.length) return <TableNoData colSpan={4} message='No Subject Found' />;
 
-  return subjectList.map(({ id, subjectId, subjectName, teacher }) => (
+  return subjectList.map(({ id, subjectId, subjectName, subjectType, teacher }) => (
     <TableRow key={subjectId}>
       <TableCell>{subjectName}</TableCell>
+      <TableCell>{subjectType}</TableCell>
       <TableCell>
         {teacher ? (
           <div>

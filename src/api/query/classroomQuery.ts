@@ -1,4 +1,4 @@
-import { TMedia, TNote, TPromiseResponse, TSubject, TTeacher } from '@/lib/types';
+import { SUBJECT_TYPE, TMedia, TNote, TPromiseResponse, TSubject, TTeacher } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
@@ -63,6 +63,7 @@ export type TGetSubjectsForClassroom = {
   id: string | null;
   subjectName: string;
   subjectId: string;
+  subjectType: SUBJECT_TYPE;
   teacher?: { id: string; name: string; phone?: string };
 };
 
