@@ -1,5 +1,5 @@
 import { QK } from '@/api';
-import { getClassroomDetails, getPayments, getPaymentSummary } from '@/api/query';
+import { getClassroomDetails, getPayments, getPaymentSummary, getTeachersSubjects } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -78,6 +78,14 @@ export const useGetClassroomDetails = (classroomId: string) => {
     queryKey: [QK.CLASSROOM, { classroomId }],
     queryFn: () => getClassroomDetails(classroomId),
     enabled: !!classroomId,
+    select: (res) => res.data,
+  });
+};
+
+export const useGetTeacherSubjects = (classroomId: string) => {
+  return useQuery({
+    queryKey: [QK.SUBJECT, { for: 'TEACHER', classroomId }],
+    queryFn: () => getTeachersSubjects(classroomId),
     select: (res) => res.data,
   });
 };

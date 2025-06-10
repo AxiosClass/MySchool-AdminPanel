@@ -1,4 +1,4 @@
-import { TMedia, TNote, TPromiseResponse, TTeacher } from '@/lib/types';
+import { TMedia, TNote, TPromiseResponse, TSubject, TTeacher } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
@@ -53,6 +53,11 @@ export const deleteNote = async (noteId: string): TPromiseResponse => {
   return response.data;
 };
 
+export const getTeachersSubjects = async (classroomId: string): TPromiseResponse<TGetTeacherSubjectsResponse> => {
+  const response = await axiosInstance.get(apiUrl.getTeacherSubjects(classroomId));
+  return response.data;
+};
+
 // type
 export type TGetSubjectsForClassroom = {
   id: string | null;
@@ -77,3 +82,5 @@ export type TGetNotesQueryResult = Array<
 export type TUpdateNotePayload = Pick<TNote, 'id' | 'title' | 'description'> & {
   media: { old: TMedia[]; new: TMedia[] };
 };
+
+type TGetTeacherSubjectsResponse = Array<Pick<TSubject, 'id' | 'name'>>;

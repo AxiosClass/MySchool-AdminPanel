@@ -29,7 +29,13 @@ export const deleteTerm = async (id: string): TPromiseResponse => {
   return response.data;
 };
 
+export const getOngoingTerm = async (): TPromiseResponse<TGetOngoingTermResponse> => {
+  const response = await axiosInstance.get(apiUrl.getOngoingTerm);
+  return response.data;
+};
+
 type TAddTermPayload = Pick<TTerm, 'name'>;
 type TGetTermsResponse = Pick<TTerm, 'id' | 'name' | 'status' | 'year'>[];
 type TUpdateTermPayload = Pick<TTerm, 'id' | 'name'>;
 type TUpdateTermStatusPayload = Pick<TTerm, 'id' | 'status'>;
+type TGetOngoingTermResponse = Pick<TTerm, 'id' | 'name' | 'year'>;

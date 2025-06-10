@@ -15,7 +15,7 @@ export const SectionCover = ({ sectionId, className, children }: TSectionCoverPr
     <div
       className={cn('flex h-60 flex-col rounded-lg bg-gradient-to-br from-primary-800 to-primary-600 p-6', className)}
     >
-      <div className='mt-auto flex items-end justify-between'>
+      <div className='mt-auto flex items-end'>
         <div className='space-y-2'>
           <h2 className='text-3xl font-semibold text-white'>
             {data?.name} ({data?.level})
