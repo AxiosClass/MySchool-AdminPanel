@@ -27,7 +27,7 @@ export default function TeacherSection() {
       <ScrollArea className='p-6'>
         <SectionCover sectionId={sectionId}>
           <div className='ml-auto flex items-center gap-4'>
-            {!!term?.id && !!subjects?.length && <AddGrade sectionId={sectionId} />}
+            {!!term?.id && !!subjects?.length && <AddGrade sectionId={sectionId} termId={term.id} />}
             <AddNote sectionId={sectionId} />
           </div>
         </SectionCover>

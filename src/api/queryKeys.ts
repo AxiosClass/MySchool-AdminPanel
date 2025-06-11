@@ -15,4 +15,5 @@ export const QK = {
   SUBJECT: 'SUBJECT',
   NOTE: 'NOTE',
   TERM: 'TERM',
+  TERM_RESULT: 'TERM_RESULT',
 };

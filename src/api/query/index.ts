@@ -11,3 +11,4 @@ export * from './studentQuery';
 export * from './subjectQuery';
 export * from './teacherQuery';
 export * from './termQuery';
+export * from './termResultQuery';

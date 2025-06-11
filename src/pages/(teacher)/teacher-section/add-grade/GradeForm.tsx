@@ -119,12 +119,7 @@ const WrittenForm = () => {
 };
 
 // Schema
-const gradeBaseFormSchema = z.object({
-  studentId: z.string(),
-  subjectId: z.string(),
-  termId: z.string(),
-  marks: z.record(z.string(), z.number().positive()),
-});
+const gradeBaseFormSchema = z.object({ marks: z.record(z.string(), z.number().positive()) });
 
 const cqMcqSchema = gradeBaseFormSchema.extend({
   marks: z.object({

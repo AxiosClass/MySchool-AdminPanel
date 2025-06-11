@@ -66,11 +66,13 @@ export const apiUrl = {
   getAdmins: (query: string) => `/admins${query}`,
   deleteAdmin: (email: string) => `/admin/${email}`,
   resetPassword: (email: string) => `/admin/reset-password/${email}`,
-  //Term
+  //term
   addTerm: '/term',
   getTerms: (searchParams: string) => `/terms${searchParams}`,
   updateTerm: (termId: string) => `/term/${termId}`,
   updateTermStatus: (termId: string) => `/term/${termId}/status`,
   deleteTerm: (termId: string) => `/term/${termId}`,
   getOngoingTerm: `/term/ongoing`,
+  // term result
+  getStudentsWithTermResult: (searchParams: string) => `/term-result/students${searchParams}`,
 };

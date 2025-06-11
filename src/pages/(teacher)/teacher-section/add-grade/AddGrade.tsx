@@ -4,8 +4,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { useGetTeacherSubjects, usePopupState } from '@/hooks';
 import { BookPlusIcon } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
+import { StudentListWithResult } from './StudentListWithResult';
 
-export const AddGrade = ({ sectionId }: { sectionId: string }) => {
+type TAddGradeProps = { sectionId: string; termId: string };
+
+export const AddGrade = ({ sectionId, termId }: TAddGradeProps) => {
   const { open, onOpenChange } = usePopupState();
   const [subject, setSubject] = useState<string>('');
 
@@ -24,6 +27,10 @@ export const AddGrade = ({ sectionId }: { sectionId: string }) => {
           <SheetTitle>Add Grade</SheetTitle>
           <SubjectSelection sectionId={sectionId} subject={subject} onSubjectChange={onSubjectChange} />
         </SheetHeader>
+        {!subject && (
+          <p className='my-6 text-center font-semibold text-muted-foreground'>Please select a subject first</p>
+        )}
+        {subject && <StudentListWithResult sectionId={sectionId} subjectId={subject} termId={termId} />}
       </SheetContent>
     </Sheet>
   );
