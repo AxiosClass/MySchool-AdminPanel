@@ -6,14 +6,15 @@ export const CommonFormField = <TFieldValues extends FieldValues, TName extends 
   description,
   children,
   showMessage = true,
-  className,
+  formItemClassName,
+
   ...props
 }: TCommonFormFieldProps<TFieldValues, TName>) => {
   return (
     <FormField
       {...props}
       render={(fieldProps) => (
-        <FormItem className={className?.formItem}>
+        <FormItem className={formItemClassName}>
           {label && <FormLabel className='font-semibold'>{label}</FormLabel>}
           <FormControl>{children(fieldProps)}</FormControl>
           {description && <FormDescription>{description}</FormDescription>}
@@ -32,5 +33,5 @@ type TCommonFormFieldProps<TFieldValues extends FieldValues, TName extends Field
   description?: string;
   showMessage?: boolean;
   children: ControllerProps<TFieldValues, TName>['render'];
-  className?: { formItem?: string };
+  formItemClassName?: string;
 };

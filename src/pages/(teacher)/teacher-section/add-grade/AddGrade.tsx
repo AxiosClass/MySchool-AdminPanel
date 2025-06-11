@@ -5,6 +5,7 @@ import { useGetTeacherSubjects, usePopupState } from '@/hooks';
 import { BookPlusIcon } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { StudentListWithResult } from './StudentListWithResult';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type TAddGradeProps = { sectionId: string; termId: string };
 
@@ -22,15 +23,17 @@ export const AddGrade = ({ sectionId, termId }: TAddGradeProps) => {
           Add Grade
         </Button>
       </SheetTrigger>
-      <SheetContent className='p-0'>
+      <SheetContent className='flex h-screen flex-col gap-0 p-0'>
         <SheetHeader className='flex-row items-center justify-between gap-4 border-b p-4'>
           <SheetTitle>Add Grade</SheetTitle>
           <SubjectSelection sectionId={sectionId} subject={subject} onSubjectChange={onSubjectChange} />
         </SheetHeader>
-        {!subject && (
-          <p className='my-6 text-center font-semibold text-muted-foreground'>Please select a subject first</p>
-        )}
-        {subject && <StudentListWithResult sectionId={sectionId} subjectId={subject} termId={termId} />}
+        <ScrollArea className='grow'>
+          {!subject && (
+            <p className='my-6 text-center font-semibold text-muted-foreground'>Please select a subject first</p>
+          )}
+          {subject && <StudentListWithResult sectionId={sectionId} subjectId={subject} termId={termId} />}
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   );

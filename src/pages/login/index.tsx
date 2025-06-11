@@ -58,13 +58,13 @@ export default function LoginPage() {
           >
             <AppLogo />
             <h3 className='text-center text-muted-foreground'>Input Your Credentials to Login</h3>
-            <CommonFormField control={form.control} name='id' label='Id' className={{ formItem: 'w-full' }}>
+            <CommonFormField control={form.control} name='id' label='Id' formItemClassName='w-full'>
               {({ field }) => <Input {...field} placeholder='Input your id' />}
             </CommonFormField>
-            <CommonFormField control={form.control} name='password' label='Password' className={{ formItem: 'w-full' }}>
+            <CommonFormField control={form.control} name='password' label='Password' formItemClassName='w-full'>
               {({ field }) => <PasswordInput {...field} placeholder='Input your password' />}
             </CommonFormField>
-            <CommonFormField control={form.control} name='type' label='Login As' className={{ formItem: 'w-full' }}>
+            <CommonFormField control={form.control} name='type' label='Login As' formItemClassName='w-full'>
               {({ field }) => <CommonSelect value={field.value} onChange={field.onChange} options={loginTypeOptions} />}
             </CommonFormField>
             <Button className='mt-4 w-full' isLoading={isPending}>

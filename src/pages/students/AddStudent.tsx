@@ -131,12 +131,7 @@ export const AddStudent = () => {
               {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
             </CommonFormField>
 
-            <CommonFormField
-              className={{ formItem: 'col-span-2' }}
-              control={form.control}
-              name='address'
-              label='Address'
-            >
+            <CommonFormField formItemClassName='col-span-2' control={form.control} name='address' label='Address'>
               {({ field }) => <Textarea {...field} placeholder='Input address' />}
             </CommonFormField>
 

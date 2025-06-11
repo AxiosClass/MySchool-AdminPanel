@@ -1,11 +1,13 @@
 import { getStudentWithTermResult, TGetStudentWithTermResultResponse } from '@/api/query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCapIcon, NotebookPenIcon, Edit3Icon } from 'lucide-react';
+import { GraduationCapIcon, NotebookPenIcon, Edit3Icon, SaveIcon, BanIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Message } from '@/components/shared';
 import { usePopupState } from '@/hooks';
-import { QK } from '@/api';
 import { Button } from '@/components/ui/button';
+import { GradeForm, TGradeForm } from './GradeForm';
+import { Separator } from '@/components/ui/separator';
+import { QK } from '@/api';
 
 // Main Types
 type TStudentWithResult = TGetStudentWithTermResultResponse[number];
@@ -24,22 +26,43 @@ export const StudentListWithResult = ({ sectionId, subjectId, termId }: TStudent
   return (
     <div className='flex flex-col gap-4 p-4'>
       {students.map((student) => (
-        <StudentWithResult key={student.studentId} {...student} />
+        <StudentWithResult key={student.studentId} termId={termId} {...student} />
       ))}
     </div>
   );
 };
 
-type TStudentWithResultProps = TStudentWithResult;
-const StudentWithResult = ({ studentName, studentId, marks }: TStudentWithResultProps) => {
+type TStudentWithResultProps = TStudentWithResult & { termId: string };
+const StudentWithResult = ({
+  studentName,
+  studentId,
+  subjectType,
+  subjectId,
+  marks,
+  termId,
+}: TStudentWithResultProps) => {
   const { open, onOpenChange } = usePopupState();
 
   return (
-    <Card className='border-primary-100 bg-background shadow-none'>
+    <Card className='bg-background'>
       <StudentInfoHeader studentId={studentId} studentName={studentName} />
       <CardContent>
-        {open && <></>}
-        {!open && <>{!marks && <NoGrade onOpenChange={onOpenChange} />}</>}
+        {open && (
+          <StudentGradeFormWrapper
+            studentId={studentId}
+            subjectId={subjectId}
+            subjectType={subjectType}
+            termId={termId}
+            onOpenChange={onOpenChange}
+          />
+        )}
+
+        {!open && (
+          <>
+            {!marks && <NoGrade onOpenChange={onOpenChange} />}
+            {marks && <></>}
+          </>
+        )}
       </CardContent>
     </Card>
   );
@@ -74,3 +97,42 @@ const NoGrade = ({ onOpenChange }: TNoGradeProps) => (
     </Button>
   </div>
 );
+
+type TStudentGradeFormWrapperProps = Pick<TStudentWithResult, 'studentId' | 'subjectId' | 'subjectType' | 'marks'> & {
+  termId: string;
+  onOpenChange: (value: boolean) => void;
+};
+
+const StudentGradeFormWrapper = ({
+  studentId,
+  subjectId,
+  subjectType,
+  marks,
+  onOpenChange,
+}: TStudentGradeFormWrapperProps) => {
+  const handleGrading = (formDatadata: TGradeForm, reset: () => void) => {
+    console.log({ formDatadata, studentId, subjectId });
+    reset();
+  };
+
+  return (
+    <div className='flex flex-col gap-4'>
+      <GradeForm
+        key={JSON.stringify({ marks, subjectType })}
+        marks={marks}
+        subjectType={subjectType}
+        onSubmit={handleGrading}
+      />
+      <Separator />
+      <div className='flex items-center gap-4'>
+        <Button className='w-full'>
+          <SaveIcon className='size-4' /> Submit Grade
+        </Button>
+        <Button onClick={() => onOpenChange(false)} variant='outline' className='w-full'>
+          <BanIcon className='size-4' />
+          Cancel Grading
+        </Button>
+      </div>
+    </div>
+  );
+};

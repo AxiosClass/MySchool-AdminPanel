@@ -97,10 +97,10 @@ const AddSubjectForm = ({ onSubmit }: TAddSubjectFormProps) => {
     <Form {...form}>
       <form id={formId} onSubmit={handleSubmit} className='flex flex-col gap-4 p-1'>
         <div className='flex items-center gap-4'>
-          <CommonFormField control={control} name='name' label='Name' className={{ formItem: 'w-full' }}>
+          <CommonFormField control={control} name='name' label='Name' formItemClassName='w-full'>
             {({ field }) => <Input {...field} placeholder='Input Subject Name' />}
           </CommonFormField>
-          <CommonFormField control={control} name='type' label='Subject Type' className={{ formItem: 'w-full' }}>
+          <CommonFormField control={control} name='type' label='Subject Type' formItemClassName='w-full'>
             {({ field }) => <CommonSelect value={field.value} onChange={field.onChange} options={subjectTypeOptions} />}
           </CommonFormField>
         </div>
@@ -141,19 +141,14 @@ const SubSubjectField = ({ index, remove }: TSubSubjectFieldProps) => {
 
   return (
     <div className='flex gap-4'>
-      <CommonFormField
-        control={control}
-        name={`children.${index}.name`}
-        label='Name'
-        className={{ formItem: 'w-full' }}
-      >
+      <CommonFormField control={control} name={`children.${index}.name`} label='Name' formItemClassName='w-full'>
         {({ field }) => <Input {...field} placeholder='Input Subject Name' />}
       </CommonFormField>
       <CommonFormField
         control={control}
         name={`children.${index}.type`}
         label='Subject Type'
-        className={{ formItem: 'w-full' }}
+        formItemClassName='w-full'
       >
         {({ field }) => <CommonSelect value={field.value} onChange={field.onChange} options={subjectTypeOptions} />}
       </CommonFormField>

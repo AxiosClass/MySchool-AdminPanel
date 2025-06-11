@@ -62,14 +62,14 @@ export const AddHoliday = () => {
             <CommonFormField control={form.control} name='endDate' label='End Date'>
               {({ field }) => <DatePicker value={field.value} onChange={field.onChange} />}
             </CommonFormField>
-            <CommonFormField control={form.control} name='name' label='Name' className={{ formItem: 'col-span-2' }}>
+            <CommonFormField control={form.control} name='name' label='Name' formItemClassName='col-span-2'>
               {({ field }) => <Input {...field} placeholder='Input holiday name' />}
             </CommonFormField>
             <CommonFormField
               control={form.control}
               name='description'
               label='Description'
-              className={{ formItem: 'col-span-2' }}
+              formItemClassName='col-span-2'
             >
               {({ field }) => <Textarea {...field} placeholder='Input description' />}
             </CommonFormField>

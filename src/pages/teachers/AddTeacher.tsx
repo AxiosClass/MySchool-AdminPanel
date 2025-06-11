@@ -88,12 +88,7 @@ export const AddTeacher = () => {
                 />
               )}
             </CommonFormField>
-            <CommonFormField
-              className={{ formItem: 'col-span-2' }}
-              control={form.control}
-              name='address'
-              label='Address'
-            >
+            <CommonFormField formItemClassName='col-span-2' control={form.control} name='address' label='Address'>
               {({ field }) => <Textarea {...field} placeholder='Input address' />}
             </CommonFormField>
             <CommonFormField control={form.control} name='salary' label='Salary'>
