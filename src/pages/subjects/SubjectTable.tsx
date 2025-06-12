@@ -8,6 +8,7 @@ import { TUserSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { AddSubject } from './AddSubject';
 import { DeleteSubject } from './DeleteSubject';
+import { MdError } from 'react-icons/md';
 
 export const SubjectTable = () => {
   const { searchTerm, value, onSearchChange } = useSearch();
@@ -79,7 +80,7 @@ const SubSubject = ({ subSubjects }: TSubSubjectProps) => {
     <ul className='flex flex-col gap-2'>
       {subSubjects.map(({ id, name, type }) => (
         <li key={id} className='flex items-center gap-2'>
-          <div className='size-3 rounded-full bg-black' />
+          <MdError />
           <h2 className='mr-2 text-sm font-medium'>Name : {name}</h2>
           <p className='text-sm font-medium'>Type : {type}</p>
         </li>

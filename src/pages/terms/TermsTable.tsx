@@ -7,7 +7,7 @@ import { QK } from '@/api';
 import { getTerms } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
 import { UpdateTerm } from './UpdateTerm';
-import { UpdateTermStatus } from './UpateTermStatus';
+import { UpdateTermStatus } from './UpdateTermStatus';
 import { DeleteTerm } from './DeleteTerm';
 
 export const TermsTable = () => {

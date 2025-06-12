@@ -18,10 +18,14 @@ export const UpdateTermStatus = ({ id, status }: TUpdateStatusProps) => {
 
   const handleStatusChange = (value: string) => {
     if (value === status) return;
-    const currentStatusIndex = termStatusOptions.findIndex((t) => t.value === status);
-    const targetStatusIndex = termStatusOptions.findIndex((t) => t.value === value);
 
-    if (currentStatusIndex > targetStatusIndex) return toast.error(`Can not update stats form ${status} to ${value}`);
+    const allowedTransition = {
+      [TERM_STATUS.PENDING]: TERM_STATUS.ONGOING,
+      [TERM_STATUS.ONGOING]: TERM_STATUS.ENDED,
+      [TERM_STATUS.ENDED]: TERM_STATUS.ONGOING,
+    };
+
+    if (allowedTransition[status] !== value) return toast.error(`Can not update stats form ${status} to ${value}`);
 
     mutate(
       { id, status: value as TERM_STATUS },
@@ -57,7 +61,7 @@ export const UpdateTermStatus = ({ id, status }: TUpdateStatusProps) => {
 const UpdatingStatus = () => (
   <div className='flex w-fit items-center gap-2 text-nowrap'>
     <Loader />
-    <span className='font-semibold'>Updating Satus</span>
+    <span className='font-semibold'>Updating Status</span>
   </div>
 );
 
