@@ -161,32 +161,40 @@ const WrittenForm = ({ type }: { type: SUBJECT_TYPE }) => {
 };
 
 // Schema
-const gradeBaseFormSchema = z.object({ marks: z.record(z.string(), z.number().positive()) });
+const gradeBaseFormSchema = z.object({
+  marks: z.record(z.string(), z.number().min(0, { message: 'Marks cannot be negative' })),
+});
 
 const cqMcqSchema = gradeBaseFormSchema.extend({
   marks: z.object({
-    cq: z.number().positive().max(70, { message: 'Marks cannot exceed 70' }),
-    mcq: z.number().positive().max(30, { message: 'Marks cannot exceed 30' }),
+    cq: z.number().min(0, { message: 'Marks cannot be negative' }).max(70, { message: 'Marks cannot exceed 70' }),
+    mcq: z.number().min(0, { message: 'Marks cannot be negative' }).max(30, { message: 'Marks cannot exceed 30' }),
   }),
 });
 
 const cqMcqPracticalSchema = gradeBaseFormSchema.extend({
   marks: z.object({
-    cq: z.number().positive().max(50, { message: 'Marks cannot exceed 50' }),
-    mcq: z.number().positive().max(25, { message: 'Marks cannot exceed 25' }),
-    practical: z.number().positive().max(25, { message: 'Marks cannot exceed 25' }),
+    cq: z.number().min(0, { message: 'Marks cannot be negative' }).max(50, { message: 'Marks cannot exceed 50' }),
+    mcq: z.number().min(0, { message: 'Marks cannot be negative' }).max(25, { message: 'Marks cannot exceed 25' }),
+    practical: z
+      .number()
+      .min(0, { message: 'Marks cannot be negative' })
+      .max(25, { message: 'Marks cannot exceed 25' }),
   }),
 });
 
 const writtenFullSchema = gradeBaseFormSchema.extend({
   marks: z.object({
-    written: z.number().positive().max(100, { message: 'Marks cannot exceed 100' }),
+    written: z
+      .number()
+      .min(0, { message: 'Marks cannot be negative' })
+      .max(100, { message: 'Marks cannot exceed 100' }),
   }),
 });
 
 const writtenHalfSchema = gradeBaseFormSchema.extend({
   marks: z.object({
-    written: z.number().positive().max(50, { message: 'Marks cannot exceed 50' }),
+    written: z.number().min(0, { message: 'Marks cannot be negative' }).max(50, { message: 'Marks cannot exceed 50' }),
   }),
 });
 
