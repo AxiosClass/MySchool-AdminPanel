@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
     <QueryProvider>
       <TooltipProvider>
         <Router />
-        <Toaster richColors />
+        <Toaster richColors duration={1500} />
       </TooltipProvider>
     </QueryProvider>
   </StrictMode>,

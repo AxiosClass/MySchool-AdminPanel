@@ -47,15 +47,16 @@ const NoteHeader = ({ note }: { note: TNoteCardProps['note'] }) => {
             </div>
           </div>
         </div>
+        <div className='ml-auto flex items-center'>
+          {!!note.media?.length && (
+            <Badge variant='outline' className='flex items-center space-x-1'>
+              {getMediaIcon(note.media[0].type)}
+              <span>{note.media.length}</span>
+            </Badge>
+          )}
 
-        {!!note.media?.length && (
-          <Badge variant='outline' className='ml-auto flex items-center space-x-1'>
-            {getMediaIcon(note.media[0].type)}
-            <span>{note.media.length}</span>
-          </Badge>
-        )}
-
-        {user?.id === note.teacher.id && <NoteAction note={note} />}
+          {user?.id === note.teacher.id && <NoteAction note={note} />}
+        </div>
       </div>
     </CardHeader>
   );
