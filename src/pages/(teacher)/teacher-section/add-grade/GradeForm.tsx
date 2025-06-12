@@ -7,12 +7,13 @@ import { useForm, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
 type TGradeFormProps = {
+  formId: string;
   subjectType: SUBJECT_TYPE;
   marks?: Record<string, number>;
   onSubmit: (formDatadata: TGradeForm, reset: () => void) => void;
 };
 
-export const GradeForm = ({ subjectType, marks, onSubmit }: TGradeFormProps) => {
+export const GradeForm = ({ formId, subjectType, marks, onSubmit }: TGradeFormProps) => {
   const form = useForm<TGradeForm>({
     resolver: zodResolver(generateGradeSchema(subjectType)),
     defaultValues: { marks: marks ?? {} },
@@ -24,10 +25,12 @@ export const GradeForm = ({ subjectType, marks, onSubmit }: TGradeFormProps) => 
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit}>
+      <form id={formId} onSubmit={handleSubmit}>
         {subjectType === SUBJECT_TYPE.CQ_MCQ && <CQ_MCQForm />}
         {subjectType === SUBJECT_TYPE.CQ_MCQ_PRACTICAL && <CQ_MCQ_PracticalForm />}
-        {(subjectType === SUBJECT_TYPE.WRITTEN_FULL || subjectType === SUBJECT_TYPE.WRITTEN_HALF) && <WrittenForm />}
+        {(subjectType === SUBJECT_TYPE.WRITTEN_FULL || subjectType === SUBJECT_TYPE.WRITTEN_HALF) && (
+          <WrittenForm type={subjectType} />
+        )}
       </form>
     </Form>
   );
@@ -38,21 +41,33 @@ const CQ_MCQForm = () => {
 
   return (
     <div className='flex items-center gap-4'>
-      <CommonFormField control={control} name='marks.cq' label='CQ' formItemClassName='w-full'>
+      <CommonFormField
+        control={control}
+        name='marks.cq'
+        label='CQ'
+        formItemClassName='w-full'
+        description='Total Marks : 70 & Pass Marks : 23'
+      >
         {({ field }) => (
           <Input
             value={field.value ?? ''}
-            onChange={(e) => Number(field.onChange(e.target.value))}
+            onChange={(e) => field.onChange(Number(e.target.value))}
             placeholder='Input CQ marks'
             type='number'
           />
         )}
       </CommonFormField>
-      <CommonFormField control={control} name='marks.mcq' label='MCQ' formItemClassName='w-full'>
+      <CommonFormField
+        control={control}
+        name='marks.mcq'
+        label='MCQ'
+        formItemClassName='w-full'
+        description='Total Marks : 30 & Pass Marks : 10'
+      >
         {({ field }) => (
           <Input
             value={field.value ?? ''}
-            onChange={(e) => Number(field.onChange(e.target.value))}
+            onChange={(e) => field.onChange(Number(e.target.value))}
             placeholder='Input MCQ marks'
             type='number'
           />
@@ -67,31 +82,49 @@ const CQ_MCQ_PracticalForm = () => {
 
   return (
     <div className='flex items-center gap-4'>
-      <CommonFormField control={control} name='marks.cq' label='CQ' formItemClassName='w-full'>
+      <CommonFormField
+        control={control}
+        name='marks.cq'
+        label='CQ'
+        formItemClassName='w-full'
+        description='Total Marks : 50 & Pass Marks : 17'
+      >
         {({ field }) => (
           <Input
             value={field.value ?? ''}
-            onChange={(e) => Number(field.onChange(e.target.value))}
+            onChange={(e) => field.onChange(Number(e.target.value))}
             placeholder='Input CQ marks'
             type='number'
           />
         )}
       </CommonFormField>
-      <CommonFormField control={control} name='marks.mcq' label='MCQ' formItemClassName='w-full'>
+      <CommonFormField
+        control={control}
+        name='marks.mcq'
+        label='MCQ'
+        formItemClassName='w-full'
+        description='Total Marks : 25 & Pass Marks : 8'
+      >
         {({ field }) => (
           <Input
             value={field.value ?? ''}
-            onChange={(e) => Number(field.onChange(e.target.value))}
+            onChange={(e) => field.onChange(Number(e.target.value))}
             placeholder='Input MCQ marks'
             type='number'
           />
         )}
       </CommonFormField>
-      <CommonFormField control={control} name='marks.practical' label='Practical' formItemClassName='w-full'>
+      <CommonFormField
+        control={control}
+        name='marks.practical'
+        label='Practical'
+        formItemClassName='w-full'
+        description='Total Marks : 25 & Pass Marks : 8'
+      >
         {({ field }) => (
           <Input
             value={field.value ?? ''}
-            onChange={(e) => Number(field.onChange(e.target.value))}
+            onChange={(e) => field.onChange(Number(e.target.value))}
             placeholder='Input practical marks'
             type='number'
           />
@@ -101,15 +134,24 @@ const CQ_MCQ_PracticalForm = () => {
   );
 };
 
-const WrittenForm = () => {
+const WrittenForm = ({ type }: { type: SUBJECT_TYPE }) => {
   const { control } = useFormContext<TWrittenForm>();
 
   return (
-    <CommonFormField control={control} name='marks.written' label='Written'>
+    <CommonFormField
+      control={control}
+      name='marks.written'
+      label='Written'
+      description={
+        type === SUBJECT_TYPE.WRITTEN_FULL
+          ? 'Total Marks : 100 & Pass Marks : 33'
+          : 'Total Marks : 50 & Pass Marks : 17'
+      }
+    >
       {({ field }) => (
         <Input
           value={field.value ?? ''}
-          onChange={(e) => Number(field.onChange(e.target.value))}
+          onChange={(e) => field.onChange(Number(e.target.value))}
           placeholder='Input written marks'
           type='number'
         />

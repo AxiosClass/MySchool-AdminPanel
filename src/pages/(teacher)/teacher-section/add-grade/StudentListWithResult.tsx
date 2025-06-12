@@ -1,13 +1,15 @@
-import { getStudentWithTermResult, TGetStudentWithTermResultResponse } from '@/api/query';
+import { addTermResult, getStudentWithTermResult, TGetStudentWithTermResultResponse } from '@/api/query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCapIcon, NotebookPenIcon, Edit3Icon, SaveIcon, BanIcon } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Message } from '@/components/shared';
 import { usePopupState } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { GradeForm, TGradeForm } from './GradeForm';
 import { Separator } from '@/components/ui/separator';
 import { QK } from '@/api';
+import { toast } from 'sonner';
+import { errorToast } from '@/helpers';
 
 // Main Types
 type TStudentWithResult = TGetStudentWithTermResultResponse[number];
@@ -26,13 +28,13 @@ export const StudentListWithResult = ({ sectionId, subjectId, termId }: TStudent
   return (
     <div className='flex flex-col gap-4 p-4'>
       {students.map((student) => (
-        <StudentWithResult key={student.studentId} termId={termId} {...student} />
+        <StudentWithResult key={student.studentId} termId={termId} sectionId={sectionId} {...student} />
       ))}
     </div>
   );
 };
 
-type TStudentWithResultProps = TStudentWithResult & { termId: string };
+type TStudentWithResultProps = TStudentWithResult & { termId: string; sectionId: string };
 const StudentWithResult = ({
   studentName,
   studentId,
@@ -40,6 +42,7 @@ const StudentWithResult = ({
   subjectId,
   marks,
   termId,
+  sectionId,
 }: TStudentWithResultProps) => {
   const { open, onOpenChange } = usePopupState();
 
@@ -53,6 +56,7 @@ const StudentWithResult = ({
             subjectId={subjectId}
             subjectType={subjectType}
             termId={termId}
+            sectionId={sectionId}
             onOpenChange={onOpenChange}
           />
         )}
@@ -100,6 +104,7 @@ const NoGrade = ({ onOpenChange }: TNoGradeProps) => (
 
 type TStudentGradeFormWrapperProps = Pick<TStudentWithResult, 'studentId' | 'subjectId' | 'subjectType' | 'marks'> & {
   termId: string;
+  sectionId: string;
   onOpenChange: (value: boolean) => void;
 };
 
@@ -108,16 +113,34 @@ const StudentGradeFormWrapper = ({
   subjectId,
   subjectType,
   marks,
+  termId,
+  sectionId,
   onOpenChange,
 }: TStudentGradeFormWrapperProps) => {
+  const formId = `${QK.TERM_RESULT}_${studentId}`;
+  const qc = useQueryClient();
+
+  const { mutate, isPending } = useMutation({ mutationKey: [formId], mutationFn: addTermResult });
+
   const handleGrading = (formDatadata: TGradeForm, reset: () => void) => {
-    console.log({ formDatadata, studentId, subjectId });
-    reset();
+    mutate(
+      { classroomId: sectionId, marks: formDatadata.marks, studentId, subjectId, termId },
+      {
+        onSuccess: (res) => {
+          toast.success(res.message);
+          qc.invalidateQueries({ queryKey: [QK.TERM_RESULT] });
+          reset();
+          onOpenChange(false);
+        },
+        onError: (error) => errorToast(error),
+      },
+    );
   };
 
   return (
     <div className='flex flex-col gap-4'>
       <GradeForm
+        formId={formId}
         key={JSON.stringify({ marks, subjectType })}
         marks={marks}
         subjectType={subjectType}
@@ -125,9 +148,16 @@ const StudentGradeFormWrapper = ({
       />
       <Separator />
       <div className='flex items-center gap-4'>
-        <Button className='w-full'>
-          <SaveIcon className='size-4' /> Submit Grade
+        <Button type='submit' form={formId} className='w-full' isLoading={isPending}>
+          {isPending ? (
+            'Submitting Grade...'
+          ) : (
+            <>
+              <SaveIcon className='size-4' /> Submit Grade
+            </>
+          )}
         </Button>
+
         <Button onClick={() => onOpenChange(false)} variant='outline' className='w-full'>
           <BanIcon className='size-4' />
           Cancel Grading

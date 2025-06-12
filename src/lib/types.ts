@@ -192,3 +192,15 @@ export enum TERM_STATUS {
   ONGOING = 'ONGOING',
   ENDED = 'ENDED',
 }
+
+// Term Result
+export type TTermResult = {
+  termId: string;
+  studentId: string;
+  subjectId: string;
+  marks: TTermResultMarks;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TTermResultMarks = Record<string, number>;

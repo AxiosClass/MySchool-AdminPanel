@@ -74,5 +74,6 @@ export const apiUrl = {
   deleteTerm: (termId: string) => `/term/${termId}`,
   getOngoingTerm: `/term/ongoing`,
   // term result
+  addTermResult: `/term-result`,
   getStudentsWithTermResult: (searchParams: string) => `/term-result/students${searchParams}`,
 };
