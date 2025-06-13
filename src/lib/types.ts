@@ -45,7 +45,7 @@ export type TStudent = {
   address: string;
   parents: { fatherName: string; motherName: string };
   guardian: { name: string; phone: string; relation: string };
-  admittedAt: Date;
+  admittedAt: string;
   updatedAt: Date;
   class: string;
   classroomId: string;

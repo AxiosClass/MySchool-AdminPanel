@@ -1,7 +1,6 @@
 import { lazy, LazyExoticComponent, ReactNode, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
-import { StudentDashboardPageLoader } from './pages/(student)/student-dashboard/StudentDashboardPageLoader';
 import { CardsLoader, PageWithCoverLoader, PageWithTableLoader, PageWithCardLoader } from './components/loader';
 import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
@@ -86,7 +85,7 @@ const router = createBrowserRouter([
         // Student Panel
         path: '/student',
         children: [
-          { index: true, element: withSuspense(lazyPages.studentDashboard, <StudentDashboardPageLoader />) },
+          { index: true, element: withSuspense(lazyPages.studentDashboard, null) },
           { path: 'payments', element: withSuspense(lazyPages.studentPayments, <StudentPaymentPageLoader />) },
           { path: 'notices', element: withSuspense(lazyPages.studentNotices, <PageWithCardLoader />) },
           { path: 'results', element: withSuspense(lazyPages.studentResult, <PageWithTableLoader />) },

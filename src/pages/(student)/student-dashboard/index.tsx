@@ -1,10 +1,9 @@
 import { Message, PageTitle } from '@/components/shared';
-// import { StudentProfile } from './StudentProfile';
-import { StudentAttendance } from './StudentAttendance';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuthStore } from '@/stores/auth';
 import { useGetStudentInfo } from '@/hooks';
 import { StudentProfile } from '@/components/shared/student-profile';
+import { AttendanceList } from '@/components/shared/attendance';
 
 export default function StudentDashboardPage() {
   const userId = useAuthStore((state) => state.user?.id as string);
@@ -17,8 +16,10 @@ export default function StudentDashboardPage() {
     <>
       <PageTitle title='Student Profile' />
       <ScrollArea className='px-6 pt-6'>
-        <StudentProfile {...studentInfo} />
-        <StudentAttendance />
+        <section className='space-y-6'>
+          <StudentProfile {...studentInfo} />
+          <AttendanceList studentId={userId} admittedAt={studentInfo.admittedAt} />
+        </section>
       </ScrollArea>
     </>
   );
