@@ -25,7 +25,7 @@ export const StudentProfile = ({
 }: TStudentProfileProps) => {
   return (
     <Card className='overflow-hidden border-0 bg-white transition-all duration-500'>
-      <div className={`relative h-32 bg-gradient-to-r from-primary-400 to-primary-600`}>
+      <div className={`relative h-36 bg-gradient-to-r from-primary-400 to-primary-600`}>
         <div className='absolute inset-0 bg-black bg-opacity-20' />
         <div className='absolute bottom-4 left-6'>
           <div className='flex size-20 items-center justify-center rounded-full bg-white shadow-xl'>
