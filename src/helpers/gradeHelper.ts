@@ -57,3 +57,13 @@ export const getGrade = (obtainedMarks: number, totalMarks: number): string => {
   if (percentage >= 33) return 'D';
   return 'F';
 };
+
+export const getGradeFromGpa = (gpa: number) => {
+  if (gpa >= 5) return 'A+';
+  else if (gpa >= 4) return 'A';
+  else if (gpa >= 3.5) return 'A-';
+  else if (gpa >= 3) return 'B';
+  else if (gpa >= 2) return 'C';
+  else if (gpa >= 1) return 'D';
+  else return 'F';
+};

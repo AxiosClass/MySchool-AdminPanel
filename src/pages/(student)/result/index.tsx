@@ -1,5 +1,6 @@
 import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { TermSummaryTable, YearPicker } from '@/components/shared/result-summary';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { getYearsFromDateToNow } from '@/helpers';
 import { useGetStudentInfo, useGetTermResultSummary } from '@/hooks';
 import { useAuthStore } from '@/stores/auth';
@@ -20,10 +21,13 @@ export default function StudentResultPage() {
   return (
     <>
       <PageTitle title='Results' />
-      <PageHeader childContainerClassName='w-full' label={`Result of Academic Year : ${year}`}>
-        <YearPicker year={year} onYearChange={onYearChange} years={years} />
-      </PageHeader>
-      <TermSummaryFetcher studentId={studentId} year={year} />
+      <ScrollArea>
+        <PageHeader childContainerClassName='w-full' label={`Result of Academic Year : ${year}`}>
+          <YearPicker year={year} onYearChange={onYearChange} years={years} />
+        </PageHeader>
+        <TermSummaryFetcher studentId={studentId} year={year} />
+        <div className='mb-6' />
+      </ScrollArea>
     </>
   );
 }
