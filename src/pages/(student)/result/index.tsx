@@ -1,13 +1,14 @@
-import { PageHeader, PageTitle } from '@/components/shared';
-import { YearPicker } from '@/components/shared/result-summary/year-picker';
+import { Message, PageHeader, PageTitle } from '@/components/shared';
+import { TermSummaryTable, YearPicker } from '@/components/shared/result-summary';
 import { getYearsFromDateToNow } from '@/helpers';
-import { useGetStudentInfo } from '@/hooks';
+import { useGetStudentInfo, useGetTermResultSummary } from '@/hooks';
 import { useAuthStore } from '@/stores/auth';
 import { useCallback, useState } from 'react';
 
 export default function StudentResultPage() {
-  const studentId = useAuthStore((state) => state.user?.id);
-  const { data: studentInfo, isLoading } = useGetStudentInfo(studentId as string);
+  const studentId = useAuthStore((state) => state.user?.id as string);
+  const { data: studentInfo, isLoading } = useGetStudentInfo(studentId);
+
   const [year, setYear] = useState(new Date().getFullYear().toString());
   const onYearChange = useCallback((year: string) => setYear(year), []);
 
@@ -19,9 +20,27 @@ export default function StudentResultPage() {
   return (
     <>
       <PageTitle title='Results' />
-      <PageHeader childContainerClassName='w-full' label='Academic Year'>
+      <PageHeader childContainerClassName='w-full' label={`Result of Academic Year : ${year}`}>
         <YearPicker year={year} onYearChange={onYearChange} years={years} />
       </PageHeader>
+      <TermSummaryFetcher studentId={studentId} year={year} />
     </>
   );
 }
+
+type TTermSummaryFetcher = { studentId: string; year: string };
+
+const TermSummaryFetcher = ({ studentId, year }: TTermSummaryFetcher) => {
+  const { data: termResults, isPending } = useGetTermResultSummary(studentId, year);
+
+  if (isPending) return null;
+  if (!termResults?.length) return <Message message='No Term Found!' />;
+
+  return (
+    <div className='flex flex-col gap-2'>
+      {termResults.map((termResult) => (
+        <TermSummaryTable key={termResult.termId} {...termResult} />
+      ))}
+    </div>
+  );
+};

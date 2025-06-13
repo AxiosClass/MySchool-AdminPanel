@@ -8,6 +8,7 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { DeleteAdmin } from './DeleteAdmin';
 import { ResetAdminPassword } from './ResetAdminPassword';
+import { useMemo } from 'react';
 
 export const AdminsTable = () => {
   const { data, isLoading } = useQuery({
@@ -16,20 +17,21 @@ export const AdminsTable = () => {
     select: (res) => res.data,
   });
 
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>Admin Info</TableHead>
+        <TableHead>Email</TableHead>
+        <TableHead>Role</TableHead>
+        <TableHead>Actions</TableHead>
+      </>
+    );
+  }, []);
+
   if (isLoading) return <TableLoader />;
 
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>Admin Info</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead>Actions</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'px-6' }}
-    >
+    <CommonTable head={tableHead} tableContainerClassName='px-6'>
       <AdminTableBody admins={data} />
     </CommonTable>
   );

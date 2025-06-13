@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AddSubject } from './AddSubject';
 import { DeleteSubject } from './DeleteSubject';
 import { MdError } from 'react-icons/md';
+import { useMemo } from 'react';
 
 export const SubjectTable = () => {
   const { searchTerm, value, onSearchChange } = useSearch();
@@ -19,21 +20,25 @@ export const SubjectTable = () => {
     select: (res) => res.data,
   });
 
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>Name</TableHead>
+        <TableHead>description</TableHead>
+        <TableHead>Sub Subject</TableHead>
+        <TableHead>Type</TableHead>
+        <TableHead>Action</TableHead>
+      </>
+    );
+  }, []);
+
   if (isLoading) return <TableLoader className='mt-6' />;
 
   return (
     <CommonTable
       header={<StudentTableHeader value={value} onSearchChange={onSearchChange} />}
-      head={
-        <>
-          <TableHead>Name</TableHead>
-          <TableHead>description</TableHead>
-          <TableHead>Sub Subject</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Action</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'mt-6 px-6' }}
+      head={tableHead}
+      tableContainerClassName='px-6 mt-6'
     >
       <SubjectTableBody subjects={data} />
     </CommonTable>

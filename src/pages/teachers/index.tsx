@@ -12,6 +12,7 @@ import { AddTeacher } from './AddTeacher';
 import { dateFormatString } from '@/data';
 
 import moment from 'moment';
+import { useMemo } from 'react';
 
 export default function TeachersPage() {
   return (
@@ -28,22 +29,23 @@ export default function TeachersPage() {
 const TeacherTable = () => {
   const { data: teachersData, isLoading } = useQuery({ queryKey: [QK.TEACHER], queryFn: getTeachers });
 
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>Teacher Info</TableHead>
+        <TableHead>Phone</TableHead>
+        <TableHead>Section</TableHead>
+        <TableHead>Salary</TableHead>
+        <TableHead className='text-right'>Joined at</TableHead>
+      </>
+    );
+  }, []);
+
   if (isLoading) return <TableLoader />;
   if (!teachersData || teachersData.data.length === 0) return <Message message='No Teacher Found' />;
 
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>Teacher Info</TableHead>
-          <TableHead>Phone</TableHead>
-          <TableHead>Section</TableHead>
-          <TableHead>Salary</TableHead>
-          <TableHead className='text-right'>Joined at</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'px-6' }}
-    >
+    <CommonTable head={tableHead} tableContainerClassName='px-6'>
       {teachersData.data.map(({ id, name, salary, joinedAt, classroomsClassTeacher, phone }) => (
         <TableRow className='border-b' key={id}>
           <TableCell>

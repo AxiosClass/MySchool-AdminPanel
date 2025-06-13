@@ -7,23 +7,25 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { dateFormatString, months } from '@/data/constants';
 import { TGetPaymentResponse } from '@/api/query';
 import { PAYMENT_TYPE } from '@/lib/types';
+import { useMemo } from 'react';
 
 export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>StudentInfo</TableHead>
+        <TableHead>Section</TableHead>
+        <TableHead>Amount</TableHead>
+        <TableHead className='text-center'>Type</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Month / Year</TableHead>
+        <TableHead className='text-right'>Paid at</TableHead>
+      </>
+    );
+  }, []);
+
   return (
-    <CommonTable
-      className={{ tableContainer: className?.table }}
-      head={
-        <>
-          <TableHead>StudentInfo</TableHead>
-          <TableHead>Section</TableHead>
-          <TableHead>Amount</TableHead>
-          <TableHead className='text-center'>Type</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Month / Year</TableHead>
-          <TableHead className='text-right'>Paid at</TableHead>
-        </>
-      }
-    >
+    <CommonTable tableContainerClassName={className?.table} head={tableHead}>
       {payments.map(({ id, student, type, description, amount, month, year, createdAt }) => {
         const paymentConfig = PAYMENT_TYPE_CONFIG[type];
         return (

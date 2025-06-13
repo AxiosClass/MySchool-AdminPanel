@@ -18,6 +18,7 @@ import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { errorToast } from '@/helpers';
+import { useMemo } from 'react';
 
 export const StudentTable = () => {
   const { data: students, isLoading } = useQuery({
@@ -26,23 +27,24 @@ export const StudentTable = () => {
     select: (res) => res.data,
   });
 
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>Student Info</TableHead>
+        <TableHead>Class</TableHead>
+        <TableHead>Address</TableHead>
+        <TableHead>Guardian</TableHead>
+        <TableHead>Admitted At</TableHead>
+        <TableHead className='text-center'>Action</TableHead>
+      </>
+    );
+  }, []);
+
   if (isLoading) return <TableLoader />;
   if (!students?.length) return <Message message='No student found' />;
 
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>Student Info</TableHead>
-          <TableHead>Class</TableHead>
-          <TableHead>Address</TableHead>
-          <TableHead>Guardian</TableHead>
-          <TableHead>Admitted At</TableHead>
-          <TableHead className='text-center'>Action</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'px-6' }}
-    >
+    <CommonTable head={tableHead} tableContainerClassName='px-6'>
       {students.map(({ id, name, cardId, class: classInfo, classroom, guardian, address, admittedAt }) => {
         return (
           <TableRow key={id} className='border-b'>

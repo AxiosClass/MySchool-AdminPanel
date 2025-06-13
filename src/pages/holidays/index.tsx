@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getHolidays } from '@/api/query';
 import { QK } from '@/api/queryKeys';
 import { AddHoliday } from './AddHoliday';
+import { useMemo } from 'react';
 
 export default function HolidaysPage() {
   return (
@@ -29,20 +30,21 @@ const HolidaysTable = () => {
     select: (res) => res.data,
   });
 
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>Holiday name</TableHead>
+        <TableHead>Start date</TableHead>
+        <TableHead>End date</TableHead>
+      </>
+    );
+  }, []);
+
   if (isLoading) return <TableLoader />;
   if (!holidaysData?.length) return <Message message='No holiday Found' />;
 
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>Holiday name</TableHead>
-          <TableHead>Start date</TableHead>
-          <TableHead>End date</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'px-6' }}
-    >
+    <CommonTable head={tableHead} tableContainerClassName='px-6'>
       {holidaysData.map(({ id, name, description, startDate, endDate }) => (
         <TableRow className='border-b' key={id}>
           <TableCell>

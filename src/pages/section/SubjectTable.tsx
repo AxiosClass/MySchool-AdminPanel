@@ -6,6 +6,7 @@ import { CommonTable, TableNoData } from '@/components/shared';
 import { AssignSubjectTeacher } from './AssignSubjectTeacher';
 import { useQuery } from '@tanstack/react-query';
 import { RemoveSubjectTeacher } from './RemoveSubjectTeacher';
+import { useMemo } from 'react';
 
 type SubjectTableProps = { sectionId: string };
 
@@ -16,20 +17,21 @@ export const SubjectTable = ({ sectionId }: SubjectTableProps) => {
     select: (res) => res.data,
   });
 
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>Name</TableHead>
+        <TableHead>Type</TableHead>
+        <TableHead>Teacher Info</TableHead>
+        <TableHead>Action</TableHead>
+      </>
+    );
+  }, []);
+
   if (isLoading) return <TableLoader />;
 
   return (
-    <CommonTable
-      head={
-        <>
-          <TableHead>Name</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Teacher Info</TableHead>
-          <TableHead>Action</TableHead>
-        </>
-      }
-      className={{ tableContainer: 'px-6' }}
-    >
+    <CommonTable head={tableHead} tableContainerClassName='px-6'>
       <SubjectTableBody subjectList={subjectList ?? []} sectionId={sectionId} />
     </CommonTable>
   );

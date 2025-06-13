@@ -11,26 +11,28 @@ import { FiDollarSign } from 'react-icons/fi';
 import { useAuthStore } from '@/stores/auth';
 import { PAYMENT_TYPE } from '@/lib/types';
 import { PaymentSummaryLoader } from './StudentPaymentPageLoader';
+import { useMemo } from 'react';
 
 export default function StudentPaymentPage() {
+  const tableHead = useMemo(() => {
+    return (
+      <>
+        <TableHead>SL</TableHead>
+        <TableHead>Amount</TableHead>
+        <TableHead className='text-center'>Type</TableHead>
+        <TableHead>Description</TableHead>
+        <TableHead>Month / Year</TableHead>
+        <TableHead className='text-right'>Paid At</TableHead>
+      </>
+    );
+  }, []);
+
   return (
     <>
       <PageTitle title='Payments' />
       <ScrollArea>
         <PaymentSummary />
-        <CommonTable
-          head={
-            <>
-              <TableHead>SL</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead className='text-center'>Type</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Month / Year</TableHead>
-              <TableHead className='text-right'>Paid At</TableHead>
-            </>
-          }
-          className={{ tableContainer: 'p-6' }}
-        >
+        <CommonTable head={tableHead} tableContainerClassName='p-6'>
           <PaymentTableBody />
         </CommonTable>
       </ScrollArea>
