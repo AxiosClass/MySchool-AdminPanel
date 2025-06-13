@@ -33,4 +33,8 @@ type TGetStudentResult = Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' |
 };
 
 type TIssueNfcCardPayload = Pick<TStudent, 'id' | 'cardId'>;
-type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'class' | 'admittedAt'> & { classroom: Pick<TClassroom, 'name'> };
+export type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'admittedAt' | 'status'> & {
+  classroomName: string;
+  className: string;
+  classLevel: string;
+};

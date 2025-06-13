@@ -43,6 +43,15 @@ export const zodNumber = ({ min, message }: TZodNumberArgs) => {
 
 export const errorToast = (error: unknown) => toast.error(errorMessageGen(error));
 
+export const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map((word) => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
+
 export const getYearsFromDateToNow = (date: string | Date) => {
   let start = moment(date).startOf('year');
   const end = moment().startOf('year');
