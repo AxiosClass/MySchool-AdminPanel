@@ -89,7 +89,7 @@ const router = createBrowserRouter([
           { index: true, element: withSuspense(lazyPages.studentDashboard, <StudentDashboardPageLoader />) },
           { path: 'payments', element: withSuspense(lazyPages.studentPayments, <StudentPaymentPageLoader />) },
           { path: 'notices', element: withSuspense(lazyPages.studentNotices, <PageWithCardLoader />) },
-          { path: 'results', element: withSuspense(lazyPages.studentResult, null) },
+          { path: 'results', element: withSuspense(lazyPages.studentResult, <PageWithTableLoader />) },
         ],
       },
     ],

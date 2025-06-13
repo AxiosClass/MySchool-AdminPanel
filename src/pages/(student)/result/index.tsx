@@ -1,3 +1,4 @@
+import { PageWithTableLoader, TableLoader } from '@/components/loader';
 import { Message, PageHeader, PageTitle } from '@/components/shared';
 import { TermSummaryTable, YearPicker } from '@/components/shared/result-summary';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -13,7 +14,7 @@ export default function StudentResultPage() {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   const onYearChange = useCallback((year: string) => setYear(year), []);
 
-  if (isLoading) return null;
+  if (isLoading) return <PageWithTableLoader />;
   if (!studentInfo) return null;
 
   const years = getYearsFromDateToNow(studentInfo.admittedAt);
@@ -37,7 +38,7 @@ type TTermSummaryFetcher = { studentId: string; year: string };
 const TermSummaryFetcher = ({ studentId, year }: TTermSummaryFetcher) => {
   const { data: termResults, isPending } = useGetTermResultSummary(studentId, year);
 
-  if (isPending) return null;
+  if (isPending) return <TableLoader />;
   if (!termResults?.length) return <Message message='No Term Found!' />;
 
   return (
