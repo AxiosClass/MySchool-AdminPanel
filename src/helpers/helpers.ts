@@ -1,6 +1,7 @@
 import { TOKEN_KEYS } from '@/data/keys';
 import { TObject } from '@/lib/types';
 import { AxiosError } from 'axios';
+import moment from 'moment';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -41,6 +42,19 @@ export const zodNumber = ({ min, message }: TZodNumberArgs) => {
 };
 
 export const errorToast = (error: unknown) => toast.error(errorMessageGen(error));
+
+export const getYearsFromDateToNow = (date: string | Date) => {
+  let start = moment(date).startOf('year');
+  const end = moment().startOf('year');
+
+  if (!start.isValid()) start = moment().startOf('year');
+
+  const years: string[] = [];
+  for (let year = start.year(); year <= end.year(); year++) {
+    years.push(String(year));
+  }
+  return years;
+};
 
 // type
 type TZodNumberArgs = { min: number; message: string };

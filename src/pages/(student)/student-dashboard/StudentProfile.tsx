@@ -1,17 +1,11 @@
-import { QK } from '@/api';
+import { StudentInfoLoader } from './StudentDashboardPageLoader';
 import { Message, UserIcon } from '@/components/shared';
 import { useAuthStore } from '@/stores/auth';
-import { useQuery } from '@tanstack/react-query';
-import { StudentInfoLoader } from './StudentDashboardPageLoader';
-import { getStudentInfo } from '@/api/query';
+import { useGetStudentInfo } from '@/hooks';
 
 export const StudentProfile = () => {
   const user = useAuthStore((state) => state.user);
-  const { data: studentData, isLoading } = useQuery({
-    queryKey: [QK.STUDENT, 'PROFILE', { id: user?.id }],
-    queryFn: getStudentInfo,
-    select: (res) => res.data,
-  });
+  const { data: studentData, isLoading } = useGetStudentInfo(user?.id as string);
 
   if (isLoading) return <StudentInfoLoader />;
   if (!studentData) return <Message message='User not found' />;

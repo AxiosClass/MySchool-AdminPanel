@@ -17,8 +17,8 @@ export const issueNfcCard = async (payload: TIssueNfcCardPayload): TPromiseRespo
   return response.data;
 };
 
-export const getStudentInfo = async (): TPromiseResponse<TStudentInfo> => {
-  const response = await axiosInstance.get(apiUrl.getStudentInfo);
+export const getStudentInfo = async (studentId: string): TPromiseResponse<TStudentInfo> => {
+  const response = await axiosInstance.get(apiUrl.getStudentInfo(studentId));
   return response.data;
 };
 
@@ -33,4 +33,4 @@ type TGetStudentResult = Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' |
 };
 
 type TIssueNfcCardPayload = Pick<TStudent, 'id' | 'cardId'>;
-type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'class'> & { classroom: Pick<TClassroom, 'name'> };
+type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'class' | 'admittedAt'> & { classroom: Pick<TClassroom, 'name'> };

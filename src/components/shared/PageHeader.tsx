@@ -7,12 +7,19 @@ import { ArrowBigLeftDashIcon } from 'lucide-react';
 type TPageHeaderProps = PropsWithChildren<{
   label: string | ReactNode;
   backLink?: string;
-  className?: { container?: string };
+  containerClassName?: string;
+  childContainerClassName?: string;
 }>;
 
-export const PageHeader = ({ label, children, backLink, className }: TPageHeaderProps) => {
+export const PageHeader = ({
+  label,
+  children,
+  backLink,
+  containerClassName,
+  childContainerClassName,
+}: TPageHeaderProps) => {
   return (
-    <section className={cn('my-6 flex items-center gap-4 px-6', className?.container)}>
+    <section className={cn('my-6 flex items-center gap-4 px-6', containerClassName)}>
       {backLink && (
         <Link to={backLink}>
           <Button size='icon'>
@@ -20,8 +27,8 @@ export const PageHeader = ({ label, children, backLink, className }: TPageHeader
           </Button>
         </Link>
       )}
-      {typeof label === 'string' ? <p className='hidden text-lg font-semibold md:block'>{label}</p> : label}
-      <div className='ml-auto'>{children}</div>
+      {typeof label === 'string' ? <p className='hidden text-nowrap text-lg font-semibold md:block'>{label}</p> : label}
+      <div className={cn('ml-auto', childContainerClassName)}>{children}</div>
     </section>
   );
 };

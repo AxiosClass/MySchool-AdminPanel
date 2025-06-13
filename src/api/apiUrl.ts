@@ -36,7 +36,7 @@ export const apiUrl = {
   addStudent: `/student`,
   getStudents: `/students`,
   issueNfcCard: `/student/issue-nfc`,
-  getStudentInfo: `/student/mine`,
+  getStudentInfo: (studentId: string) => `/student/${studentId}`,
   // payment
   getPaymentSummary: (studentId: string) => `/payment/summary/${studentId}`,
   makePayment: `/payment`,
@@ -76,4 +76,5 @@ export const apiUrl = {
   // term result
   addTermResult: `/term-result`,
   getStudentsWithTermResult: (searchParams: string) => `/term-result/students${searchParams}`,
+  getTermsResultSummary: (studentId: string, year: string) => `/term-result/summary/${studentId}?${year}`,
 };

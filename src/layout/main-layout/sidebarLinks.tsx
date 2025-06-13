@@ -34,6 +34,7 @@ export const useSidebarLinks = () => {
       { title: 'Home', url: '/student', icon: <FaHome /> },
       { title: 'Payments', url: '/student/payments', icon: <IoWallet /> },
       { title: 'Notice', url: '/student/notices', icon: <FaBellConcierge /> },
+      { title: 'Result', url: '/student/results', icon: <FaBook /> },
     ];
 };
 
