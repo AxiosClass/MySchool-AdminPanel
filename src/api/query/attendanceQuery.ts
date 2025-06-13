@@ -41,7 +41,7 @@ export type TAttendanceForClassroom = {
   classTeacherId: string;
 };
 
-type TAttendanceStatus = 'PRESENT' | 'ABSENT' | 'HOLIDAY';
+export type TAttendanceStatus = 'PRESENT' | 'ABSENT' | 'HOLIDAY';
 
 export type TAttendanceList = {
   id: string;

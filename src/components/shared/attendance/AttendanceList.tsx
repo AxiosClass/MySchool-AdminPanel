@@ -1,14 +1,15 @@
 import moment from 'moment';
 import type { Moment } from 'moment';
 
+import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CalendarDaysIcon, ChevronLeftIcon, ChevronRightIcon, CircleCheckBigIcon, CircleXIcon } from 'lucide-react';
 import { dateFormatString } from '@/data';
 import { useGetStudentAttendance } from '@/hooks';
+import { TAttendanceList, TAttendanceStatus } from '@/api/query';
 import { Message } from '../Message';
-import { cn } from '@/lib/utils';
 
 export const AttendanceList = ({ studentId, admittedAt }: { studentId: string; admittedAt: string }) => {
   const [date, setDate] = useState(moment().startOf('month'));
@@ -85,6 +86,7 @@ const AttendanceFetcher = ({ studentId, date }: TAttendanceFetcherProps) => {
   return (
     <CardContent className='space-y-6'>
       <AttendanceSummary {...attendanceSummary} />
+      <Attendances attendances={attendanceData.attendances} month={date} />
     </CardContent>
   );
 };
@@ -120,6 +122,96 @@ const AttendanceSummary = ({ present, absent, holiday }: TAttendanceSummaryProps
       {renderSummaryCard(present, 'present')}
       {renderSummaryCard(holiday, 'holiday')}
       {renderSummaryCard(absent, 'absent')}
+    </div>
+  );
+};
+
+type TAttendancesProps = Pick<TAttendanceList, 'attendances'> & { month: Moment };
+
+export const Attendances = ({ attendances, month }: TAttendancesProps) => {
+  const today = moment();
+
+  const dateMap = useMemo(() => {
+    return attendances.reduce<Record<string, TAttendanceStatus>>((acc, curr) => {
+      acc[moment(curr.date).format(dateFormatString.basic)] = curr.status;
+      return acc;
+    }, {});
+  }, [attendances]);
+
+  const days = useMemo(() => {
+    const start = month.clone().startOf('month').startOf('week');
+    const end = month.clone().endOf('month').endOf('week');
+
+    const temp: Moment[] = [];
+    const current = start.clone();
+
+    while (current.isSameOrBefore(end)) {
+      temp.push(current.clone());
+      current.add(1, 'day');
+    }
+
+    return temp;
+  }, [month]);
+
+  const getStatusIcon = (status?: TAttendanceStatus) => {
+    const typeConfig = {
+      PRESENT: {
+        icon: <CircleCheckBigIcon className='size-4 text-primary' />,
+        containerClass: 'bg-primary-50',
+      },
+      HOLIDAY: {
+        icon: <CalendarDaysIcon className='size-4 text-blue-500' />,
+        containerClass: 'bg-blue-50',
+      },
+      ABSENT: {
+        icon: <CircleXIcon className='size-4 text-red-500' />,
+        containerClass: 'bg-red-50',
+      },
+    };
+
+    const config = status ? typeConfig[status] : null;
+
+    if (!config) return null;
+
+    return (
+      <span className={cn('flex size-8 items-center justify-center rounded-full', config.containerClass)}>
+        {config.icon}
+      </span>
+    );
+  };
+
+  return (
+    <div className='overflow-hidden rounded-t-md'>
+      {/* Weekday Headers */}
+      <div className='grid grid-cols-7 gap-2 bg-muted p-4 text-center text-xs font-medium text-gray-600'>
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+          <div key={d}>{d}</div>
+        ))}
+      </div>
+
+      {/* Calendar Days */}
+      <div className='grid grid-cols-7 text-center'>
+        {days.map((day) => {
+          const key = day.format(dateFormatString.basic);
+          const status = dateMap[key];
+          const isCurrentMonth = day.month() === month.month();
+          const isToday = day.isSame(today, 'day');
+
+          return (
+            <div
+              key={key}
+              className={cn(
+                'flex h-24 flex-col items-center justify-center space-y-1 border p-2',
+                isCurrentMonth ? 'bg-white' : 'bg-gray-100 text-gray-400',
+                isToday ? 'border-blue-500' : 'border-gray-200',
+              )}
+            >
+              <div className='text-lg font-semibold'>{day.date()}</div>
+              <div>{getStatusIcon(status)}</div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

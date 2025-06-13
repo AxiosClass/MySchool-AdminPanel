@@ -4,13 +4,13 @@ import { TakePaymentLoader } from './pages/transactions/take-payment/TakePayment
 import { CardsLoader, PageWithCoverLoader, PageWithTableLoader, PageWithCardLoader } from './components/loader';
 import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
-import { LogInPageLoader } from './pages/login/LogInPageLoader';
 import { DashboardPageLoader } from './pages/home/DashboardLoader';
 import { MainLayout } from './layout/main-layout';
+import LoginPage from './pages/login';
 
 const lazyPages = {
   // auth
-  login: lazy(() => import('@/pages/login')),
+  // login: lazy(() => import('@/pages/login')),
   // admin
   home: lazy(() => import('@/pages/home')),
   adminClasses: lazy(() => import('@/pages/classes')),
@@ -45,7 +45,7 @@ const withSuspense = (Component: LazyExoticComponent<any>, FallBack: ReactNode) 
 
 const router = createBrowserRouter([
   // auth
-  { path: '/login', element: withSuspense(lazyPages.login, <LogInPageLoader />) },
+  { path: '/login', element: <LoginPage /> },
   // main layout
   {
     path: '/',

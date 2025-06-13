@@ -25,7 +25,7 @@ export const StudentProfile = ({
 }: TStudentProfileProps) => {
   return (
     <Card className='overflow-hidden border-0 bg-white transition-all duration-500'>
-      <div className={`relative h-36 bg-gradient-to-r from-primary-400 to-primary-600`}>
+      {/* <div className={`relative h-36 bg-gradient-to-r from-primary-400 to-primary-600`}>
         <div className='absolute inset-0 bg-black bg-opacity-20' />
         <div className='absolute bottom-4 left-6'>
           <div className='flex size-20 items-center justify-center rounded-full bg-white shadow-xl'>
@@ -36,33 +36,35 @@ export const StudentProfile = ({
             </span>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className='p-6 pt-8'>
-        <div className='mb-6'>
+      <div className='flex items-center gap-4 p-6'>
+        <div className='flex size-20 items-center justify-center rounded-full bg-primary shadow-xl'>
+          <span className={`text-2xl font-bold text-white`}>{getInitials(name)}</span>
+        </div>
+        <div className=''>
           <h2 className='mb-1 text-2xl font-bold'>{name}</h2>
           <p className='flex items-center text-muted-foreground'>
             <GraduationCapIcon className='mr-2 h-4 w-4' />
             Student ID: {id}
           </p>
         </div>
-
-        <div className='mb-6 grid grid-cols-1 gap-4 md:grid-cols-2'>
-          <InfoCardItem
-            icon={<IoBook className='size-6' />}
-            title='Class'
-            value={`${className} (${classLevel})`}
-            color='blue'
-          />
-          <InfoCardItem icon={<GiTeacher className='size-6' />} title='Classroom' value={classroomName} color='green' />
-          <InfoCardItem
-            icon={<FaCalendar className='size-6' />}
-            title='Admitted Date'
-            value={moment(admittedAt).format(dateFormatString.basic)}
-            color='purple'
-          />
-          <InfoCardItem icon={<FaFileWaveform className='size-6' />} title='Status' value={status} color='orange' />
-        </div>
+      </div>
+      <div className='mb-6 grid grid-cols-1 gap-4 px-6 md:grid-cols-2'>
+        <InfoCardItem
+          icon={<IoBook className='size-6' />}
+          title='Class'
+          value={`${className} (${classLevel})`}
+          color='blue'
+        />
+        <InfoCardItem icon={<GiTeacher className='size-6' />} title='Classroom' value={classroomName} color='green' />
+        <InfoCardItem
+          icon={<FaCalendar className='size-6' />}
+          title='Admitted Date'
+          value={moment(admittedAt).format(dateFormatString.basic)}
+          color='purple'
+        />
+        <InfoCardItem icon={<FaFileWaveform className='size-6' />} title='Status' value={status} color='orange' />
       </div>
     </Card>
   );
