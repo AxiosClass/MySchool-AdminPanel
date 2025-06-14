@@ -97,6 +97,7 @@ export type TClass = {
   level: string;
   monthlyFee: number;
   admissionFee: number;
+  termFee: number;
   createdAt: Date;
 };
 

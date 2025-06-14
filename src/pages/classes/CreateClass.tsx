@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { errorToast, zodNumber } from '@/helpers';
+import { errorToast } from '@/helpers';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export const CreateClass = () => {
@@ -20,7 +20,7 @@ export const CreateClass = () => {
 
   const form = useForm<TCreateClassForm>({
     resolver: zodResolver(createClassFormSchema),
-    defaultValues: { name: '', level: '', monthlyFee: '', admissionFee: '' },
+    defaultValues: { name: '', level: '' },
   });
 
   const { mutate } = useMutation({
@@ -29,6 +29,7 @@ export const CreateClass = () => {
     onSuccess: (res) => {
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.CLASS] });
+      form.reset();
       onOpenChange(false);
     },
     onError: (error) => errorToast(error),
@@ -61,10 +62,37 @@ export const CreateClass = () => {
               {({ field }) => <Input {...field} placeholder='Input level' />}
             </CommonFormField>
             <CommonFormField control={form.control} name='monthlyFee' label='Monthly Fee'>
-              {({ field }) => <Input {...field} placeholder='Input monthly fee' type='number' min={0} />}
+              {({ field }) => (
+                <Input
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder='Input monthly fee'
+                  type='number'
+                  min={0}
+                />
+              )}
             </CommonFormField>
             <CommonFormField control={form.control} name='admissionFee' label='Admission Fee'>
-              {({ field }) => <Input {...field} placeholder='Input admission fee' type='number' min={0} />}
+              {({ field }) => (
+                <Input
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder='Input admission fee'
+                  type='number'
+                  min={0}
+                />
+              )}
+            </CommonFormField>
+            <CommonFormField control={form.control} name='termFee' label='Term Fee'>
+              {({ field }) => (
+                <Input
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder='Input admission fee'
+                  type='number'
+                  min={0}
+                />
+              )}
             </CommonFormField>
           </form>
         </Form>
@@ -77,8 +105,9 @@ export const CreateClass = () => {
 const createClassFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   level: z.string().min(1, { message: 'Level is required' }),
-  monthlyFee: zodNumber({ min: 100, message: 'Minimum monthly fee is 100 taka' }),
-  admissionFee: zodNumber({ min: 500, message: 'Minimum monthly fee is 500 taka' }),
+  monthlyFee: z.number().positive({ message: 'Monthly fee must be a positive number' }),
+  admissionFee: z.number().positive({ message: 'Admission fee must be a positive number' }),
+  termFee: z.number().positive({ message: 'Term fee must be a positive number' }),
 });
 
 // type

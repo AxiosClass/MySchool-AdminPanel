@@ -38,7 +38,7 @@ export const getAssignedSubjects = async (classId: string): TPromiseResponse<TAs
 };
 
 // type
-type TCreateClassPayload = Pick<TClass, 'name' | 'level' | 'monthlyFee' | 'admissionFee'>;
+type TCreateClassPayload = Pick<TClass, 'name' | 'level' | 'monthlyFee' | 'admissionFee' | 'termFee'>;
 type TAssignedSubject = Pick<TSubject, 'id' | 'name' | 'description' | 'type'>;
 
 export type TGetClassResponse = {
