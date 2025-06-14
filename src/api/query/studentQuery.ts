@@ -37,4 +37,7 @@ export type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'admittedAt' | 'status
   classroomName: string;
   className: string;
   classLevel: string;
+  totalPaid: number;
+  totalDue: number;
+  totalDiscount: number;
 };

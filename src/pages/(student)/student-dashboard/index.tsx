@@ -17,7 +17,7 @@ export default function StudentDashboardPage() {
       <PageTitle title='Student Profile' />
       <ScrollArea className='px-6'>
         <section className='my-6 space-y-6'>
-          <StudentProfile {...studentInfo} />
+          <StudentProfile {...studentInfo} showPaymentInfo />
           <AttendanceList studentId={userId} admittedAt={studentInfo.admittedAt} />
         </section>
       </ScrollArea>
