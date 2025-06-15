@@ -7,7 +7,12 @@ export const createClass = async (payload: TCreateClassPayload): TPromiseRespons
   return response?.data;
 };
 
-export const getClasses = async (): TPromiseResponse<TGetClassResponse[]> => {
+export const updateClass = async ({ classId, ...payload }: TUpdateClassPayload): TPromiseResponse => {
+  const response = await axiosInstance.patch(apiUrl.updateClass(classId), payload);
+  return response.data;
+};
+
+export const getClasses = async (): TPromiseResponse<TGetClassResponse> => {
   const response = await axiosInstance.get(apiUrl.getClasses);
   return response?.data;
 };
@@ -39,15 +44,15 @@ export const getAssignedSubjects = async (classId: string): TPromiseResponse<TAs
 
 // type
 type TCreateClassPayload = Pick<TClass, 'name' | 'level' | 'monthlyFee' | 'admissionFee' | 'termFee'>;
+type TUpdateClassPayload = Partial<TCreateClassPayload> & { classId: string };
 type TAssignedSubject = Pick<TSubject, 'id' | 'name' | 'description' | 'type'>;
 
-export type TGetClassResponse = {
-  id: string;
-  name: string;
-  level: string;
-  subjects: { id: string; name: string }[];
-  classrooms: { id: string; students: { id: string }[] }[];
-};
+export type TGetClassResponse = Array<
+  Pick<TClass, 'id' | 'name' | 'level' | 'admissionFee' | 'monthlyFee' | 'termFee'> & {
+    totalStudent: number;
+    totalClassroom: number;
+  }
+>;
 
 export type TGetClassDetails = {
   id: string;

@@ -1,5 +1,5 @@
-// export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
-export const SERVER_ADDRESS = 'https://my-school-server-cyan.vercel.app/api/v1';
+export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
+// export const SERVER_ADDRESS = 'https://my-school-server-cyan.vercel.app/api/v1';
 
 export const apiUrl = {
   // auth
@@ -12,6 +12,7 @@ export const apiUrl = {
   getClassroomList: (level: string) => `/classes/list/classroom/${level}`,
   assignSubjects: 'class/subjects',
   getAssignedSubjects: (classId: string) => `/class/${classId}/subjects`,
+  updateClass: (classId: string) => `/class/${classId}`,
   //classroom
   createClassroom: `/classroom`,
   assignSubjectTeacher: 'classroom/subject-teacher',
