@@ -3,7 +3,7 @@ import { QK } from '@/api';
 import { toast } from 'sonner';
 import { months } from '@/data';
 import { useForm } from 'react-hook-form';
-import { ActionButton } from '../ui/button';
+import { Button } from '../ui/button';
 import { usePopupState } from '@/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CommonFormField, CommonSelect, FormDialog } from './form';
@@ -14,6 +14,7 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { PAYMENT_TYPE } from '@/lib/types';
 import { makePayment } from '@/api/query';
+import { MdPayment } from 'react-icons/md';
 
 export const MakePayment = ({ studentId }: { studentId: string }) => {
   const form = useForm<TMakePaymentFromSchema>({
@@ -50,12 +51,9 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
 
   return (
     <>
-      <ActionButton
-        actionType='UPDATE'
-        label='Make Payment'
-        onClick={() => onOpenChange(true)}
-        className='bg-primary text-white'
-      />
+      <Button variant='outline' onClick={() => onOpenChange(true)} className='bg-white'>
+        <MdPayment className='size-4' /> Make Payment
+      </Button>
       <FormDialog open={open} onOpenChange={onOpenChange} title='Make Payment' formId={formId}>
         <Form {...form}>
           <form id={formId} onSubmit={handleMakePayment} className='flex flex-col gap-3'>

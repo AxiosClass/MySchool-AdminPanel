@@ -1,13 +1,18 @@
 import { cn } from '@/lib/utils';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { FaWallet } from 'react-icons/fa';
 
 export const TransactionSubLayout = () => {
   const location = useLocation();
+
   return (
     <div className='flex h-full w-full'>
-      <div className='min-w-[290px] border-r p-6'>
-        <h1 className='text-lg font-semibold'>
-          Transactions {'>'} <span className='capitalize'>{findPath(location.pathname)}</span>
+      <div className='min-w-[270px] border-r p-6'>
+        <h1 className='flex items-center gap-2 font-semibold'>
+          <FaWallet className='size-4' />
+          <span>
+            Transactions {'>'} <span className='capitalize'>{findPath(location.pathname)}</span>
+          </span>
         </h1>
 
         <div className='mt-4 flex flex-col gap-1'>
@@ -25,7 +30,7 @@ export const TransactionSubLayout = () => {
           ))}
         </div>
       </div>
-      <section className='flex-grow p-6'>
+      <section className='grow'>
         <Outlet />
       </section>
     </div>

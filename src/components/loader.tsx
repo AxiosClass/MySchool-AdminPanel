@@ -159,3 +159,41 @@ export const PostCardLoader = ({ className }: { className?: string }) => {
     </div>
   );
 };
+
+export const StudentProfileSkeleton = ({ className }: { className?: string }) => (
+  <Card className={cn('m-6 overflow-hidden border-0 bg-white', className)}>
+    {/* Header */}
+    <div className='flex items-center gap-4 p-6'>
+      <Skeleton className='size-20 rounded-full' />
+      <div className='space-y-2'>
+        <Skeleton className='h-6 w-40' />
+        <Skeleton className='h-4 w-32' />
+      </div>
+    </div>
+    {/* Info Items */}
+    <div className='mb-6 grid grid-cols-1 gap-4 px-6 md:grid-cols-2'>
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className='flex items-center gap-4 rounded-lg bg-muted/20 p-3'>
+          <Skeleton className='size-6 rounded-md' />
+          <div className='space-y-2'>
+            <Skeleton className='h-4 w-24' />
+            <Skeleton className='h-4 w-32' />
+          </div>
+        </div>
+      ))}
+    </div>
+  </Card>
+);
+
+export const TakePaymentCardSkeleton = () => (
+  <Card className='m-6 p-6'>
+    <CardHeader className='items-center space-y-2'>
+      <Skeleton className='size-16 rounded-full bg-primary-100/40' />
+      <Skeleton className='h-6 w-32' /> {/* Title */}
+      <Skeleton className='h-4 w-56' /> {/* Description */}
+    </CardHeader>
+    <CardContent>
+      <Skeleton className='h-10 w-full rounded-md' />
+    </CardContent>
+  </Card>
+);

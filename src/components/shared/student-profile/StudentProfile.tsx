@@ -6,13 +6,13 @@ import { dateFormatString } from '@/data';
 import { getInitials } from '@/helpers';
 import { cn } from '@/lib/utils';
 import { DollarSignIcon, GraduationCapIcon } from 'lucide-react';
-import { ReactNode } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { GiTeacher } from 'react-icons/gi';
 import { FaCalendar } from 'react-icons/fa';
 import { IoBook } from 'react-icons/io5';
 import { FaFileWaveform } from 'react-icons/fa6';
 
-type TStudentProfileProps = TStudentInfo & { showPaymentInfo?: boolean };
+type TStudentProfileProps = PropsWithChildren<TStudentInfo & { showPaymentInfo?: boolean }>;
 
 export const StudentProfile = ({
   id,
@@ -26,6 +26,7 @@ export const StudentProfile = ({
   totalDiscount,
   totalDue,
   showPaymentInfo,
+  children,
 }: TStudentProfileProps) => {
   return (
     <Card className='overflow-hidden border-0 bg-white transition-all duration-500'>
@@ -40,6 +41,7 @@ export const StudentProfile = ({
             Student ID: {id}
           </p>
         </div>
+        {children}
       </div>
       <div className='mb-6 grid grid-cols-1 gap-4 px-6 md:grid-cols-2'>
         <InfoCardItem

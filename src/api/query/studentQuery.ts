@@ -22,6 +22,11 @@ export const getStudentInfo = async (studentId: string): TPromiseResponse<TStude
   return response.data;
 };
 
+export const getStudentListForPayment = async (): TPromiseResponse<TGetStudentListForPaymentResult> => {
+  const response = await axiosInstance.get(apiUrl.getStudentListForPayment);
+  return response.data;
+};
+
 // types
 type TAddStudentPayload = Pick<
   TStudent,
@@ -41,3 +46,7 @@ export type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'admittedAt' | 'status
   totalDue: number;
   totalDiscount: number;
 };
+
+export type TGetStudentListForPaymentResult = Array<
+  Pick<TStudent, 'id' | 'name'> & { classroomName: string; className: string; classLevel: string }
+>;

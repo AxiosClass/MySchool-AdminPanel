@@ -1,7 +1,14 @@
+import {
+  CardsLoader,
+  PageWithCoverLoader,
+  PageWithTableLoader,
+  PageWithCardLoader,
+  StudentProfileSkeleton,
+  TakePaymentCardSkeleton,
+} from './components/loader';
+
 import { lazy, LazyExoticComponent, ReactNode, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { TakePaymentLoader } from './pages/transactions/take-payment/TakePaymentLoader';
-import { CardsLoader, PageWithCoverLoader, PageWithTableLoader, PageWithCardLoader } from './components/loader';
 import { StudentPaymentPageLoader } from './pages/(student)/payments/StudentPaymentPageLoader';
 import { TransactionSubLayout } from './layout/transaction-sub-layout';
 import { DashboardPageLoader } from './pages/home/DashboardLoader';
@@ -63,7 +70,7 @@ const router = createBrowserRouter([
         path: '/transactions',
         element: <TransactionSubLayout />,
         children: [
-          { path: 'take-payment', element: withSuspense(lazyPages.takePayment, <TakePaymentLoader />) },
+          { path: 'take-payment', element: withSuspense(lazyPages.takePayment, <TakePaymentCardSkeleton />) },
           { path: 'payments', element: withSuspense(lazyPages.adminPayments, <PageWithTableLoader />) },
         ],
       },
@@ -85,7 +92,7 @@ const router = createBrowserRouter([
         // Student Panel
         path: '/student',
         children: [
-          { index: true, element: withSuspense(lazyPages.studentDashboard, null) },
+          { index: true, element: withSuspense(lazyPages.studentDashboard, <StudentProfileSkeleton />) },
           { path: 'payments', element: withSuspense(lazyPages.studentPayments, <StudentPaymentPageLoader />) },
           { path: 'notices', element: withSuspense(lazyPages.studentNotices, <PageWithCardLoader />) },
           { path: 'results', element: withSuspense(lazyPages.studentResult, <PageWithTableLoader />) },
