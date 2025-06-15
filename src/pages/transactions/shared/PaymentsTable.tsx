@@ -9,7 +9,7 @@ import { TGetPaymentResponse } from '@/api/query';
 import { PAYMENT_TYPE } from '@/lib/types';
 import { useMemo } from 'react';
 
-export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
+export const PaymentsTable = ({ payments, tableClassName }: TPaymentsTableProps) => {
   const tableHead = useMemo(() => {
     return (
       <>
@@ -25,9 +25,10 @@ export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
   }, []);
 
   return (
-    <CommonTable tableContainerClassName={className?.table} head={tableHead}>
+    <CommonTable tableContainerClassName={tableClassName} head={tableHead}>
       {payments.map(({ id, student, type, description, amount, month, year, createdAt }) => {
         const paymentConfig = PAYMENT_TYPE_CONFIG[type];
+
         return (
           <TableRow className='border-b' key={id}>
             <TableCell>
@@ -42,13 +43,13 @@ export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
             <TableCell className='font-semibold'>
               {student.classroom.name} ({student.class})
             </TableCell>
-            <TableCell className='font-semibold'>{amount} TK</TableCell>
+            <TableCell className='font-semibold'>{amount}</TableCell>
             <TableCell className='text-center'>
               <span className={cn('rounded p-1 text-xs font-semibold text-white', paymentConfig.className)}>
                 {type}
               </span>
             </TableCell>
-            <TableCell className='text-muted-foreground'>{description + 'TK' || 'N/A'} </TableCell>
+            <TableCell className='text-muted-foreground'>{description || 'N/A'} </TableCell>
             <TableCell className='font-semibold text-muted-foreground'>
               {month && `${months[month]}, `}
               {year}
@@ -66,9 +67,10 @@ export const PaymentsTable = ({ payments, className }: TPaymentsTableProps) => {
 // config
 const PAYMENT_TYPE_CONFIG = {
   [PAYMENT_TYPE.ADMISSION_FEE]: { className: 'bg-orange-600' },
+  [PAYMENT_TYPE.TERM_FEE]: { className: 'bg-yellow-600' },
   [PAYMENT_TYPE.MONTHLY_FEE]: { className: 'bg-blue-600' },
   [PAYMENT_TYPE.OTHERS]: { className: 'bg-green-600' },
 };
 
 // types
-type TPaymentsTableProps = { payments: TGetPaymentResponse[]; className?: { table?: string } };
+type TPaymentsTableProps = { payments: TGetPaymentResponse[]; tableClassName?: string };

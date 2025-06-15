@@ -78,6 +78,7 @@ export type TPayment = {
   amount: number;
   month: number | null;
   year: number;
+  classId: string;
   createdAt: Date;
   description: string | null;
   type: PAYMENT_TYPE;
@@ -87,6 +88,7 @@ export type TPayment = {
 export enum PAYMENT_TYPE {
   ADMISSION_FEE = 'ADMISSION_FEE',
   MONTHLY_FEE = 'MONTHLY_FEE',
+  TERM_FEE = 'TERM_FEE',
   OTHERS = 'OTHERS',
 }
 

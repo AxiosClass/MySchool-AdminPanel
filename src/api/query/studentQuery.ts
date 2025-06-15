@@ -1,4 +1,4 @@
-import { TClassroom, TPromiseResponse, TStudent } from '@/lib/types';
+import { TClass, TClassroom, TPromiseResponse, TStudent } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
 
@@ -27,6 +27,11 @@ export const getStudentListForPayment = async (): TPromiseResponse<TGetStudentLi
   return response.data;
 };
 
+export const getStudentClassInfo = async (studentId: string): TPromiseResponse<TGetStudentClassInfoResult> => {
+  const response = await axiosInstance.get(apiUrl.getStudentClassInfo(studentId));
+  return response.data;
+};
+
 // types
 type TAddStudentPayload = Pick<
   TStudent,
@@ -50,3 +55,5 @@ export type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'admittedAt' | 'status
 export type TGetStudentListForPaymentResult = Array<
   Pick<TStudent, 'id' | 'name'> & { classroomName: string; className: string; classLevel: string }
 >;
+
+export type TGetStudentClassInfoResult = Pick<TClass, 'id' | 'name' | 'admissionFee' | 'monthlyFee' | 'termFee'>;

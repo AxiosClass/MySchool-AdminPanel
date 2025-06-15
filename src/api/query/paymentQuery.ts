@@ -34,4 +34,4 @@ export type TGetPaymentSummaryResponse = Pick<TStudent, 'id' | 'name' | 'class' 
   totalDue: number;
 };
 
-type TMakePayment = Pick<TPayment, 'amount' | 'description' | 'type' | 'month' | 'year' | 'studentId'>;
+type TMakePayment = Pick<TPayment, 'amount' | 'description' | 'type' | 'month' | 'year' | 'studentId' | 'classId'>;

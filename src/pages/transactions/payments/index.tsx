@@ -25,5 +25,5 @@ const PaymentList = () => {
   if (isLoading) return <TableLoader />;
   if (!payments?.length) return <Message message='No Payments Found' className='my-6' />;
 
-  return <PaymentsTable payments={payments} />;
+  return <PaymentsTable payments={payments} tableClassName='m-6' />;
 };

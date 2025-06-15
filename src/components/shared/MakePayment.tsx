@@ -2,31 +2,45 @@ import { z } from 'zod';
 import { QK } from '@/api';
 import { toast } from 'sonner';
 import { months } from '@/data';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { usePopupState } from '@/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CommonFormField, CommonSelect, FormDialog } from './form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorToast, zodNumber } from '@/helpers';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { errorToast, getYearsFromDateToNow } from '@/helpers';
 import { Form } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { PAYMENT_TYPE } from '@/lib/types';
-import { makePayment } from '@/api/query';
+import { getStudentClassInfo, makePayment } from '@/api/query';
 import { MdPayment } from 'react-icons/md';
+import { Skeleton } from '../ui/skeleton';
+import { useMemo } from 'react';
 
 export const MakePayment = ({ studentId }: { studentId: string }) => {
-  const form = useForm<TMakePaymentFromSchema>({
+  const form = useForm<TMakePaymentFrom>({
     resolver: zodResolver(makePaymentFormSchema),
-    defaultValues: { amount: '', description: '', month: '', type: '', year: '' },
+    defaultValues: { description: '', type: '', year: new Date().getFullYear() },
   });
 
-  const { open, onOpenChange } = usePopupState();
   const qc = useQueryClient();
-
   const formId = QK.PAYMENT + '_MAKE' + studentId;
-  const paymentType = form.watch('type');
+  const { open, onOpenChange } = usePopupState();
+
+  const { data, isLoading } = useQuery({
+    queryKey: [QK.CLASS, { studentId }],
+    queryFn: () => getStudentClassInfo(studentId),
+    select: (res) => res.data,
+  });
+
+  const classInfo = useMemo(() => {
+    return {
+      ADMISSION_FEE: data?.admissionFee ?? 0,
+      MONTHLY_FEE: data?.monthlyFee ?? 0,
+      TERM_FEE: data?.monthlyFee ?? 0,
+    };
+  }, [data]);
 
   const { mutate } = useMutation({
     mutationKey: [formId],
@@ -34,87 +48,128 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
     onSuccess: (res) => {
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.PAYMENT] });
+      qc.invalidateQueries({ queryKey: [QK.STUDENT] });
+      form.reset();
       onOpenChange(false);
     },
     onError: (error) => errorToast(error),
   });
 
   const handleMakePayment = form.handleSubmit((formData) => {
-    const amount = Number(formData.amount);
-    const month = Number(formData.month) || null;
-    const year = Number(formData.year);
+    const { amount, year } = formData;
+    const month = formData.month ?? null;
     const description = formData.description ?? null;
     const type = formData.type as PAYMENT_TYPE;
 
-    mutate({ studentId, amount, month, year, description, type });
+    mutate({ studentId, amount, month, year, description, type, classId: data?.id as string });
   });
 
   return (
     <>
       <Button variant='outline' onClick={() => onOpenChange(true)} className='bg-white'>
-        <MdPayment className='size-4' /> Make Payment
+        <MdPayment className='size-4' /> Take Payment
       </Button>
       <FormDialog open={open} onOpenChange={onOpenChange} title='Make Payment' formId={formId}>
         <Form {...form}>
-          <form id={formId} onSubmit={handleMakePayment} className='flex flex-col gap-3'>
-            <CommonFormField control={form.control} name='amount' label='Amount'>
-              {({ field }) => <Input {...field} placeholder='Input amount' type='number' />}
-            </CommonFormField>
-            <CommonFormField control={form.control} name='description' label='Description'>
-              {({ field }) => <Textarea {...field} placeholder='Write down description' />}
-            </CommonFormField>
-            <CommonFormField control={form.control} name='type' label='Payment Type'>
-              {({ field }) => (
-                <CommonSelect
-                  value={field.value}
-                  onChange={field.onChange}
-                  options={paymentTypeOptions}
-                  placeholder='Select payment type'
-                />
-              )}
-            </CommonFormField>
-
-            {paymentType === PAYMENT_TYPE.MONTHLY_FEE && (
-              <CommonFormField control={form.control} name='month' label='Month'>
-                {({ field }) => (
-                  <CommonSelect
-                    options={monthOptions}
-                    value={field.value || ''}
-                    onChange={field.onChange}
-                    placeholder='Select month'
-                  />
-                )}
-              </CommonFormField>
-            )}
-            <CommonFormField control={form.control} name='year' label='Year'>
-              {({ field }) => (
-                <CommonSelect
-                  options={yearOptions}
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder='Select year'
-                />
-              )}
-            </CommonFormField>
-          </form>
+          <MakePaymentForm
+            formId={formId}
+            onSubmit={handleMakePayment}
+            classInfo={classInfo || {}}
+            isLoading={isLoading}
+          />
         </Form>
       </FormDialog>
     </>
   );
 };
 
+type TMakePaymentFromProps = {
+  formId: string;
+  onSubmit: () => void;
+  classInfo: Record<string, number>;
+  isLoading: boolean;
+};
+
+const MakePaymentForm = ({ formId, onSubmit, classInfo, isLoading }: TMakePaymentFromProps) => {
+  const { control, watch, setValue } = useFormContext<TMakePaymentFrom>();
+  const paymentType = watch('type');
+
+  if (isLoading) return <MakePaymentSkeleton />;
+
+  return (
+    <form id={formId} onSubmit={onSubmit} className='flex flex-col gap-3'>
+      <CommonFormField control={control} name='type' label='Payment Type'>
+        {({ field }) => (
+          <CommonSelect
+            value={field.value}
+            onChange={(value) => {
+              field.onChange(value);
+              setValue('amount', classInfo[value] ?? 0);
+            }}
+            options={paymentTypeOptions}
+            placeholder='Select payment type'
+          />
+        )}
+      </CommonFormField>
+
+      <CommonFormField control={control} name='amount' label='Amount'>
+        {({ field }) => <Input {...field} placeholder='Input amount' type='number' />}
+      </CommonFormField>
+
+      <CommonFormField control={control} name='year' label='Year'>
+        {({ field }) => (
+          <CommonSelect
+            options={yearOptions}
+            value={field.value.toString()}
+            onChange={(val) => Number(field.onChange(val))}
+            placeholder='Select year'
+          />
+        )}
+      </CommonFormField>
+
+      {paymentType === PAYMENT_TYPE.MONTHLY_FEE && (
+        <CommonFormField control={control} name='month' label='Month'>
+          {({ field }) => (
+            <CommonSelect
+              options={monthOptions}
+              value={field.value?.toString() || ''}
+              onChange={(val) => Number(field.onChange(val))}
+              placeholder='Select month'
+            />
+          )}
+        </CommonFormField>
+      )}
+
+      <CommonFormField control={control} name='description' label='Description'>
+        {({ field }) => <Textarea {...field} placeholder='Write down description' />}
+      </CommonFormField>
+    </form>
+  );
+};
+
+const MakePaymentSkeleton = () => (
+  <div className='flex flex-col gap-4'>
+    {Array.from({ length: 4 }).map((_, index) => (
+      <div key={index} className='space-y-2'>
+        <Skeleton className='h-4 w-32' />
+        <Skeleton className='h-4 w-full' />
+      </div>
+    ))}
+  </div>
+);
+
 const paymentTypeOptions = Object.keys(PAYMENT_TYPE).map((key) => ({ label: key, value: key }));
 const monthOptions = months.map((month, index) => ({ label: month, value: String(index) }));
-const yearOptions = ['2024', '2025'].map((year) => ({ label: year, value: year }));
+const yearOptions = getYearsFromDateToNow('2025-01-01').map((year) => ({ label: year, value: year }));
 
 // schema
 const makePaymentFormSchema = z.object({
-  amount: zodNumber({ min: 0, message: 'Invalid amount' }),
-  month: z.string().optional(),
-  year: z.string().min(0, { message: 'Invalid Year' }),
+  amount: z.number().positive({ message: 'Amount can not be negative' }),
+  month: z.number().optional(),
+  year: z.number().min(2025, { message: 'Invalid Year' }),
   description: z.string().optional(),
   type: z.string().min(1, { message: 'Payment type is required' }),
 });
 
 // type
-type TMakePaymentFromSchema = z.infer<typeof makePaymentFormSchema>;
+type TMakePaymentFrom = z.infer<typeof makePaymentFormSchema>;
