@@ -35,8 +35,13 @@ export const FormDialog = ({
           <DialogClose asChild>
             <Button variant='destructive'>Cancel</Button>
           </DialogClose>
-          <Button form={formId} type='submit' isLoading={!!isMutating}>
-            {!!isMutating ? submitLoadingTitle || 'Submitting...' : submitButtonTitle || 'Submit'}
+          <Button
+            form={formId}
+            type='submit'
+            onClick={() => console.log('I am being pressed')}
+            isLoading={!!isMutating}
+          >
+            {isMutating ? submitLoadingTitle || 'Submitting...' : submitButtonTitle || 'Submit'}
           </Button>
         </DialogFooter>
       </DialogContent>

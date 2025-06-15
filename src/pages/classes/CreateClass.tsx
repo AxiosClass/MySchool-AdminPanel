@@ -16,10 +16,8 @@ export const CreateClass = () => {
   const { mutate } = useMutation({ mutationKey: [formId], mutationFn: createClass });
 
   const handleCreateClass = (formData: TClassForm, reset: () => void) => {
-    const monthlyFee = Number(formData.monthlyFee);
-    const admissionFee = Number(formData.admissionFee);
     mutate(
-      { ...formData, monthlyFee, admissionFee },
+      { ...formData },
       {
         onSuccess: (res) => {
           toast.success(res.message);
@@ -35,6 +33,7 @@ export const CreateClass = () => {
   return (
     <>
       <ActionButton actionType='ADD' label='Create Class' onClick={() => onOpenChange(true)} />
+
       <FormDialog
         formId={formId}
         open={open}

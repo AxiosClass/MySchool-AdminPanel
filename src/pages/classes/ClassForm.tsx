@@ -30,43 +30,16 @@ export const ClassForm = ({ formId, onSubmit, defaultValues }: TClassFormProps) 
           {({ field }) => <Input {...field} placeholder='Input class name' />}
         </CommonFormField>
         <CommonFormField control={form.control} name='level' label='Level'>
-          {({ field }) => <Input {...field} placeholder='Input level' />}
+          {({ field }) => <Input {...field} placeholder='Input level' type='number' />}
         </CommonFormField>
         <CommonFormField control={form.control} name='monthlyFee' label='Monthly Fee'>
-          {({ field }) => (
-            <Input
-              // value={field.value}
-              // onChange={(e) => field.onChange(Number(e.target.value))}
-              {...field}
-              placeholder='Input monthly fee'
-              type='number'
-              min={0}
-            />
-          )}
+          {({ field }) => <Input {...field} placeholder='Input monthly fee' type='number' min={0} />}
         </CommonFormField>
         <CommonFormField control={form.control} name='admissionFee' label='Admission Fee'>
-          {({ field }) => (
-            <Input
-              // value={field.value}
-              // onChange={(e) => field.onChange(Number(e.target.value))}
-              {...field}
-              placeholder='Input admission fee'
-              type='number'
-              min={0}
-            />
-          )}
+          {({ field }) => <Input {...field} placeholder='Input admission fee' type='number' min={0} />}
         </CommonFormField>
         <CommonFormField control={form.control} name='termFee' label='Term Fee'>
-          {({ field }) => (
-            <Input
-              // value={field.value}
-              // onChange={(e) => field.onChange(Number(e.target.value))}
-              {...field}
-              placeholder='Input admission fee'
-              type='number'
-              min={0}
-            />
-          )}
+          {({ field }) => <Input {...field} placeholder='Input admission fee' type='number' min={0} />}
         </CommonFormField>
       </form>
     </Form>
