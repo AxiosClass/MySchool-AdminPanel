@@ -68,6 +68,7 @@ const PaymentCard = ({ label, value }: { label: string; value: number }) => (
 const PAYMENT_TYPE_CONFIG = {
   [PAYMENT_TYPE.ADMISSION_FEE]: { className: 'bg-orange-600' },
   [PAYMENT_TYPE.MONTHLY_FEE]: { className: 'bg-blue-600' },
+  [PAYMENT_TYPE.TERM_FEE]: { className: 'bg-yellow-600' },
   [PAYMENT_TYPE.OTHERS]: { className: 'bg-green-600' },
 };
 
