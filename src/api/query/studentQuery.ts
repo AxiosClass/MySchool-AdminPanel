@@ -1,14 +1,15 @@
-import { TClass, TClassroom, TPromiseResponse, TStudent } from '@/lib/types';
+import { TClass, TObject, TPromiseResponse, TStudent } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 import { apiUrl } from '../apiUrl';
+import { makeUrlParams } from '@/helpers';
 
 export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addStudent, payload);
   return response?.data;
 };
 
-export const getStudents = async (): TPromiseResponse<TGetStudentResult[]> => {
-  const response = await axiosInstance.get(apiUrl.getStudents);
+export const getStudents = async (args: TObject): TPromiseResponse<TGetStudentSResult> => {
+  const response = await axiosInstance.get(apiUrl.getStudents(makeUrlParams(args)));
   return response?.data;
 };
 
@@ -38,9 +39,11 @@ type TAddStudentPayload = Pick<
   'name' | 'birthId' | 'class' | 'classroomId' | 'bloodGroup' | 'dob' | 'address' | 'parents' | 'guardian'
 >;
 
-type TGetStudentResult = Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' | 'admittedAt' | 'class' | 'cardId'> & {
-  classroom: Pick<TClassroom, 'name'>;
-};
+export type TGetStudentSResult = Array<
+  Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' | 'admittedAt' | 'class' | 'cardId'> & {
+    classroomName: string;
+  }
+>;
 
 type TIssueNfcCardPayload = Pick<TStudent, 'id' | 'cardId'>;
 export type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'admittedAt' | 'status'> & {
