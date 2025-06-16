@@ -5,6 +5,7 @@ import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 import { TGetClassResponse } from '@/api/query';
 import { UpdateClass } from './UpdateClass';
 import { ReactNode } from 'react';
+import { DeleteClass } from './DeleteClass';
 
 type ClassCardProps = TGetClassResponse[number];
 
@@ -37,6 +38,7 @@ export const ClassCard = ({
             monthlyFee={monthlyFee}
             termFee={termFee}
           />
+          {!totalClassroom && <DeleteClass classId={id} />}
         </div>
       </CardHeader>
 

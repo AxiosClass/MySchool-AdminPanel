@@ -13,6 +13,7 @@ export const apiUrl = {
   assignSubjects: 'class/subjects',
   getAssignedSubjects: (classId: string) => `/class/${classId}/subjects`,
   updateClass: (classId: string) => `/class/${classId}`,
+  deleteClass: (classId: string) => `/class/${classId}`,
   //classroom
   createClassroom: `/classroom`,
   assignSubjectTeacher: 'classroom/subject-teacher',

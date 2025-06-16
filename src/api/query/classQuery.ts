@@ -42,6 +42,11 @@ export const getAssignedSubjects = async (classId: string): TPromiseResponse<TAs
   return response.data;
 };
 
+export const deleteClass = async (classId: string): TPromiseResponse => {
+  const response = await axiosInstance.delete(apiUrl.deleteClass(classId));
+  return response.data;
+};
+
 // type
 type TCreateClassPayload = Pick<TClass, 'name' | 'level' | 'monthlyFee' | 'admissionFee' | 'termFee'>;
 type TUpdateClassPayload = Partial<TCreateClassPayload> & { classId: string };
