@@ -39,6 +39,7 @@ const lazyPages = {
   studentPayments: lazy(() => import('@/pages/(student)/payments')),
   studentNotices: lazy(() => import('@/pages/(student)/notices')),
   studentResult: lazy(() => import('@/pages/(student)/result')),
+  studentSection: lazy(() => import('@/pages/(student)/student-section')),
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,6 +95,7 @@ const router = createBrowserRouter([
           { path: 'payments', element: withSuspense(lazyPages.studentPayments, <StudentPaymentPageLoader />) },
           { path: 'notices', element: withSuspense(lazyPages.studentNotices, <PageWithCardLoader />) },
           { path: 'results', element: withSuspense(lazyPages.studentResult, <PageWithTableLoader />) },
+          { path: 'section', element: withSuspense(lazyPages.studentSection, <PageWithCoverLoader />) },
         ],
       },
     ],

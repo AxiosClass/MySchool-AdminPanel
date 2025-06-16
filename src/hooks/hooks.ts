@@ -7,6 +7,7 @@ import {
   getTermsResultSummary,
   getAttendancesForStudent,
 } from '@/api/query';
+
 import { QK } from '@/api';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';

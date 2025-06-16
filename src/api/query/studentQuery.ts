@@ -47,6 +47,7 @@ export type TGetStudentSResult = Array<
 
 type TIssueNfcCardPayload = Pick<TStudent, 'id' | 'cardId'>;
 export type TStudentInfo = Pick<TStudent, 'id' | 'name' | 'admittedAt' | 'status'> & {
+  classroomId: string;
   classroomName: string;
   className: string;
   classLevel: string;
