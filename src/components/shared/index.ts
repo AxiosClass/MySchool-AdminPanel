@@ -12,3 +12,4 @@ export * from './SectionCard';
 export * from './TableNodata';
 export * from './TooltipContainer';
 export * from './UserIcon';
+export * from './Pagination';

@@ -35,24 +35,6 @@ export const usePopupState = () => {
   return { open, onOpenChange };
 };
 
-export const usePagination = ({ totalPage = 1 }: { totalPage: number | undefined }) => {
-  const [page, setPage] = useState(1);
-  const hasNextPage = page < totalPage;
-  const hasPrevPage = page > 1;
-
-  const goToPage = useCallback((page: number) => setPage(page), []);
-
-  const goNextPage = useCallback(() => {
-    if (hasNextPage) goToPage(page + 1);
-  }, [page, hasNextPage, goToPage]);
-
-  const goPrevPage = useCallback(() => {
-    if (hasPrevPage) goToPage(page - 1);
-  }, [page, hasPrevPage, goToPage]);
-
-  return { page, goToPage, goNextPage, goPrevPage, hasNextPage, hasPrevPage };
-};
-
 export const useSearch = () => {
   const [value, setValue] = useState('');
   const searchTerm = useDebounce(value);

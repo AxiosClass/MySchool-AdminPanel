@@ -7,33 +7,35 @@ import { getStudents, TGetStudentSResult } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { SearchInput, TableNoData, UserIcon } from '@/components/shared';
+import { Pagination, SearchInput, TableNoData, usePagination, UserIcon } from '@/components/shared';
 import { dateFormatString } from '@/data';
 import { AddStudent } from './AddStudent';
 import { IssueNfcCard } from './IssueNfcCard';
 
 export const StudentTable = () => {
   const { value, searchTerm, onSearchChange } = useSearch();
+  const { page, onPageChange } = usePagination();
+  const LIMIT = '10';
+
+  const { data, isLoading } = useQuery({
+    queryKey: [QK.STUDENT, { searchTerm, page, LIMIT }],
+    queryFn: () => getStudents({ searchTerm, page: page.toString(), limit: LIMIT }),
+    select: (res) => ({ students: res.data, meta: res.meta }),
+  });
 
   return (
     <CommonTable
       head={<StudentTableHead />}
       header={<StudentTableHeader value={value} onSearchChange={onSearchChange} />}
+      footer={<Pagination page={page} onPageChange={onPageChange} totalPages={data?.meta?.totalPages ?? 0} />}
       tableContainerClassName='px-6 mt-6'
     >
-      <TStudentTableBody searchTerm={searchTerm} />
+      <TStudentTableBody students={data?.students || []} isLoading={isLoading} />
     </CommonTable>
   );
 };
 
 type TStudentTableHeaderProps = Pick<TUserSearch, 'value' | 'onSearchChange'>;
-
-const StudentTableHeader = ({ value, onSearchChange }: TStudentTableHeaderProps) => (
-  <div className='flex items-center justify-between gap-4'>
-    <SearchInput value={value} onSearchChange={onSearchChange} placeholder='Search by id, name..' />
-    <AddStudent />
-  </div>
-);
 
 const StudentTableHead = () => (
   <>
@@ -46,15 +48,16 @@ const StudentTableHead = () => (
   </>
 );
 
-type TStudentTableBodyProps = Pick<TUserSearch, 'searchTerm'>;
+const StudentTableHeader = ({ value, onSearchChange }: TStudentTableHeaderProps) => (
+  <div className='flex items-center justify-between gap-4'>
+    <SearchInput value={value} onSearchChange={onSearchChange} placeholder='Search by id, name..' />
+    <AddStudent />
+  </div>
+);
 
-const TStudentTableBody = ({ searchTerm }: TStudentTableBodyProps) => {
-  const { data: students, isLoading } = useQuery({
-    queryKey: [QK.STUDENT, { searchTerm }],
-    queryFn: () => getStudents({ searchTerm }),
-    select: (res) => res.data,
-  });
+type TStudentTableBodyProps = { students: TGetStudentSResult; isLoading: boolean };
 
+const TStudentTableBody = ({ students, isLoading }: TStudentTableBodyProps) => {
   if (isLoading) return <TableBodyLoader cols={6} />;
   if (!students?.length) return <TableNoData message={'No Student found'} colSpan={6} />;
 

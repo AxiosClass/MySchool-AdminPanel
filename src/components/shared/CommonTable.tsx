@@ -9,26 +9,29 @@ export const CommonTable = ({
   header,
   tableContainerClassName,
   headerClassName,
-}: TCommonTableProps) => {
-  return (
-    <ScrollArea fixedLayout disableScrollbar className={cn(tableContainerClassName)}>
-      <section className={cn('w-full overflow-hidden rounded-md border')}>
-        {header && <section className={cn('border-b p-4', headerClassName)}>{header}</section>}
-        <Table>
-          <TableHeader>
-            <TableRow className='border-none'>{head}</TableRow>
-          </TableHeader>
-          <TableBody>{children}</TableBody>
-        </Table>
-      </section>
-      <ScrollBar />
-    </ScrollArea>
-  );
-};
+  footer,
+  footerClassName,
+}: TCommonTableProps) => (
+  <ScrollArea fixedLayout disableScrollbar className={cn(tableContainerClassName)}>
+    <section className={cn('w-full overflow-hidden rounded-md border')}>
+      {header && <section className={cn('border-b p-4', headerClassName)}>{header}</section>}
+      <Table>
+        <TableHeader>
+          <TableRow className='border-none'>{head}</TableRow>
+        </TableHeader>
+        <TableBody>{children}</TableBody>
+      </Table>
+      {footer && <section className={cn('', footerClassName)}>{footer}</section>}
+    </section>
+    <ScrollBar />
+  </ScrollArea>
+);
 
 type TCommonTableProps = PropsWithChildren<{
   tableContainerClassName?: string;
   headerClassName?: string;
+  footerClassName?: string;
   head: ReactNode;
   header?: ReactNode;
+  footer?: ReactNode;
 }>;
