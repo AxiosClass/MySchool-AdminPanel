@@ -21,54 +21,46 @@ export const Loader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEle
 Loader.displayName = 'Loader';
 
 // Cards Loader
-type CardsLoaderProps = { className?: { card?: string } };
-export const CardsLoader = ({ className }: CardsLoaderProps) => {
-  return (
-    <div className='mt-6 grid gap-6 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-      {[...Array(4)].map((_, index) => (
-        <Skeleton className={cn('h-52 w-full', className?.card)} key={index} />
-      ))}
-    </div>
-  );
-};
+type CardsLoaderProps = { cardClassName?: string; size?: number };
+export const CardsLoader = ({ cardClassName, size = 4 }: CardsLoaderProps) => (
+  <div className='mt-6 grid gap-6 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+    {[...Array(size)].map((_, index) => (
+      <Skeleton className={cn('h-52 w-full', cardClassName)} key={index} />
+    ))}
+  </div>
+);
 
 // Page Header Loader
-export const PageHeaderLoader = () => {
-  return (
-    <div className='flex items-center justify-between px-6'>
-      <Skeleton className='h-10 w-32 md:w-60' />
-      <Skeleton className='h-10 w-16 md:w-40' />
-    </div>
-  );
-};
+export const PageHeaderLoader = () => (
+  <div className='flex items-center justify-between px-6'>
+    <Skeleton className='h-10 w-32 md:w-60' />
+    <Skeleton className='h-10 w-16 md:w-40' />
+  </div>
+);
 
 // Page With Card Loader
-export const PageWithCardLoader = () => {
-  return (
-    <section className='my-6'>
-      <PageHeaderLoader />
-      <CardsLoader />
-    </section>
-  );
-};
+export const PageWithCardLoader = () => (
+  <section className='my-6'>
+    <PageHeaderLoader />
+    <CardsLoader />
+  </section>
+);
 
 // Table Loader
-export const TableLoader = ({ className }: { className?: string }) => {
-  return (
-    <div className={cn('flex flex-col gap-2 px-6', className)}>
-      <Skeleton className='h-10' />
-      {Array.from({ length: 4 }).map((_, index) => (
-        <div key={index} className='flex items-center gap-2'>
-          <Skeleton className='h-10 w-full' />
-          <Skeleton className='h-10 w-full' />
-          <Skeleton className='h-10 w-full' />
-          <Skeleton className='h-10 w-full' />
-          <Skeleton className='h-10 w-full' />
-        </div>
-      ))}
-    </div>
-  );
-};
+export const TableLoader = ({ className }: { className?: string }) => (
+  <div className={cn('flex flex-col gap-2 px-6', className)}>
+    <Skeleton className='h-10' />
+    {Array.from({ length: 4 }).map((_, index) => (
+      <div key={index} className='flex items-center gap-2'>
+        <Skeleton className='h-10 w-full' />
+        <Skeleton className='h-10 w-full' />
+        <Skeleton className='h-10 w-full' />
+        <Skeleton className='h-10 w-full' />
+        <Skeleton className='h-10 w-full' />
+      </div>
+    ))}
+  </div>
+);
 
 // Page With Table Loader
 export const PageWithTableLoader = () => (
@@ -81,8 +73,8 @@ export const PageWithTableLoader = () => (
 );
 
 type TTableBodyLoaderProps = { rows?: number; cols?: number };
-export const TableBodyLoader = ({ rows = 4, cols = 4 }: TTableBodyLoaderProps) => {
-  return Array.from({ length: rows }).map((_, rowIndex) => (
+export const TableBodyLoader = ({ rows = 4, cols = 4 }: TTableBodyLoaderProps) =>
+  Array.from({ length: rows }).map((_, rowIndex) => (
     <TableRow key={rowIndex}>
       {Array.from({ length: cols }).map((_, colIndex) => (
         <TableCell key={colIndex}>
@@ -91,7 +83,6 @@ export const TableBodyLoader = ({ rows = 4, cols = 4 }: TTableBodyLoaderProps) =
       ))}
     </TableRow>
   ));
-};
 
 export const PageWithCoverLoader = () => (
   <ScrollArea>
@@ -110,55 +101,53 @@ export const CoverLoader = ({ className }: { className?: string }) => (
   </div>
 );
 
-export const PostCardLoader = ({ className }: { className?: string }) => {
-  return (
-    <div className={cn('flex w-full flex-col gap-6', className)}>
-      {Array.from({ length: 2 }).map((_, index) => (
-        <Card key={index} className='mx-auto w-full shadow-sm'>
-          <CardHeader className='pb-3'>
-            <div className='flex items-start justify-between'>
-              <div className='flex items-center space-x-3'>
-                {/* Avatar skeleton */}
-                <Skeleton className='h-10 w-10 rounded-full' />
-                <div className='space-y-2'>
-                  {/* Title skeleton */}
-                  <Skeleton className='h-5 w-48' />
-                  {/* Metadata skeleton */}
-                  <div className='flex items-center space-x-4'>
-                    <Skeleton className='h-3 w-20' />
-                    <Skeleton className='h-3 w-24' />
-                  </div>
+export const PostCardLoader = ({ className }: { className?: string }) => (
+  <div className={cn('flex w-full flex-col gap-6', className)}>
+    {Array.from({ length: 2 }).map((_, index) => (
+      <Card key={index} className='mx-auto w-full shadow-sm'>
+        <CardHeader className='pb-3'>
+          <div className='flex items-start justify-between'>
+            <div className='flex items-center space-x-3'>
+              {/* Avatar skeleton */}
+              <Skeleton className='h-10 w-10 rounded-full' />
+              <div className='space-y-2'>
+                {/* Title skeleton */}
+                <Skeleton className='h-5 w-48' />
+                {/* Metadata skeleton */}
+                <div className='flex items-center space-x-4'>
+                  <Skeleton className='h-3 w-20' />
+                  <Skeleton className='h-3 w-24' />
                 </div>
               </div>
-              <div className='flex items-center space-x-2'>
-                {/* Media badge skeleton */}
-                <Skeleton className='h-6 w-8 rounded-full' />
-                {/* Three dot menu skeleton */}
-                <Skeleton className='h-6 w-6 rounded-full' />
-              </div>
             </div>
-          </CardHeader>
+            <div className='flex items-center space-x-2'>
+              {/* Media badge skeleton */}
+              <Skeleton className='h-6 w-8 rounded-full' />
+              {/* Three dot menu skeleton */}
+              <Skeleton className='h-6 w-6 rounded-full' />
+            </div>
+          </div>
+        </CardHeader>
 
-          <CardContent className='space-y-4'>
-            <div className='space-y-2'>
-              <Skeleton className='h-4 w-full' />
-              <Skeleton className='h-4 w-full' />
-              <Skeleton className='h-4 w-3/4' />
+        <CardContent className='space-y-4'>
+          <div className='space-y-2'>
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-3/4' />
+          </div>
+          <div className='space-y-3'>
+            <Skeleton className='h-4 w-20' />
+            <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
+              {Array.from({ length: 2 }).map((_, index) => (
+                <Skeleton key={index} className='h-32 w-full rounded-lg' />
+              ))}
             </div>
-            <div className='space-y-3'>
-              <Skeleton className='h-4 w-20' />
-              <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
-                {Array.from({ length: 2 }).map((_, index) => (
-                  <Skeleton key={index} className='h-32 w-full rounded-lg' />
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-};
+          </div>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+);
 
 export const StudentProfileSkeleton = ({ className }: { className?: string }) => (
   <Card className={cn('m-6 overflow-hidden border-0 bg-white', className)}>

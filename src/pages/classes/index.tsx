@@ -24,7 +24,7 @@ export default function ClassesPage() {
 const ClassList = () => {
   const { data: classesData, isLoading } = useQuery({ queryKey: [QK.CLASS], queryFn: getClasses });
 
-  if (isLoading) return <CardsLoader className={{ card: 'h-36' }} />;
+  if (isLoading) return <CardsLoader size={3} />;
   if (!classesData?.data.length) return <Message message='No Class Found!' />;
 
   return (

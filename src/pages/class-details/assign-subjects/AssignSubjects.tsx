@@ -1,38 +1,53 @@
 import { QK } from '@/api';
-import { usePopupState } from '@/hooks';
 import { FormSheet } from '@/components/shared/form';
 import { AssignSubjectsForm, TAssignSubjectsForm } from './AssignSubjectsForm';
 import { ActionButton } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { getAssignedSubjects } from '@/api/query';
 import { Skeleton } from '@/components/ui/skeleton';
+import { AssignSubjectStoreProvider, useAssignSubjectStore } from './assignSubjectStore';
+import { useStore } from 'zustand';
 
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
+  return (
+    <AssignSubjectStoreProvider>
+      <AssignSubjectSheet classId={classId} />
+    </AssignSubjectStoreProvider>
+  );
+};
+
+type AssignedSubjectsProps = { classId: string; formId: string };
+
+const AssignSubjectSheet = ({ classId }: { classId: string }) => {
   const formId = QK.SUBJECT + '_ASSIGN_SUBJECT_' + classId;
-  const { open, onOpenChange } = usePopupState();
+  const store = useAssignSubjectStore();
+  const sheetOpen = useStore(store, (state) => state.sheetOpen);
+  const setSheetOpen = useStore(store, (state) => state.setSheetOpen);
+  const setPopOpen = useStore(store, (state) => state.setPopOpen);
 
   return (
     <>
-      <ActionButton actionType='ADD' label='Assign Subjects' onClick={() => onOpenChange(true)} />
+      <ActionButton actionType='ADD' label='Assign Subjects' onClick={() => setSheetOpen(true)} />
       <FormSheet
         formId={formId}
-        open={open}
-        onOpenChange={onOpenChange}
+        open={sheetOpen}
+        onOpenChange={(open) => {
+          setSheetOpen(open);
+          if (!open) setPopOpen(false);
+        }}
         title='Assign Subjects'
         description='Provide following information'
         submitButtonTitle='Save'
         submitLoadingTitle='Saving...'
       >
-        <AssignedSubjects classId={classId} formId={formId} onOpenChange={onOpenChange} />
+        <AssignedSubjects classId={classId} formId={formId} />
       </FormSheet>
     </>
   );
 };
 
-type AssignedSubjectsProps = { classId: string; formId: string; onOpenChange: (open: boolean) => void };
-
-const AssignedSubjects = ({ classId, formId, onOpenChange }: AssignedSubjectsProps) => {
+const AssignedSubjects = ({ classId, formId }: AssignedSubjectsProps) => {
   const { data, isLoading } = useQuery({
     queryKey: [QK.SUBJECT, { classId }],
     queryFn: () => getAssignedSubjects(classId),
@@ -45,9 +60,7 @@ const AssignedSubjects = ({ classId, formId, onOpenChange }: AssignedSubjectsPro
 
   if (isLoading) return <AssignSubjectLoading />;
 
-  return (
-    <AssignSubjectsForm formId={formId} defaultValues={defaultValues} onOpenChange={onOpenChange} classId={classId} />
-  );
+  return <AssignSubjectsForm formId={formId} defaultValues={defaultValues} classId={classId} />;
 };
 
 const AssignSubjectLoading = () => <Skeleton className='h-20 w-full' />;
