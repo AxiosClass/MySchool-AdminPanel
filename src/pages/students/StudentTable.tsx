@@ -3,7 +3,7 @@ import moment from 'moment';
 import { QK } from '@/api';
 import { TUserSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
-import { getStudents, TGetStudentSResult } from '@/api/query';
+import { getClassList, getStudents, TGetStudentSResult } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
@@ -11,22 +11,35 @@ import { Pagination, SearchInput, TableNoData, usePagination, UserIcon } from '@
 import { dateFormatString } from '@/data';
 import { AddStudent } from './AddStudent';
 import { IssueNfcCard } from './IssueNfcCard';
+import { useCallback, useState } from 'react';
+import { CommonSelect } from '@/components/shared/form';
 
 export const StudentTable = () => {
   const { value, searchTerm, onSearchChange } = useSearch();
+  const [classLevel, setClassLevel] = useState('all');
   const { page, onPageChange } = usePagination();
-  const LIMIT = '10';
 
+  const onClassChangeLevelChange = useCallback((level: string) => setClassLevel(level), []);
+
+  const LIMIT = '10';
   const { data, isLoading } = useQuery({
-    queryKey: [QK.STUDENT, { searchTerm, page, LIMIT }],
-    queryFn: () => getStudents({ searchTerm, page: page.toString(), limit: LIMIT }),
+    queryKey: [QK.STUDENT, { searchTerm, page, LIMIT, classLevel }],
+    queryFn: () =>
+      getStudents({ searchTerm, page: page.toString(), limit: LIMIT, ...(classLevel !== 'all' && { classLevel }) }),
     select: (res) => ({ students: res.data, meta: res.meta }),
   });
 
   return (
     <CommonTable
       head={<StudentTableHead />}
-      header={<StudentTableHeader value={value} onSearchChange={onSearchChange} />}
+      header={
+        <StudentTableHeader
+          value={value}
+          onSearchChange={onSearchChange}
+          classLevel={classLevel}
+          onClassLevelChange={onClassChangeLevelChange}
+        />
+      }
       footer={<Pagination page={page} onPageChange={onPageChange} totalPages={data?.meta?.totalPages ?? 0} />}
       tableContainerClassName='px-6 mt-6'
     >
@@ -34,8 +47,6 @@ export const StudentTable = () => {
     </CommonTable>
   );
 };
-
-type TStudentTableHeaderProps = Pick<TUserSearch, 'value' | 'onSearchChange'>;
 
 const StudentTableHead = () => (
   <>
@@ -48,12 +59,45 @@ const StudentTableHead = () => (
   </>
 );
 
-const StudentTableHeader = ({ value, onSearchChange }: TStudentTableHeaderProps) => (
-  <div className='flex items-center justify-between gap-4'>
-    <SearchInput value={value} onSearchChange={onSearchChange} placeholder='Search by id, name..' />
-    <AddStudent />
-  </div>
-);
+type TStudentTableHeaderProps = Pick<TUserSearch, 'value' | 'onSearchChange'> & {
+  classLevel: string;
+  onClassLevelChange: (level: string) => void;
+};
+
+const StudentTableHeader = ({ value, onSearchChange, classLevel, onClassLevelChange }: TStudentTableHeaderProps) => {
+  const { data: classOptions } = useQuery({
+    queryKey: [QK.CLASS, 'LIST'],
+    queryFn: getClassList,
+    select: (res) => {
+      const classOptions = [{ label: 'All', value: 'all' }];
+      res.data
+        .sort((a, b) => Number(a.level) - Number(b.level))
+        .forEach((cls) => classOptions.push({ label: cls.name, value: cls.level }));
+      return classOptions;
+    },
+  });
+
+  return (
+    <div className='flex items-center justify-between gap-4'>
+      <div className='flex items-center gap-4'>
+        <SearchInput
+          className='shrink-0'
+          value={value}
+          onSearchChange={onSearchChange}
+          placeholder='Search by id, name..'
+        />
+        <CommonSelect
+          className='min-w-40'
+          options={classOptions || []}
+          value={classLevel}
+          onChange={onClassLevelChange}
+        />
+      </div>
+
+      <AddStudent />
+    </div>
+  );
+};
 
 type TStudentTableBodyProps = { students: TGetStudentSResult; isLoading: boolean };
 
