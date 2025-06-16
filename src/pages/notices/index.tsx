@@ -28,11 +28,11 @@ const NoticeList = () => {
     select: (res) => res.data,
   });
 
-  if (isLoading) return <CardsLoader />;
+  if (isLoading) return <CardsLoader size={3} />;
   if (!notices?.length) return <Message message='No Notices Found!' className='mt-4' />;
 
   return (
-    <div className='grid gap-4 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+    <div className='grid gap-4 px-6 md:grid-cols-2 lg:grid-cols-3'>
       {notices.map((notice) => (
         <NoticeCard key={notice.id} notice={notice} deleteNotice updateNotice showNoticeFor />
       ))}

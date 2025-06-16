@@ -16,8 +16,6 @@ import { MainLayout } from './layout/main-layout';
 import LoginPage from './pages/login';
 
 const lazyPages = {
-  // auth
-  // login: lazy(() => import('@/pages/login')),
   // admin
   home: lazy(() => import('@/pages/home')),
   adminClasses: lazy(() => import('@/pages/classes')),

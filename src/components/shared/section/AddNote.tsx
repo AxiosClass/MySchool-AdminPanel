@@ -40,7 +40,7 @@ export const AddNote = ({ sectionId }: TAddNoteProps) => {
 
   return (
     <>
-      <Button variant='outline' onClick={() => onOpenChange(true)}>
+      <Button variant='outline' className='bg-white' onClick={() => onOpenChange(true)}>
         <PlusIcon size={16} />
         Add Note
       </Button>

@@ -6,7 +6,7 @@ export default function NoticesPageForStudent() {
   return (
     <>
       <PageTitle title='Notices' />
-      <ScrollArea className='pt-6'>
+      <ScrollArea>
         <PageHeader label='Notices' />
         <NoticeList />
       </ScrollArea>

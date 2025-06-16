@@ -8,6 +8,7 @@ import { NoticeCard } from './NoticeCard';
 
 export const NoticeList = () => {
   const user = useAuthStore((state) => state.user);
+
   const { data: notices, isLoading } = useQuery({
     queryKey: [QK.NOTICE, 'MINE', { id: user?.id }],
     queryFn: getMyNotices,
@@ -15,11 +16,11 @@ export const NoticeList = () => {
     enabled: !!user?.id,
   });
 
-  if (isLoading) return <CardsLoader />;
+  if (isLoading) return <CardsLoader size={3} />;
   if (!notices?.length) return <Message message='No Notices Found!' className='mt-6' />;
 
   return (
-    <div className='grid gap-4 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+    <div className='grid gap-4 px-6 md:grid-cols-2 lg:grid-cols-3'>
       {notices.map((notice) => (
         <NoticeCard key={notice.id} notice={notice} />
       ))}
