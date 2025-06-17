@@ -6,6 +6,7 @@ import {
   getTeachersSubjects,
   getTermsResultSummary,
   getAttendancesForStudent,
+  getSubjectListForClassroom,
 } from '@/api/query';
 
 import { QK } from '@/api';
@@ -105,5 +106,13 @@ export const useGetStudentAttendance = ({ studentId, start, end }: TUseGetStuden
     queryFn: () => getAttendancesForStudent({ studentId, start, end }),
     select: (res) => res.data,
     enabled: !!studentId,
+  });
+};
+
+export const useGetSubjectListFormClassroom = (sectionId: string) => {
+  return useQuery({
+    queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }],
+    queryFn: () => getSubjectListForClassroom(sectionId),
+    select: (res) => res.data,
   });
 };

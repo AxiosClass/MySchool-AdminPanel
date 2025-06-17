@@ -22,7 +22,7 @@ export const apiUrl = {
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
   getClassroomDetails: (classroomId: string) => `/classroom/${classroomId}`,
   addNote: `/classroom/note`,
-  getNotes: (classroomId: string) => `/classroom/${classroomId}/notes`,
+  getNotes: (classroomId: string, searchParams: string) => `/classroom/${classroomId}/notes${searchParams}`,
   updateNote: (noteId: string) => `/classroom/note/${noteId}`,
   deleteNote: (noteId: string) => `/classroom/note/${noteId}`,
   getTeacherSubjects: (classroomId: string) => `/classroom/${classroomId}/teacher-subjects`,

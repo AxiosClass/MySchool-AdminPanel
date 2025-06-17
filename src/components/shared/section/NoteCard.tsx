@@ -40,9 +40,12 @@ const NoteHeader = ({ note }: { note: TNoteCardProps['note'] }) => {
             </AvatarFallback>
           </Avatar>
           <div>
-            <h3 className='text-lg font-semibold leading-tight'>{note.title}</h3>
+            <div className='flex items-center gap-2'>
+              <h3 className='text-lg font-semibold leading-tight'>{note.teacher.name}</h3>
+              {note.subject?.name && <Badge variant='outline'>{note.subject.name}</Badge>}
+            </div>
+
             <div className='mt-1 flex items-center gap-6 text-sm text-muted-foreground'>
-              <InfoItem icon={<UserIcon className='h-3 w-3' />} text={note.teacher.name} />
               <InfoItem icon={<CalendarIcon className='h-3 w-3' />} text={formattedDate} />
             </div>
           </div>

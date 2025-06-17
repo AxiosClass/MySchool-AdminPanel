@@ -31,7 +31,7 @@ export const RemoveSubjectTeacher = ({ classroomSubjectTeacherId, sectionId }: T
   return (
     <>
       <TooltipContainer label='Remove Teacher'>
-        <Button variant='destructive' onClick={() => onOpenChange(true)}>
+        <Button variant='destructive' onClick={() => onOpenChange(true)} size='icon'>
           <TrashIcon size={16} />
         </Button>
       </TooltipContainer>

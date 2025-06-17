@@ -22,7 +22,7 @@ export const AssignSubjectTeacher = ({ sectionId, subjectId }: TAssignSubjectTea
   return (
     <>
       <TooltipContainer label='Assign Teacher'>
-        <Button onClick={() => onOpenChange(true)}>
+        <Button onClick={() => onOpenChange(true)} size='icon'>
           <UserPlusIcon size={16} />
         </Button>
       </TooltipContainer>

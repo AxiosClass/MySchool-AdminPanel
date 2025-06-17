@@ -1,45 +1,35 @@
-import { QK } from '@/api';
-import { TableLoader } from '@/components/loader';
-import { getSubjectListForClassroom, TGetSubjectsForClassroom } from '@/api/query';
+import { TableBodyLoader } from '@/components/loader';
+import { TGetSubjectsForClassroom } from '@/api/query';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CommonTable, TableNoData } from '@/components/shared';
 import { AssignSubjectTeacher } from './AssignSubjectTeacher';
-import { useQuery } from '@tanstack/react-query';
 import { RemoveSubjectTeacher } from './RemoveSubjectTeacher';
-import { useMemo } from 'react';
+import { useGetSubjectListFormClassroom } from '@/hooks';
 
 type SubjectTableProps = { sectionId: string };
 
 export const SubjectTable = ({ sectionId }: SubjectTableProps) => {
-  const { data: subjectList, isLoading } = useQuery({
-    queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }],
-    queryFn: () => getSubjectListForClassroom(sectionId),
-    select: (res) => res.data,
-  });
-
-  const tableHead = useMemo(() => {
-    return (
-      <>
-        <TableHead>Name</TableHead>
-        <TableHead>Type</TableHead>
-        <TableHead>Teacher Info</TableHead>
-        <TableHead>Action</TableHead>
-      </>
-    );
-  }, []);
-
-  if (isLoading) return <TableLoader />;
-
+  const { data: subjectList, isLoading } = useGetSubjectListFormClassroom(sectionId);
   return (
-    <CommonTable head={tableHead} tableContainerClassName='px-6'>
-      <SubjectTableBody subjectList={subjectList ?? []} sectionId={sectionId} />
+    <CommonTable head={<SubjectTableHead />} tableContainerClassName='px-6'>
+      <SubjectTableBody subjectList={subjectList ?? []} sectionId={sectionId} isLoading={isLoading} />
     </CommonTable>
   );
 };
 
-type TSubjectTableBodyProps = { subjectList: TGetSubjectsForClassroom[]; sectionId: string };
+const SubjectTableHead = () => (
+  <>
+    <TableHead>Name</TableHead>
+    <TableHead>Type</TableHead>
+    <TableHead>Teacher Info</TableHead>
+    <TableHead>Action</TableHead>
+  </>
+);
 
-const SubjectTableBody = ({ subjectList, sectionId }: TSubjectTableBodyProps) => {
+type TSubjectTableBodyProps = { subjectList: TGetSubjectsForClassroom[]; isLoading: boolean; sectionId: string };
+
+const SubjectTableBody = ({ subjectList, sectionId, isLoading }: TSubjectTableBodyProps) => {
+  if (isLoading) return <TableBodyLoader cols={4} />;
   if (!subjectList.length) return <TableNoData colSpan={4} message='No Subject Found' />;
 
   return subjectList.map(({ id, subjectId, subjectName, subjectType, teacher }) => (

@@ -40,6 +40,8 @@ export const AddTeacher = () => {
       toast.success(res.message);
       onOpenChange(false);
       qc.invalidateQueries({ queryKey: [QK.TEACHER] });
+      qc.invalidateQueries({ queryKey: [QK.CLASSROOM] });
+      qc.invalidateQueries({ queryKey: [QK.SUBJECT] });
       form.reset();
     },
   });

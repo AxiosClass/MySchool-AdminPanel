@@ -31,11 +31,17 @@ export const AddNote = ({ sectionId }: TAddNoteProps) => {
   });
 
   const onAddNote = async (formData: TNoteForm) => {
-    const { title, description, files } = formData;
+    const { title, description, files, subjectId } = formData;
 
     let media: TMedia[] = [];
     if (files.new.length) media = await uploadFile(files.new);
-    handleAddNote({ classroomId: sectionId, title, description, ...(media.length && { media }) });
+    handleAddNote({
+      classroomId: sectionId,
+      title,
+      description,
+      ...(subjectId && { subjectId }),
+      ...(media.length && { media }),
+    });
   };
 
   return (
@@ -53,7 +59,7 @@ export const AddNote = ({ sectionId }: TAddNoteProps) => {
         submitButtonTitle='Add'
         submitLoadingTitle='Adding...'
       >
-        <NoteForm formId={formId} onSubmit={onAddNote} />
+        <NoteForm formId={formId} onSubmit={onAddNote} sectionId={sectionId} />
       </FormSheet>
     </>
   );
