@@ -1,7 +1,7 @@
 import { SUBJECT_TYPE, TMedia, TNote, TPromiseResponse, TSubject, TTeacher } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
-import { apiUrl } from '../apiUrl';
 import { makeUrlParams } from '@/helpers';
+import { apiUrl } from '../apiUrl';
 
 export const createClassroom = async (payload: TCreateClassroomPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.createClassroom, payload);
@@ -23,7 +23,7 @@ export const deleteSubjectTeacher = async (classRoomSubjectTeacherId: string): T
   return response.data;
 };
 
-export const getClassroomsForTeacher = async (teacherId: string): TPromiseResponse<TGetClassroomForTeacher> => {
+export const getClassroomsForTeacher = async (teacherId: string): TPromiseResponse<TGetClassroomForTeacherResponse> => {
   const response = await axiosInstance.get(apiUrl.getClassroomsForTeacher(teacherId));
   return response.data;
 };
@@ -73,8 +73,8 @@ export type TGetSubjectsForClassroom = {
 
 type TCreateClassroomPayload = { name: string; classId: string; classTeacherId: string };
 type TAssignSubjectTeacherPayload = { teacherId: string; classroomId: string; subjectId: string };
-type TClassroomInfo = { id: string; name: string; class: { name: string }; students: { id: string }[] };
-type TGetClassroomForTeacher = { asClassTeacher: TClassroomInfo[]; asSubjectTeacher: TClassroomInfo[] };
+type TClassroomInfo = { id: string; name: string; class: { level: string }; students: { id: string }[] };
+type TGetClassroomForTeacherResponse = { asClassTeacher: TClassroomInfo[]; asSubjectTeacher: TClassroomInfo[] };
 type TGetClassroomDetails = { name: string; level: string; classTeacher: { id: string; name: string } | null };
 type TAddNotePayload = Pick<TNote, 'title' | 'classroomId' | 'description' | 'media' | 'subjectId'>;
 

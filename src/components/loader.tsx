@@ -23,7 +23,7 @@ Loader.displayName = 'Loader';
 // Cards Loader
 type CardsLoaderProps = { cardClassName?: string; size?: number };
 export const CardsLoader = ({ cardClassName, size = 4 }: CardsLoaderProps) => (
-  <div className='mt-6 grid gap-6 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+  <div className='mt-6 flex items-center gap-6 px-6'>
     {[...Array(size)].map((_, index) => (
       <Skeleton className={cn('h-52 w-full', cardClassName)} key={index} />
     ))}
@@ -39,10 +39,10 @@ export const PageHeaderLoader = () => (
 );
 
 // Page With Card Loader
-export const PageWithCardLoader = () => (
+export const PageWithCardLoader = ({ size = 4 }: { size?: number }) => (
   <section className='my-6'>
     <PageHeaderLoader />
-    <CardsLoader />
+    <CardsLoader size={size} />
   </section>
 );
 

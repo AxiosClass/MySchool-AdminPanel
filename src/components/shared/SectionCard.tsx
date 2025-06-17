@@ -9,16 +9,27 @@ type TSectionCardProps = {
   students: { id: string }[];
   linkPrefix: string;
   isClassTeacher?: boolean;
+  class?: { level: string };
 };
 
-export const SectionCard = ({ id, name, classTeacher, students, linkPrefix, isClassTeacher }: TSectionCardProps) => (
+export const SectionCard = ({
+  id,
+  name,
+  classTeacher,
+  students,
+  linkPrefix,
+  isClassTeacher,
+  class: cls,
+}: TSectionCardProps) => (
   <Link to={`${linkPrefix}/${id}`} data-teacher={isClassTeacher ?? undefined}>
     <Card
       data-teacher={isClassTeacher ?? undefined}
       className='border-primary-100 bg-transparent data-[teacher]:bg-primary-50'
     >
       <CardHeader className='flex-row items-center justify-between gap-2 px-4 pb-2 pt-4'>
-        <CardTitle className='text-xl'>{name}</CardTitle>
+        <CardTitle className='text-xl'>
+          {name} {cls && `(${cls.level})`}
+        </CardTitle>
         {isClassTeacher && <FaChalkboardTeacher className='size-5' />}
       </CardHeader>
       <CardContent className='mt-2'>

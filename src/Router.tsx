@@ -59,7 +59,7 @@ const router = createBrowserRouter([
     children: [
       // admins
       { path: '/', element: withSuspense(lazyPages.home, <DashboardPageLoader />) },
-      { path: '/classes', element: withSuspense(lazyPages.adminClasses, <PageWithCardLoader />) },
+      { path: '/classes', element: withSuspense(lazyPages.adminClasses, <PageWithCardLoader size={3} />) },
       { path: '/class/:classId', element: withSuspense(lazyPages.adminClassDetails, <PageWithCardLoader />) },
       { path: '/section/:sectionId', element: withSuspense(lazyPages.adminSection, <PageWithTableLoader />) },
       { path: '/teachers', element: withSuspense(lazyPages.adminTeachers, <PageWithTableLoader />) },

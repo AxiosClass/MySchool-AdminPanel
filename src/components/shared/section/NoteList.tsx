@@ -10,7 +10,6 @@ import { useCallback, useMemo, useState } from 'react';
 import { CommonSelect } from '../form';
 
 type TNoteListProps = { sectionId: string; className?: string };
-
 export const NoteList = ({ sectionId, className }: TNoteListProps) => {
   const [subjectId, setSubjectId] = useState('');
   const onSubjectIdChange = useCallback((subjectId: string) => setSubjectId(subjectId), []);
