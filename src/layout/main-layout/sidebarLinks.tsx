@@ -23,7 +23,7 @@ export const useSidebarLinks = () => {
       { title: 'Subjects', url: '/subjects', icon: <IoIosBookmarks /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Terms', url: '/terms', icon: <FaNoteSticky /> },
-      { title: 'Admins', url: '/admins', icon: <FaUserSecret /> },
+      ...(user?.role === USER_ROLE.SUPER_ADMIN ? [{ title: 'Admins', url: '/admins', icon: <FaUserSecret /> }] : []),
     ];
   else if (user?.role === USER_ROLE.TEACHER)
     return [
