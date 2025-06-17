@@ -57,7 +57,12 @@ export const EditNote = ({ note, onActionChange }: TEditNoteProps) => {
         submitButtonTitle='Update'
         submitLoadingTitle='Updating...'
       >
-        <NoteForm formId={formId} defaultValues={defaultValues} onSubmit={handleUpdateNote} />
+        <NoteForm
+          formId={formId}
+          defaultValues={defaultValues}
+          onSubmit={handleUpdateNote}
+          sectionId={note.classroomId}
+        />
       </FormSheet>
     </>
   );
