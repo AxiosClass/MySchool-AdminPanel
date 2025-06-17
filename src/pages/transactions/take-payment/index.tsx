@@ -13,7 +13,6 @@ import { StudentProfile } from '@/components/shared/student-profile';
 import { StudentProfileSkeleton } from '@/components/loader';
 import { MakePayment, Message } from '@/components/shared';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 
 export default function TakePaymentPage() {
@@ -95,9 +94,9 @@ const StudentSelection = ({ studentId, onStudentIdChange }: TStudentSelectionPro
   return (
     <Popover open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
-        <Button variant='outline' className='h-14 w-full justify-start bg-transparent'>
+        <button className='flex h-14 w-full items-center justify-start rounded-md border bg-transparent px-4 py-2'>
           {selectedStudentDisplay}
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent className='w-[var(--radix-popover-trigger-width)]'>
         <Command shouldFilter={false}>

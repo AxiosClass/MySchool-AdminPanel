@@ -102,4 +102,5 @@ const ActionButton = React.forwardRef<HTMLButtonElement, TActionButtonProps>(
 
 ActionButton.displayName = 'ActionButton';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { Button, buttonVariants, ActionButton };

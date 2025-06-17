@@ -13,6 +13,7 @@ import { AddStudent } from './AddStudent';
 import { IssueNfcCard } from './IssueNfcCard';
 import { useCallback, useState } from 'react';
 import { CommonSelect } from '@/components/shared/form';
+import { Link } from 'react-router-dom';
 
 export const StudentTable = () => {
   const { value, searchTerm, onSearchChange } = useSearch();
@@ -125,7 +126,9 @@ const StudentTableRow = ({
       <div className='flex gap-4'>
         <UserIcon username={name} />
         <div>
-          <p className='text-base font-semibold'>{name}</p>
+          <Link to={`/student/${id}`}>
+            <p className='text-base font-semibold'>{name}</p>
+          </Link>
           <p className='text-sm text-muted-foreground'>ID : {id}</p>
           {cardId && <p className='text-sm text-muted-foreground'>CardID : {cardId}</p>}
         </div>
