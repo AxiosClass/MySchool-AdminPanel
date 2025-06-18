@@ -14,6 +14,7 @@ import { StudentProfileSkeleton } from '@/components/loader';
 import { MakePayment, Message } from '@/components/shared';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { GiveDiscount } from '@/components/shared/give-discount';
 
 export default function TakePaymentPage() {
   const [studentId, setStudentId] = useState('');
@@ -148,7 +149,8 @@ const StudentProfileFetcher = ({ studentId }: { studentId: string }) => {
 
   return (
     <StudentProfile {...studentInfo} showPaymentInfo>
-      <div className='ml-auto'>
+      <div className='ml-auto flex items-center gap-4'>
+        <GiveDiscount studentId={studentId} />
         <MakePayment studentId={studentId} />
       </div>
     </StudentProfile>

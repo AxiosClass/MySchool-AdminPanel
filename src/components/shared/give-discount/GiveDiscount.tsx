@@ -40,7 +40,7 @@ export const GiveDiscount = ({ studentId }: { studentId: string }) => {
   return (
     <>
       <Button variant='outline' onClick={() => onOpenChange(true)} className='bg-white'>
-        <MdDiscount className='size-4' /> Take Payment
+        <MdDiscount className='size-4' /> Grant Discount
       </Button>
       <FormDialog
         open={open}

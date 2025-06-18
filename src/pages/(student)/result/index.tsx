@@ -1,11 +1,11 @@
+import { TermSummaryTable, YearPicker } from '@/components/shared/result-summary';
 import { PageWithTableLoader, TableLoader } from '@/components/loader';
 import { Message, PageHeader, PageTitle } from '@/components/shared';
-import { TermSummaryTable, YearPicker } from '@/components/shared/result-summary';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { getYearsFromDateToNow } from '@/helpers';
 import { useGetStudentInfo, useGetTermResultSummary } from '@/hooks';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuthStore } from '@/stores/auth';
 import { useCallback, useState } from 'react';
+import { getYearsFromDateToNow } from '@/helpers';
 
 export default function StudentResultPage() {
   const studentId = useAuthStore((state) => state.user?.id as string);

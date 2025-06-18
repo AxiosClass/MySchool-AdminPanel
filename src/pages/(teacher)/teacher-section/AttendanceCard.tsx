@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { errorToast } from '@/helpers';
+import { Link } from 'react-router-dom';
 
 type TAttendanceCardProps = TAttendanceForClassroom['attendanceList'][number] & { isClassTeacher: boolean };
 
@@ -25,10 +26,15 @@ export const AttendanceCard = ({
   return (
     <Card className={cn('border-l-4 transition-colors', config.cardClassName)}>
       <CardContent className='flex items-center gap-4 p-4'>
-        <StudentAvatar name={name} className={config?.indicatorClass} />
+        <Link to={`/student/${studentId}`}>
+          <StudentAvatar name={name} className={config?.indicatorClass} />
+        </Link>
 
         <div className='min-w-0 flex-1'>
-          <h3 className='truncate font-semibold'>{name}</h3>
+          <Link to={`/student/${studentId}`}>
+            <h3 className='truncate font-semibold'>{name}</h3>
+          </Link>
+
           <p className='mt-1 text-sm text-muted-foreground'>
             <span className='font-bold'># </span>
             {studentId}
