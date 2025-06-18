@@ -1,6 +1,6 @@
 import { TGetClassDetails } from '@/api/query';
 import { Message } from '@/components/shared';
-import { SectionCard } from '@/components/shared';
+import { SectionCard } from '@/components/shared/section';
 
 export const ClassRoomList = ({ classrooms }: { classrooms: TGetClassDetails['classrooms'] }) => {
   if (!classrooms.length) return <Message message='No Classrooms Found!' />;

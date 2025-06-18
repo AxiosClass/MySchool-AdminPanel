@@ -3,19 +3,19 @@ import { QK } from '@/api';
 import { toast } from 'sonner';
 import { months } from '@/data';
 import { useForm, useFormContext } from 'react-hook-form';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { usePopupState } from '@/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CommonFormField, CommonSelect, FormDialog } from './form';
+import { CommonFormField, CommonSelect, FormDialog } from '../form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { errorToast, getYearsFromDateToNow } from '@/helpers';
-import { Form } from '../ui/form';
-import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
+import { Form } from '../../ui/form';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import { PAYMENT_TYPE } from '@/lib/types';
 import { getStudentClassInfo, makePayment } from '@/api/query';
 import { MdPayment } from 'react-icons/md';
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '../../ui/skeleton';
 import { useMemo } from 'react';
 
 export const MakePayment = ({ studentId }: { studentId: string }) => {

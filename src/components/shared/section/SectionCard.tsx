@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaGraduationCap, FaUserTie, FaChalkboardTeacher } from 'react-icons/fa';
 
 type TSectionCardProps = {

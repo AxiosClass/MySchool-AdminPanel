@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 import { getClassroomsForTeacher } from '@/api/query';
 import { useQuery } from '@tanstack/react-query';
 import { CardsLoader } from '@/components/loader';
-import { SectionCard } from '@/components/shared';
+import { SectionCard } from '@/components/shared/section';
 
 export default function TeacherDashboardPage() {
   const user = useAuthStore((state) => state.user);
