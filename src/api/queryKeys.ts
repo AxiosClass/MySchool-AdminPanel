@@ -16,4 +16,5 @@ export const QK = {
   NOTE: 'NOTE',
   TERM: 'TERM',
   TERM_RESULT: 'TERM_RESULT',
+  DISCOUNT: 'DISCOUNT',
 };

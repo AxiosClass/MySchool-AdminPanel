@@ -164,10 +164,25 @@ const yearOptions = getYearsFromDateToNow('2025-01-01').map((year) => ({ label: 
 
 // schema
 const makePaymentFormSchema = z.object({
-  amount: z.number().positive({ message: 'Amount can not be negative' }),
-  month: z.number().optional(),
-  year: z.number().min(2025, { message: 'Invalid Year' }),
-  description: z.string().optional(),
+  amount: z.coerce
+    .number({ invalid_type_error: 'Amount must be a number' })
+    .positive({ message: 'Amount must be greater than 0' }),
+
+  month: z.coerce
+    .number({ invalid_type_error: 'Month must be a number' })
+    .min(0, { message: 'Month must be between 1 and 12' })
+    .max(11, { message: 'Month must be between 1 and 12' })
+    .optional(),
+
+  year: z.coerce
+    .number({ invalid_type_error: 'Year must be a number' })
+    .min(2025, { message: 'Year must be 2025 or later' }),
+
+  description: z
+    .string()
+    .optional()
+    .transform((val) => val?.trim()),
+
   type: z.string().min(1, { message: 'Payment type is required' }),
 });
 

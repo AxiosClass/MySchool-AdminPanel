@@ -81,4 +81,6 @@ export const apiUrl = {
   addTermResult: `/term-result`,
   getStudentsWithTermResult: (searchParams: string) => `/term-result/students${searchParams}`,
   getTermsResultSummary: (studentId: string, year: string) => `/term-result/summary/${studentId}?${year}`,
+  // actions
+  giveDiscount: `/actions/discount`,
 };
