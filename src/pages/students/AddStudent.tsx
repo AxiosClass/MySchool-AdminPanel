@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addStudent } from '@/api/query';
 import { toast } from 'sonner';
 import { errorToast } from '@/helpers';
-import { StudentForm, TStudentForm } from '@/components/shared/student-form/student-form';
+import { StudentForm, TStudentForm } from './StudentForm';
 import { useMemo } from 'react';
 
 export const AddStudent = () => {

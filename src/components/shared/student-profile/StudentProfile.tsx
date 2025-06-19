@@ -50,7 +50,7 @@ export const StudentProfile = ({
           value={`${className} (${classLevel})`}
           color='blue'
         />
-        <InfoCardItem icon={<GiTeacher className='size-6' />} title='Classroom' value={classroomName} color='green' />
+        <InfoCardItem icon={<GiTeacher className='size-6' />} title='Section' value={classroomName} color='green' />
         <InfoCardItem
           icon={<FaCalendar className='size-6' />}
           title='Admitted Date'

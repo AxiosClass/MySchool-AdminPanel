@@ -7,6 +7,8 @@ import {
   getTermsResultSummary,
   getAttendancesForStudent,
   getSubjectListForClassroom,
+  getClassList,
+  getClassroomList,
 } from '@/api/query';
 
 import { QK } from '@/api';
@@ -114,5 +116,22 @@ export const useGetSubjectListFormClassroom = (sectionId: string) => {
     queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }],
     queryFn: () => getSubjectListForClassroom(sectionId),
     select: (res) => res.data,
+  });
+};
+
+export const useGetClassListOptions = () => {
+  return useQuery({
+    queryKey: [QK.CLASS, 'LIST'],
+    queryFn: getClassList,
+    select: (res) => res.data.map(({ level, name }) => ({ label: name, value: level })),
+  });
+};
+
+export const useGetClassroomListOptions = (cls: string) => {
+  return useQuery({
+    queryKey: [QK.CLASSROOM, { classId: cls }],
+    queryFn: () => getClassroomList(cls),
+    select: (res) => res.data.map(({ id, name }) => ({ label: name, value: id })),
+    enabled: !!cls,
   });
 };

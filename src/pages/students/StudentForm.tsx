@@ -1,12 +1,11 @@
+import { z } from 'zod';
 import { Form } from '@/components/ui/form';
-import { CommonFormField, CommonSelect, DatePicker } from '../form';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { useGetClassListOptions, useGetClassroomListOptions } from '@/hooks';
+import { CommonFormField, CommonSelect, DatePicker } from '../../components/shared/form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ClassSelection } from './class-selection';
-import { ClassroomSelection } from './classroom-selection';
 import { BLOOD_GROUP } from '@/data';
 
 type TStudentFormProps = {
@@ -74,6 +73,51 @@ export const StudentForm = ({ formId, onSubmit, defaultValues }: TStudentFormPro
         </CommonFormField>
       </form>
     </Form>
+  );
+};
+
+const ClassSelection = () => {
+  const { control, setValue } = useFormContext<TStudentForm>();
+  const { data: classes, isLoading } = useGetClassListOptions();
+
+  return (
+    <CommonFormField control={control} name='class' label='Class'>
+      {({ field }) => (
+        <CommonSelect
+          value={field.value}
+          onChange={(val) => {
+            setValue('classroomId', '');
+            field.onChange(val);
+          }}
+          placeholder='Select class'
+          options={classes || []}
+          isLoading={isLoading}
+          disabled={isLoading}
+        />
+      )}
+    </CommonFormField>
+  );
+};
+
+const ClassroomSelection = () => {
+  const { watch, control } = useFormContext<TStudentForm>();
+  const selectedClass = watch('class');
+
+  const { data: classrooms, isLoading } = useGetClassroomListOptions(selectedClass);
+
+  return (
+    <CommonFormField control={control} name='classroomId' label='Section'>
+      {({ field }) => (
+        <CommonSelect
+          value={field.value}
+          onChange={field.onChange}
+          placeholder='Select classroom'
+          options={classrooms || []}
+          isLoading={isLoading}
+          disabled={!selectedClass}
+        />
+      )}
+    </CommonFormField>
   );
 };
 
