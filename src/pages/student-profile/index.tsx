@@ -2,6 +2,7 @@ import { StudentProfileSkeleton } from '@/components/loader';
 import { MakePayment, Message, PageTitle } from '@/components/shared';
 import { AttendanceList } from '@/components/shared/attendance';
 import { GiveDiscount } from '@/components/shared/give-discount';
+import { PromoteStudent } from '@/components/shared/promote-student';
 import { StudentProfile } from '@/components/shared/student-profile';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useGetStudentInfo } from '@/hooks';
@@ -31,6 +32,7 @@ export default function StudentProfilePage() {
           <StudentProfile {...studentInfo} showPaymentInfo>
             {isAdmin && (
               <div className='ml-auto flex items-center gap-4'>
+                <PromoteStudent studentId={studentId} />
                 <GiveDiscount studentId={studentId} />
                 <MakePayment studentId={studentId} />
               </div>

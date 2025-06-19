@@ -83,4 +83,5 @@ export const apiUrl = {
   getTermsResultSummary: (studentId: string, year: string) => `/term-result/summary/${studentId}?${year}`,
   // actions
   giveDiscount: `/actions/discount`,
+  promoteStudent: `/actions/promote`,
 };

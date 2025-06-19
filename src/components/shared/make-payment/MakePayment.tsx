@@ -14,7 +14,7 @@ import { Input } from '../../ui/input';
 import { Textarea } from '../../ui/textarea';
 import { PAYMENT_TYPE } from '@/lib/types';
 import { getStudentClassInfo, makePayment } from '@/api/query';
-import { MdPayment } from 'react-icons/md';
+import { BsFillWalletFill } from 'react-icons/bs';
 import { Skeleton } from '../../ui/skeleton';
 import { useMemo } from 'react';
 
@@ -66,8 +66,8 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
 
   return (
     <>
-      <Button variant='outline' onClick={() => onOpenChange(true)} className='bg-white'>
-        <MdPayment className='size-4' /> Take Payment
+      <Button variant='outline' onClick={() => onOpenChange(true)} className='w-44 bg-white'>
+        <BsFillWalletFill className='size-4' /> Take Payment
       </Button>
       <FormDialog open={open} onOpenChange={onOpenChange} title='Make Payment' formId={formId}>
         <Form {...form}>

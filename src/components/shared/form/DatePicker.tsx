@@ -35,7 +35,7 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
   };
 
   return (
-    <div className='flex items-center gap-4'>
+    <div className='grid grid-cols-3 gap-4'>
       <DatePartPicker isOpen={isYearShown} onOpenChange={setYearShown} label='Year' displayValue={value.getFullYear()}>
         <div className='grid grid-cols-4 gap-2'>
           {Array.from({ length: YEARS_TO_SHOW }).map((_, index) => {
@@ -55,7 +55,6 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
           })}
         </div>
       </DatePartPicker>
-
       <DatePartPicker
         isOpen={isMonthShown}
         onOpenChange={setIsMonthShown}
@@ -77,7 +76,6 @@ export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
           ))}
         </div>
       </DatePartPicker>
-
       <DatePartPicker isOpen={isDayShown} onOpenChange={setIsDayShown} label='Day' displayValue={value.getDate()}>
         <div className='grid grid-cols-7 gap-2'>
           {Array.from({ length: daysInMonth }).map((_, index) => {

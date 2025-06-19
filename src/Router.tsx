@@ -103,7 +103,7 @@ const router = createBrowserRouter([
             ],
           },
           { path: '/subjects', element: withSuspense(lazyPages.subjects, <PageWithTableLoader />) },
-          { path: '/notices', element: withSuspense(lazyPages.adminNotices, <PageWithCardLoader />) },
+          { path: '/notices', element: withSuspense(lazyPages.adminNotices, <PageWithCardLoader size={3} />) },
           { path: '/holidays', element: withSuspense(lazyPages.holidays, <PageWithTableLoader />) },
           { path: '/terms', element: withSuspense(lazyPages.terms, <PageWithTableLoader />) },
           {

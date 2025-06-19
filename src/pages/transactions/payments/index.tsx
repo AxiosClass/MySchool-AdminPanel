@@ -22,7 +22,7 @@ const PaymentList = () => {
     select: (res) => res.data,
   });
 
-  if (isLoading) return <TableLoader />;
+  if (isLoading) return <TableLoader className='mt-6' />;
   if (!payments?.length) return <Message message='No Payments Found' className='my-6' />;
 
   return <PaymentsTable payments={payments} tableClassName='m-6' />;
