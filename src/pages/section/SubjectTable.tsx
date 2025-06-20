@@ -1,21 +1,15 @@
 import { TableBodyLoader } from '@/components/loader';
-import { TGetSubjectsForClassroom } from '@/api/query';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CommonTable, TableNoData } from '@/components/shared';
 import { AssignSubjectTeacher } from './AssignSubjectTeacher';
 import { RemoveSubjectTeacher } from './RemoveSubjectTeacher';
 import { useGetSubjectListFormClassroom } from '@/hooks';
 
-type SubjectTableProps = { sectionId: string };
-
-export const SubjectTable = ({ sectionId }: SubjectTableProps) => {
-  const { data: subjectList, isLoading } = useGetSubjectListFormClassroom(sectionId);
-  return (
-    <CommonTable head={<SubjectTableHead />} tableContainerClassName='px-6'>
-      <SubjectTableBody subjectList={subjectList ?? []} sectionId={sectionId} isLoading={isLoading} />
-    </CommonTable>
-  );
-};
+export const SubjectTable = ({ sectionId }: { sectionId: string }) => (
+  <CommonTable head={<SubjectTableHead />} tableContainerClassName='px-6'>
+    <SubjectTableBody sectionId={sectionId} />
+  </CommonTable>
+);
 
 const SubjectTableHead = () => (
   <>
@@ -26,11 +20,11 @@ const SubjectTableHead = () => (
   </>
 );
 
-type TSubjectTableBodyProps = { subjectList: TGetSubjectsForClassroom[]; isLoading: boolean; sectionId: string };
+const SubjectTableBody = ({ sectionId }: { sectionId: string }) => {
+  const { data: subjectList, isLoading } = useGetSubjectListFormClassroom(sectionId);
 
-const SubjectTableBody = ({ subjectList, sectionId, isLoading }: TSubjectTableBodyProps) => {
   if (isLoading) return <TableBodyLoader cols={4} />;
-  if (!subjectList.length) return <TableNoData colSpan={4} message='No Subject Found' />;
+  if (!subjectList?.length) return <TableNoData colSpan={4} message='No Subject Found' />;
 
   return subjectList.map(({ id, subjectId, subjectName, subjectType, teacher }) => (
     <TableRow key={subjectId}>
