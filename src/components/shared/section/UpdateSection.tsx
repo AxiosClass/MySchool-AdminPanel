@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { TooltipContainer } from '../TooltipContainer';
 import { PenLineIcon } from 'lucide-react';
+import { errorToast } from '@/helpers';
 
 type TUpdateSectionProps = { sectionId: string; name: string; classLevel: string; teacherId: string };
 
@@ -35,6 +36,7 @@ export const UpdateSection = ({ sectionId, name, teacherId }: TUpdateSectionProp
       qc.invalidateQueries({ queryKey: [QK.CLASS] });
       onOpenChange(false);
     },
+    onError: (error) => errorToast(error),
   });
 
   const handleUpdateSection = form.handleSubmit((formData) => {

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaGraduationCap, FaUserTie, FaChalkboardTeacher } from 'react-icons/fa';
 import { UpdateSection } from './UpdateSection';
+import { DeleteSection } from './DeleteSection';
 
 type TSectionCardProps = {
   id: string;
@@ -46,6 +47,7 @@ export const SectionCard = ({
               sectionId={id}
               teacherId={classTeacher?.id || ''}
             />
+            {!students.length && <DeleteSection sectionId={id} />}
           </div>
         )}
       </CardHeader>
