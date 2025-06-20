@@ -1,14 +1,14 @@
 import { z } from 'zod';
 import { QK } from '@/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { CommonFormField, CommonSelect, FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
-import { assignSubjectTeacher, getTeacherList } from '@/api/query';
+import { assignSubjectTeacher } from '@/api/query';
 import { Button } from '@/components/ui/button';
 import { UserPlusIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { usePopupState } from '@/hooks';
+import { useGetTeacherList, usePopupState } from '@/hooks';
 import { TooltipContainer } from '@/components/shared';
 import { toast } from 'sonner';
 import { errorToast } from '@/helpers';
@@ -45,12 +45,7 @@ type AssignSubjectFormProps = { sectionId: string; subjectId: string; onOpenChan
 
 const AssignSubjectForm = ({ sectionId, subjectId, onOpenChange }: AssignSubjectFormProps) => {
   const qc = useQueryClient();
-
-  const { data: teacherList, isLoading } = useQuery({
-    queryKey: [QK.TEACHER, 'FOR_ASSIGN_TEACHER'],
-    queryFn: getTeacherList,
-    select: (res) => res.data.map((teacher) => ({ label: teacher.name, value: teacher.id })),
-  });
+  const { data: teacherList, isLoading } = useGetTeacherList();
 
   const form = useForm<TAssignTeacherForm>({
     resolver: zodResolver(assignTeacherSchema),

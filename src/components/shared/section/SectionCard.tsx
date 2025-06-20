@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaGraduationCap, FaUserTie, FaChalkboardTeacher } from 'react-icons/fa';
+import { UpdateSection } from './UpdateSection';
 
 type TSectionCardProps = {
   id: string;
@@ -10,6 +11,7 @@ type TSectionCardProps = {
   linkPrefix: string;
   isClassTeacher?: boolean;
   class?: { level: string };
+  canModify?: boolean;
 };
 
 export const SectionCard = ({
@@ -20,17 +22,32 @@ export const SectionCard = ({
   linkPrefix,
   isClassTeacher,
   class: cls,
-}: TSectionCardProps) => (
-  <Link to={`${linkPrefix}/${id}`} data-teacher={isClassTeacher ?? undefined}>
+  canModify,
+}: TSectionCardProps) => {
+  const navigate = useNavigate();
+
+  return (
     <Card
       data-teacher={isClassTeacher ?? undefined}
       className='border-primary-100 bg-transparent data-[teacher]:bg-primary-50'
+      onClick={() => navigate(`${linkPrefix}/${id}`)}
     >
       <CardHeader className='flex-row items-center justify-between gap-2 px-4 pb-2 pt-4'>
         <CardTitle className='text-xl'>
           {name} {cls && `(${cls.level})`}
         </CardTitle>
         {isClassTeacher && <FaChalkboardTeacher className='size-5' />}
+
+        {canModify && (
+          <div onClick={(e) => e.stopPropagation()} className='flex items-center gap-4'>
+            <UpdateSection
+              name={name}
+              classLevel={cls?.level || ''}
+              sectionId={id}
+              teacherId={classTeacher?.id || ''}
+            />
+          </div>
+        )}
       </CardHeader>
       <CardContent className='mt-2'>
         {classTeacher && (
@@ -44,5 +61,5 @@ export const SectionCard = ({
         </div>
       </CardContent>
     </Card>
-  </Link>
-);
+  );
+};

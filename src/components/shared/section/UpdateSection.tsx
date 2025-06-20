@@ -1,52 +1,62 @@
 import { z } from 'zod';
 import { QK } from '@/api';
-import { toast } from 'sonner';
-import { useGetTeacherList, usePopupState } from '@/hooks';
 import { useForm } from 'react-hook-form';
-import { ActionButton } from '@/components/ui/button';
-import { FormDialog } from '@/components/shared/form';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { CommonFormField, CommonSelect } from '@/components/shared/form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useGetTeacherList, usePopupState } from '@/hooks';
+import { CommonFormField, CommonSelect, FormDialog } from '../form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createClassroom } from '@/api/query';
-import { useParams } from 'react-router-dom';
-import { errorToast } from '@/helpers';
+import { updateClassroom } from '@/api/query';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { TooltipContainer } from '../TooltipContainer';
+import { PenLineIcon } from 'lucide-react';
 
-export const CreateClassroom = () => {
+type TUpdateSectionProps = { sectionId: string; name: string; classLevel: string; teacherId: string };
+
+export const UpdateSection = ({ sectionId, name, teacherId }: TUpdateSectionProps) => {
   const { open, onOpenChange } = usePopupState();
-  const { classId } = useParams();
+  const { data: teacherList, isLoading } = useGetTeacherList();
 
-  const formId = QK.CLASSROOM + '_CREATE';
+  const formId = `${QK.CLASSROOM}_UPDATE_${sectionId}`;
   const qc = useQueryClient();
 
-  const form = useForm<TCreateClassroomForm>({
-    resolver: zodResolver(createClassroomFormSchema),
-    defaultValues: { name: '', classTeacherId: '' },
+  const form = useForm<TUpdateSectionForm>({
+    resolver: zodResolver(updateSectionSchema),
+    defaultValues: { name, classTeacherId: teacherId },
   });
-
-  const { data: teacherList, isLoading } = useGetTeacherList();
 
   const { mutate } = useMutation({
     mutationKey: [formId],
-    mutationFn: createClassroom,
+    mutationFn: updateClassroom,
     onSuccess: (res) => {
-      qc.invalidateQueries({ queryKey: [QK.CLASS] });
       toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.CLASS] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
   });
 
-  const handleCreateClassroom = form.handleSubmit((formData) => {
-    const { name, classTeacherId } = formData;
-    mutate({ name, classTeacherId, classId: classId as string });
+  const handleUpdateSection = form.handleSubmit((formData) => {
+    mutate({ ...formData, classroomId: sectionId });
   });
 
   return (
     <>
-      <ActionButton actionType='ADD' label='Add Section' onClick={() => onOpenChange(true)} />
+      <TooltipContainer label='Update Class'>
+        <Button
+          variant='outline'
+          size='icon'
+          onClick={(e) => {
+            onOpenChange(true);
+            e.stopPropagation();
+          }}
+          className='shrink-0 bg-transparent'
+        >
+          <PenLineIcon className='size-4' />
+        </Button>
+      </TooltipContainer>
+
       <FormDialog
         formId={formId}
         open={open}
@@ -57,7 +67,7 @@ export const CreateClassroom = () => {
         submitLoadingTitle='Creating...'
       >
         <Form {...form}>
-          <form className='space-y-3' id={formId} onSubmit={handleCreateClassroom}>
+          <form className='space-y-3' id={formId} onSubmit={handleUpdateSection}>
             <CommonFormField control={form.control} name='name' label='Name'>
               {({ field }) => <Input {...field} placeholder='Input name' />}
             </CommonFormField>
@@ -68,7 +78,7 @@ export const CreateClassroom = () => {
                   onChange={field.onChange}
                   placeholder='Select Teacher'
                   options={teacherList || []}
-                  disabled={isLoading}
+                  isLoading={isLoading}
                 />
               )}
             </CommonFormField>
@@ -79,11 +89,9 @@ export const CreateClassroom = () => {
   );
 };
 
-// schema
-const createClassroomFormSchema = z.object({
+const updateSectionSchema = z.object({
   name: z.string().min(1, { message: 'Classroom name is required' }),
   classTeacherId: z.string().min(1, { message: 'TeacherId is required' }),
 });
 
-// types
-type TCreateClassroomForm = z.infer<typeof createClassroomFormSchema>;
+type TUpdateSectionForm = z.infer<typeof updateSectionSchema>;

@@ -62,6 +62,16 @@ export const getTeachersSubjects = async (classroomId: string): TPromiseResponse
   return response.data;
 };
 
+export const updateClassroom = async ({ classroomId, ...payload }: TUpdateClassroomPayload): TPromiseResponse => {
+  const response = await axiosInstance.patch(apiUrl.updateClassroom(classroomId), payload);
+  return response.data;
+};
+
+export const deleteClassroom = async (classroomId: string): TPromiseResponse => {
+  const response = await axiosInstance.delete(apiUrl.deleteClassroom(classroomId));
+  return response.data;
+};
+
 // type
 export type TGetSubjectsForClassroom = {
   id: string | null;
@@ -90,3 +100,4 @@ export type TUpdateNotePayload = Pick<TNote, 'id' | 'title' | 'description'> & {
 };
 
 type TGetTeacherSubjectsResponse = Array<Pick<TSubject, 'id' | 'name'>>;
+type TUpdateClassroomPayload = { classroomId: string; name: string; classTeacherId: string };

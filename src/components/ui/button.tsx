@@ -83,9 +83,14 @@ type TActionButtonConfig = {
 };
 
 const ACTION_BUTTON_CONFIG: TActionButtonConfig = {
-  ADD: { icon: <PlusIcon size={20} /> },
-  UPDATE: { icon: <PenLineIcon size={20} />, className: 'justify-start', variant: 'primary-ghost' },
-  DELETE: { icon: <TrashIcon size={20} />, className: 'justify-start text-foreground', variant: 'destructive-ghost' },
+  ADD: { icon: <PlusIcon className='size-4' /> },
+  UPDATE: { icon: <PenLineIcon className='size-4' />, className: 'justify-start', variant: 'primary-ghost' },
+
+  DELETE: {
+    icon: <TrashIcon className='size-4' />,
+    className: 'justify-start text-foreground',
+    variant: 'destructive-ghost',
+  },
 };
 
 const ActionButton = React.forwardRef<HTMLButtonElement, TActionButtonProps>(

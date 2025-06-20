@@ -9,6 +9,7 @@ import {
   getSubjectListForClassroom,
   getClassList,
   getClassroomList,
+  getTeacherList,
 } from '@/api/query';
 
 import { QK } from '@/api';
@@ -133,5 +134,13 @@ export const useGetClassroomListOptions = (cls: string) => {
     queryFn: () => getClassroomList(cls),
     select: (res) => res.data.map(({ id, name }) => ({ label: name, value: id })),
     enabled: !!cls,
+  });
+};
+
+export const useGetTeacherList = () => {
+  return useQuery({
+    queryKey: [QK.TEACHER, 'LIST'],
+    queryFn: getTeacherList,
+    select: (res) => res.data.map((teacher) => ({ label: teacher.name, value: teacher.id })),
   });
 };

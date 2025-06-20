@@ -6,9 +6,9 @@ export const ClassRoomList = ({ classrooms }: { classrooms: TGetClassDetails['cl
   if (!classrooms.length) return <Message message='No Classrooms Found!' />;
 
   return (
-    <section className='grid gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+    <section className='grid gap-6 px-6 sm:grid-cols-2 md:grid-cols-3'>
       {classrooms.map((classroom) => (
-        <SectionCard key={classroom.id} {...classroom} linkPrefix='/section' />
+        <SectionCard key={classroom.id} {...classroom} linkPrefix='/section' canModify />
       ))}
     </section>
   );

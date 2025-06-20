@@ -1,12 +1,13 @@
 import { QK } from '@/api';
 import { FormSheet } from '@/components/shared/form';
 import { AssignSubjectsForm, TAssignSubjectsForm } from './AssignSubjectsForm';
-import { ActionButton } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { getAssignedSubjects } from '@/api/query';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AssignSubjectStoreProvider, useAssignSubjectStore } from './assignSubjectStore';
 import { useStore } from 'zustand';
+import { PlusIcon } from 'lucide-react';
 
 // main component
 export const AssignSubjects = ({ classId }: { classId: string }) => {
@@ -28,7 +29,11 @@ const AssignSubjectSheet = ({ classId }: { classId: string }) => {
 
   return (
     <>
-      <ActionButton actionType='ADD' label='Assign Subjects' onClick={() => setSheetOpen(true)} />
+      <Button variant='outline' onClick={() => setSheetOpen(true)}>
+        <PlusIcon className='size-4' />
+        Assign Subjects
+      </Button>
+
       <FormSheet
         formId={formId}
         open={sheetOpen}
