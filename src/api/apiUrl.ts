@@ -44,7 +44,6 @@ export const apiUrl = {
   getStudentListForPayment: `/students/list`,
   getStudentClassInfo: (studentId: string) => `/student/${studentId}/class`,
   // payment
-  getPaymentSummary: (studentId: string) => `/payment/summary/${studentId}`,
   makePayment: `/payment`,
   getPayments: (searchParams: string) => `/payments${searchParams}`,
   // notice

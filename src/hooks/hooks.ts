@@ -1,7 +1,6 @@
 import {
   getClassroomDetails,
   getPayments,
-  getPaymentSummary,
   getStudentInfo,
   getTeachersSubjects,
   getTermsResultSummary,
@@ -56,15 +55,6 @@ export const useGetStudentPayments = (studentId: string) => {
     queryFn: () => getPayments({ studentId }),
     select: (res) => res.data,
     enabled: !!studentId,
-  });
-};
-
-export const useGetPaymentSummary = (studentId: string) => {
-  return useQuery({
-    queryKey: [QK.PAYMENT, 'SUMMARY', { studentId }],
-    queryFn: () => getPaymentSummary(studentId),
-    enabled: !!studentId,
-    select: (res) => res.data,
   });
 };
 

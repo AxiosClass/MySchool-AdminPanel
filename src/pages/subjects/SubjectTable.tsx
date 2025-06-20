@@ -15,7 +15,7 @@ export const SubjectTable = () => {
 
   return (
     <CommonTable
-      header={<StudentTableHeader value={value} onSearchChange={onSearchChange} />}
+      header={<SubjectTableHeader value={value} onSearchChange={onSearchChange} />}
       head={<SubjectTableHead />}
       tableContainerClassName='px-6 mt-6'
     >
@@ -24,7 +24,7 @@ export const SubjectTable = () => {
   );
 };
 
-const StudentTableHeader = (props: Pick<TUserSearch, 'value' | 'onSearchChange'>) => {
+const SubjectTableHeader = (props: Pick<TUserSearch, 'value' | 'onSearchChange'>) => {
   return (
     <div className='flex items-center justify-between gap-6'>
       <SearchInput {...props} placeholder='Search Subject ...' className='max-w-[350px]' />

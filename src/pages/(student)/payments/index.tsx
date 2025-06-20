@@ -5,7 +5,7 @@ import { dateFormatString, months } from '@/data';
 import { CommonTable, PageTitle, TableNoData } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
-import { useGetPaymentSummary, useGetStudentPayments } from '@/hooks';
+import { useGetStudentInfo, useGetStudentPayments } from '@/hooks';
 import { FiDollarSign } from 'react-icons/fi';
 import { useAuthStore } from '@/stores/auth';
 import { PAYMENT_TYPE } from '@/lib/types';
@@ -25,16 +25,21 @@ export default function StudentPaymentPage() {
 }
 
 const PaymentSummary = () => {
-  const user = useAuthStore((state) => state.user);
-  const { data: payments, isLoading } = useGetPaymentSummary(user?.id as string);
+  const studentId = useAuthStore((s) => s.user?.id as string);
+  const { data: studentInfo, isLoading } = useGetStudentInfo(studentId);
 
   if (isLoading) return <PaymentSummaryLoader />;
 
+  const paid = studentInfo?.totalPaid ?? 0;
+  const discount = studentInfo?.totalDiscount ?? 0;
+  const due = studentInfo?.totalDue ?? 0;
+
   return (
-    <div className='grid grid-cols-3 gap-6 p-6'>
-      <PaymentCard label='Demand' value={(payments?.totalPaid || 0) + (payments?.totalDue || 0)} />
-      <PaymentCard label='Paid' value={payments?.totalPaid || 0} />
-      <PaymentCard label='Due' value={payments?.totalDue || 0} />
+    <div className='grid grid-cols-2 gap-6 p-6 md:grid-cols-4'>
+      <PaymentCard label='Demand' value={due} />
+      <PaymentCard label='Paid' value={paid} />
+      <PaymentCard label='Discount' value={discount} />
+      <PaymentCard label='Due' value={due - paid - discount} />
     </div>
   );
 };
