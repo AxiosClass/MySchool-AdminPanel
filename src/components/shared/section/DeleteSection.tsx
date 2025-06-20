@@ -22,7 +22,7 @@ export const DeleteSection = ({ sectionId }: { sectionId: string }) => {
       qc.invalidateQueries({ queryKey: [QK.CLASS] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (

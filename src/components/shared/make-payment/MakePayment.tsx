@@ -52,7 +52,7 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
       form.reset();
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleMakePayment = form.handleSubmit((formData) => {

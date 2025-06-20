@@ -30,7 +30,7 @@ const UpdateTerm = memo(({ id, name }: TUpdateTermProps) => {
           reset();
           onOpenChange(false);
         },
-        onError: (error) => errorToast(error),
+        onError: errorToast,
       },
     );
   };

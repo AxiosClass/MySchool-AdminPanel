@@ -34,7 +34,7 @@ export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
       qc.invalidateQueries({ queryKey: [QK.STUDENT] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleIssueNfcCard = form.handleSubmit((formData) => {
@@ -44,7 +44,7 @@ export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
   return (
     <>
       <TooltipContainer label='Issue Nfc Card'>
-        <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
+        <Button variant='outline' size='sm' onClick={() => onOpenChange(true)}>
           <FaRegAddressCard className='size-4' />
         </Button>
       </TooltipContainer>

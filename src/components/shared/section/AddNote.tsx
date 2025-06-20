@@ -27,7 +27,7 @@ export const AddNote = ({ sectionId }: TAddNoteProps) => {
       qc.invalidateQueries({ queryKey: [QK.NOTE, { sectionId }] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const onAddNote = async (formData: TNoteForm) => {

@@ -43,7 +43,7 @@ export const AddStudent = () => {
           reset();
           onOpenChange(false);
         },
-        onError: (error) => errorToast(error),
+        onError: errorToast,
       },
     );
   };

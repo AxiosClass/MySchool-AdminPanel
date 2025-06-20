@@ -23,7 +23,7 @@ export const DeleteAdmin = ({ email }: DeleteAdminProps) => {
       toast.message(res.message);
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (

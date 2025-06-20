@@ -33,7 +33,7 @@ export const CreateAdmin = () => {
       onOpenChange(false);
       form.reset();
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleCreateAdmin = form.handleSubmit((formData) => {

@@ -142,7 +142,7 @@ const StudentGradeFormWrapper = ({
           reset();
           onOpenChange(false);
         },
-        onError: (error) => errorToast(error),
+        onError: errorToast,
       },
     );
   };

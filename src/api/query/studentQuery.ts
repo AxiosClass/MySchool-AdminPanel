@@ -33,11 +33,23 @@ export const getStudentClassInfo = async (studentId: string): TPromiseResponse<T
   return response.data;
 };
 
+export const getStudentDetails = async (studentId: string): TPromiseResponse<TGetStudentDetailsResult> => {
+  const response = await axiosInstance.get(apiUrl.getStudentDetails(studentId));
+  return response.data;
+};
+
+export const updateStudent = async ({ studentId, ...payload }: TUpdateStudentPayload): TPromiseResponse => {
+  const response = await axiosInstance.patch(apiUrl.updateStudent(studentId), payload);
+  return response.data;
+};
+
 // types
 type TAddStudentPayload = Pick<
   TStudent,
   'name' | 'birthId' | 'class' | 'classroomId' | 'bloodGroup' | 'dob' | 'address' | 'parents' | 'guardian'
 >;
+
+type TUpdateStudentPayload = Partial<TAddStudentPayload> & { studentId: string };
 
 export type TGetStudentSResult = Array<
   Pick<TStudent, 'id' | 'name' | 'address' | 'guardian' | 'admittedAt' | 'class' | 'cardId'> & {
@@ -61,3 +73,7 @@ export type TGetStudentListForPaymentResult = Array<
 >;
 
 export type TGetStudentClassInfoResult = Pick<TClass, 'id' | 'name' | 'admissionFee' | 'monthlyFee' | 'termFee'>;
+export type TGetStudentDetailsResult = Pick<
+  TStudent,
+  'name' | 'birthId' | 'bloodGroup' | 'dob' | 'address' | 'parents' | 'guardian'
+>;

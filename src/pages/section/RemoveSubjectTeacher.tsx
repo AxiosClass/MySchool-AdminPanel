@@ -25,7 +25,7 @@ export const RemoveSubjectTeacher = ({ classroomSubjectTeacherId, sectionId }: T
       qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (

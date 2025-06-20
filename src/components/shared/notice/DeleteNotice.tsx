@@ -21,7 +21,7 @@ export const DeleteNotice = ({ noticeId }: { noticeId: string }) => {
       qc.invalidateQueries({ queryKey: [QK.NOTICE] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (

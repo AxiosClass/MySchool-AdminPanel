@@ -28,7 +28,7 @@ export const ResetAdminPassword = ({ email }: TResetAdminPasswordProps) => {
       toast.success(res.message);
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (

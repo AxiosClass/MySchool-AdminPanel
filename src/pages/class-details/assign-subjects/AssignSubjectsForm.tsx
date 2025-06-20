@@ -42,7 +42,7 @@ export const AssignSubjectsForm = ({ formId, classId, defaultValues }: TAssignSu
       form.reset();
       setSheetOpen(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleSubmit = form.handleSubmit((formData) => {

@@ -11,11 +11,17 @@ import { BLOOD_GROUP } from '@/data';
 type TStudentFormProps = {
   formId: string;
   onSubmit: (formData: TStudentForm, reset: () => void) => void;
-  defaultValues: TStudentForm;
+  defaultValues: Partial<TStudentForm>;
+  isUpdate?: boolean;
 };
 
-export const StudentForm = ({ formId, onSubmit, defaultValues }: TStudentFormProps) => {
-  const form = useForm<TStudentForm>({ resolver: zodResolver(studentFormSchema), defaultValues: { ...defaultValues } });
+export const StudentForm = ({ formId, onSubmit, defaultValues, isUpdate }: TStudentFormProps) => {
+  const schema = isUpdate ? studentFormSchema.partial() : studentFormSchema;
+
+  const form = useForm<TStudentForm>({
+    resolver: zodResolver(schema),
+    defaultValues: { ...defaultValues },
+  });
 
   const handleSubmit = form.handleSubmit((formData) => {
     onSubmit(formData, () => form.reset());
@@ -31,8 +37,12 @@ export const StudentForm = ({ formId, onSubmit, defaultValues }: TStudentFormPro
           {({ field }) => <Input {...field} placeholder='Input birth ID' />}
         </CommonFormField>
 
-        <ClassSelection />
-        <ClassroomSelection />
+        {!isUpdate && (
+          <>
+            <ClassSelection />
+            <ClassroomSelection />
+          </>
+        )}
 
         <CommonFormField control={form.control} name='bloodGroup' label='Blood Group'>
           {({ field }) => (

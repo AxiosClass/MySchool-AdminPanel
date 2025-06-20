@@ -35,7 +35,7 @@ export const UpdateTermStatus = ({ id, status }: TUpdateStatusProps) => {
           qc.invalidateQueries({ queryKey: [QK.TERM] });
           setSelectedStatus(value);
         },
-        onError: (error) => errorToast(error),
+        onError: errorToast,
       },
     );
   };

@@ -186,3 +186,24 @@ export const TakePaymentCardSkeleton = () => (
     </CardContent>
   </Card>
 );
+
+export const TeacherOrStudentFormSkeleton = () => (
+  <div className='my-2 grid grid-cols-2 gap-4'>
+    {Array.from({ length: 6 }).map((_, index) => (
+      <div key={index} className='space-y-2'>
+        <Skeleton className='h-4 w-40' />
+        <Skeleton className='h-10 w-full' />
+      </div>
+    ))}
+    <div className='col-span-2 space-y-2'>
+      <Skeleton className='h-4 w-40' />
+      <Skeleton className='h-32 w-full' />
+    </div>
+    {Array.from({ length: 6 }).map((_, index) => (
+      <div key={index} className='space-y-2'>
+        <Skeleton className='h-4 w-40' />
+        <Skeleton className='h-10 w-full' />
+      </div>
+    ))}
+  </div>
+);

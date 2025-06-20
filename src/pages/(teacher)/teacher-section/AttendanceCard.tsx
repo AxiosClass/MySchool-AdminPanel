@@ -82,7 +82,7 @@ const AttendanceController = ({ attendanceId, studentId, date }: TAttendanceCont
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const { mutate: handleDeleteAttendance, isPending: isRemovingAttendance } = useMutation({
@@ -91,7 +91,7 @@ const AttendanceController = ({ attendanceId, studentId, date }: TAttendanceCont
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleToggleAttendance = () => {

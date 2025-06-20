@@ -22,7 +22,7 @@ export const AddNotice = () => {
       qc.invalidateQueries({ queryKey: [QK.NOTICE] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleAddNotice = (formData: TNoticeForm) => {

@@ -22,7 +22,7 @@ export const DeleteTerm = ({ id }: { id: string }) => {
       qc.invalidateQueries({ queryKey: [QK.TERM] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (

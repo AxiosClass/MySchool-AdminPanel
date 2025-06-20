@@ -32,7 +32,7 @@ export const GiveDiscount = ({ studentId }: { studentId: string }) => {
           reset();
           onOpenChange(false);
         },
-        onError: (error) => errorToast(error),
+        onError: errorToast,
       },
     );
   };

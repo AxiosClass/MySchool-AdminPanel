@@ -36,7 +36,7 @@ export const CreateClassroom = () => {
       toast.success(res.message);
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleCreateClassroom = form.handleSubmit((formData) => {

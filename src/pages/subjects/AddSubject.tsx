@@ -43,7 +43,7 @@ export const AddSubject = () => {
       qc.invalidateQueries({ queryKey: [QK.SUBJECT] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleAddSubject = (formData: TAddSubjectForm) => {

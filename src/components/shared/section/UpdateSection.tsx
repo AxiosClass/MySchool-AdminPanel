@@ -36,7 +36,7 @@ export const UpdateSection = ({ sectionId, name, teacherId }: TUpdateSectionProp
       qc.invalidateQueries({ queryKey: [QK.CLASS] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleUpdateSection = form.handleSubmit((formData) => {

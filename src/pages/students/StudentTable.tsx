@@ -3,16 +3,17 @@ import moment from 'moment';
 import { QK } from '@/api';
 import { TUserSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
-import { getClassList, getStudents, TGetStudentSResult } from '@/api/query';
-import { TableBodyLoader } from '@/components/loader';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
+import { TableBodyLoader } from '@/components/loader';
 import { Pagination, SearchInput, TableNoData, usePagination, UserIcon } from '@/components/shared';
+import { getClassList, getStudents, TGetStudentSResult } from '@/api/query';
 import { dateFormatString } from '@/data';
 import { AddStudent } from './AddStudent';
 import { IssueNfcCard } from './IssueNfcCard';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { CommonSelect } from '@/components/shared/form';
+import { UpdateStudent } from './UpdateStudent';
 import { Link } from 'react-router-dom';
 
 export const StudentTable = () => {
@@ -105,8 +106,16 @@ const TStudentTableBody = ({ students, isLoading }: TStudentTableBodyProps) => {
   if (isLoading) return <TableBodyLoader cols={6} />;
   if (!students?.length) return <TableNoData message={'No Student found'} colSpan={6} />;
 
-  return students.map(({ id, name, cardId, class: cls, classroomName, address, guardian, admittedAt }) => (
-    <TableRow key={id}>
+  return students.map((student) => <StudentTableRow key={student.id} {...student} />);
+};
+
+type TStudentTableRowProps = TGetStudentSResult[number];
+
+const StudentTableRow = memo((props: TStudentTableRowProps) => {
+  const { id, name, cardId, class: cls, classroomName, address, guardian, admittedAt } = props;
+
+  return (
+    <TableRow>
       <TableCell>
         <div className='flex gap-4'>
           <UserIcon username={name} />
@@ -130,8 +139,13 @@ const TStudentTableBody = ({ students, isLoading }: TStudentTableBodyProps) => {
       </TableCell>
       <TableCell>{moment(admittedAt).format(dateFormatString.basic)}</TableCell>
       <TableCell>
-        <IssueNfcCard key={cardId} studentId={id} cardId={cardId} />
+        <div className='flex items-center justify-center gap-2'>
+          <UpdateStudent studentId={id} />
+          <IssueNfcCard studentId={id} cardId={cardId} />
+        </div>
       </TableCell>
     </TableRow>
-  ));
-};
+  );
+});
+
+StudentTableRow.displayName = 'StudentTableRow';

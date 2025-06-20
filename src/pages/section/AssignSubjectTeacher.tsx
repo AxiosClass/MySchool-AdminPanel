@@ -60,7 +60,7 @@ const AssignSubjectForm = ({ sectionId, subjectId, onOpenChange }: AssignSubject
       qc.invalidateQueries({ queryKey: [QK.CLASSROOM, QK.SUBJECT, { sectionId }] });
       onOpenChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleAssignedSubject = form.handleSubmit((formData) => {

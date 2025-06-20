@@ -33,7 +33,7 @@ export const EditNote = ({ note, onActionChange }: TEditNoteProps) => {
       onOpenChange(false);
       onActionChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   const handleUpdateNote = async (formData: TNoteForm) => {

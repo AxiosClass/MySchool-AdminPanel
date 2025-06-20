@@ -24,7 +24,7 @@ export const DeleteNote = ({ noteId, onActionChange, sectionId }: TDeleteNotePro
       onOpenChange(false);
       onActionChange(false);
     },
-    onError: (error) => errorToast(error),
+    onError: errorToast,
   });
 
   return (
