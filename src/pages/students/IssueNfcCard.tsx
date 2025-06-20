@@ -1,24 +1,25 @@
+import { z } from 'zod';
 import { QK } from '@/api';
 import { issueNfcCard } from '@/api/query';
-import { CommonFormField, FormDialog } from '@/components/shared/form';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { errorToast } from '@/helpers';
-import { usePopupState } from '@/hooks';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { usePopupState } from '@/hooks';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CommonFormField, FormDialog } from '@/components/shared/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FaRegAddressCard } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { z } from 'zod';
+import { TooltipContainer } from '@/components/shared';
 
 type TIssueNfcCardProps = { studentId: string; cardId?: string };
-
 export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
+  const { open, onOpenChange } = usePopupState();
+
   const formId = 'ISSUE_NFC_CARD_' + studentId;
   const qc = useQueryClient();
-
-  const { open, onOpenChange } = usePopupState();
 
   const form = useForm<TIssueNfcCardForm>({
     resolver: zodResolver(issueNfcCardSchema),
@@ -41,10 +42,13 @@ export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
   });
 
   return (
-    <div className='mx-auto w-fit'>
-      <Button variant='outline' onClick={() => onOpenChange(true)}>
-        Issue Nfc Card
-      </Button>
+    <>
+      <TooltipContainer label='Issue Nfc Card'>
+        <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
+          <FaRegAddressCard className='size-4' />
+        </Button>
+      </TooltipContainer>
+
       <FormDialog
         formId={formId}
         title='Issue Nfc Card'
@@ -61,7 +65,7 @@ export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
           </form>
         </Form>
       </FormDialog>
-    </div>
+    </>
   );
 };
 
@@ -69,5 +73,4 @@ export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
 const issueNfcCardSchema = z.object({ cardId: z.string().min(1, 'CardId is required') });
 
 // types
-
 type TIssueNfcCardForm = z.infer<typeof issueNfcCardSchema>;

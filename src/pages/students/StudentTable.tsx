@@ -101,51 +101,37 @@ const StudentTableHeader = ({ value, onSearchChange, classLevel, onClassLevelCha
 };
 
 type TStudentTableBodyProps = { students: TGetStudentSResult; isLoading: boolean };
-
 const TStudentTableBody = ({ students, isLoading }: TStudentTableBodyProps) => {
   if (isLoading) return <TableBodyLoader cols={6} />;
   if (!students?.length) return <TableNoData message={'No Student found'} colSpan={6} />;
 
-  return students.map((student) => <StudentTableRow key={student.id} {...student} />);
-};
-
-type TStudentTableRowProps = TGetStudentSResult[number];
-
-const StudentTableRow = ({
-  id,
-  name,
-  cardId,
-  class: cls,
-  classroomName,
-  address,
-  admittedAt,
-  guardian,
-}: TStudentTableRowProps) => (
-  <TableRow key={id} className='border-b'>
-    <TableCell>
-      <div className='flex gap-4'>
-        <UserIcon username={name} />
-        <div>
-          <Link to={`/student/${id}`}>
-            <p className='text-base font-semibold'>{name}</p>
-          </Link>
-          <p className='text-sm text-muted-foreground'>ID : {id}</p>
-          {cardId && <p className='text-sm text-muted-foreground'>CardID : {cardId}</p>}
+  return students.map(({ id, name, cardId, class: cls, classroomName, address, guardian, admittedAt }) => (
+    <TableRow key={id}>
+      <TableCell>
+        <div className='flex gap-4'>
+          <UserIcon username={name} />
+          <div>
+            <Link to={`/student/${id}`}>
+              <p className='text-base font-semibold'>{name}</p>
+            </Link>
+            <p className='text-sm text-muted-foreground'>ID : {id}</p>
+            {cardId && <p className='text-sm text-muted-foreground'>CardID : {cardId}</p>}
+          </div>
         </div>
-      </div>
-    </TableCell>
-    <TableCell>
-      <p className='text-base font-semibold'>Class : {cls}</p>
-      <p className='text-sm text-muted-foreground'>Section : {classroomName}</p>
-    </TableCell>
-    <TableCell>{address}</TableCell>
-    <TableCell>
-      <p className='text-base font-semibold'> {guardian.name}</p>
-      <p className='text-sm text-muted-foreground'>Cell : {guardian.phone}</p>
-    </TableCell>
-    <TableCell>{moment(admittedAt).format(dateFormatString.basic)}</TableCell>
-    <TableCell>
-      <IssueNfcCard key={cardId} studentId={id} cardId={cardId} />
-    </TableCell>
-  </TableRow>
-);
+      </TableCell>
+      <TableCell>
+        <p className='text-base font-semibold'>Class : {cls}</p>
+        <p className='text-sm text-muted-foreground'>Section : {classroomName}</p>
+      </TableCell>
+      <TableCell>{address}</TableCell>
+      <TableCell>
+        <p className='text-base font-semibold'> {guardian.name}</p>
+        <p className='text-sm text-muted-foreground'>Cell : {guardian.phone}</p>
+      </TableCell>
+      <TableCell>{moment(admittedAt).format(dateFormatString.basic)}</TableCell>
+      <TableCell>
+        <IssueNfcCard key={cardId} studentId={id} cardId={cardId} />
+      </TableCell>
+    </TableRow>
+  ));
+};
