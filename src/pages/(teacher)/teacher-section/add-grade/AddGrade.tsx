@@ -18,7 +18,7 @@ export const AddGrade = ({ sectionId, termId }: TAddGradeProps) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
-        <Button variant='outline'>
+        <Button variant='outline' className='bg-white'>
           <BookPlusIcon size={16} />
           Add Grade
         </Button>

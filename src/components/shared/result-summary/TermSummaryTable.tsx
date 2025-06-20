@@ -1,10 +1,10 @@
-import { TSubjectResult, TTermResultSummaryResult } from '@/api/query';
-import { CommonTable } from '../CommonTable';
-import { useMemo } from 'react';
-import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
+import { TSubjectResult, TTermResultSummaryResult } from '@/api/query';
+import { TableCell, TableHead, TableRow } from '@/components/ui/table';
+import { CommonTable } from '../CommonTable';
 
-type TTermSummaryTableProps = TTermResultSummaryResult[number];
+type TTermResultSummary = TTermResultSummaryResult[number];
+type TTermSummaryTableProps = TTermResultSummary & { tableContainerClass?: string; tableHeaderClass?: string };
 
 export const TermSummaryTable = ({
   termName,
@@ -13,44 +13,66 @@ export const TermSummaryTable = ({
   termGPA,
   termGrade,
   subjectResults,
-}: TTermSummaryTableProps) => {
-  const header = useMemo(() => {
-    return (
-      <div className='flex items-center gap-4 bg-muted p-4'>
-        <div className='mr-auto space-y-1'>
-          <h2 className='text-lg font-semibold'>
-            {termName} : {academicYear}
-          </h2>
-          <p className='font-medium'>
-            Class : {classInfo.name} ({classInfo.level})
-          </p>
-        </div>
-        <p className='rounded-lg border px-2 py-1 font-semibold'>Grade : {termGrade}</p>
-        <GpaBadge gpa={termGPA} grade={termGrade} />
-      </div>
-    );
-  }, [termName, classInfo, termGPA, termGrade, academicYear]);
+  tableContainerClass,
+  tableHeaderClass,
+}: TTermSummaryTableProps) => (
+  <CommonTable
+    header={
+      <TermSummaryTableHeader
+        termName={termName}
+        academicYear={academicYear}
+        classInfo={classInfo}
+        termGPA={termGPA}
+        termGrade={termGrade}
+        tableHeaderClass={tableHeaderClass}
+      />
+    }
+    head={<TermSummaryTableHead />}
+    tableContainerClassName={cn('px-6', tableContainerClass)}
+    headerClassName='p-0'
+  >
+    {subjectResults.map((subjectResult) => (
+      <SubjectResult key={subjectResult.subjectId} {...subjectResult} />
+    ))}
+  </CommonTable>
+);
 
-  const tableHead = useMemo(() => {
-    return (
-      <>
-        <TableHead>Subject</TableHead>
-        <TableHead>Breakdown</TableHead>
-        <TableHead className='text-center'>Marks</TableHead>
-        <TableHead className='text-center'>GPA</TableHead>
-        <TableHead className='text-center'>Grade</TableHead>
-      </>
-    );
-  }, []);
+type TTermSummaryTableHeaderProps = Pick<
+  TTermResultSummary,
+  'termName' | 'academicYear' | 'classInfo' | 'termGPA' | 'termGrade'
+> & { tableHeaderClass?: string };
 
-  return (
-    <CommonTable header={header} head={tableHead} tableContainerClassName='px-6' headerClassName='p-0'>
-      {subjectResults.map((subjectResult) => (
-        <SubjectResult key={subjectResult.subjectId} {...subjectResult} />
-      ))}
-    </CommonTable>
-  );
-};
+const TermSummaryTableHeader = ({
+  termName,
+  academicYear,
+  classInfo,
+  termGPA,
+  termGrade,
+  tableHeaderClass,
+}: TTermSummaryTableHeaderProps) => (
+  <div className={cn('flex items-center gap-4 bg-muted p-4', tableHeaderClass)}>
+    <div className='mr-auto space-y-1'>
+      <h2 className='text-lg font-semibold'>
+        {termName} : {academicYear}
+      </h2>
+      <p className='font-medium'>
+        Class : {classInfo.name} ({classInfo.level})
+      </p>
+    </div>
+    <p className='rounded-lg border px-2 py-1 font-semibold'>Grade : {termGrade}</p>
+    <GpaBadge gpa={termGPA} grade={termGrade} />
+  </div>
+);
+
+const TermSummaryTableHead = () => (
+  <>
+    <TableHead>Subject</TableHead>
+    <TableHead>Breakdown</TableHead>
+    <TableHead className='text-center'>Marks</TableHead>
+    <TableHead className='text-center'>GPA</TableHead>
+    <TableHead className='text-center'>Grade</TableHead>
+  </>
+);
 
 // Sub Components
 type TSubjectResultProps = TSubjectResult;

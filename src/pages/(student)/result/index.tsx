@@ -1,11 +1,12 @@
-import { TermSummaryTable, YearPicker } from '@/components/shared/result-summary';
-import { PageWithTableLoader, TableLoader } from '@/components/loader';
-import { Message, PageHeader, PageTitle } from '@/components/shared';
-import { useGetStudentInfo, useGetTermResultSummary } from '@/hooks';
+import { YearPicker } from '@/components/shared/result-summary';
+import { PageWithTableLoader } from '@/components/loader';
+import { PageHeader, PageTitle } from '@/components/shared';
+import { useGetStudentInfo } from '@/hooks';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuthStore } from '@/stores/auth';
 import { useCallback, useState } from 'react';
 import { getYearsFromDateToNow } from '@/helpers';
+import { TermSummaryFetcher } from '@/components/shared/result-summary/TermSummaryFetcher';
 
 export default function StudentResultPage() {
   const studentId = useAuthStore((state) => state.user?.id as string);
@@ -32,20 +33,3 @@ export default function StudentResultPage() {
     </>
   );
 }
-
-type TTermSummaryFetcher = { studentId: string; year: string };
-
-const TermSummaryFetcher = ({ studentId, year }: TTermSummaryFetcher) => {
-  const { data: termResults, isPending } = useGetTermResultSummary(studentId, year);
-
-  if (isPending) return <TableLoader />;
-  if (!termResults?.length) return <Message message='No Term Found!' />;
-
-  return (
-    <div className='flex flex-col gap-2'>
-      {termResults.map((termResult) => (
-        <TermSummaryTable key={termResult.termId} {...termResult} />
-      ))}
-    </div>
-  );
-};
