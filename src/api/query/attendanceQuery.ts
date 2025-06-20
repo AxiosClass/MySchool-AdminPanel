@@ -6,7 +6,8 @@ export const getAttendancesForClassroom = async ({
   classroomId,
   date,
 }: TGetAttendancesForClassroomArgs): TPromiseResponse<TAttendanceForClassroom> => {
-  const response = await axiosInstance.get(apiUrl.getAttendanceForClassroom(classroomId, date));
+  const url = apiUrl.getAttendanceForClassroom(classroomId, date);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -15,7 +16,8 @@ export const getAttendancesForStudent = async ({
   end,
   studentId,
 }: TGetAttendancesForStudentArgs): TPromiseResponse<TAttendanceList> => {
-  const response = await axiosInstance.get(apiUrl.getAttendancesForStudent({ start, end, studentId }));
+  const url = apiUrl.getAttendancesForStudent({ start, end, studentId });
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -25,14 +27,16 @@ export const addAttendance = async (payload: TAddAttendancePayload): TPromiseRes
 };
 
 export const deleteAttendance = async (attendanceId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteAttendance(attendanceId));
+  const url = apiUrl.deleteAttendance(attendanceId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 
 export const getAttendanceSummaryForStudent = async (
   studentId: string,
 ): TPromiseResponse<TGetAttendanceSummaryForStudentResult> => {
-  const response = await axiosInstance.get(apiUrl.getAttendanceSummaryForStudent(studentId));
+  const url = apiUrl.getAttendanceSummaryForStudent(studentId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 

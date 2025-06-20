@@ -8,7 +8,8 @@ export const createClass = async (payload: TCreateClassPayload): TPromiseRespons
 };
 
 export const updateClass = async ({ classId, ...payload }: TUpdateClassPayload): TPromiseResponse => {
-  const response = await axiosInstance.patch(apiUrl.updateClass(classId), payload);
+  const url = apiUrl.updateClass(classId);
+  const response = await axiosInstance.patch(url, payload);
   return response.data;
 };
 
@@ -18,7 +19,8 @@ export const getClasses = async (): TPromiseResponse<TGetClassResponse> => {
 };
 
 export const getClassDetails = async (classId: string): TPromiseResponse<TGetClassDetails> => {
-  const response = await axiosInstance.get(apiUrl.getClassDetails(classId));
+  const url = apiUrl.getClassDetails(classId);
+  const response = await axiosInstance.get(url);
   return response?.data;
 };
 
@@ -28,7 +30,8 @@ export const getClassList = async (): TPromiseResponse<TClassList[]> => {
 };
 
 export const getClassroomList = async (level: string): TPromiseResponse<TClassroomList[]> => {
-  const response = await axiosInstance.get(apiUrl.getClassroomList(level));
+  const url = apiUrl.getClassroomList(level);
+  const response = await axiosInstance.get(url);
   return response?.data;
 };
 
@@ -38,12 +41,14 @@ export const assignSubjects = async (payload: TAssignedSubjectPayload): TPromise
 };
 
 export const getAssignedSubjects = async (classId: string): TPromiseResponse<TAssignedSubject[]> => {
-  const response = await axiosInstance.get(apiUrl.getAssignedSubjects(classId));
+  const url = apiUrl.getAssignedSubjects(classId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const deleteClass = async (classId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteClass(classId));
+  const url = apiUrl.deleteClass(classId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 

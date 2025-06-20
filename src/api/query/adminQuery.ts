@@ -8,18 +8,22 @@ export const createAdmin = async (payload: TCreateAdminPayload): TPromiseRespons
   return response.data;
 };
 
-export const getAdmins = async (query: TGetAdminArgs): TPromiseResponse<TGetAdminQueryResult> => {
-  const response = await axiosInstance.get(apiUrl.getAdmins(makeUrlParams(query)));
+export const getAdmins = async (args: TGetAdminArgs): TPromiseResponse<TGetAdminQueryResult> => {
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getAdmins(queryString);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const deleteAdmin = async (email: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteAdmin(email));
+  const url = apiUrl.deleteAdmin(email);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 
 export const resetAdminPassword = async (email: string): TPromiseResponse => {
-  const response = await axiosInstance.patch(apiUrl.resetPassword(email));
+  const url = apiUrl.resetPassword(email);
+  const response = await axiosInstance.patch(url);
   return response.data;
 };
 

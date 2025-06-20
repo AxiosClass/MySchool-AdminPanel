@@ -11,7 +11,9 @@ export const addTermResult = async (payload: TAddTermResultPayload): TPromiseRes
 export const getStudentWithTermResult = async (
   args: TGetStudentWithTermResultArgs,
 ): TPromiseResponse<TGetStudentWithTermResultResponse> => {
-  const response = await axiosInstance.get(apiUrl.getStudentsWithTermResult(makeUrlParams(args)));
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getStudentsWithTermResult(queryString);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -19,7 +21,8 @@ export const getTermsResultSummary = async ({
   studentId,
   year,
 }: TGetTermsResultSummaryArgs): TPromiseResponse<TTermResultSummaryResult> => {
-  const response = await axiosInstance.get(apiUrl.getTermsResultSummary(studentId, year));
+  const url = apiUrl.getTermsResultSummary(studentId, year);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 

@@ -9,12 +9,15 @@ export const createSubject = async (payload: TCreateSubjectPayload): TPromiseRes
 };
 
 export const getSubjects = async (args: TObject): TPromiseResponse<TGetSubjectsQueryResult[]> => {
-  const response = await axiosInstance.get(apiUrl.getSubjects(makeUrlParams(args)));
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getSubjects(queryString);
+  const response = await axiosInstance.get(url);
   return response?.data;
 };
 
 export const deleteSubject = async (subjectId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteSubject(subjectId));
+  const url = apiUrl.deleteSubject(subjectId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 

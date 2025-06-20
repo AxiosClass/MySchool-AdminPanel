@@ -9,7 +9,9 @@ export const addNotice = async (payload: TAddNoticePayload): TPromiseResponse =>
 };
 
 export const getNotices = async (args: TObject = {}): TPromiseResponse<TNotice[]> => {
-  const response = await axiosInstance.get(apiUrl.getNotices(makeUrlParams(args)));
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getNotices(queryString);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -18,14 +20,15 @@ export const getMyNotices = async (): TPromiseResponse<TNotice[]> => {
   return notices.data;
 };
 
-export const updateNotice = async (payload: TUpdateNoticePayload): TPromiseResponse => {
-  const { id, title, description, noticeFor } = payload;
-  const response = await axiosInstance.patch(apiUrl.updateNotice(id!), { title, description, noticeFor });
+export const updateNotice = async ({ id, ...payload }: TUpdateNoticePayload): TPromiseResponse => {
+  const url = apiUrl.updateNotice(id);
+  const response = await axiosInstance.patch(url, payload);
   return response.data;
 };
 
 export const deleteNotice = async (noticeId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteNotice(noticeId));
+  const url = apiUrl.deleteNotice(noticeId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 

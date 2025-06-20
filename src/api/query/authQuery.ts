@@ -4,7 +4,8 @@ import { axiosInstance } from '../axiosInstance';
 
 export const login = async (payload: TLoginPayload): TLoginResponse => {
   const { type, ...rest } = payload;
-  const response = await axiosInstance.post(apiUrl.login(type), rest);
+  const url = apiUrl.login(type);
+  const response = await axiosInstance.post(url, rest);
   return response?.data;
 };
 

@@ -5,11 +5,13 @@ import { makeUrlParams } from '@/helpers';
 
 export const addStudent = async (payload: TAddStudentPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addStudent, payload);
-  return response?.data;
+  return response.data;
 };
 
 export const getStudents = async (args: TObject): TPromiseResponse<TGetStudentSResult> => {
-  const response = await axiosInstance.get(apiUrl.getStudents(makeUrlParams(args)));
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getStudents(queryString);
+  const response = await axiosInstance.get(url);
   return response?.data;
 };
 
@@ -19,7 +21,8 @@ export const issueNfcCard = async (payload: TIssueNfcCardPayload): TPromiseRespo
 };
 
 export const getStudentInfo = async (studentId: string): TPromiseResponse<TStudentInfo> => {
-  const response = await axiosInstance.get(apiUrl.getStudentInfo(studentId));
+  const url = apiUrl.getStudentInfo(studentId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -29,17 +32,20 @@ export const getStudentListForPayment = async (): TPromiseResponse<TGetStudentLi
 };
 
 export const getStudentClassInfo = async (studentId: string): TPromiseResponse<TGetStudentClassInfoResult> => {
-  const response = await axiosInstance.get(apiUrl.getStudentClassInfo(studentId));
+  const url = apiUrl.getStudentClassInfo(studentId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const getStudentDetails = async (studentId: string): TPromiseResponse<TGetStudentDetailsResult> => {
-  const response = await axiosInstance.get(apiUrl.getStudentDetails(studentId));
+  const url = apiUrl.getStudentDetails(studentId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const updateStudent = async ({ studentId, ...payload }: TUpdateStudentPayload): TPromiseResponse => {
-  const response = await axiosInstance.patch(apiUrl.updateStudent(studentId), payload);
+  const url = apiUrl.updateStudent(studentId);
+  const response = await axiosInstance.patch(url, payload);
   return response.data;
 };
 

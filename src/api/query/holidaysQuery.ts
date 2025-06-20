@@ -4,12 +4,12 @@ import { apiUrl } from '../apiUrl';
 
 export const getHolidays = async (): TPromiseResponse<TGetHolidaysResult[]> => {
   const response = await axiosInstance.get(apiUrl.getHolidays);
-  return response?.data;
+  return response.data;
 };
 
 export const addHoliday = async (payload: TAddHolidayPayload): TPromiseResponse => {
   const response = await axiosInstance.post(apiUrl.addHoliday, payload);
-  return response?.data;
+  return response.data;
 };
 
 // types

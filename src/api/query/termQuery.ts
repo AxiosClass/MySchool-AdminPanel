@@ -10,22 +10,26 @@ export const addTerm = async (payload: TAddTermPayload): TPromiseResponse => {
 
 export const getTerms = async (args: TObject): TPromiseResponse<TGetTermsResponse> => {
   const searchParams = makeUrlParams(args);
-  const response = await axiosInstance.get(apiUrl.getTerms(searchParams));
+  const url = apiUrl.getTerms(searchParams);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const updateTerm = async ({ id, ...payload }: TUpdateTermPayload): TPromiseResponse => {
-  const response = await axiosInstance.patch(apiUrl.updateTerm(id), payload);
+  const url = apiUrl.updateTerm(id);
+  const response = await axiosInstance.patch(url, payload);
   return response.data;
 };
 
 export const updateTermStatus = async ({ id, status }: TUpdateTermStatusPayload): TPromiseResponse => {
-  const response = await axiosInstance.patch(apiUrl.updateTermStatus(id), { status });
+  const url = apiUrl.updateTermStatus(id);
+  const response = await axiosInstance.patch(url, { status });
   return response.data;
 };
 
 export const deleteTerm = async (id: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteTerm(id));
+  const url = apiUrl.deleteTerm(id);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 

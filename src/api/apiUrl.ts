@@ -38,7 +38,7 @@ export const apiUrl = {
 
   // teacher
   addTeacher: `/teacher`,
-  getTeachers: `/teachers`,
+  getTeachers: (searchParams: string) => `/teachers${searchParams}`,
   getTeacherList: `/teachers/list`,
 
   // student

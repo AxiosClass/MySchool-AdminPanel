@@ -9,7 +9,8 @@ export const createClassroom = async (payload: TCreateClassroomPayload): TPromis
 };
 
 export const getSubjectListForClassroom = async (classroomId: string): TPromiseResponse<TGetSubjectsForClassroom[]> => {
-  const response = await axiosInstance.get(apiUrl.getSubjectListForClassroom(classroomId));
+  const url = apiUrl.getSubjectListForClassroom(classroomId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -19,17 +20,20 @@ export const assignSubjectTeacher = async (payload: TAssignSubjectTeacherPayload
 };
 
 export const deleteSubjectTeacher = async (classRoomSubjectTeacherId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteSubjectTeacher(classRoomSubjectTeacherId));
+  const url = apiUrl.deleteSubjectTeacher(classRoomSubjectTeacherId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 
 export const getClassroomsForTeacher = async (teacherId: string): TPromiseResponse<TGetClassroomForTeacherResponse> => {
-  const response = await axiosInstance.get(apiUrl.getClassroomsForTeacher(teacherId));
+  const url = apiUrl.getClassroomsForTeacher(teacherId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const getClassroomDetails = async (classroomId: string): TPromiseResponse<TGetClassroomDetails> => {
-  const response = await axiosInstance.get(apiUrl.getClassroomDetails(classroomId));
+  const url = apiUrl.getClassroomDetails(classroomId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
@@ -42,33 +46,40 @@ export const getNotes = async (
   classroomId: string,
   args: { subjectId?: string },
 ): TPromiseResponse<TGetNotesQueryResult> => {
-  const response = await axiosInstance.get(apiUrl.getNotes(classroomId, makeUrlParams(args)));
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getNotes(classroomId, queryString);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const updateNote = async (payload: TUpdateNotePayload): TPromiseResponse => {
   const { id, ...restPayload } = payload;
-  const response = await axiosInstance.patch(apiUrl.updateNote(id), restPayload);
+  const url = apiUrl.deleteNote(id);
+  const response = await axiosInstance.patch(url, restPayload);
   return response.data;
 };
 
 export const deleteNote = async (noteId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteNote(noteId));
+  const url = apiUrl.deleteNote(noteId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 
 export const getTeachersSubjects = async (classroomId: string): TPromiseResponse<TGetTeacherSubjectsResponse> => {
-  const response = await axiosInstance.get(apiUrl.getTeacherSubjects(classroomId));
+  const url = apiUrl.getTeacherSubjects(classroomId);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 
 export const updateClassroom = async ({ classroomId, ...payload }: TUpdateClassroomPayload): TPromiseResponse => {
-  const response = await axiosInstance.patch(apiUrl.updateClassroom(classroomId), payload);
+  const url = apiUrl.updateClassroom(classroomId);
+  const response = await axiosInstance.patch(url, payload);
   return response.data;
 };
 
 export const deleteClassroom = async (classroomId: string): TPromiseResponse => {
-  const response = await axiosInstance.delete(apiUrl.deleteClassroom(classroomId));
+  const url = apiUrl.deleteClassroom(classroomId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 

@@ -4,7 +4,9 @@ import { apiUrl } from '../apiUrl';
 import { makeUrlParams, removeEmptyProperties } from '@/helpers';
 
 export const getPayments = async (args: TObject = {}): TPromiseResponse<TGetPaymentResponse[]> => {
-  const response = await axiosInstance.get(apiUrl.getPayments(makeUrlParams(args)));
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getPayments(queryString);
+  const response = await axiosInstance.get(url);
   return response?.data;
 };
 
