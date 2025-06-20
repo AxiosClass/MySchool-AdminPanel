@@ -103,7 +103,7 @@ const AttendanceSummary = ({ present, absent, holiday }: TAttendanceSummaryProps
     const config = typeConfig[type];
 
     return (
-      <Card className='w-full bg-transparent shadow-none'>
+      <Card className='w-full border-none bg-transparent shadow-none'>
         <CardContent className='flex items-center gap-4 p-4'>
           <span className={cn('flex size-14 items-center justify-center rounded-full', config.containerClass)}>
             {config.icon}
@@ -118,7 +118,7 @@ const AttendanceSummary = ({ present, absent, holiday }: TAttendanceSummaryProps
   }, []);
 
   return (
-    <div className='flex items-center gap-4'>
+    <div className='flex items-center gap-4 pb-4'>
       {renderSummaryCard(present, 'present')}
       {renderSummaryCard(holiday, 'holiday')}
       {renderSummaryCard(absent, 'absent')}
@@ -127,7 +127,6 @@ const AttendanceSummary = ({ present, absent, holiday }: TAttendanceSummaryProps
 };
 
 type TAttendancesProps = Pick<TAttendanceList, 'attendances'> & { month: Moment };
-
 export const Attendances = ({ attendances, month }: TAttendancesProps) => {
   const today = moment();
 
@@ -142,15 +141,15 @@ export const Attendances = ({ attendances, month }: TAttendancesProps) => {
     const start = month.clone().startOf('month').startOf('week');
     const end = month.clone().endOf('month').endOf('week');
 
-    const temp: Moment[] = [];
+    const days: Moment[] = [];
     const current = start.clone();
 
     while (current.isSameOrBefore(end)) {
-      temp.push(current.clone());
+      days.push(current.clone());
       current.add(1, 'day');
     }
 
-    return temp;
+    return days;
   }, [month]);
 
   const getStatusIcon = (status?: TAttendanceStatus) => {
@@ -183,7 +182,7 @@ export const Attendances = ({ attendances, month }: TAttendancesProps) => {
   return (
     <div className='overflow-hidden rounded-t-md'>
       {/* Weekday Headers */}
-      <div className='grid grid-cols-7 gap-2 bg-muted p-4 text-center text-xs font-medium text-gray-600'>
+      <div className='grid grid-cols-7 gap-2 bg-muted p-4 text-center text-sm font-semibold text-muted-foreground'>
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
           <div key={d}>{d}</div>
         ))}

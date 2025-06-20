@@ -4,6 +4,7 @@ export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
 export const apiUrl = {
   // auth
   login: (type: string) => `/auth/login?type=${type}`,
+
   // class
   createClass: `/class`,
   getClasses: `/classes`,
@@ -14,6 +15,7 @@ export const apiUrl = {
   getAssignedSubjects: (classId: string) => `/class/${classId}/subjects`,
   updateClass: (classId: string) => `/class/${classId}`,
   deleteClass: (classId: string) => `/class/${classId}`,
+
   //classroom
   createClassroom: `/classroom`,
   assignSubjectTeacher: 'classroom/subject-teacher',
@@ -28,14 +30,17 @@ export const apiUrl = {
   getTeacherSubjects: (classroomId: string) => `/classroom/${classroomId}/teacher-subjects`,
   updateClassroom: (classroomId: string) => `/classroom/${classroomId}`,
   deleteClassroom: (classroomId: string) => `/classroom/${classroomId}`,
+
   // subjects
   createSubject: `/subject`,
   getSubjects: (searchParams: string) => `/subjects${searchParams}`,
   deleteSubject: (subjectId: string) => `/subject/${subjectId}`,
+
   // teacher
   addTeacher: `/teacher`,
   getTeachers: `/teachers`,
   getTeacherList: `/teachers/list`,
+
   // student
   addStudent: `/student`,
   getStudents: (searchParams: string) => `/students${searchParams}`,
@@ -43,18 +48,22 @@ export const apiUrl = {
   getStudentInfo: (studentId: string) => `/student/${studentId}`,
   getStudentListForPayment: `/students/list`,
   getStudentClassInfo: (studentId: string) => `/student/${studentId}/class`,
+
   // payment
   makePayment: `/payment`,
   getPayments: (searchParams: string) => `/payments${searchParams}`,
+
   // notice
   addNotice: `/notice`,
   getNotices: (searchParams: string) => `/notices${searchParams}`,
   updateNotice: (noticeId: string) => `/notice/${noticeId}`,
   deleteNotice: (noticeId: string) => `/notice/${noticeId}`,
   getMyNotices: `/notices/mine`,
+
   // holidays
   addHoliday: `/holiday`,
   getHolidays: `/holidays`,
+
   // attendance
   getAttendanceForClassroom: (classroomId: string, date: string) =>
     `/attendances/classroom/${classroomId}?date=${date}`,
@@ -62,15 +71,19 @@ export const apiUrl = {
   deleteAttendance: (attendanceId: string) => `/attendance/${attendanceId}`,
   getAttendancesForStudent: ({ start, end, studentId }: { start: string; end: string; studentId: string }) =>
     `/attendances/student/${studentId}?start=${start}&end=${end}`,
+  getAttendanceSummaryForStudent: (studentId: string) => `/attendance/summary/${studentId}`,
+
   // metadata
   getAttendanceSummary: '/meta-data/attendance/summary',
   getAttendanceTrends: '/meta-data/attendance/trends',
   getPaymentTrends: '/meta-data/payment/trends',
+
   // admin
   createAdmin: '/admin',
   getAdmins: (query: string) => `/admins${query}`,
   deleteAdmin: (email: string) => `/admin/${email}`,
   resetPassword: (email: string) => `/admin/reset-password/${email}`,
+
   //term
   addTerm: '/term',
   getTerms: (searchParams: string) => `/terms${searchParams}`,
@@ -78,10 +91,12 @@ export const apiUrl = {
   updateTermStatus: (termId: string) => `/term/${termId}/status`,
   deleteTerm: (termId: string) => `/term/${termId}`,
   getOngoingTerm: `/term/ongoing`,
+
   // term result
   addTermResult: `/term-result`,
   getStudentsWithTermResult: (searchParams: string) => `/term-result/students${searchParams}`,
   getTermsResultSummary: (studentId: string, year: string) => `/term-result/summary/${studentId}?${year}`,
+
   // actions
   giveDiscount: `/actions/discount`,
   promoteStudent: `/actions/promote`,

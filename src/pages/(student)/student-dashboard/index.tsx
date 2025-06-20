@@ -3,7 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuthStore } from '@/stores/auth';
 import { useGetStudentInfo } from '@/hooks';
 import { StudentProfile } from '@/components/shared/student-profile';
-import { AttendanceList } from '@/components/shared/attendance';
+import { AttendanceList, StudentAttendanceSummary } from '@/components/shared/attendance';
 import { StudentProfileSkeleton } from '@/components/loader';
 
 export default function StudentDashboardPage() {
@@ -19,6 +19,7 @@ export default function StudentDashboardPage() {
       <ScrollArea className='px-6'>
         <section className='my-6 space-y-6'>
           <StudentProfile {...studentInfo} showPaymentInfo />
+          <StudentAttendanceSummary studentId={studentInfo.id} />
           <AttendanceList studentId={userId} admittedAt={studentInfo.admittedAt} />
         </section>
       </ScrollArea>

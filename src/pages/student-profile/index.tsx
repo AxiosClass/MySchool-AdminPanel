@@ -1,6 +1,6 @@
 import { StudentProfileSkeleton } from '@/components/loader';
 import { MakePayment, Message, PageTitle } from '@/components/shared';
-import { AttendanceList } from '@/components/shared/attendance';
+import { AttendanceList, StudentAttendanceSummary } from '@/components/shared/attendance';
 import { GiveDiscount } from '@/components/shared/give-discount';
 import { PromoteStudent } from '@/components/shared/promote-student';
 import { YearPicker } from '@/components/shared/result-summary';
@@ -44,6 +44,7 @@ export default function StudentProfilePage() {
             )}
           </StudentProfile>
 
+          <StudentAttendanceSummary studentId={studentId} />
           <AttendanceList studentId={studentId} admittedAt={studentInfo.admittedAt} />
           <StudentResult studentId={studentId} admittedAt={studentInfo.admittedAt} />
         </section>

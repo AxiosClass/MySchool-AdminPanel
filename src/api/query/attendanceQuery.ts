@@ -29,6 +29,13 @@ export const deleteAttendance = async (attendanceId: string): TPromiseResponse =
   return response.data;
 };
 
+export const getAttendanceSummaryForStudent = async (
+  studentId: string,
+): TPromiseResponse<TGetAttendanceSummaryForStudentResult> => {
+  const response = await axiosInstance.get(apiUrl.getAttendanceSummaryForStudent(studentId));
+  return response.data;
+};
+
 // type
 type TGetAttendancesForClassroomArgs = { classroomId: string; date: string };
 type TGetAttendancesForStudentArgs = { start: string; end: string; studentId: string };
@@ -60,3 +67,5 @@ type TAttendance = {
   attendanceId: string;
   status: TAttendanceStatus;
 };
+
+type TGetAttendanceSummaryForStudentResult = { totalPresent: number; totalAbsent: number; totalHolidays: number };
