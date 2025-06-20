@@ -11,6 +11,7 @@ import { AddTeacher } from './AddTeacher';
 import { dateFormatString } from '@/data';
 import { Pagination, SearchInput, TableNoData, usePagination } from '@/components/shared';
 import { TUseSearch, useSearch } from '@/hooks';
+import { UpdateTeacher } from './UpdateTeacher';
 import { memo } from 'react';
 
 const LIMIT = '10';
@@ -50,7 +51,8 @@ const TeacherTableHead = () => (
     <TableHead>Phone</TableHead>
     <TableHead>Section</TableHead>
     <TableHead>Salary</TableHead>
-    <TableHead className='text-right'>Joined at</TableHead>
+    <TableHead>Joined at</TableHead>
+    <TableHead className='text-center'>Actions</TableHead>
   </>
 );
 
@@ -84,7 +86,12 @@ const TeacherTableRow = memo((props: TTeacherTableRowProps) => {
         </div>
       </TableCell>
       <TableCell>{salary} TK</TableCell>
-      <TableCell className='text-right capitalize'>{moment(joinedAt).format(dateFormatString.basic)}</TableCell>
+      <TableCell>{moment(joinedAt).format(dateFormatString.basic)}</TableCell>
+      <TableCell>
+        <div className='flex items-center justify-center'>
+          <UpdateTeacher teacherId={id} />
+        </div>
+      </TableCell>
     </TableRow>
   );
 });

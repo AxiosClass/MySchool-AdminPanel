@@ -41,6 +41,8 @@ export const apiUrl = {
   getTeachers: (searchParams: string) => `/teachers${searchParams}`,
   getTeacherList: `/teachers/list`,
   getTeacherDetails: (teacherId: string) => `/teacher/${teacherId}`,
+  updateTeacher: (teacherId: string) => `/teacher/${teacherId}`,
+
   // student
   addStudent: `/student`,
   getStudents: (searchParams: string) => `/students${searchParams}`,

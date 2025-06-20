@@ -27,6 +27,12 @@ export const getTeacherDetails = async (teacherId: string): TPromiseResponse<TGe
   return response.data;
 };
 
+export const updateTeacher = async ({ teacherId, ...payload }: TUpdateTeacherPayload): TPromiseResponse => {
+  const url = apiUrl.updateTeacher(teacherId);
+  const response = await axiosInstance.patch(url, payload);
+  return response.data;
+};
+
 type TAddTeacherPayload = Pick<
   TTeacher,
   'id' | 'name' | 'nid' | 'phone' | 'dob' | 'salary' | 'bloodGroup' | 'address' | 'education'
@@ -42,3 +48,5 @@ type TGetTeacherDetailsResult = Pick<
   TTeacher,
   'id' | 'name' | 'nid' | 'phone' | 'dob' | 'bloodGroup' | 'address' | 'salary' | 'education'
 >;
+
+type TUpdateTeacherPayload = Partial<TAddTeacherPayload> & { teacherId: string };

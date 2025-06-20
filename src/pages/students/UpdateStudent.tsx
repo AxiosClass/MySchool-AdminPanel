@@ -32,14 +32,14 @@ export const UpdateStudent = ({ studentId }: { studentId: string }) => {
         submitButtonTitle='Update'
         submitLoadingTitle='Updating...'
       >
-        <StudentFetcher formId={formId} studentId={studentId} onOpenChange={onOpenChange} />
+        <UpdateStudentFormLoader formId={formId} studentId={studentId} onOpenChange={onOpenChange} />
       </FormSheet>
     </>
   );
 };
 
-type StudentFetcherProps = { studentId: string; formId: string; onOpenChange: (open: boolean) => void };
-const StudentFetcher = ({ studentId, formId, onOpenChange }: StudentFetcherProps) => {
+type TUpdateStudentFormLoaderProps = { studentId: string; formId: string; onOpenChange: (open: boolean) => void };
+const UpdateStudentFormLoader = ({ studentId, formId, onOpenChange }: TUpdateStudentFormLoaderProps) => {
   const qc = useQueryClient();
 
   const { data: studentDetails, isLoading } = useQuery({

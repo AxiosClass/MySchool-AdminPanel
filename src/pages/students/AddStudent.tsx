@@ -7,27 +7,13 @@ import { addStudent } from '@/api/query';
 import { toast } from 'sonner';
 import { errorToast } from '@/helpers';
 import { StudentForm, TStudentForm } from './StudentForm';
-import { useMemo } from 'react';
+import { memo } from 'react';
 
-export const AddStudent = () => {
+export const AddStudent = memo(() => {
   const { open, onOpenChange } = usePopupState();
 
   const formId = QK.STUDENT + '_CREATE';
   const qc = useQueryClient();
-
-  const defaultValues = useMemo(() => {
-    return {
-      name: '',
-      birthId: '',
-      class: '',
-      classroomId: '',
-      bloodGroup: '',
-      parents: { fatherName: '', motherName: '' },
-      guardian: { name: '', phone: '', relation: '' },
-      address: '',
-      dob: new Date(),
-    };
-  }, []);
 
   // mutation
   const { mutate } = useMutation({ mutationKey: [formId], mutationFn: addStudent });
@@ -60,8 +46,24 @@ export const AddStudent = () => {
         submitButtonTitle='Add'
         submitLoadingTitle='Adding...'
       >
-        <StudentForm formId={formId} defaultValues={defaultValues} onSubmit={handleAddStudent} />
+        <StudentForm
+          formId={formId}
+          defaultValues={{
+            name: '',
+            birthId: '',
+            class: '',
+            classroomId: '',
+            bloodGroup: '',
+            parents: { fatherName: '', motherName: '' },
+            guardian: { name: '', phone: '', relation: '' },
+            address: '',
+            dob: new Date(),
+          }}
+          onSubmit={handleAddStudent}
+        />
       </FormSheet>
     </>
   );
-};
+});
+
+AddStudent.displayName = 'AddStudent';
