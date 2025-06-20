@@ -14,7 +14,7 @@ export const Pagination = ({ page, totalPages, onPageChange }: TPaginationProps)
   return (
     <div className='sticky bottom-0 flex h-16 items-center justify-between gap-4 border-t bg-neutral-100 px-4'>
       <Button onClick={goPrevious} disabled={page === 1} variant='outline'>
-        <ArrowLeftIcon /> Previous
+        <ArrowLeftIcon className='size-4' /> Previous
       </Button>
       <div className='flex items-center gap-2 font-semibold'>
         {Array.from({ length: totalPages }).map((_, index) => {
@@ -37,7 +37,7 @@ export const Pagination = ({ page, totalPages, onPageChange }: TPaginationProps)
         })}
       </div>
       <Button onClick={goNext} disabled={page === totalPages} variant='outline'>
-        Next <ArrowRightIcon />
+        Next <ArrowRightIcon className='size-4' />
       </Button>
     </div>
   );

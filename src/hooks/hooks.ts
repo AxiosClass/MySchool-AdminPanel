@@ -46,7 +46,7 @@ export const useSearch = () => {
   return { value, searchTerm, onSearchChange };
 };
 
-export type TUserSearch = ReturnType<typeof useSearch>;
+export type TUseSearch = ReturnType<typeof useSearch>;
 
 // data fetching
 export const useGetStudentPayments = (studentId: string) => {

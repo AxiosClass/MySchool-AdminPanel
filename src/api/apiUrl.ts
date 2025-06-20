@@ -40,7 +40,7 @@ export const apiUrl = {
   addTeacher: `/teacher`,
   getTeachers: (searchParams: string) => `/teachers${searchParams}`,
   getTeacherList: `/teachers/list`,
-
+  getTeacherDetails: (teacherId: string) => `/teacher/${teacherId}`,
   // student
   addStudent: `/student`,
   getStudents: (searchParams: string) => `/students${searchParams}`,

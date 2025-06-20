@@ -4,7 +4,7 @@ import { getSubjects, TGetSubjectsQueryResult } from '@/api/query';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { TableBodyLoader } from '@/components/loader';
 import { Badge } from '@/components/ui/badge';
-import { TUserSearch, useSearch } from '@/hooks';
+import { TUseSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { AddSubject } from './AddSubject';
 import { DeleteSubject } from './DeleteSubject';
@@ -24,7 +24,7 @@ export const SubjectTable = () => {
   );
 };
 
-const SubjectTableHeader = (props: Pick<TUserSearch, 'value' | 'onSearchChange'>) => {
+const SubjectTableHeader = (props: Pick<TUseSearch, 'value' | 'onSearchChange'>) => {
   return (
     <div className='flex items-center justify-between gap-6'>
       <SearchInput {...props} placeholder='Search Subject ...' className='max-w-[350px]' />

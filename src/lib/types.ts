@@ -65,6 +65,7 @@ export type TTeacher = {
   salary: number;
   address: string;
   education: TTeacherEducation;
+  joinedAt: string;
 };
 
 export type TTeacherEducation = {

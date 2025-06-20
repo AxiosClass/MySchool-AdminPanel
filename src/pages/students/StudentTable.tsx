@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import { QK } from '@/api';
-import { TUserSearch, useSearch } from '@/hooks';
+import { TUseSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
@@ -16,14 +16,14 @@ import { CommonSelect } from '@/components/shared/form';
 import { UpdateStudent } from './UpdateStudent';
 import { Link } from 'react-router-dom';
 
+const LIMIT = '10';
 export const StudentTable = () => {
-  const { value, searchTerm, onSearchChange } = useSearch();
   const [classLevel, setClassLevel] = useState('all');
+  const { value, searchTerm, onSearchChange } = useSearch();
   const { page, onPageChange } = usePagination();
 
   const onClassChangeLevelChange = useCallback((level: string) => setClassLevel(level), []);
 
-  const LIMIT = '10';
   const { data, isLoading } = useQuery({
     queryKey: [QK.STUDENT, { searchTerm, page, LIMIT, classLevel }],
     queryFn: () =>
@@ -61,7 +61,7 @@ const StudentTableHead = () => (
   </>
 );
 
-type TStudentTableHeaderProps = Pick<TUserSearch, 'value' | 'onSearchChange'> & {
+type TStudentTableHeaderProps = Pick<TUseSearch, 'value' | 'onSearchChange'> & {
   classLevel: string;
   onClassLevelChange: (level: string) => void;
 };
@@ -110,7 +110,6 @@ const TStudentTableBody = ({ students, isLoading }: TStudentTableBodyProps) => {
 };
 
 type TStudentTableRowProps = TGetStudentSResult[number];
-
 const StudentTableRow = memo((props: TStudentTableRowProps) => {
   const { id, name, cardId, class: cls, classroomName, address, guardian, admittedAt } = props;
 
