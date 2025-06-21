@@ -1,28 +1,44 @@
+import moment from 'moment';
+
 import { QK } from '@/api';
 import { getPayments, TGetPaymentResult } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
-import { CommonTable, Pagination, TableNoData, usePagination, UserIcon } from '@/components/shared';
+import { CommonTable, Pagination, SearchInput, TableNoData, usePagination, UserIcon } from '@/components/shared';
 import { PaymentTypeBadge } from '@/components/shared/PaymentTypeBadge';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { dateFormatString, months } from '@/data';
-import { useSearch } from '@/hooks';
+import { TUseSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
-import moment from 'moment';
+import { PAYMENT_TYPE } from '@/lib/types';
+import { useCallback, useState } from 'react';
+import { CommonSelect } from '@/components/shared/form';
 
+// -------------------- Main Component -------------------- \\
 const LIMIT = '10';
 export const AdminPaymentTable = () => {
   const { page, onPageChange } = usePagination();
   const { value, searchTerm, onSearchChange } = useSearch();
+  const [type, setType] = useState('ANY');
 
   const { data: apiResponse, isLoading } = useQuery({
-    queryKey: [QK.PAYMENT, { page, searchTerm, LIMIT }],
-    queryFn: () => getPayments({ searchTerm, page: page.toString(), limit: LIMIT }),
+    queryKey: [QK.PAYMENT, { page, searchTerm, LIMIT, type }],
+    queryFn: () => getPayments({ searchTerm, page: page.toString(), limit: LIMIT, ...(type !== 'ANY' && { type }) }),
     select: (res) => ({ payments: res.data, meta: res.meta }),
   });
 
+  // handlers
+  const onTypeChange = useCallback((type: string) => setType(type), []);
+
   return (
     <CommonTable
-      header={<AdminPaymentTableHeader />}
+      header={
+        <AdminPaymentTableHeader
+          value={value}
+          onSearchChange={onSearchChange}
+          type={type}
+          onTypeChange={onTypeChange}
+        />
+      }
       head={<AdminPaymentTableHead />}
       footer={<Pagination page={page} onPageChange={onPageChange} totalPages={apiResponse?.meta?.totalPages ?? 0} />}
       tableContainerClassName='px-6 mt-6'
@@ -32,7 +48,27 @@ export const AdminPaymentTable = () => {
   );
 };
 
-const AdminPaymentTableHeader = () => <></>;
+// -------------------- Sub Components -------------------- \\
+
+type TAdminPaymentTableHeaderProps = Pick<TUseSearch, 'value' | 'onSearchChange'> & {
+  type: string;
+  onTypeChange: (type: string) => void;
+};
+
+const paymentTypeOptions = [
+  { label: 'ANY', value: 'ANY' },
+  { label: PAYMENT_TYPE.MONTHLY_FEE, value: PAYMENT_TYPE.MONTHLY_FEE },
+  { label: PAYMENT_TYPE.ADMISSION_FEE, value: PAYMENT_TYPE.ADMISSION_FEE },
+  { label: PAYMENT_TYPE.TERM_FEE, value: PAYMENT_TYPE.TERM_FEE },
+  { label: PAYMENT_TYPE.OTHERS, value: PAYMENT_TYPE.OTHERS },
+];
+
+const AdminPaymentTableHeader = ({ value, onSearchChange, type, onTypeChange }: TAdminPaymentTableHeaderProps) => (
+  <div className='flex items-center gap-4'>
+    <SearchInput value={value} onSearchChange={onSearchChange} placeholder='Search here...' />
+    <CommonSelect className='max-w-40' value={type} options={paymentTypeOptions} onChange={onTypeChange} />
+  </div>
+);
 
 const AdminPaymentTableHead = () => (
   <>
