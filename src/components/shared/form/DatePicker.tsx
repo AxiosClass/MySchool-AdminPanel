@@ -1,138 +1,182 @@
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+'use client';
+
+import moment from 'moment';
+import type { Moment } from 'moment';
+
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { ReactNode, useState } from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { dateFormatString } from '@/data';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-// Main component
-export const DatePicker = ({ value, onChange }: TDatePickerProps) => {
-  const [isYearShown, setYearShown] = useState(false);
-  const [isMonthShown, setIsMonthShown] = useState(false);
-  const [isDayShown, setIsDayShown] = useState(false);
+type TDatePickerProps = {
+  value?: Date;
+  onChange: (date: Date) => void;
+  minDate?: Date;
+  maxDate?: Date;
+  className?: string;
+};
 
-  const currentYear = new Date().getFullYear();
-  const daysInMonth = new Date(value.getFullYear(), value.getMonth() + 1, 0).getDate();
+const weekdays = moment.weekdaysShort();
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 50 }, (_, i) => currentYear - 49 + i);
+const months = moment.months();
 
-  const updateDate = (part: 'year' | 'month' | 'day', newValue: number) => {
-    const newDate = new Date(value);
+export const DatePicker = ({ value, onChange, minDate, maxDate, className }: TDatePickerProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(value);
+  const [currentMonth, setCurrentMonth] = useState(() => moment(value));
+  const [selectedDate, setSelectedDate] = useState(() => moment(value));
 
-    switch (part) {
-      case 'year':
-        newDate.setFullYear(newValue);
-        setYearShown(false);
-        break;
-      case 'month':
-        newDate.setMonth(newValue);
-        setIsMonthShown(false);
-        break;
-      case 'day':
-        newDate.setDate(newValue);
-        setIsDayShown(false);
-        break;
-    }
+  const onMonthChange = useCallback((value: Moment) => setCurrentMonth(value), []);
 
-    onChange(newDate);
+  useEffect(() => {
+    const newDate = moment(value);
+    setSelectedDate(newDate);
+    setCurrentMonth(newDate);
+  }, [value]);
+
+  const isDisabled = (date: Moment) => {
+    if (minDate && date.isBefore(moment(minDate), 'day')) return true;
+    if (maxDate && date.isAfter(moment(maxDate), 'day')) return true;
+    return false;
   };
 
+  const handleSelectDate = (date: Moment) => {
+    if (!isDisabled(date)) {
+      setSelectedDate(date);
+      onChange(date.toDate());
+      setIsOpen(false);
+    }
+  };
+
+  const days = useMemo(() => {
+    const daysInMonth = currentMonth.daysInMonth();
+    const startOfMonth = currentMonth.clone().startOf('month').day();
+    const result: (Moment | null)[] = Array(startOfMonth).fill(null);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      result.push(currentMonth.clone().date(d));
+    }
+
+    return result;
+  }, [currentMonth]);
+
   return (
-    <div className='grid grid-cols-3 gap-4'>
-      <DatePartPicker isOpen={isYearShown} onOpenChange={setYearShown} label='Year' displayValue={value.getFullYear()}>
-        <div className='grid grid-cols-4 gap-2'>
-          {Array.from({ length: YEARS_TO_SHOW }).map((_, index) => {
-            const year = currentYear - index;
-            return (
-              <div
-                key={year}
-                onClick={() => updateDate('year', year)}
-                className={cn(
-                  'flex cursor-pointer justify-center rounded-md border p-1',
-                  value.getFullYear() === year && 'bg-primary text-white',
-                )}
-              >
-                {year}
-              </div>
-            );
-          })}
-        </div>
-      </DatePartPicker>
-      <DatePartPicker
-        isOpen={isMonthShown}
-        onOpenChange={setIsMonthShown}
-        label='Month'
-        displayValue={MONTHS[value.getMonth()]}
-      >
-        <div className='grid grid-cols-3 gap-2'>
-          {MONTHS.map((month, index) => (
-            <div
-              key={month}
-              onClick={() => updateDate('month', index)}
-              className={cn(
-                'flex cursor-pointer justify-center rounded-md border p-1',
-                value.getMonth() === index && 'bg-primary text-white',
-              )}
-            >
-              {month}
-            </div>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type='button'
+          variant='outline'
+          className={cn('flex w-full justify-start border-border', className)}
+        >
+          {value ? (
+            selectedDate.format(dateFormatString.basic)
+          ) : (
+            <p className='font-normal text-muted-foreground'>Pick a date</p>
+          )}
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent align='center' className='rounded-md border border-gray-200 bg-white p-4'>
+        <DatePickerControl currentMonth={currentMonth} onMonthChange={onMonthChange} />
+
+        <div className='mt-4 grid grid-cols-7 gap-1 text-center text-sm font-medium text-muted-foreground'>
+          {weekdays.map((day) => (
+            <div key={day}>{day}</div>
           ))}
         </div>
-      </DatePartPicker>
-      <DatePartPicker isOpen={isDayShown} onOpenChange={setIsDayShown} label='Day' displayValue={value.getDate()}>
-        <div className='grid grid-cols-7 gap-2'>
-          {Array.from({ length: daysInMonth }).map((_, index) => {
-            const day = index + 1;
+
+        <div className='mt-1 grid grid-cols-7 gap-1'>
+          {days.map((date, idx) => {
+            const isSelected = date?.isSame(selectedDate, 'day');
+            const isToday = date?.isSame(currentMonth.date(), 'day');
+            const disabled = date && isDisabled(date);
+
             return (
-              <div
-                key={day}
-                onClick={() => updateDate('day', day)}
+              <button
+                type='button'
+                key={idx}
+                disabled={!!(!date || disabled)}
+                onClick={() => date && handleSelectDate(date)}
                 className={cn(
-                  'flex cursor-pointer justify-center rounded-md border p-1',
-                  value.getDate() === day && 'bg-primary text-white',
+                  'size-10 rounded text-sm transition-all',
+                  date ? 'hover:bg-gray-100' : '',
+                  isSelected && 'bg-primary text-white hover:bg-primary/70',
+                  disabled && 'cursor-not-allowed text-gray-400',
+                  isToday && 'bg-blue-300',
                 )}
               >
-                {day}
-              </div>
+                {date ? date.date() : ''}
+              </button>
             );
           })}
         </div>
-      </DatePartPicker>
-    </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 
-// Reusable date part picker component
-const DatePartPicker = ({ isOpen, onOpenChange, label, displayValue, children }: TDatePartPickerProps) => (
-  <Popover open={isOpen} onOpenChange={onOpenChange} modal>
-    <PopoverTrigger
-      onClick={() => onOpenChange(true)}
-      className='w-full focus:border-primary focus:ring-1 focus:ring-primary'
-      asChild
-    >
-      <Button variant='outline' type='button' className='w-full justify-start rounded-md'>
-        {label} : {displayValue}
-      </Button>
-    </PopoverTrigger>
-    <PopoverContent className='bg-background p-0' align='start' onWheel={(e) => e.stopPropagation()}>
-      <ScrollArea className='p-4'>
-        <div className='max-h-52'>{children}</div>
-      </ScrollArea>
-    </PopoverContent>
-  </Popover>
-);
+type TDatePickerControlProps = { currentMonth: Moment; onMonthChange: (value: Moment) => void };
 
-// consts
-const YEARS_TO_SHOW = 80;
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+const DatePickerControl = ({ currentMonth, onMonthChange }: TDatePickerControlProps) => {
+  const handleMonthChange = (value: string) => {
+    onMonthChange(currentMonth.clone().month(value));
+  };
 
-// Types
-type TDatePickerProps = {
-  value: Date;
-  onChange: (date: Date) => void;
-};
+  const handleYearChange = (value: string) => {
+    onMonthChange(currentMonth.clone().year(Number(value)));
+  };
 
-type TDatePartPickerProps = {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  label: string;
-  displayValue: string | number;
-  children?: ReactNode;
+  const goPrevious = () => {
+    onMonthChange(currentMonth.clone().subtract(1, 'month'));
+  };
+
+  const goNext = () => {
+    onMonthChange(currentMonth.clone().add(1, 'month'));
+  };
+
+  return (
+    <div className='mb-2 flex items-center justify-between'>
+      <button type='button' onClick={goPrevious} className='rounded p-1 hover:bg-gray-100'>
+        <ChevronLeftIcon />
+      </button>
+
+      <div className='flex items-center gap-2'>
+        <Select value={currentMonth.month().toString()} onValueChange={handleMonthChange}>
+          <SelectTrigger className='w-20'>
+            <SelectValue placeholder='Pick Month' />
+          </SelectTrigger>
+          <SelectContent>
+            {months.map((month, idx) => (
+              <SelectItem key={idx} value={idx.toString()}>
+                <span className='text-xs font-semibold uppercase'> {month.slice(0, 3)}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <span> : </span>
+
+        <Select value={currentMonth.year().toString()} onValueChange={handleYearChange}>
+          <SelectTrigger className='w-20'>
+            <SelectValue placeholder='Pick Year' />
+          </SelectTrigger>
+          <SelectContent>
+            {years.map((year) => (
+              <SelectItem key={year} value={year.toString()}>
+                <span className='text-xs font-semibold'>{year}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <button type='button' onClick={goNext} className='rounded p-1 hover:bg-gray-100'>
+        <ChevronRightIcon />
+      </button>
+    </div>
+  );
 };

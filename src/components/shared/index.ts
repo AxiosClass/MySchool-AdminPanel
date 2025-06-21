@@ -12,3 +12,4 @@ export * from './TableNodata';
 export * from './TooltipContainer';
 export * from './UserIcon';
 export * from './Pagination';
+export * from './PaymentTypeBadge';

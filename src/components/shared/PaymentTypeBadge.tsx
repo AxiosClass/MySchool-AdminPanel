@@ -4,7 +4,13 @@ import { cn } from '@/lib/utils';
 export const PaymentTypeBadge = ({ type }: { type: PAYMENT_TYPE }) => {
   const config = PAYMENT_TYPE_CONFIG[type];
 
-  return <span className={cn('rounded p-2 text-xs font-semibold text-white', config.className)}>{type}</span>;
+  return (
+    <span
+      className={cn('inline-block w-32 rounded p-2 text-center text-xs font-semibold text-white', config.className)}
+    >
+      {type}
+    </span>
+  );
 };
 
 const PAYMENT_TYPE_CONFIG = {

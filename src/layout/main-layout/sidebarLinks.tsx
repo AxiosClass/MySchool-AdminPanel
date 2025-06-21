@@ -6,6 +6,7 @@ import { FaBellConcierge, FaUserTie, FaNoteSticky } from 'react-icons/fa6';
 import { useAuthStore } from '@/stores/auth';
 import { IoIosBookmarks } from 'react-icons/io';
 import { MdClass } from 'react-icons/md';
+import { RiWalletFill } from 'react-icons/ri';
 
 const adminRoles = [USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN];
 
@@ -18,12 +19,15 @@ export const useSidebarLinks = () => {
       { title: 'Classes', url: '/classes', icon: <FaBook /> },
       { title: 'Teachers', url: '/teachers', icon: <FaUserTie /> },
       { title: 'Students', url: '/students', icon: <PiStudentFill /> },
-      { title: 'Transactions', url: '/transactions/take-payment', icon: <IoWallet /> },
+      { title: 'Payments', url: '/transactions/payments', icon: <RiWalletFill /> },
+      { title: 'Take Payment', url: '/transactions/take-payment', icon: <IoWallet /> },
       { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
       { title: 'Subjects', url: '/subjects', icon: <IoIosBookmarks /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Terms', url: '/terms', icon: <FaNoteSticky /> },
-      ...(user?.role === USER_ROLE.SUPER_ADMIN ? [{ title: 'Admins', url: '/admins', icon: <FaUserSecret /> }] : []),
+      ...(user?.role === USER_ROLE.SUPER_ADMIN
+        ? [{ title: 'Admins', url: '/admins', icon: <FaUserSecret /> }]
+        : []),
     ];
   else if (user?.role === USER_ROLE.TEACHER)
     return [
@@ -43,8 +47,8 @@ export const useSidebarLinks = () => {
 export const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes') return partialMatch(['/classes', '/class', '/section'], pathname);
-  if (url === '/transactions/take-payment') return partialMatch(['/transactions'], pathname);
-  if (url === '/teacher') return partialMatch(['/teacher', '/section'], pathname) && pathname !== '/teacher/notices';
+  if (url === '/teacher')
+    return partialMatch(['/teacher', '/section'], pathname) && pathname !== '/teacher/notices';
 };
 
 const partialMatch = (urls: string[], pathname: string): boolean => {

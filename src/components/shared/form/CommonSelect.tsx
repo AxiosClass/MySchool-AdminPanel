@@ -36,7 +36,7 @@ export const CommonSelect = ({
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className={className}>
-        <SelectValue placeholder={placeholder} />
+        {value ? <SelectValue /> : <span className='text-muted-foreground'>{placeholder}</span>}
       </SelectTrigger>
       <SelectContent>{content}</SelectContent>
     </Select>

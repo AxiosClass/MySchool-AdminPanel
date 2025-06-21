@@ -29,7 +29,9 @@ export const TeacherTable = () => {
     <CommonTable
       header={<TeacherTableHeader value={value} onSearchChange={onSearchChange} />}
       head={<TeacherTableHead />}
-      footer={<Pagination page={page} onPageChange={onPageChange} totalPages={apiResponse?.meta?.totalPages ?? 0} />}
+      footer={
+        <Pagination page={page} onPageChange={onPageChange} totalPages={apiResponse?.meta?.totalPages ?? 0} />
+      }
       tableContainerClassName='px-6 mt-6'
     >
       <TeacherTableBody teachers={apiResponse?.teacher ?? []} isLoading={isLoading} />
@@ -58,8 +60,8 @@ const TeacherTableHead = () => (
 
 type TTeacherTableBodyProps = { teachers: TGetTeachersResult; isLoading: boolean };
 const TeacherTableBody = ({ teachers, isLoading }: TTeacherTableBodyProps) => {
-  if (isLoading) return <TableBodyLoader cols={5} />;
-  if (!teachers?.length) return <TableNoData colSpan={5} message='No Teacher Found' />;
+  if (isLoading) return <TableBodyLoader cols={6} />;
+  if (!teachers?.length) return <TableNoData colSpan={6} message='No Teacher Found' />;
 
   return teachers.map((teacher) => <TeacherTableRow key={teacher.id} {...teacher} />);
 };
