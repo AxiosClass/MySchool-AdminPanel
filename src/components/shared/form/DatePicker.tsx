@@ -26,7 +26,6 @@ const months = moment.months();
 
 export const DatePicker = ({ value, onChange, minDate, maxDate, className }: TDatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(value);
   const [currentMonth, setCurrentMonth] = useState(() => moment(value));
   const [selectedDate, setSelectedDate] = useState(() => moment(value));
 

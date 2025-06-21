@@ -67,3 +67,20 @@
     @apply bg-background text-sm text-foreground;
   }
 }
+
+/* @media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .print-area, .print-area * {
+    visibility: visible !important;
+  }
+
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+} */

@@ -52,7 +52,7 @@ export default function LoginPage() {
         <LoginDecorations />
 
         <div className='relative z-10 w-full max-w-md'>
-          <Card className='border bg-card/95 shadow-lg backdrop-blur-sm'>
+          <Card className='border bg-card/95 p-4 shadow-lg backdrop-blur-sm'>
             <CardHeader className='pb-2 text-center'>
               <div className='mx-auto mb-4 flex items-center justify-center'>
                 <AppLogo />

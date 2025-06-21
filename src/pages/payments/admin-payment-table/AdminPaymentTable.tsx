@@ -24,6 +24,7 @@ import { PAYMENT_TYPE } from '@/lib/types';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FunnelXIcon } from 'lucide-react';
+import { PrintReceipt } from './PrintReceipt';
 
 // -------------------- Main Component -------------------- \\
 export const AdminPaymentTable = () => {
@@ -144,16 +145,17 @@ const AdminPaymentTableHead = () => (
     <TableHead>Description</TableHead>
     <TableHead>Month / Year</TableHead>
     <TableHead>Paid At</TableHead>
+    <TableHead>Action</TableHead>
   </>
 );
 
 type TAdminPaymentTableBody = { payments: TGetPaymentResult; isLoading: boolean };
 const AdminPaymentTableBody = ({ payments, isLoading }: TAdminPaymentTableBody) => {
-  if (isLoading) return <TableBodyLoader cols={7} />;
-  if (!payments.length) return <TableNoData colSpan={7} message='No payment found' />;
+  if (isLoading) return <TableBodyLoader cols={8} />;
+  if (!payments.length) return <TableNoData colSpan={8} message='No payment found' />;
 
-  return payments.map(
-    ({
+  return payments.map((payment) => {
+    const {
       id,
       studentName,
       studentId,
@@ -165,7 +167,9 @@ const AdminPaymentTableBody = ({ payments, isLoading }: TAdminPaymentTableBody) 
       month,
       year,
       createdAt,
-    }) => (
+    } = payment;
+
+    return (
       <TableRow key={id}>
         <TableCell>
           <Link to={`/student/${studentId}`} className='flex items-center gap-2'>
@@ -188,9 +192,12 @@ const AdminPaymentTableBody = ({ payments, isLoading }: TAdminPaymentTableBody) 
           {month && months[month]} {year}
         </TableCell>
         <TableCell>{moment(createdAt).format(dateFormatString.basic)}</TableCell>
+        <TableCell>
+          <PrintReceipt payment={payment} />
+        </TableCell>
       </TableRow>
-    ),
-  );
+    );
+  });
 };
 
 // -------------------- Hook -------------------- \\
