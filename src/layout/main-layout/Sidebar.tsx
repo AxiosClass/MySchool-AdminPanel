@@ -1,22 +1,17 @@
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import { FaUser } from 'react-icons/fa6';
 import { useAuthStore } from '@/stores/auth';
-import { IoMdSettings } from 'react-icons/io';
 import { isActive, useSidebarLinks } from './sidebarLinks';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 import { AppLogo } from '@/components/shared/AppLogo';
+import { ChangePassword } from '@/components/shared/ChangePassword';
+import { TooltipContainer } from '@/components/shared';
+import { Button } from '@/components/ui/button';
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
-  const removeUser = useAuthStore((state) => state.removeUser);
   const sidebarLinks = useSidebarLinks();
-
-  const handleLogout = () => {
-    toast.info('You have been logged out');
-    removeUser();
-  };
 
   return (
     <aside className='hidden min-h-screen min-w-[240px] flex-col border-r shadow md:flex'>
@@ -37,16 +32,26 @@ export const Sidebar = () => {
         ))}
       </div>
       <div className='mt-auto flex items-center justify-between border-t p-6'>
-        <div onClick={handleLogout} className='cursor-pointer rounded-full bg-white p-2 text-red-600'>
-          <BiLogOutCircle size={20} />
-        </div>
-        <div className='rounded-full bg-white p-2'>
-          <IoMdSettings size={20} />
-        </div>
-        <div className='rounded-full bg-white p-2'>
-          <FaUser size={20} />
-        </div>
+        <Logout />
+        <ChangePassword />
       </div>
     </aside>
+  );
+};
+
+const Logout = () => {
+  const removeUser = useAuthStore((s) => s.removeUser);
+
+  const handleLogout = () => {
+    toast.info('You have been logged out');
+    removeUser();
+  };
+
+  return (
+    <TooltipContainer label='Logout'>
+      <Button onClick={handleLogout} variant='outline' size='icon'>
+        <BiLogOutCircle className='size-4 text-destructive' />
+      </Button>
+    </TooltipContainer>
   );
 };

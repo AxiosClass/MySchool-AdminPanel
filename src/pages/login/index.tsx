@@ -86,7 +86,9 @@ export default function LoginPage() {
                   </CommonFormField>
 
                   <CommonFormField control={form.control} name='password' label='Password'>
-                    {({ field }) => <PasswordInput {...field} placeholder='Enter your password' className='h-12' />}
+                    {({ field }) => (
+                      <PasswordInput {...field} placeholder='Enter your password' className='h-12' />
+                    )}
                   </CommonFormField>
 
                   <Button type='submit' className='h-12 w-full' disabled={isPending}>
@@ -117,7 +119,13 @@ export default function LoginPage() {
 }
 
 // === Role Selector ===
-const RoleSelector = ({ selectedRole, setRole }: { selectedRole: string; setRole: (val: string) => void }) => (
+const RoleSelector = ({
+  selectedRole,
+  setRole,
+}: {
+  selectedRole: string;
+  setRole: (val: string) => void;
+}) => (
   <div className='space-y-2'>
     <label className='text-sm font-medium text-gray-700'>Login As</label>
     <div className='grid grid-cols-3 gap-2'>
@@ -172,7 +180,7 @@ const LoginDecorations = () => (
 // === Schema and Types ===
 const formSchema = z.object({
   id: z.string().min(1, 'User ID is required'),
-  password: z.string().min(4, 'Password is required'),
+  password: z.string().min(1, 'Password is required'),
   type: z.string(),
 });
 type TFormSchema = z.infer<typeof formSchema>;

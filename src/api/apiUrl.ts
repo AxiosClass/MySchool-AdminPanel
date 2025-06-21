@@ -4,6 +4,8 @@ export const SERVER_ADDRESS = 'http://localhost:5000/api/v1';
 export const apiUrl = {
   // auth
   login: (type: string) => `/auth/login?type=${type}`,
+  changePassword: `/auth/change-password`,
+  resetPassword: `/auth/reset-password`,
 
   // class
   createClass: `/class`,
@@ -20,7 +22,8 @@ export const apiUrl = {
   createClassroom: `/classroom`,
   assignSubjectTeacher: 'classroom/subject-teacher',
   getSubjectListForClassroom: (classroomId: string) => `/classroom/${classroomId}/subjects`,
-  deleteSubjectTeacher: (classSubjectTeacherId: string) => `/classroom/subject-teacher/${classSubjectTeacherId}`,
+  deleteSubjectTeacher: (classSubjectTeacherId: string) =>
+    `/classroom/subject-teacher/${classSubjectTeacherId}`,
   getClassroomsForTeacher: (teacherId: string) => `/classrooms/teacher/${teacherId}`,
   getClassroomDetails: (classroomId: string) => `/classroom/${classroomId}`,
   addNote: `/classroom/note`,
@@ -86,7 +89,7 @@ export const apiUrl = {
   createAdmin: '/admin',
   getAdmins: (query: string) => `/admins${query}`,
   deleteAdmin: (email: string) => `/admin/${email}`,
-  resetPassword: (email: string) => `/admin/reset-password/${email}`,
+  resetPasswordAdmin: (email: string) => `/admin/reset-password/${email}`,
 
   //term
   addTerm: '/term',

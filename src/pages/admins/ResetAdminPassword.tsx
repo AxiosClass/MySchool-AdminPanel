@@ -35,7 +35,7 @@ export const ResetAdminPassword = ({ email }: TResetAdminPasswordProps) => {
     <>
       <TooltipContainer label='Reset Password'>
         <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
-          <KeySquareIcon size={16} />
+          <KeySquareIcon className='size-4' />
         </Button>
       </TooltipContainer>
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -43,7 +43,9 @@ export const ResetAdminPassword = ({ email }: TResetAdminPasswordProps) => {
           <DialogHeader>
             <DialogTitle>Reset Password</DialogTitle>
           </DialogHeader>
-          <DialogDescription>Are you sure that you want to reset this admin&apos;s password</DialogDescription>
+          <DialogDescription>
+            Are you sure that you want to reset this admin&apos;s password
+          </DialogDescription>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant='outline'>Cancel</Button>

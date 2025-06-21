@@ -1,6 +1,5 @@
 import { QK } from '@/api';
 import { getAdmins, TGetAdminQueryResult } from '@/api/query';
-import { TableLoader } from '@/components/loader';
 import { CommonTable, UserIcon } from '@/components/shared';
 import { TableNoData } from '@/components/shared/TableNodata';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +7,7 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { DeleteAdmin } from './DeleteAdmin';
 import { ResetAdminPassword } from './ResetAdminPassword';
-import { useMemo } from 'react';
+import { TableBodyLoader } from '@/components/loader';
 
 export const AdminsTable = () => {
   const { data, isLoading } = useQuery({
@@ -17,29 +16,25 @@ export const AdminsTable = () => {
     select: (res) => res.data,
   });
 
-  const tableHead = useMemo(() => {
-    return (
-      <>
-        <TableHead>Admin Info</TableHead>
-        <TableHead>Email</TableHead>
-        <TableHead>Role</TableHead>
-        <TableHead>Actions</TableHead>
-      </>
-    );
-  }, []);
-
-  if (isLoading) return <TableLoader />;
-
   return (
-    <CommonTable head={tableHead} tableContainerClassName='px-6'>
-      <AdminTableBody admins={data} />
+    <CommonTable head={<AdminTableHead />} tableContainerClassName='px-6'>
+      <AdminTableBody admins={data} isLoading={isLoading} />
     </CommonTable>
   );
 };
 
-type TAdminTableBodyProps = { admins: TGetAdminQueryResult | undefined };
+const AdminTableHead = () => (
+  <>
+    <TableHead>Admin Info</TableHead>
+    <TableHead>Email</TableHead>
+    <TableHead>Role</TableHead>
+    <TableHead>Actions</TableHead>
+  </>
+);
 
-const AdminTableBody = ({ admins }: TAdminTableBodyProps) => {
+type TAdminTableBodyProps = { admins?: TGetAdminQueryResult; isLoading: boolean };
+const AdminTableBody = ({ admins, isLoading }: TAdminTableBodyProps) => {
+  if (isLoading) return <TableBodyLoader cols={4} />;
   if (!admins?.length) return <TableNoData message='No admin found!' colSpan={4} />;
 
   return admins.map(({ id, name, role }) => (

@@ -22,7 +22,7 @@ export const deleteAdmin = async (email: string): TPromiseResponse => {
 };
 
 export const resetAdminPassword = async (email: string): TPromiseResponse => {
-  const url = apiUrl.resetPassword(email);
+  const url = apiUrl.resetPasswordAdmin(email);
   const response = await axiosInstance.patch(url);
   return response.data;
 };
