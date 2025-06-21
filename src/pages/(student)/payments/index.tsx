@@ -1,6 +1,5 @@
 import moment from 'moment';
 
-import { cn } from '@/lib/utils';
 import { dateFormatString, months } from '@/data';
 import { CommonTable, PageTitle, TableNoData } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -8,9 +7,9 @@ import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useGetStudentInfo, useGetStudentPayments } from '@/hooks';
 import { FiDollarSign } from 'react-icons/fi';
 import { useAuthStore } from '@/stores/auth';
-import { PAYMENT_TYPE } from '@/lib/types';
 import { PaymentSummaryLoader } from './StudentPaymentPageLoader';
 import { TableBodyLoader } from '@/components/loader';
+import { PaymentTypeBadge } from '@/components/shared/PaymentTypeBadge';
 
 export default function StudentPaymentPage() {
   return (
@@ -54,13 +53,6 @@ const PaymentCard = ({ label, value }: { label: string; value: number }) => (
   </div>
 );
 
-const PAYMENT_TYPE_CONFIG = {
-  [PAYMENT_TYPE.ADMISSION_FEE]: { className: 'bg-orange-600' },
-  [PAYMENT_TYPE.MONTHLY_FEE]: { className: 'bg-blue-600' },
-  [PAYMENT_TYPE.TERM_FEE]: { className: 'bg-yellow-600' },
-  [PAYMENT_TYPE.OTHERS]: { className: 'bg-green-600' },
-};
-
 const PaymentTable = () => (
   <CommonTable head={<PaymentTableHead />} tableContainerClassName='p-6'>
     <PaymentTableBody />
@@ -87,27 +79,23 @@ const PaymentTableBody = () => {
 
   return (
     <>
-      {payments.map(({ id, amount, type, description, month, year, createdAt }, index) => {
-        const config = PAYMENT_TYPE_CONFIG[type];
-
-        return (
-          <TableRow key={id}>
-            <TableCell>{index + 1}</TableCell>
-            <TableCell>{amount} TK</TableCell>
-            <TableCell className='text-center'>
-              <span className={cn('rounded p-1 text-xs font-semibold text-white', config.className)}>{type}</span>
-            </TableCell>
-            <TableCell className='text-muted-foreground'>{description || 'N/A'} </TableCell>
-            <TableCell className='font-semibold text-muted-foreground'>
-              {month && `${months[month]}, `}
-              {year}
-            </TableCell>
-            <TableCell className='text-right text-muted-foreground'>
-              {moment(createdAt).format(dateFormatString.basic)}
-            </TableCell>
-          </TableRow>
-        );
-      })}
+      {payments.map(({ id, amount, type, description, month, year, createdAt }, index) => (
+        <TableRow key={id}>
+          <TableCell>{index + 1}</TableCell>
+          <TableCell>{amount} TK</TableCell>
+          <TableCell className='text-center'>
+            <PaymentTypeBadge type={type} />
+          </TableCell>
+          <TableCell className='text-muted-foreground'>{description || 'N/A'} </TableCell>
+          <TableCell className='font-semibold text-muted-foreground'>
+            {month && `${months[month]}, `}
+            {year}
+          </TableCell>
+          <TableCell className='text-right text-muted-foreground'>
+            {moment(createdAt).format(dateFormatString.basic)}
+          </TableCell>
+        </TableRow>
+      ))}
     </>
   );
 };
