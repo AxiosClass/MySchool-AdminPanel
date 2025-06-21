@@ -5,7 +5,7 @@ import { isActive, useSidebarLinks } from './sidebarLinks';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 import { AppLogo } from '@/components/shared/AppLogo';
-import { ChangePassword } from '@/components/shared/ChangePassword';
+import { ChangePassword } from '@/components/shared';
 import { TooltipContainer } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 

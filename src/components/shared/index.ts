@@ -1,5 +1,6 @@
 export * from './ActionMenu';
 export * from './AppLogo';
+export * from './ChangePassword';
 export * from './CommonTable';
 export * from './CustomSheet';
 export * from './DeleteDialog';
@@ -13,3 +14,4 @@ export * from './TooltipContainer';
 export * from './UserIcon';
 export * from './Pagination';
 export * from './PaymentTypeBadge';
+export * from './PasswordReset';

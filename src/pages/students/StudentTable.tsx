@@ -1,12 +1,20 @@
 import moment from 'moment';
 
+import {
+  Pagination,
+  PasswordReset,
+  SearchInput,
+  TableNoData,
+  usePagination,
+  UserIcon,
+} from '@/components/shared';
+
 import { QK } from '@/api';
 import { TUseSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { TableBodyLoader } from '@/components/loader';
-import { Pagination, SearchInput, TableNoData, usePagination, UserIcon } from '@/components/shared';
 import { getClassList, getStudents, TGetStudentSResult } from '@/api/query';
 import { dateFormatString } from '@/data';
 import { AddStudent } from './AddStudent';
@@ -15,6 +23,7 @@ import { memo, useCallback, useState } from 'react';
 import { CommonSelect } from '@/components/shared/form';
 import { UpdateStudent } from './UpdateStudent';
 import { Link } from 'react-router-dom';
+import { USER_ROLE } from '@/lib/types';
 
 const LIMIT = '10';
 export const StudentTable = () => {
@@ -27,7 +36,12 @@ export const StudentTable = () => {
   const { data, isLoading } = useQuery({
     queryKey: [QK.STUDENT, { searchTerm, page, LIMIT, classLevel }],
     queryFn: () =>
-      getStudents({ searchTerm, page: page.toString(), limit: LIMIT, ...(classLevel !== 'all' && { classLevel }) }),
+      getStudents({
+        searchTerm,
+        page: page.toString(),
+        limit: LIMIT,
+        ...(classLevel !== 'all' && { classLevel }),
+      }),
     select: (res) => ({ students: res.data, meta: res.meta }),
   });
 
@@ -66,7 +80,12 @@ type TStudentTableHeaderProps = Pick<TUseSearch, 'value' | 'onSearchChange'> & {
   onClassLevelChange: (level: string) => void;
 };
 
-const StudentTableHeader = ({ value, onSearchChange, classLevel, onClassLevelChange }: TStudentTableHeaderProps) => {
+const StudentTableHeader = ({
+  value,
+  onSearchChange,
+  classLevel,
+  onClassLevelChange,
+}: TStudentTableHeaderProps) => {
   const { data: classOptions } = useQuery({
     queryKey: [QK.CLASS, 'LIST'],
     queryFn: getClassList,
@@ -141,6 +160,7 @@ const StudentTableRow = memo((props: TStudentTableRowProps) => {
         <div className='flex items-center justify-center gap-2'>
           <UpdateStudent studentId={id} />
           <IssueNfcCard studentId={id} cardId={cardId} />
+          <PasswordReset id={id} role={USER_ROLE.STUDENT} />
         </div>
       </TableCell>
     </TableRow>

@@ -22,4 +22,4 @@ export const resetPassword = async (payload: TResetPasswordPayload): TPromiseRes
 // types
 type TLoginPayload = { id: string; password: string; type: string };
 type TChangePasswordPayload = { currentPassword: string; newPassword: string };
-type TResetPasswordPayload = { userId: string; role: USER_ROLE };
+type TResetPasswordPayload = { userId: string; userRole: USER_ROLE };

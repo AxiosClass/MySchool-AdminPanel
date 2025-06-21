@@ -20,7 +20,7 @@ export const ChangePassword = () => {
 
   const form = useForm<TChangePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
-    defaultValues: { currentPassword: '', newPassword: '' },
+    defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
   const { mutate } = useMutation({

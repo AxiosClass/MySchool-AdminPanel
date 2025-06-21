@@ -5,7 +5,13 @@ import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CalendarDaysIcon, ChevronLeftIcon, ChevronRightIcon, CircleCheckBigIcon, CircleXIcon } from 'lucide-react';
+import {
+  CalendarDaysIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CircleCheckBigIcon,
+  CircleXIcon,
+} from 'lucide-react';
 import { dateFormatString } from '@/data';
 import { useGetStudentAttendance } from '@/hooks';
 import { TAttendanceList, TAttendanceStatus } from '@/api/query';
@@ -95,7 +101,10 @@ type TAttendanceSummaryProps = { present: number; absent: number; holiday: numbe
 const AttendanceSummary = ({ present, absent, holiday }: TAttendanceSummaryProps) => {
   const renderSummaryCard = useCallback((value: number, type: 'present' | 'absent' | 'holiday') => {
     const typeConfig = {
-      present: { icon: <CircleCheckBigIcon className='size-6 text-primary' />, containerClass: 'bg-primary-50' },
+      present: {
+        icon: <CircleCheckBigIcon className='size-6 text-primary' />,
+        containerClass: 'bg-primary-50',
+      },
       holiday: { icon: <CalendarDaysIcon className='size-6 text-blue-500' />, containerClass: 'bg-blue-50' },
       absent: { icon: <CircleXIcon className='size-6 text-red-500' />, containerClass: 'bg-red-50' },
     };
@@ -103,9 +112,11 @@ const AttendanceSummary = ({ present, absent, holiday }: TAttendanceSummaryProps
     const config = typeConfig[type];
 
     return (
-      <Card className='w-full border-none bg-transparent shadow-none'>
+      <Card className='w-full bg-transparent shadow-none'>
         <CardContent className='flex items-center gap-4 p-4'>
-          <span className={cn('flex size-14 items-center justify-center rounded-full', config.containerClass)}>
+          <span
+            className={cn('flex size-14 items-center justify-center rounded-full', config.containerClass)}
+          >
             {config.icon}
           </span>
           <div className='space-y-1'>
