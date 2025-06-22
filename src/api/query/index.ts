@@ -4,6 +4,7 @@ export * from './attendanceQuery';
 export * from './authQuery';
 export * from './classQuery';
 export * from './classroomQuery';
+export * from './dueQuery';
 export * from './holidaysQuery';
 export * from './metaDataQuery';
 export * from './noticeQuery';

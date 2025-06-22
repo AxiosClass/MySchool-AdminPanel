@@ -3,10 +3,10 @@ import { PiStudentFill } from 'react-icons/pi';
 import { FaHome, FaBook, FaUserSecret } from 'react-icons/fa';
 import { IoNotificationsOff, IoWallet } from 'react-icons/io5';
 import { FaBellConcierge, FaUserTie, FaNoteSticky } from 'react-icons/fa6';
+import { RiWalletFill, RiWallet3Fill } from 'react-icons/ri';
 import { useAuthStore } from '@/stores/auth';
 import { IoIosBookmarks } from 'react-icons/io';
 import { MdClass } from 'react-icons/md';
-import { RiWalletFill } from 'react-icons/ri';
 
 const adminRoles = [USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN];
 
@@ -21,20 +21,25 @@ export const useSidebarLinks = () => {
       { title: 'Students', url: '/students', icon: <PiStudentFill /> },
       { title: 'Payments', url: '/transactions/payments', icon: <RiWalletFill /> },
       { title: 'Take Payment', url: '/transactions/take-payment', icon: <IoWallet /> },
+      { title: 'Dues', url: '/transactions/dues', icon: <RiWallet3Fill /> },
       { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
       { title: 'Subjects', url: '/subjects', icon: <IoIosBookmarks /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
       { title: 'Terms', url: '/terms', icon: <FaNoteSticky /> },
+
+      // Only Super admin can access
       ...(user?.role === USER_ROLE.SUPER_ADMIN
         ? [{ title: 'Admins', url: '/admins', icon: <FaUserSecret /> }]
         : []),
     ];
-  else if (user?.role === USER_ROLE.TEACHER)
+
+  if (user?.role === USER_ROLE.TEACHER)
     return [
       { title: 'Home', url: '/teacher', icon: <FaHome /> },
       { title: 'Notice', url: '/teacher/notices', icon: <FaBellConcierge /> },
     ];
-  else if (user?.role === USER_ROLE.STUDENT)
+
+  if (user?.role === USER_ROLE.STUDENT)
     return [
       { title: 'Home', url: '/student', icon: <FaHome /> },
       { title: 'Payments', url: '/student/payments', icon: <IoWallet /> },

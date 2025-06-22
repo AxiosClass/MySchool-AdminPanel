@@ -17,4 +17,5 @@ export const QK = {
   TERM: 'TERM',
   TERM_RESULT: 'TERM_RESULT',
   DISCOUNT: 'DISCOUNT',
+  DUE: 'DUE',
 };

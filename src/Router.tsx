@@ -33,6 +33,8 @@ const lazyPages = {
   holidays: lazy(() => import('@/pages/holidays')),
   terms: lazy(() => import('@/pages/terms')),
   admins: lazy(() => import('@/pages/admins')),
+  dues: lazy(() => import('@/pages/dues')),
+
   // teacher
   teacherDashboard: lazy(() => import('@/pages/(teacher)/teacher-dashboard')),
   teacherSection: lazy(() => import('@/pages/(teacher)/teacher-section')),
@@ -112,18 +114,10 @@ const router = createBrowserRouter([
             path: '/transactions/payments',
             element: withSuspense(lazyPages.adminPayments, <PageWithTableLoader />),
           },
-
-          // {
-          //   path: '/transactions',
-          //   element: <TransactionSubLayout />,
-          //   children: [
-          //     {
-          //       path: 'take-payment',
-          //       element: withSuspense(lazyPages.takePayment, <TakePaymentCardSkeleton />),
-          //     },
-          //     { path: 'payments', element: withSuspense(lazyPages.adminPayments, <PageWithTableLoader />) },
-          //   ],
-          // },
+          {
+            path: '/transactions/dues',
+            element: withSuspense(lazyPages.dues, <CardsLoader />),
+          },
           { path: '/subjects', element: withSuspense(lazyPages.subjects, <PageWithTableLoader />) },
           {
             path: '/notices',

@@ -107,4 +107,7 @@ export const apiUrl = {
   // actions
   giveDiscount: `/actions/discount`,
   promoteStudent: `/actions/promote`,
+
+  // dues
+  getDuesByClassroom: `/dues/classroom`,
 };

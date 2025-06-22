@@ -28,7 +28,7 @@ const ClassList = () => {
   if (!classesData?.data.length) return <Message message='No Class Found!' />;
 
   return (
-    <section className='grid gap-6 px-6 sm:grid-cols-2 lg:grid-cols-3'>
+    <section className='mb-6 grid gap-6 px-6 sm:grid-cols-2 lg:grid-cols-3'>
       {classesData.data.map((cls) => (
         <ClassCard key={cls.id} {...cls} />
       ))}
