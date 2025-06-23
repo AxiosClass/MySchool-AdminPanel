@@ -109,5 +109,7 @@ export const apiUrl = {
   promoteStudent: `/actions/promote`,
 
   // dues
+  getDuesByClass: `/dues/class`,
   getDuesByClassroom: `/dues/classroom`,
+  getDuesByStudent: (searchParams: string) => `/dues/student${searchParams}`,
 };

@@ -21,7 +21,7 @@ export const useSidebarLinks = () => {
       { title: 'Students', url: '/students', icon: <PiStudentFill /> },
       { title: 'Payments', url: '/transactions/payments', icon: <RiWalletFill /> },
       { title: 'Take Payment', url: '/transactions/take-payment', icon: <IoWallet /> },
-      { title: 'Dues', url: '/transactions/dues', icon: <RiWallet3Fill /> },
+      { title: 'Dues', url: '/dues', icon: <RiWallet3Fill /> },
       { title: 'Notice', url: '/notices', icon: <FaBellConcierge /> },
       { title: 'Subjects', url: '/subjects', icon: <IoIosBookmarks /> },
       { title: 'Holidays', url: '/holidays', icon: <IoNotificationsOff /> },
