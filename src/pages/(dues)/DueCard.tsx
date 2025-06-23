@@ -18,7 +18,13 @@ export const DueCard = ({ id, title, totalDue, totalPaid, totalDiscount, linkPre
   const percentageDue = totalDue > 0 ? 100 - percentagePaid : 0;
 
   const progressColor =
-    percentagePaid >= 75 ? 'bg-primary' : percentagePaid >= 50 ? 'bg-orange-500' : 'bg-destructive';
+    percentagePaid >= 90
+      ? 'bg-primary'
+      : percentagePaid >= 75
+        ? 'bg-primary/80'
+        : percentagePaid >= 50
+          ? 'bg-primary/75'
+          : 'bg-primary/50';
 
   const formattedPaidPercentage = formatNumber(percentagePaid);
   const formattedDuePercentage = formatNumber(percentageDue);

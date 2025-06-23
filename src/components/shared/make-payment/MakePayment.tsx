@@ -17,8 +17,10 @@ import { getStudentClassInfo, makePayment } from '@/api/query';
 import { BsFillWalletFill } from 'react-icons/bs';
 import { Skeleton } from '../../ui/skeleton';
 import { useMemo } from 'react';
+import { TooltipContainer } from '../TooltipContainer';
 
-export const MakePayment = ({ studentId }: { studentId: string }) => {
+type TButtonType = 'button' | 'icon';
+export const MakePayment = ({ studentId, type = 'button' }: { studentId: string; type?: TButtonType }) => {
   const form = useForm<TMakePaymentFrom>({
     resolver: zodResolver(makePaymentFormSchema),
     defaultValues: { description: '', type: '', year: new Date().getFullYear() },
@@ -48,6 +50,7 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
     onSuccess: (res) => {
       toast.success(res.message);
       qc.invalidateQueries({ queryKey: [QK.PAYMENT] });
+      qc.invalidateQueries({ queryKey: [QK.DUE] });
       qc.invalidateQueries({ queryKey: [QK.STUDENT] });
       form.reset();
       onOpenChange(false);
@@ -66,9 +69,8 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
 
   return (
     <>
-      <Button variant='outline' onClick={() => onOpenChange(true)} className='w-44 bg-white'>
-        <BsFillWalletFill className='size-4' /> Take Payment
-      </Button>
+      <MakePaymentTrigger type={type} onClick={() => onOpenChange(true)} />
+
       <FormDialog open={open} onOpenChange={onOpenChange} title='Make Payment' formId={formId}>
         <Form {...form}>
           <MakePaymentForm
@@ -81,6 +83,26 @@ export const MakePayment = ({ studentId }: { studentId: string }) => {
       </FormDialog>
     </>
   );
+};
+
+const MakePaymentTrigger = ({ type, onClick }: { type: TButtonType; onClick: () => void }) => {
+  switch (type) {
+    case 'button':
+      return (
+        <Button variant='outline' onClick={onClick} className='w-44'>
+          <BsFillWalletFill className='size-4' /> Take Payment
+        </Button>
+      );
+
+    case 'icon':
+      return (
+        <TooltipContainer label='Take Payment'>
+          <Button variant='outline' onClick={onClick} size='sm'>
+            <BsFillWalletFill className='size-4' />
+          </Button>
+        </TooltipContainer>
+      );
+  }
 };
 
 type TMakePaymentFromProps = {

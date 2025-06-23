@@ -13,8 +13,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { giveDiscount } from '@/api/query';
 import { toast } from 'sonner';
 import { errorToast } from '@/helpers';
+import { TooltipContainer } from '../TooltipContainer';
 
-export const GiveDiscount = ({ studentId }: { studentId: string }) => {
+type TButtonType = 'button' | 'icon';
+export const GiveDiscount = ({ studentId, type = 'button' }: { studentId: string; type?: TButtonType }) => {
   const formId = `${QK.DISCOUNT}_ADD`;
   const qc = useQueryClient();
 
@@ -27,6 +29,7 @@ export const GiveDiscount = ({ studentId }: { studentId: string }) => {
       {
         onSuccess: (res) => {
           qc.invalidateQueries({ queryKey: [QK.PAYMENT] });
+          qc.invalidateQueries({ queryKey: [QK.DUE] });
           qc.invalidateQueries({ queryKey: [QK.STUDENT] });
           toast.success(res.message);
           reset();
@@ -39,9 +42,8 @@ export const GiveDiscount = ({ studentId }: { studentId: string }) => {
 
   return (
     <>
-      <Button variant='outline' onClick={() => onOpenChange(true)} className='w-44 bg-white'>
-        <MdDiscount className='size-4' /> Grant Discount
-      </Button>
+      <GivePaymentTrigger type={type} onClick={() => onOpenChange(true)} />
+
       <FormDialog
         open={open}
         onOpenChange={onOpenChange}
@@ -55,6 +57,26 @@ export const GiveDiscount = ({ studentId }: { studentId: string }) => {
       </FormDialog>
     </>
   );
+};
+
+const GivePaymentTrigger = ({ type, onClick }: { type: TButtonType; onClick: () => void }) => {
+  switch (type) {
+    case 'button':
+      return (
+        <Button variant='outline' onClick={onClick} className='w-44'>
+          <MdDiscount className='size-4' /> Grant Discount
+        </Button>
+      );
+
+    case 'icon':
+      return (
+        <TooltipContainer label='Grant Discount'>
+          <Button variant='outline' onClick={onClick} size='sm'>
+            <MdDiscount className='size-4' />
+          </Button>
+        </TooltipContainer>
+      );
+  }
 };
 
 type TDiscountFormPops = { formId: string; onSubmit: (value: TDiscountForm, reset: () => void) => void };
@@ -72,7 +94,9 @@ const DiscountForm = ({ formId, onSubmit }: TDiscountFormPops) => {
     <Form {...form}>
       <form id={formId} onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <CommonFormField control={form.control} name='amount' label='Amount'>
-          {({ field }) => <Input {...field} value={field.value || ''} type='number' placeholder='Input Amount' />}
+          {({ field }) => (
+            <Input {...field} value={field.value || ''} type='number' placeholder='Input Amount' />
+          )}
         </CommonFormField>
         <CommonFormField control={form.control} name='description' label='Description'>
           {({ field }) => <Textarea {...field} placeholder='Write down description' />}

@@ -1,7 +1,8 @@
 import { QK } from '@/api';
 import { getDuesByStudent, TGetDuesByStudentResult } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
-import { CommonTable, SearchInput, TableNoData } from '@/components/shared';
+import { CommonTable, MakePayment, SearchInput, TableNoData } from '@/components/shared';
+import { GiveDiscount } from '@/components/shared/give-discount';
 import { StudentInfoCell } from '@/components/shared/StudentInfoCell';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { TUseSearch, useSearch } from '@/hooks';
@@ -36,12 +37,11 @@ const DuesTableHead = () => (
     <TableHead>Student Info</TableHead>
     <TableHead>Section</TableHead>
     <TableHead>Amount</TableHead>
-    <TableHead>Actions</TableHead>
+    <TableHead className='text-center'>Actions</TableHead>
   </>
 );
 
 type TDuesHeaderProps = Pick<TUseSearch, 'value' | 'onSearchChange'>;
-
 const DuesTableHeader = ({ value, onSearchChange }: TDuesHeaderProps) => {
   return (
     <div className='flex items-center justify-center gap-4'>
@@ -56,16 +56,15 @@ const DuesTableHeader = ({ value, onSearchChange }: TDuesHeaderProps) => {
 };
 
 type TDuesTableBodyProps = { students: TGetDuesByStudentResult; searchTerm: string; isLoading: boolean };
-
 const DuesTableBody = ({ students, searchTerm, isLoading }: TDuesTableBodyProps) => {
-  if (isLoading) <TableBodyLoader cols={4} />;
-  if (!students.length) return <TableNoData colSpan={4} message='No Student with due found this section' />;
+  if (isLoading) return <TableBodyLoader cols={4} />;
+  if (!students.length) return <TableNoData colSpan={4} message='No students with dues in this section.' />;
 
   const filteredStudents = students.filter(
     (student) => student.name.toLowerCase().includes(searchTerm) || student.id.includes(searchTerm),
   );
 
-  if (!filteredStudents.length) return <TableNoData colSpan={4} message='No matched student found' />;
+  if (!filteredStudents.length) return <TableNoData colSpan={4} message='No students match your search.' />;
 
   return filteredStudents.map((std) => <DuesTableRow key={std.id} {...std} />);
 };
@@ -76,12 +75,18 @@ const DuesTableRow = memo(({ id, name, classroomName, classLevel, due }: TDuesTa
     <TableCell>
       <StudentInfoCell id={id} name={name} />
     </TableCell>
-
     <TableCell>
       <p className='text-base font-semibold'>Class : {classLevel}</p>
       <p className='text-sm text-muted-foreground'>Section : {classroomName}</p>
     </TableCell>
     <TableCell className='font-semibold'>{due} TK</TableCell>
-    <TableCell></TableCell>
+    <TableCell>
+      <div className='flex items-center justify-center gap-4'>
+        <MakePayment studentId={id} type='icon' />
+        <GiveDiscount studentId={id} type='icon' />
+      </div>
+    </TableCell>
   </TableRow>
 ));
+
+DuesTableRow.displayName = 'DuesTableRow';
