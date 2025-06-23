@@ -52,6 +52,7 @@ export const useSidebarLinks = () => {
 export const isActive = (url: string, pathname: string) => {
   if (url === pathname) return true;
   if (url === '/classes') return partialMatch(['/classes', '/class', '/section'], pathname);
+  if (url === '/dues') return partialMatch(['/dues'], pathname);
   if (url === '/teacher')
     return partialMatch(['/teacher', '/section'], pathname) && pathname !== '/teacher/notices';
 };

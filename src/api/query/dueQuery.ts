@@ -8,8 +8,9 @@ export const getDuesByClass = async (): TPromiseResponse<TGetDuesByClass> => {
   return response.data;
 };
 
-export const getDuesByClassroom = async (): TPromiseResponse<TGetDuesByClassroom> => {
-  const response = await axiosInstance.get(apiUrl.getDuesByClassroom);
+export const getDuesByClassroom = async (level: string): TPromiseResponse<TGetDuesByClassroom> => {
+  const url = apiUrl.getDuesByClassroom(level);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 

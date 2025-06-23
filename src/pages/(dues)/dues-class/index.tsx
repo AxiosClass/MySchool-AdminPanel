@@ -6,7 +6,7 @@ export default function DuesClassPage() {
   return (
     <>
       <PageTitle title='Dues' />
-      <ScrollArea className='px-6'>
+      <ScrollArea>
         <DuesByClass />
       </ScrollArea>
     </>

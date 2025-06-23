@@ -110,6 +110,6 @@ export const apiUrl = {
 
   // dues
   getDuesByClass: `/dues/class`,
-  getDuesByClassroom: `/dues/classroom`,
+  getDuesByClassroom: (level: string) => `/dues/classroom/${level}`,
   getDuesByStudent: (searchParams: string) => `/dues/student${searchParams}`,
 };
