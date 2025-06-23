@@ -3,10 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MdWallet } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-type TDueCardProps = { id: string; title: string; totalDue: number; totalPaid: number; linkPrefix: string };
+type TDueCardProps = {
+  id: string;
+  title: string;
+  totalDue: number;
+  totalPaid: number;
+  totalDiscount: number;
+  linkPrefix: string;
+};
 
-export const DueCard = ({ id, title, totalDue, totalPaid, linkPrefix }: TDueCardProps) => {
-  const due = totalDue || 0 - totalPaid || 0;
+export const DueCard = ({ id, title, totalDue, totalPaid, totalDiscount, linkPrefix }: TDueCardProps) => {
+  const due = (totalDue || 0) - (totalPaid || 0) - (totalDiscount || 0);
   const percentagePaid = totalDue > 0 ? (totalPaid / totalDue) * 100 : 0;
   const percentageDue = totalDue > 0 ? 100 - percentagePaid : 0;
 

@@ -1,44 +1,44 @@
 import { apiUrl } from '../apiUrl';
-import { TObject, TPromiseResponse } from '@/lib/types';
+import { TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
-import { makeUrlParams } from '@/helpers';
 
-export const getDuesByClass = async (): TPromiseResponse<TGetDuesByClass> => {
+export const getDuesByClass = async (): TPromiseResponse<TGetDuesByClassResult> => {
   const response = await axiosInstance.get(apiUrl.getDuesByClass);
   return response.data;
 };
 
-export const getDuesByClassroom = async (level: string): TPromiseResponse<TGetDuesByClassroom> => {
+export const getDuesByClassroom = async (level: string): TPromiseResponse<TGetDuesByClassroomResult> => {
   const url = apiUrl.getDuesByClassroom(level);
   const response = await axiosInstance.get(url);
   return response.data;
 };
 
-export const getDuesByStudent = async (args: TObject) => {
-  const queryString = makeUrlParams(args);
-  const url = apiUrl.getDuesByStudent(queryString);
+export const getDuesByStudent = async (classroomId: string): TPromiseResponse<TGetDuesByStudentResult> => {
+  const url = apiUrl.getDuesByStudent(classroomId);
   const response = await axiosInstance.get(url);
   return response.data;
 };
 
-export type TGetDuesByClass = Array<{
+type TGetDuesByClassResult = Array<{
   level: string;
   name: string;
   totalDue: number;
   totalPaid: number;
+  totalDiscount: number;
 }>;
 
-export type TGetDuesByClassroom = Array<{
+type TGetDuesByClassroomResult = Array<{
   id: string;
   name: string;
   classLevel: string;
   totalDue: number;
   totalPaid: number;
+  totalDiscount: number;
 }>;
 
-export type TGetDuesByStudent = Array<{
-  studentId: string;
-  studentName: string;
+export type TGetDuesByStudentResult = Array<{
+  id: string;
+  name: string;
   classLevel: string;
   classroomName: string;
   due: number;

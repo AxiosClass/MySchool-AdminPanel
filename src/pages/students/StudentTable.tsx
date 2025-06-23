@@ -1,20 +1,12 @@
 import moment from 'moment';
 
-import {
-  Pagination,
-  PasswordReset,
-  SearchInput,
-  TableNoData,
-  usePagination,
-  UserIcon,
-} from '@/components/shared';
-
 import { QK } from '@/api';
 import { TUseSearch, useSearch } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { CommonTable } from '@/components/shared/CommonTable';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { TableBodyLoader } from '@/components/loader';
+import { Pagination, PasswordReset, SearchInput, TableNoData, usePagination } from '@/components/shared';
 import { getClassList, getStudents, TGetStudentSResult } from '@/api/query';
 import { dateFormatString } from '@/data';
 import { AddStudent } from './AddStudent';
@@ -22,8 +14,8 @@ import { IssueNfcCard } from './IssueNfcCard';
 import { memo, useCallback, useState } from 'react';
 import { CommonSelect } from '@/components/shared/form';
 import { UpdateStudent } from './UpdateStudent';
-import { Link } from 'react-router-dom';
 import { USER_ROLE } from '@/lib/types';
+import { StudentInfoCell } from '@/components/shared/StudentInfoCell';
 
 const LIMIT = '10';
 export const StudentTable = () => {
@@ -135,16 +127,7 @@ const StudentTableRow = memo((props: TStudentTableRowProps) => {
   return (
     <TableRow>
       <TableCell>
-        <div className='flex gap-4'>
-          <UserIcon username={name} />
-          <div>
-            <Link to={`/student/${id}`}>
-              <p className='text-base font-semibold'>{name}</p>
-            </Link>
-            <p className='text-sm text-muted-foreground'>ID : {id}</p>
-            {cardId && <p className='text-sm text-muted-foreground'>CardID : {cardId}</p>}
-          </div>
-        </div>
+        <StudentInfoCell id={id} name={name} cardId={cardId} />
       </TableCell>
       <TableCell>
         <p className='text-base font-semibold'>Class : {cls}</p>

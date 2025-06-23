@@ -5,11 +5,9 @@ import { DuesTable } from './DuesTable';
 export default function DuesClassroomPage() {
   return (
     <>
-      <PageTitle title='Dues' />
+      <PageTitle title='Section Dues' />
       <ScrollArea>
-        <section className='space-y-6 p-6'>
-          <DuesTable />
-        </section>
+        <DuesTable />
       </ScrollArea>
     </>
   );

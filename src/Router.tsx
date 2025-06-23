@@ -35,6 +35,7 @@ const lazyPages = {
   admins: lazy(() => import('@/pages/admins')),
   duesClasses: lazy(() => import('@/pages/(dues)/dues-class')),
   duesClassDetails: lazy(() => import('@/pages/(dues)/dues-class-details')),
+  duesSectionDetails: lazy(() => import('@/pages/(dues)/dues-section')),
 
   // teacher
   teacherDashboard: lazy(() => import('@/pages/(teacher)/teacher-dashboard')),
@@ -117,10 +118,10 @@ const router = createBrowserRouter([
           },
           { path: '/dues', element: withSuspense(lazyPages.duesClasses, <CardsLoader />) },
           { path: '/dues/class/:level', element: withSuspense(lazyPages.duesClassDetails, <CardsLoader />) },
-          // {
-          //   path: '/transactions/dues/section/:sectionId',
-          //   element: withSuspense(lazyPages.duesSection, <CardsLoader />),
-          // },
+          {
+            path: '/dues/section/:sectionId',
+            element: withSuspense(lazyPages.duesSectionDetails, <PageWithTableLoader />),
+          },
           { path: '/subjects', element: withSuspense(lazyPages.subjects, <PageWithTableLoader />) },
           {
             path: '/notices',
