@@ -81,7 +81,7 @@ export const apiUrl = {
   getAttendanceSummaryForStudent: (studentId: string) => `/attendance/summary/${studentId}`,
 
   // metadata
-  getAttendanceSummary: '/meta-data/attendance/summary',
+  getOverview: '/meta-data/overview',
   getAttendanceTrends: '/meta-data/attendance/trends',
   getPaymentTrends: '/meta-data/payment/trends',
 

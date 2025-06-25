@@ -2,8 +2,8 @@ import { apiUrl } from '../apiUrl';
 import { TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
 
-export const getAttendanceSummary = async (): TPromiseResponse<TAttendanceSummary> => {
-  const response = await axiosInstance.get(apiUrl.getAttendanceSummary);
+export const getOverview = async (): TPromiseResponse<TAttendanceSummary> => {
+  const response = await axiosInstance.get(apiUrl.getOverview);
   return response.data;
 };
 
@@ -17,6 +17,12 @@ export const getPaymentTrends = async (): TPromiseResponse<TPaymentTrend[]> => {
   return response.data;
 };
 
-type TAttendanceSummary = { totalStudents: number; present: number; absent: number };
+type TAttendanceSummary = {
+  totalStudent: number;
+  totalTeacher: number;
+  collection: number;
+  currentDue: number;
+};
+
 export type TAttendanceTrend = { date: string; count: number };
 export type TPaymentTrend = { month: string; amount: number };

@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 
 export const AttendanceTrends = () => {
   const { data, isLoading } = useQuery({
-    queryKey: [QK.META_DATA, 'ATTENDANCE_TRENDS'],
+    queryKey: [QK.OVERVIEW, 'ATTENDANCE_TRENDS'],
     queryFn: getAttendanceTrends,
     select: (res) => res.data,
   });
