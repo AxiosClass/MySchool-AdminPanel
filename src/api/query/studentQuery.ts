@@ -31,7 +31,9 @@ export const getStudentListForPayment = async (): TPromiseResponse<TGetStudentLi
   return response.data;
 };
 
-export const getStudentClassInfo = async (studentId: string): TPromiseResponse<TGetStudentClassInfoResult> => {
+export const getStudentClassInfo = async (
+  studentId: string,
+): TPromiseResponse<TGetStudentClassInfoResult> => {
   const url = apiUrl.getStudentClassInfo(studentId);
   const response = await axiosInstance.get(url);
   return response.data;
@@ -46,6 +48,12 @@ export const getStudentDetails = async (studentId: string): TPromiseResponse<TGe
 export const updateStudent = async ({ studentId, ...payload }: TUpdateStudentPayload): TPromiseResponse => {
   const url = apiUrl.updateStudent(studentId);
   const response = await axiosInstance.patch(url, payload);
+  return response.data;
+};
+
+export const deleteStudent = async (studentId: string): TPromiseResponse => {
+  const url = apiUrl.deleteStudent(studentId);
+  const response = await axiosInstance.delete(url);
   return response.data;
 };
 
@@ -78,7 +86,10 @@ export type TGetStudentListForPaymentResult = Array<
   Pick<TStudent, 'id' | 'name'> & { classroomName: string; className: string; classLevel: string }
 >;
 
-export type TGetStudentClassInfoResult = Pick<TClass, 'id' | 'name' | 'admissionFee' | 'monthlyFee' | 'termFee'>;
+export type TGetStudentClassInfoResult = Pick<
+  TClass,
+  'id' | 'name' | 'admissionFee' | 'monthlyFee' | 'termFee'
+>;
 export type TGetStudentDetailsResult = Pick<
   TStudent,
   'name' | 'birthId' | 'bloodGroup' | 'dob' | 'address' | 'parents' | 'guardian'

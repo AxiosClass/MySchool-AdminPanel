@@ -33,13 +33,22 @@ export const updateTeacher = async ({ teacherId, ...payload }: TUpdateTeacherPay
   return response.data;
 };
 
+export const deleteTeacher = async (teacherId: string): TPromiseResponse => {
+  const url = apiUrl.deleteTeacher(teacherId);
+  const response = await axiosInstance.delete(url);
+  return response.data;
+};
+
 type TAddTeacherPayload = Pick<
   TTeacher,
   'id' | 'name' | 'nid' | 'phone' | 'dob' | 'salary' | 'bloodGroup' | 'address' | 'education'
 >;
 
 export type TGetTeachersResult = Array<
-  Pick<TTeacher, 'id' | 'name' | 'phone' | 'salary' | 'joinedAt'> & { classroomName: string; classLevel: string }
+  Pick<TTeacher, 'id' | 'name' | 'phone' | 'salary' | 'joinedAt'> & {
+    classroomName: string;
+    classLevel: string;
+  }
 >;
 
 type TGetTeacherListResult = Array<Pick<TTeacher, 'id' | 'name'>>;

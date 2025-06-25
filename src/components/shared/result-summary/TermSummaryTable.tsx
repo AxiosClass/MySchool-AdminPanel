@@ -2,9 +2,13 @@ import { cn } from '@/lib/utils';
 import { TSubjectResult, TTermResultSummaryResult } from '@/api/query';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { CommonTable } from '../CommonTable';
+import { TableNoData } from '../TableNodata';
 
 type TTermResultSummary = TTermResultSummaryResult[number];
-type TTermSummaryTableProps = TTermResultSummary & { tableContainerClass?: string; tableHeaderClass?: string };
+type TTermSummaryTableProps = TTermResultSummary & {
+  tableContainerClass?: string;
+  tableHeaderClass?: string;
+};
 
 export const TermSummaryTable = ({
   termName,
@@ -31,9 +35,7 @@ export const TermSummaryTable = ({
     tableContainerClassName={cn('px-6', tableContainerClass)}
     headerClassName='p-0'
   >
-    {subjectResults.map((subjectResult) => (
-      <SubjectResult key={subjectResult.subjectId} {...subjectResult} />
-    ))}
+    <TermSummaryTableBody subjectResults={subjectResults} />
   </CommonTable>
 );
 
@@ -60,7 +62,7 @@ const TermSummaryTableHeader = ({
       </p>
     </div>
     <p className='rounded-lg border px-2 py-1 font-semibold'>Grade : {termGrade}</p>
-    <GpaBadge gpa={termGPA} grade={termGrade} />
+    {termGPA && <GpaBadge gpa={termGPA} grade={termGrade} />}
   </div>
 );
 
@@ -76,7 +78,14 @@ const TermSummaryTableHead = () => (
 
 // Sub Components
 type TSubjectResultProps = TSubjectResult;
-const SubjectResult = ({ subjectName, obtainedMarks, fullMarks, gpa, grade, componentMarks }: TSubjectResultProps) => {
+const SubjectResult = ({
+  subjectName,
+  obtainedMarks,
+  fullMarks,
+  gpa,
+  grade,
+  componentMarks,
+}: TSubjectResultProps) => {
   const cellBase = 'border group-last:border-b-0';
   const centerCell = `${cellBase} text-center`;
   const leftCell = `${cellBase} border-l-0`;
@@ -105,6 +114,16 @@ const SubjectResult = ({ subjectName, obtainedMarks, fullMarks, gpa, grade, comp
       </TableCell>
     </TableRow>
   );
+};
+
+type TTermSummaryTableBodyProps = { subjectResults: TSubjectResult[] };
+
+const TermSummaryTableBody = ({ subjectResults }: TTermSummaryTableBodyProps) => {
+  if (!subjectResults.length) return <TableNoData colSpan={5} message='No Result found' />;
+
+  return subjectResults.map((subjectResult) => (
+    <SubjectResult key={subjectResult.subjectId} {...subjectResult} />
+  ));
 };
 
 type TComponentBreakDownProps = TSubjectResult['componentMarks'][string] & { componentName: string };

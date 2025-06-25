@@ -40,7 +40,7 @@ export const CreateClass = () => {
         onOpenChange={onOpenChange}
         title='Create Class'
         description='Provide following information to create a class'
-        submitButtonTitle='Crate Class'
+        submitButtonTitle='Cerate Class'
         submitLoadingTitle='Cratering Class...'
       >
         <ClassForm formId={formId} onSubmit={handleCreateClass} />

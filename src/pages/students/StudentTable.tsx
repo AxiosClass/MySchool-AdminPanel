@@ -16,6 +16,7 @@ import { CommonSelect } from '@/components/shared/form';
 import { UpdateStudent } from './UpdateStudent';
 import { USER_ROLE } from '@/lib/types';
 import { StudentInfoCell } from '@/components/shared/StudentInfoCell';
+import { DeleteStudent } from './DeleteStudent';
 
 const LIMIT = '10';
 export const StudentTable = () => {
@@ -144,6 +145,7 @@ const StudentTableRow = memo((props: TStudentTableRowProps) => {
           <UpdateStudent studentId={id} />
           <IssueNfcCard studentId={id} cardId={cardId} />
           <PasswordReset id={id} role={USER_ROLE.STUDENT} />
+          <DeleteStudent studentId={id} />
         </div>
       </TableCell>
     </TableRow>

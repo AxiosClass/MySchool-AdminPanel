@@ -1,26 +1,26 @@
 import { QK } from '@/api';
-import { deleteAdmin } from '@/api/query';
+import { deleteStudent } from '@/api/query';
 import { DeleteDialog, TooltipContainer } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { errorToast } from '@/helpers';
 import { usePopupState } from '@/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { TrashIcon } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { toast } from 'sonner';
 
-type DeleteAdminProps = { email: string };
-
-const formId = 'DELETE_ADMIN';
-
-export const DeleteAdmin = ({ email }: DeleteAdminProps) => {
+export const DeleteStudent = ({ studentId }: { studentId: string }) => {
   const qc = useQueryClient();
+  const mutationKey = QK.STUDENT + '_DELETE';
+
   const { open, onOpenChange } = usePopupState();
+
   const { mutate } = useMutation({
-    mutationKey: [formId],
-    mutationFn: () => deleteAdmin(email),
+    mutationKey: [mutationKey],
+    mutationFn: () => deleteStudent(studentId),
     onSuccess: (res) => {
-      qc.invalidateQueries({ queryKey: [QK.ADMINS] });
-      toast.message(res.message);
+      toast.success(res.message);
+      qc.invalidateQueries({ queryKey: [QK.STUDENT] });
+      qc.invalidateQueries({ queryKey: [QK.OVERVIEW] });
       onOpenChange(false);
     },
     onError: errorToast,
@@ -28,19 +28,19 @@ export const DeleteAdmin = ({ email }: DeleteAdminProps) => {
 
   return (
     <>
-      <TooltipContainer label='Delete Admin'>
+      <TooltipContainer label='Delete Student'>
         <Button
           variant='destructive-outline'
           className='bg-destructive/5'
           size='icon'
           onClick={() => onOpenChange(true)}
         >
-          <TrashIcon className='size-4' />
+          <Trash2Icon className='size-4' />
         </Button>
       </TooltipContainer>
 
       <DeleteDialog
-        formId={formId}
+        formId={mutationKey}
         onDelete={mutate}
         open={open}
         onOpenChange={onOpenChange}

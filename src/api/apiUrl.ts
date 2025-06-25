@@ -45,6 +45,7 @@ export const apiUrl = {
   getTeacherList: `/teachers/list`,
   getTeacherDetails: (teacherId: string) => `/teacher/${teacherId}`,
   updateTeacher: (teacherId: string) => `/teacher/${teacherId}`,
+  deleteTeacher: (teacherId: string) => `/teacher/${teacherId}`,
 
   // student
   addStudent: `/student`,
@@ -55,6 +56,7 @@ export const apiUrl = {
   getStudentListForPayment: `/students/list`,
   getStudentClassInfo: (studentId: string) => `/student/${studentId}/class`,
   updateStudent: (studentId: string) => `/student/${studentId}`,
+  deleteStudent: (studentId: string) => `student/${studentId}`,
 
   // payment
   makePayment: `/payment`,
