@@ -1,9 +1,9 @@
 import { QK } from '@/api';
-import { getPaymentTrends, TPaymentTrend } from '@/api/query';
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { BarChartLoader } from './DashboardLoader';
 import { Message } from '@/components/shared';
-import { useMemo } from 'react';
+import { getPaymentTrends, TPaymentTrend } from '@/api/query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';

@@ -6,9 +6,9 @@ import {
   SearchInput,
   TableNoData,
   usePagination,
-  UserIcon,
   PaymentTypeBadge,
   TooltipContainer,
+  StudentInfoCell,
 } from '@/components/shared';
 
 import { QK } from '@/api';
@@ -173,11 +173,7 @@ const AdminPaymentTableBody = ({ payments, isLoading }: TAdminPaymentTableBody) 
       <TableRow key={id}>
         <TableCell>
           <Link to={`/student/${studentId}`} className='flex items-center gap-2'>
-            <UserIcon username={studentName} />
-            <div className='space-y-2'>
-              <h2 className='font-semibold'>{studentName}</h2>
-              <p className='text-muted-foreground'>#{studentId}</p>
-            </div>
+            <StudentInfoCell id={studentId} name={studentName} />
           </Link>
         </TableCell>
         <TableCell className='font-medium'>

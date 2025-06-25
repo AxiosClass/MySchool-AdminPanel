@@ -15,3 +15,4 @@ export * from './UserIcon';
 export * from './Pagination';
 export * from './PaymentTypeBadge';
 export * from './PasswordReset';
+export * from './StudentInfoCell';

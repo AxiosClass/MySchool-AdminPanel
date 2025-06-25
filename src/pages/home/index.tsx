@@ -3,6 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { AttendanceTrends } from './AttendanceTrends';
 import { PaymentTrends } from './PaymentTrends';
 import { Overview } from './Overview';
+import { RecentPayments } from './RecentPayments';
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
             <AttendanceTrends />
             <PaymentTrends />
           </div>
+          <RecentPayments />
         </section>
       </ScrollArea>
     </>
