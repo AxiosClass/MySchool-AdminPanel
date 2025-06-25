@@ -13,10 +13,10 @@ export const Overview = () => {
     select: (res) => res.data,
   });
 
-  if (isLoading) return <CardsLoader />;
+  if (isLoading) return <CardsLoader cardContainerClassName='px-0' />;
 
   return (
-    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+    <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4'>
       <OverviewCard icon={<UsersIcon />} label='Students' value={data?.totalStudent ?? 0} />
       <OverviewCard icon={<BookOpenIcon />} label='Teachers' value={data?.totalTeacher ?? 0} />
       <OverviewCard icon={<DollarSignIcon />} label='Collected' value={data?.collection ?? 0} />

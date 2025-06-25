@@ -1,14 +1,17 @@
 import { apiUrl } from '../apiUrl';
 import { TPromiseResponse } from '@/lib/types';
 import { axiosInstance } from '../axiosInstance';
+import { makeUrlParams } from '@/helpers';
 
 export const getOverview = async (): TPromiseResponse<TAttendanceSummary> => {
   const response = await axiosInstance.get(apiUrl.getOverview);
   return response.data;
 };
 
-export const getAttendanceTrends = async (): TPromiseResponse<TAttendanceTrend[]> => {
-  const response = await axiosInstance.get(apiUrl.getAttendanceTrends);
+export const getAttendanceTrends = async (args: { range?: string }): TPromiseResponse<TAttendanceTrend[]> => {
+  const queryString = makeUrlParams(args);
+  const url = apiUrl.getAttendanceTrends(queryString);
+  const response = await axiosInstance.get(url);
   return response.data;
 };
 

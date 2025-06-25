@@ -6,12 +6,12 @@ import { Message } from '@/components/shared';
 import { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Bar, BarChart, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { orange } from 'tailwindcss/colors';
 
 export const PaymentTrends = () => {
   const { data, isLoading } = useQuery({
-    queryKey: [QK.META_DATA, 'PAYMENT_TRENDS'],
+    queryKey: [QK.OVERVIEW, 'PAYMENT_TRENDS'],
     queryFn: getPaymentTrends,
     select: (res) => res.data,
   });
@@ -44,7 +44,8 @@ const PaymentsBarChart = ({ data }: TPaymentsBarChartProps) => {
       </CardHeader>
       <CardContent>
         <ChartContainer className='h-[500px] w-full' config={config}>
-          <BarChart accessibilityLayer data={data}>
+          <BarChart accessibilityLayer data={data} barSize={10}>
+            <CartesianGrid vertical={false} strokeDasharray='2 2' stroke='#f0f0f0' />
             <Bar dataKey='amount' fill={orange[700]} radius={4} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent indicator='dashed' />} />
             <XAxis dataKey='month' tickLine={false} tickMargin={10} axisLine={false} />

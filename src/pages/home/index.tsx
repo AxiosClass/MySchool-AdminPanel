@@ -11,8 +11,10 @@ export default function HomePage() {
       <ScrollArea>
         <section className='space-y-6 p-6'>
           <Overview />
-          <AttendanceTrends />
-          <PaymentTrends />
+          <div className='flex gap-6'>
+            <AttendanceTrends />
+            <PaymentTrends />
+          </div>
         </section>
       </ScrollArea>
     </>

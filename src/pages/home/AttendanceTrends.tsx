@@ -5,14 +5,14 @@ import { BarChartLoader } from './DashboardLoader';
 import { Message } from '@/components/shared';
 import { green } from 'tailwindcss/colors';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Bar, BarChart, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useMemo } from 'react';
 
 export const AttendanceTrends = () => {
   const { data, isLoading } = useQuery({
     queryKey: [QK.OVERVIEW, 'ATTENDANCE_TRENDS'],
-    queryFn: getAttendanceTrends,
+    queryFn: () => getAttendanceTrends({ range: '15' }),
     select: (res) => res.data,
   });
 
@@ -30,7 +30,7 @@ export const AttendanceTrends = () => {
 
 type TAttendanceBardChartProps = { data: TAttendanceTrend[] };
 const AttendanceBarChart = ({ data }: TAttendanceBardChartProps) => {
-  const config = { count: { label: 'Count', color: 'red' } };
+  const config = { count: { label: 'Count' } };
 
   const maxValue = useMemo(() => {
     const max = data.reduce((max, eachData) => (eachData.count > max ? eachData.count : max), 0);
@@ -44,10 +44,17 @@ const AttendanceBarChart = ({ data }: TAttendanceBardChartProps) => {
       </CardHeader>
       <CardContent>
         <ChartContainer className='h-[500px] w-full' config={config}>
-          <BarChart accessibilityLayer data={data}>
+          <BarChart accessibilityLayer data={data} barSize={10}>
+            <CartesianGrid vertical={false} strokeDasharray='2 2' stroke='#f0f0f0' />
             <Bar dataKey='count' fill={green[800]} radius={4} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent indicator='dashed' />} />
-            <XAxis dataKey='date' tickLine={false} tickMargin={10} axisLine={false} />
+            <XAxis
+              dataKey='date'
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(val) => new Date(val).getDate().toString().padStart(2, '0')}
+            />
             <YAxis domain={[0, maxValue]} axisLine={false} tickMargin={10} />
           </BarChart>
         </ChartContainer>

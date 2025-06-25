@@ -82,7 +82,7 @@ export const apiUrl = {
 
   // metadata
   getOverview: '/meta-data/overview',
-  getAttendanceTrends: '/meta-data/attendance/trends',
+  getAttendanceTrends: (searchParams: string) => `/meta-data/attendance/trends${searchParams}`,
   getPaymentTrends: '/meta-data/payment/trends',
 
   // admin

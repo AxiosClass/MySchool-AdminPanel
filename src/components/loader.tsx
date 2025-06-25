@@ -13,7 +13,11 @@ export const Loading = forwardRef<SVGSVGElement, LucideProps>(({ className, ...p
 Loading.displayName = 'Loading';
 
 export const Loader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>((props, ref) => (
-  <div ref={ref} className='flex w-full items-center justify-center py-3.5 text-secondary-foreground' {...props}>
+  <div
+    ref={ref}
+    className='flex w-full items-center justify-center py-3.5 text-secondary-foreground'
+    {...props}
+  >
     <Loading />
   </div>
 ));
@@ -21,9 +25,9 @@ export const Loader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEle
 Loader.displayName = 'Loader';
 
 // Cards Loader
-type CardsLoaderProps = { cardClassName?: string; size?: number };
-export const CardsLoader = ({ cardClassName, size = 4 }: CardsLoaderProps) => (
-  <div className='mt-6 flex items-center gap-6 px-6'>
+type CardsLoaderProps = { cardContainerClassName?: string; cardClassName?: string; size?: number };
+export const CardsLoader = ({ cardContainerClassName, cardClassName, size = 4 }: CardsLoaderProps) => (
+  <div className={cn('mt-6 flex items-center gap-6 px-6', cardContainerClassName)}>
     {[...Array(size)].map((_, index) => (
       <Skeleton className={cn('h-52 w-full', cardClassName)} key={index} />
     ))}
