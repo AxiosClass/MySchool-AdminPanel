@@ -31,6 +31,7 @@ export const GiveDiscount = ({ studentId, type = 'button' }: { studentId: string
           qc.invalidateQueries({ queryKey: [QK.PAYMENT] });
           qc.invalidateQueries({ queryKey: [QK.DUE] });
           qc.invalidateQueries({ queryKey: [QK.STUDENT] });
+          qc.invalidateQueries({ queryKey: [QK.OVERVIEW] });
           toast.success(res.message);
           reset();
           onOpenChange(false);

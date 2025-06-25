@@ -13,6 +13,7 @@ import { Pagination, SearchInput, TableNoData, usePagination } from '@/component
 import { TUseSearch, useSearch } from '@/hooks';
 import { UpdateTeacher } from './UpdateTeacher';
 import { memo } from 'react';
+import { DeleteTeacher } from './DeleteTeacher';
 
 const LIMIT = '10';
 export const TeacherTable = () => {
@@ -90,8 +91,9 @@ const TeacherTableRow = memo((props: TTeacherTableRowProps) => {
       <TableCell>{salary} TK</TableCell>
       <TableCell>{moment(joinedAt).format(dateFormatString.basic)}</TableCell>
       <TableCell>
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center gap-2'>
           <UpdateTeacher teacherId={id} />
+          <DeleteTeacher teacherId={id} />
         </div>
       </TableCell>
     </TableRow>

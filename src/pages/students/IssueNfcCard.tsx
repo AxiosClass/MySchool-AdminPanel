@@ -44,7 +44,7 @@ export const IssueNfcCard = ({ studentId, cardId }: TIssueNfcCardProps) => {
   return (
     <>
       <TooltipContainer label='Issue Nfc Card'>
-        <Button variant='outline' size='sm' onClick={() => onOpenChange(true)}>
+        <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
           <FaRegAddressCard className='size-4' />
         </Button>
       </TooltipContainer>

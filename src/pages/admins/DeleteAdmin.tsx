@@ -1,4 +1,5 @@
 import { QK } from '@/api';
+import { toast } from 'sonner';
 import { deleteAdmin } from '@/api/query';
 import { DeleteDialog, TooltipContainer } from '@/components/shared';
 import { Button } from '@/components/ui/button';
@@ -6,7 +7,6 @@ import { errorToast } from '@/helpers';
 import { usePopupState } from '@/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TrashIcon } from 'lucide-react';
-import { toast } from 'sonner';
 
 type DeleteAdminProps = { email: string };
 
@@ -31,7 +31,7 @@ export const DeleteAdmin = ({ email }: DeleteAdminProps) => {
       <TooltipContainer label='Delete Admin'>
         <Button
           variant='destructive-outline'
-          className='bg-destructive/5'
+          className='bg-destructive/5 hover:bg-destructive/20'
           size='icon'
           onClick={() => onOpenChange(true)}
         >

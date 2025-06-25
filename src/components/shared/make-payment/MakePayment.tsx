@@ -49,9 +49,12 @@ export const MakePayment = ({ studentId, type = 'button' }: { studentId: string;
     mutationFn: makePayment,
     onSuccess: (res) => {
       toast.success(res.message);
+
       qc.invalidateQueries({ queryKey: [QK.PAYMENT] });
       qc.invalidateQueries({ queryKey: [QK.DUE] });
       qc.invalidateQueries({ queryKey: [QK.STUDENT] });
+      qc.invalidateQueries({ queryKey: [QK.OVERVIEW] });
+
       form.reset();
       onOpenChange(false);
     },

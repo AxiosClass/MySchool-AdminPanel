@@ -18,7 +18,7 @@ export const UpdateTeacher = ({ teacherId }: { teacherId: string }) => {
   return (
     <>
       <TooltipContainer label='Update Teacher'>
-        <Button variant='outline' size='sm' onClick={() => onOpenChange(true)}>
+        <Button variant='outline' size='icon' onClick={() => onOpenChange(true)}>
           <PencilIcon className='size-4' />
         </Button>
       </TooltipContainer>
@@ -37,7 +37,11 @@ export const UpdateTeacher = ({ teacherId }: { teacherId: string }) => {
   );
 };
 
-type TUpdateTeacherFormLoaderProps = { teacherId: string; formId: string; onOpenChange: (open: boolean) => void };
+type TUpdateTeacherFormLoaderProps = {
+  teacherId: string;
+  formId: string;
+  onOpenChange: (open: boolean) => void;
+};
 const UpdateTeacherFormLoader = ({ formId, teacherId, onOpenChange }: TUpdateTeacherFormLoaderProps) => {
   const qc = useQueryClient();
 
