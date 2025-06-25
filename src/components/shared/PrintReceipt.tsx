@@ -7,10 +7,7 @@ import { useReactToPrint } from 'react-to-print';
 import { dateFormatString, months } from '@/data';
 import { TGetPaymentResult } from '@/api/query';
 
-type TPrintReceiptProps = {
-  payment: TGetPaymentResult[number];
-};
-
+type TPrintReceiptProps = { payment: TGetPaymentResult[number] };
 export const PrintReceipt = ({ payment }: TPrintReceiptProps) => {
   const printRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({ contentRef: printRef, documentTitle: `Receipt-${payment.id}` });

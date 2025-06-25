@@ -8,6 +8,7 @@ export * from './make-payment';
 export * from './Message';
 export * from './PageHeader';
 export * from './PageTitle';
+export * from './PrintReceipt';
 export * from './SearchInput';
 export * from './TableNodata';
 export * from './TooltipContainer';

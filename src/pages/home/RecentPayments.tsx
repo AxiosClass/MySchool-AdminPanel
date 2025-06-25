@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { QK } from '@/api';
 import { getPayments } from '@/api/query';
 import { TableBodyLoader } from '@/components/loader';
@@ -5,10 +7,9 @@ import { CommonTable, PaymentTypeBadge, StudentInfoCell, TableNoData } from '@/c
 import { Button } from '@/components/ui/button';
 import { TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import { PrintReceipt } from '../payments/admin-payment-table/PrintReceipt';
 import { dateFormatString, months } from '@/data';
-import moment from 'moment';
+import { PrintReceipt } from '../../components/shared';
+import { Link } from 'react-router-dom';
 
 export const RecentPayments = () => (
   <CommonTable header={<Header />} head={<Head />}>

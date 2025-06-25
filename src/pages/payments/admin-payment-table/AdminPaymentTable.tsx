@@ -24,7 +24,7 @@ import { PAYMENT_TYPE } from '@/lib/types';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FunnelXIcon } from 'lucide-react';
-import { PrintReceipt } from './PrintReceipt';
+import { PrintReceipt } from '../../../components/shared';
 
 // -------------------- Main Component -------------------- \\
 export const AdminPaymentTable = () => {
