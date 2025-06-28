@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DeleteAdmin } from './DeleteAdmin';
 import { ResetAdminPassword } from './ResetAdminPassword';
 import { TableBodyLoader } from '@/components/loader';
+import { USER_ROLE } from '@/lib/types';
 
 export const AdminsTable = () => {
   const { data, isLoading } = useQuery({
@@ -51,7 +52,7 @@ const AdminTableBody = ({ admins, isLoading }: TAdminTableBodyProps) => {
       </TableCell>
       <TableCell>
         <div className='flex items-center gap-2'>
-          <DeleteAdmin email={id} />
+          {role !== USER_ROLE.SUPER_ADMIN && <DeleteAdmin email={id} />}
           <ResetAdminPassword email={id} />
         </div>
       </TableCell>
