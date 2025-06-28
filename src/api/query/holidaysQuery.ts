@@ -12,6 +12,12 @@ export const addHoliday = async (payload: TAddHolidayPayload): TPromiseResponse 
   return response.data;
 };
 
+export const deleteHoliday = async (holidayId: string): TPromiseResponse => {
+  const url = apiUrl.deleteHoliday(holidayId);
+  const response = await axiosInstance.delete(url);
+  return response.data;
+};
+
 // types
 
 type TGetHolidaysResult = Pick<THoliday, 'id' | 'name' | 'description' | 'startDate' | 'endDate'>;

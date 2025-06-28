@@ -8,6 +8,7 @@ import { getHolidays } from '@/api/query';
 import { QK } from '@/api/queryKeys';
 import { AddHoliday } from './AddHoliday';
 import { useMemo } from 'react';
+import { DeleteHoliday } from './DeleteHoliday';
 
 export default function HolidaysPage() {
   return (
@@ -36,6 +37,7 @@ const HolidaysTable = () => {
         <TableHead>Holiday name</TableHead>
         <TableHead>Start date</TableHead>
         <TableHead>End date</TableHead>
+        <TableHead className='text-center'>Action</TableHead>
       </>
     );
   }, []);
@@ -58,6 +60,11 @@ const HolidaysTable = () => {
           </TableCell>
           <TableCell>{new Date(startDate).toDateString()}</TableCell>
           <TableCell>{new Date(endDate).toDateString()}</TableCell>
+          <TableCell>
+            <div className='flex items-center justify-center'>
+              <DeleteHoliday holidayId={id} />
+            </div>
+          </TableCell>
         </TableRow>
       ))}
     </CommonTable>

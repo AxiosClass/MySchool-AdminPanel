@@ -62,7 +62,7 @@ const TermSummaryTableHeader = ({
       </p>
     </div>
     <p className='rounded-lg border px-2 py-1 font-semibold'>Grade : {termGrade}</p>
-    {termGPA && <GpaBadge gpa={termGPA} grade={termGrade} />}
+    <GpaBadge gpa={termGPA ?? 0} grade={termGrade} />
   </div>
 );
 

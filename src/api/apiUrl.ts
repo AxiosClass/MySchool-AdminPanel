@@ -72,6 +72,7 @@ export const apiUrl = {
   // holidays
   addHoliday: `/holiday`,
   getHolidays: `/holidays`,
+  deleteHoliday: (holidayId: string) => `/holiday/${holidayId}`,
 
   // attendance
   getAttendanceForClassroom: (classroomId: string, date: string) =>

@@ -30,6 +30,8 @@ export const AddHoliday = () => {
       toast.success(res.message);
       onOpenChange(false);
       qc.invalidateQueries({ queryKey: [QK.HOLIDAY] });
+      qc.invalidateQueries({ queryKey: [QK.NOTICE] });
+      qc.invalidateQueries({ queryKey: [QK.ATTENDANCE] });
     },
   });
 
@@ -90,7 +92,11 @@ const addHolidayFormSchema = z
   })
   .superRefine((values, ctx) => {
     if (values.endDate < values.startDate) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'End date must be after start date', path: ['endDate'] });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'End date must be after start date',
+        path: ['endDate'],
+      });
     }
   });
 
