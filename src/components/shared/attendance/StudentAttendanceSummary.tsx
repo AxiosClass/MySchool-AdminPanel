@@ -18,7 +18,7 @@ export const StudentAttendanceSummary = ({ studentId }: { studentId: string }) =
     enabled: !!studentId,
   });
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return null;
   if (!attendanceSummary) return null;
 
   const total = attendanceSummary.totalPresent + attendanceSummary.totalAbsent;
@@ -37,7 +37,13 @@ export const StudentAttendanceSummary = ({ studentId }: { studentId: string }) =
           variant='present'
           unit={unit}
         />
-        <ProgressBar title='Absent' total={total} value={attendanceSummary.totalAbsent} variant='absent' unit={unit} />
+        <ProgressBar
+          title='Absent'
+          total={total}
+          value={attendanceSummary.totalAbsent}
+          variant='absent'
+          unit={unit}
+        />
       </CardContent>
     </Card>
   );
@@ -56,7 +62,13 @@ const UnitSelection = ({ unit, onUnitChange }: TUnitSelectionProps) => (
   />
 );
 
-type TProgressBarProps = { title: string; total: number; value: number; variant: 'present' | 'absent'; unit: TUnit };
+type TProgressBarProps = {
+  title: string;
+  total: number;
+  value: number;
+  variant: 'present' | 'absent';
+  unit: TUnit;
+};
 const ProgressBar = ({ title, total, value, variant, unit }: TProgressBarProps) => {
   const safeTotal = total === 0 ? 1 : total;
   const safeValue = Math.min(Math.max(value, 0), safeTotal);
