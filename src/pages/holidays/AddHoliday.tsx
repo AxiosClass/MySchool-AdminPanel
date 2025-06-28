@@ -38,8 +38,8 @@ export const AddHoliday = () => {
   const handleAddHoliday = form.handleSubmit((formData) => {
     const holidayData = {
       ...formData,
-      startDate: formData.startDate.toISOString().split('T')[0],
-      endDate: formData.endDate.toISOString().split('T')[0],
+      startDate: formData.startDate.toISOString(),
+      endDate: formData.endDate.toISOString(),
     };
     mutate(holidayData);
   });
