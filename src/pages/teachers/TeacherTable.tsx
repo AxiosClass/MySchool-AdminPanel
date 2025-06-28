@@ -9,11 +9,12 @@ import { useQuery } from '@tanstack/react-query';
 import { getTeachers, TGetTeachersResult } from '@/api/query';
 import { AddTeacher } from './AddTeacher';
 import { dateFormatString } from '@/data';
-import { Pagination, SearchInput, TableNoData, usePagination } from '@/components/shared';
+import { Pagination, PasswordReset, SearchInput, TableNoData, usePagination } from '@/components/shared';
 import { TUseSearch, useSearch } from '@/hooks';
 import { UpdateTeacher } from './UpdateTeacher';
 import { memo } from 'react';
 import { DeleteTeacher } from './DeleteTeacher';
+import { USER_ROLE } from '@/lib/types';
 
 const LIMIT = '10';
 export const TeacherTable = () => {
@@ -93,6 +94,7 @@ const TeacherTableRow = memo((props: TTeacherTableRowProps) => {
       <TableCell>
         <div className='flex items-center justify-center gap-2'>
           <UpdateTeacher teacherId={id} />
+          <PasswordReset id={id} role={USER_ROLE.TEACHER} />
           <DeleteTeacher teacherId={id} />
         </div>
       </TableCell>

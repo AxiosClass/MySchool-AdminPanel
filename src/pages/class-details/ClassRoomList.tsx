@@ -3,7 +3,7 @@ import { Message } from '@/components/shared';
 import { SectionCard } from '@/components/shared/section';
 
 export const ClassRoomList = ({ classrooms }: { classrooms: TGetClassDetails['classrooms'] }) => {
-  if (!classrooms.length) return <Message message='No Classrooms Found!' />;
+  if (!classrooms.length) return <Message message='No section Found!' />;
 
   return (
     <section className='grid gap-6 px-6 sm:grid-cols-2 md:grid-cols-3'>

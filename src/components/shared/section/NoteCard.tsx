@@ -102,11 +102,13 @@ const MediaPreview = ({ media }: { media: NonNullable<TNoteCardProps['note']['me
   return (
     <div className='group relative'>
       {isImage ? (
-        <img
-          src={media.url || '/placeholder.svg'}
-          alt='Note attachment'
-          className='h-40 w-full rounded-lg border border-input object-cover transition-colors group-hover:border-gray-300'
-        />
+        <a href={media.url} download target='_blank' className='cursor-pointer'>
+          <img
+            src={media.url || '/placeholder.svg'}
+            alt='Note attachment'
+            className='h-40 w-full rounded-lg border border-input object-cover transition-colors group-hover:border-gray-300'
+          />
+        </a>
       ) : (
         <a
           href={media.url}

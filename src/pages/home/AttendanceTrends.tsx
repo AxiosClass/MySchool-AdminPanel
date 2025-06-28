@@ -43,7 +43,7 @@ const AttendanceBarChart = ({ data }: TAttendanceBardChartProps) => {
         <CardTitle className='px-6 text-xl'>Attendance Trends.</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer className='h-[500px] w-full' config={config}>
+        <ChartContainer className='h-[250px] w-full' config={config}>
           <BarChart accessibilityLayer data={data} barSize={10}>
             <CartesianGrid vertical={false} strokeDasharray='2 2' stroke='#f0f0f0' />
             <Bar dataKey='count' fill={green[800]} radius={4} />
